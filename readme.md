@@ -1,7 +1,7 @@
-Group Project - README Template
+Group Project 
 ===
 
-# APP_NAME_HERE
+# KAT
 
 ## Table of Contents 
 1. [Overview](#Overview)
