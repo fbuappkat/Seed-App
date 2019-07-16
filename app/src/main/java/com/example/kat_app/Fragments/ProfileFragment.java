@@ -1,24 +1,77 @@
 package com.example.kat_app.Fragments;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 
+import com.example.kat_app.Activities.LoginActivity;
 import com.example.kat_app.Activities.MainActivity;
 import com.example.kat_app.R;
+import com.parse.ParseUser;
 
 public class ProfileFragment extends Fragment {
 
+    private ImageView ivLogout;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_empty, container, false);
+        return inflater.inflate(R.layout.fragment_profile, container, false);
+
+
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Find reference for the view
+        ivLogout = view.findViewById(R.id.ivLogout);
+
+        // Make the logout image clickable and open up dialog on click
+        ivLogout.setClickable(true);
+        ivLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Log Out");
+                builder.setIcon(R.drawable.ic_alert);
+                builder.setMessage("Are you sure you want to log out?");
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ParseUser.logOut();
+                        final Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                        dialog.dismiss();
+
+                    }
+                });
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
+                Button negButton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+                negButton.setTextColor(getResources().getColor(R.color.kat_orange_1));
+                Button posButton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+                posButton.setTextColor(getResources().getColor(R.color.kat_orange_1));
+            }
+        });
     }
 }
