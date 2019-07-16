@@ -70,6 +70,8 @@ public class SignupActivity extends AppCompatActivity {
         user.setPassword(password);
         user.setEmail(email);
         user.put("name",name);
+
+        //signup in background, check if successful, return to home
         user.signUpInBackground(new SignUpCallback() {
             public void done(com.parse.ParseException e) {
                 if (e == null) {
