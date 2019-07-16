@@ -19,6 +19,8 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -60,13 +62,17 @@ public class createProjectActivity extends AppCompatActivity {
             }
         });
 
+        //init ArrayLists
         requests = new ArrayList<>();
         prices = new ArrayList<>();
         requestWithPrice = new ArrayList<>();
 
+        //create and set adapter for listview of requests
         requestsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, requestWithPrice);
         lvRequest = (ListView) findViewById(R.id.lvRequests);
         lvRequest.setAdapter(requestsAdapter);
+
+        //publish post
         btnPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,12 +124,16 @@ public class createProjectActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),"Request added to list!", Toast.LENGTH_SHORT).show();
     }
 
-    //create project and upload to Parse
+    //create project and upload to Parse, return project to be used in createRequest
     private Project createProject(String name, String description, ParseUser user){
         final Project newProject = new Project();
         newProject.setDescription(description);
         newProject.setName(name);
         newProject.setUser(user);
+        JSONArray emptyFollowers = new JSONArray();
+        JSONArray emptyInvestors = new JSONArray();
+        newProject.put("followers", emptyFollowers);
+        newProject.put("investors", emptyInvestors);
         newProject.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
