@@ -92,6 +92,25 @@ public class FeedFragment extends Fragment {
         rvFeed.setAdapter(adapter);
         // set the layout manager on the recycler view
         rvFeed.setLayoutManager(new LinearLayoutManager(getContext()));
+        // Lookup the swipe container view
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                updates.clear();
+                adapter.clear();
+                queryUpdates();
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
         queryUpdates();
     }
 
@@ -137,7 +156,7 @@ public class FeedFragment extends Fragment {
                     Log.d(TAG,"Update: " + update.getCaption() + update.getUser());
                 }
                 adapter.notifyDataSetChanged();
-                //swipeContainer.setRefreshing(false);
+                swipeContainer.setRefreshing(false);
             }
         });
     }
