@@ -1,4 +1,4 @@
-package com.example.kat_app;
+package com.example.kat_app.Data;
 
 import android.app.Application;
 

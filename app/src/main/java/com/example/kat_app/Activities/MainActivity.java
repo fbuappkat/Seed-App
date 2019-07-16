@@ -1,4 +1,4 @@
-package com.example.kat_app;
+package com.example.kat_app.Activities;
 
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationMenu;
@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import com.example.kat_app.Fragments.FeedFragment;
 import com.example.kat_app.Fragments.HomeFragment;
 import com.example.kat_app.Fragments.ProfileFragment;
+import com.example.kat_app.R;
 
 public class MainActivity extends AppCompatActivity {
 
