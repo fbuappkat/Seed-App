@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.kat_app.Activities.AddUpdateActivity;
 import com.example.kat_app.Activities.LoginActivity;
 import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
@@ -45,8 +46,7 @@ public class FeedFragment extends Fragment {
     private int limit;
     // Store a member variable for the listener
     private com.codepath.instagram.EndlessRecyclerViewScrollListener scrollListener;
-    private Button btnAddUpdate;
-    private EditText etUpdateCaption;
+    private Button btnGoToAddUpdate;
 
     // onCreateView to inflate the view
     @Nullable
@@ -58,19 +58,9 @@ public class FeedFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         rvFeed = view.findViewById(R.id.rvFeed);
-        etUpdateCaption = view.findViewById(R.id.etUpdateCaption);
-        btnAddUpdate = view.findViewById(R.id.btnAddUpdate);
-
-        btnAddUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String caption = etUpdateCaption.getText().toString();
-                ParseUser user = ParseUser.getCurrentUser();
-                savePost(caption, user);
-            }
-        });
-
         btnLogout= view.findViewById(R.id.btnLogout);
+        btnGoToAddUpdate = view.findViewById(R.id.btnGoToAddUpdate);
+
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,6 +68,14 @@ public class FeedFragment extends Fragment {
                 ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
                 Intent TimelineToLogin = new Intent(getContext(), LoginActivity.class);
                 startActivity(TimelineToLogin);
+            }
+        });
+
+        btnGoToAddUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent TimelineToUpdate = new Intent(getContext(), AddUpdateActivity.class);
+                startActivity(TimelineToUpdate);
             }
         });
 
@@ -107,30 +105,8 @@ public class FeedFragment extends Fragment {
             }
         });
         // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-        queryUpdates();
-    }
-
-    // Save a new update to the server
-    private void savePost(String caption, ParseUser parseUser) {
-        Update update = new Update();
-        update.setCaption(caption);
-        //update.setUser(parseUser);
-        update.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.d(TAG, "Error while saving");
-                    e.printStackTrace();
-                    return;
-                }
-                Log.d(TAG, "Success!");
-                etUpdateCaption.setText("");
-            }
-        });
+        swipeContainer.setColorSchemeResources(android.R.color.holo_orange_dark,
+                android.R.color.holo_orange_light);
         queryUpdates();
     }
 
@@ -139,7 +115,7 @@ public class FeedFragment extends Fragment {
         ParseQuery<Update> updateQuery = new ParseQuery<Update>(Update.class);
         //updateQuery.include(Update.KEY_USER);
         //postQuery.setLimit(limit);
-        //postQuery.addDescendingOrder(Update.KEY_CREATED_AT);
+        updateQuery.addDescendingOrder(Update.KEY_CREATED_AT);
 
         updateQuery.findInBackground(new FindCallback<Update>() {
             @Override
