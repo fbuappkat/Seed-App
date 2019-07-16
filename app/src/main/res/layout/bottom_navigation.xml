@@ -7,7 +7,7 @@
         android:layout_alignParentBottom="true">
 
         <android.support.design.widget.BottomNavigationView
-            android:id="@+id/bottomNavViewBar"
+            android:id="@+id/bottomNav"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@color/kat_off_white"
