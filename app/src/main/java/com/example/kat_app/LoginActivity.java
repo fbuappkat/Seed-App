@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
             loginToSignup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    final Intent loginToSignup = new Intent(LoginActivity.this, SignUpActivity.class);
+                    final Intent loginToSignup = new Intent(LoginActivity.this, SignupActivity.class);
                     startActivity(loginToSignup);
                     finish();
                 }
@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginToHome() {
-        final Intent loginToHome = new Intent(LoginActivity.this, TimelineActivity.class);
+        final Intent loginToHome = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(loginToHome);
     }
 }

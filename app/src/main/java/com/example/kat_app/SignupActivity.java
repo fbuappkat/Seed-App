@@ -1,10 +1,13 @@
 package com.example.kat_app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -34,6 +37,27 @@ public class SignupActivity extends AppCompatActivity {
         etConfirmpassword = findViewById(R.id.etConfirmpassword);
 
 
+        btnSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //get values for user creation
+                final String name = etName.getText().toString();
+                final String username = etUsername.getText().toString();
+                final String email = etEmail.getText().toString();
+                final String password = etPassword.getText().toString();
+                final String confirmPassword = etConfirmpassword.getText().toString();
+
+                //check if password and confirmation are the same
+                if (!password.equals(confirmPassword)) {
+                    signup(username, password, email, name);
+                } else {
+                    Toast.makeText(SignupActivity.this, "Passwords do not match!", Toast.LENGTH_LONG);
+                }
+            }
+        });
+
+
     }
 
 
@@ -45,18 +69,18 @@ public class SignupActivity extends AppCompatActivity {
         user.setUsername(username);
         user.setPassword(password);
         user.setEmail(email);
-
+        user.put("name",name);
         user.signUpInBackground(new SignUpCallback() {
             public void done(com.parse.ParseException e) {
                 if (e == null) {
                     //enter home
                     Log.d("LoginActivity", "Signup succesful");
-//                    final Intent signup2home = new Intent(MainActivity.this, HomeActivity.class);
-//                    startActivity(signup2home);
-//                    finish();
+                    final Intent signup2home = new Intent(SignupActivity.this, MainActivity.class);
+                    startActivity(signup2home);
+                    finish();
                 } else {
                     // Sign up didn't succeed. Look at the ParseException
-                    Log.e("LoginActivity", "Signup failure");
+                    Log.e("LoginActivity", "Sign up failure");
                     e.printStackTrace();
                 }
             }
