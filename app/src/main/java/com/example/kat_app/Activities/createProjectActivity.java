@@ -43,7 +43,6 @@ public class createProjectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_project);
 
 
-
         //link xml
         btnAdd = findViewById(R.id.btnAdd);
         btnPublish = findViewById(R.id.btnPublish);
@@ -57,7 +56,7 @@ public class createProjectActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onAddItem(v);
+                onAddRequest(v);
             }
         });
 
@@ -71,10 +70,6 @@ public class createProjectActivity extends AppCompatActivity {
         btnPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ParseObject reqs = new ParseObject("Request");
-//                for(int i = 0; i < requests.size(); i++){
-//                    reqs.put(requests.get(i), prices.get(i));
-//                }
                 String name = etName.getText().toString();
                 String description = etDescription.getText().toString();
                 Project proj = createProject(name, description, ParseUser.getCurrentUser());
@@ -87,6 +82,8 @@ public class createProjectActivity extends AppCompatActivity {
         });
     }
 
+
+    //create requests that will be pointing to project it is a part of and upload to Parse
     public void createRequest(String request, Float price, Project project){
         final Request newRequest = new Request();
         newRequest.setPrice(price);
@@ -105,7 +102,8 @@ public class createProjectActivity extends AppCompatActivity {
         });
     }
 
-    public void onAddItem(View v){
+    //add request for project to listview and corresponding arraylists
+    public void onAddRequest(View v){
         EditText etRequest = findViewById(R.id.etRequest);
         EditText etPrice = findViewById(R.id.etPrice);
         String request = etRequest.getText().toString();
@@ -120,6 +118,7 @@ public class createProjectActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),"Request added to list!", Toast.LENGTH_SHORT).show();
     }
 
+    //create project and upload to Parse
     private Project createProject(String name, String description, ParseUser user){
         final Project newProject = new Project();
         newProject.setDescription(description);

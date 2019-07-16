@@ -18,8 +18,6 @@ public class ParseApp extends Application {
         ParseObject.registerSubclass(Project.class);
         ParseObject.registerSubclass(Request.class);
 
-
-
         //initilaize parse
         final Parse.Configuration configuration = new Parse.Configuration.Builder(this)
                 .applicationId("kat-app")
