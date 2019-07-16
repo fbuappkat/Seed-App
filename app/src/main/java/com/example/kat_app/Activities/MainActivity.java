@@ -80,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
     private void setStatusBarColor(int statusBarColor) {
         Window window = this.getWindow();
 
+        // Make sure that status bar text is still visible
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
         // clear FLAG_TRANSLUCENT_STATUS flag:
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
