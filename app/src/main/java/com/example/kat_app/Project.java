@@ -10,12 +10,21 @@ import com.parse.ParseUser;
 public class Project extends ParseObject {
     //fields
     private final static String KEY_DESCRIPTION = "description";
+    private final static String KEY_NAME = "name";
     private final static String KEY_IMAGE = "image";
-    private final static String KEY_USER = "user";
-    private final static String KEY_REQUESTED = "requested";
+    private final static String KEY_USER = "author";
+    private final static String KEY_REQUESTS = "requests";
 
 
     //setters and getters for Parse project object
+
+    public String getName(){
+        return getString(KEY_NAME);
+    }
+
+    public void setName(String name){
+        put(KEY_NAME, name);
+    }
 
     public String getDescription(){
         return getString(KEY_DESCRIPTION);
@@ -38,6 +47,14 @@ public class Project extends ParseObject {
 
     public void setUser(ParseUser user){
         put(KEY_USER, user);
+    }
+
+    public ParseObject getRequests(){
+        return getParseObject(KEY_REQUESTS);
+    }
+
+    public void setRequests(ParseObject requests){
+        put(KEY_REQUESTS, requests);
     }
 
     public static class Query extends ParseQuery<Project> {

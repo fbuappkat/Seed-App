@@ -1,20 +1,17 @@
 package com.example.kat_app.Activities;
 
-import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.internal.BottomNavigationMenu;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toolbar;
 
 import com.example.kat_app.Fragments.FeedFragment;
 import com.example.kat_app.Fragments.HomeFragment;
@@ -34,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setStatusBarColor(R.color.kat_orange_1);
+
 
         // Find references for the views
         toolbar =   findViewById(R.id.toolbar);

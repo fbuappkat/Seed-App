@@ -2,7 +2,10 @@ package com.example.kat_app.Data;
 
 import android.app.Application;
 
+import com.example.kat_app.Project;
+import com.example.kat_app.Request;
 import com.parse.Parse;
+import com.parse.ParseObject;
 
 public class ParseApp extends Application {
 
@@ -12,7 +15,9 @@ public class ParseApp extends Application {
 
 
         //Todo - register Post subclass once made in Parse
-        //ParseObject.registerSubclass(User.class);
+        ParseObject.registerSubclass(Project.class);
+        ParseObject.registerSubclass(Request.class);
+
 
 
         //initilaize parse
