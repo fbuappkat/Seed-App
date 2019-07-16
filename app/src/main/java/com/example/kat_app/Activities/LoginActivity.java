@@ -33,8 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         if (currentUser != null) {
             loginToHome();
         } else {
-            setContentView(R.layout.activity_main);
-            getSupportActionBar().hide();
+            setContentView(R.layout.activity_login);
             usernameInput = (EditText) findViewById(R.id.etLoginUsername);
             passwordInput = (EditText) findViewById(R.id.etLoginPassword);
             loginBtn = findViewById(R.id.btnLogin);
