@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                                 setStatusBarColor(R.color.kat_orange_1);
                                 break;
                             case R.id.navUser:
-                                setStatusBarColor(R.color.kat_off_white);
+                                setStatusBarColor(R.color.kat_white);
                                 fragment = new ProfileFragment();
                                 hideToolbar();
                                 break;
