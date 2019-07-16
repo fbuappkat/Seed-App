@@ -1,13 +1,12 @@
 package com.example.kat_app.Activities;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.internal.BottomNavigationMenu;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
@@ -28,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setStatusBarColor();
+
+
 
         // Find reference for the view
         bottomNav = findViewById(R.id.bottomNav);
@@ -69,6 +70,6 @@ public class MainActivity extends AppCompatActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
         // finally change the color
-        window.setStatusBarColor(this.getResources().getColor(R.color.kat_off_white));
+        window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimary));
     }
 }

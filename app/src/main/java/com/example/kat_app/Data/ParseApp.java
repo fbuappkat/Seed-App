@@ -12,7 +12,7 @@ public class ParseApp extends Application {
 
 
         //Todo - register Post subclass once made in Parse
-        //ParseObject.registerSubclass(Post.class);
+        //ParseObject.registerSubclass(User.class);
 
 
         //initilaize parse

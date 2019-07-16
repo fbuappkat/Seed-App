@@ -10,9 +10,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.kat_app.R;
+import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
-
 
 
 public class SignupActivity extends AppCompatActivity {
@@ -50,10 +50,10 @@ public class SignupActivity extends AppCompatActivity {
                 final String confirmPassword = etConfirmpassword.getText().toString();
 
                 //check if password and confirmation are the same
-                if (!password.equals(confirmPassword)) {
+                if (password.equals(confirmPassword)) {
                     signup(username, password, email, name);
                 } else {
-                    Toast.makeText(SignupActivity.this, "Passwords do not match!", Toast.LENGTH_LONG);
+                    Toast.makeText(SignupActivity.this, "Passwords do not match!", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -74,7 +74,7 @@ public class SignupActivity extends AppCompatActivity {
 
         //signup in background, check if successful, return to home
         user.signUpInBackground(new SignUpCallback() {
-            public void done(com.parse.ParseException e) {
+            public void done(ParseException e) {
                 if (e == null) {
                     //enter home
                     Log.d("LoginActivity", "Signup succesful");
