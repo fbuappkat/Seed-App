@@ -1,4 +1,4 @@
-package com.example.kat_app;
+package com.example.kat_app.Models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
@@ -8,10 +8,11 @@ import com.parse.ParseUser;
 /* FBU 2019
    Update defines the elements of an update about a project and getters and setters for each.
  */
-@ParseClassName("Post")
+@ParseClassName("Update")
 public class Update extends ParseObject {
     public static final String KEY_CAPTION = "caption";
     public static final String KEY_USER = "user";
+    public static final String KEY_CREATED_AT = "createdAt";
 
     public String getCaption() {
         return getString(KEY_CAPTION);
@@ -21,8 +22,8 @@ public class Update extends ParseObject {
         put(KEY_CAPTION, caption);
     }
 
-    public String getUser() {
-        return getString(KEY_USER);
+    public ParseUser getUser() {
+        return getParseUser(KEY_USER);
     }
 
     public void setUser(ParseUser parseUser) {

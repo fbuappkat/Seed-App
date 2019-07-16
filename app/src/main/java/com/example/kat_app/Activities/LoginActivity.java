@@ -1,14 +1,15 @@
-package com.example.kat_app;
+package com.example.kat_app.Activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.kat_app.R;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -32,26 +33,11 @@ public class LoginActivity extends AppCompatActivity {
         if (currentUser != null) {
             loginToHome();
         } else {
-            setContentView(R.layout.activity_main);
-            getSupportActionBar().hide();
+            setContentView(R.layout.activity_login);
             usernameInput = (EditText) findViewById(R.id.etLoginUsername);
             passwordInput = (EditText) findViewById(R.id.etLoginPassword);
             loginBtn = findViewById(R.id.btnLogin);
             loginToSignup = findViewById(R.id.btnLoginToSignup);
-
-            usernameInput.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    usernameInput.setHint("");
-                }
-            });
-
-            passwordInput.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    passwordInput.setHint("");
-                }
-            });
 
             loginBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -66,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
             loginToSignup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    final Intent loginToSignup = new Intent(LoginActivity.this, SignUpActivity.class);
+                    final Intent loginToSignup = new Intent(LoginActivity.this, SignupActivity.class);
                     startActivity(loginToSignup);
                     finish();
                 }
@@ -93,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginToHome() {
-        final Intent loginToHome = new Intent(LoginActivity.this, TimelineActivity.class);
+        final Intent loginToHome = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(loginToHome);
     }
 }
