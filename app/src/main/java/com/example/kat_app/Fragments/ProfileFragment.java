@@ -30,7 +30,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvBalanceCount;
     private TextView tvProjectsCount;
     private TextView tvInvestmentsCount;
-    private TextView tvDescription;
+    private TextView tvBio;
     private ImageView ivSettings;
     private ImageView ivEdit;
 
@@ -60,6 +60,7 @@ public class ProfileFragment extends Fragment {
         tvName = view.findViewById(R.id.tvName);
         tvUsername = view.findViewById(R.id.tvUsername);
         tvBalanceCount = view.findViewById(R.id.tvBalanceCount);
+        tvBio = view.findViewById(R.id.tvBio);
         ivProfileImage = view.findViewById(R.id.ivProfileImage);
 
         ParseUser currUser = ParseUser.getCurrentUser();
@@ -67,6 +68,7 @@ public class ProfileFragment extends Fragment {
         tvName.setText(currUser.getString(KEY_NAME));
         tvUsername.setText("@" + currUser.getUsername());
         tvBalanceCount.setText("$" + currUser.getInt(KEY_BALANCE));
+        tvBio.setText(currUser.getString(KEY_BIO));
 
         ParseFile profileImage = currUser.getParseFile(KEY_PROFILE_IMAGE);
         if (profileImage != null) {

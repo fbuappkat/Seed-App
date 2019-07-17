@@ -22,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.R;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -70,8 +72,27 @@ public class EditAccountActivity extends AppCompatActivity {
     }
 
     private void setUploadProfileImage() {
-        // Find reference for the view
+        // Find references for the views
+        ivProfileImage = findViewById(R.id.ivProfileImage);
         tvUpload = findViewById(R.id.tvUpload);
+
+        // Get the current user
+        ParseUser currUser  = ParseUser.getCurrentUser();
+
+        // Populate the profile picture holder
+        ParseFile profileImage = currUser.getParseFile(KEY_PROFILE_IMAGE);
+        if (profileImage != null) {
+            Glide.with(this)
+                    .load(profileImage.getUrl())
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(ivProfileImage);
+        }
+        else {
+            Glide.with(this)
+                    .load(R.drawable.default_profile_image)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(ivProfileImage);
+        }
 
         tvUpload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,14 +156,19 @@ public class EditAccountActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
             // Load the taken image into a preview
-            ivProfileImage.setImageBitmap(chosenImage);
+            Glide.with(this)
+                    .asBitmap()
+                    .load(chosenImage)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(ivProfileImage);
 
             // Load the parseFile
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             chosenImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             byte[] image = stream.toByteArray();
-            photoFile = new ParseFile("profilepic.jpg", image);
+            photoFile = new ParseFile(etCurrUsername + "profile_pic.jpg", image);
         }
     }
 
@@ -253,14 +279,18 @@ public class EditAccountActivity extends AppCompatActivity {
         currUser.setUsername(etCurrUsername.getText().toString());
         currUser.setEmail(etCurrEmail.getText().toString());
         currUser.put(KEY_BIO, etCurrBio.getText().toString());
-        currUser.put(KEY_PROFILE_IMAGE, photoFile);
+
+        // Check if user uploaded new profile photo
+        if (photoFile != null) {
+            currUser.put(KEY_PROFILE_IMAGE, photoFile);
+        }
 
         // Save details to the parse server
         currUser.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
-                    Log.d(TAG, "Post saved successfully!");
+                    Log.d(TAG, "Details saved successfully!");
                     onBackPressed();
                 } else {
                     Log.e(TAG, "Error while saving.");
