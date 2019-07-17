@@ -6,6 +6,11 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import org.parceler.Parcel;
+
+import java.util.ArrayList;
+
+@Parcel
 @ParseClassName("Project")
 public class Project extends ParseObject {
     //fields
@@ -14,9 +19,11 @@ public class Project extends ParseObject {
     private final static String KEY_IMAGE = "image";
     private final static String KEY_USER = "author";
     private final static String KEY_REQUESTS = "requests";
-
+    private final static String KEY_FOLLOWERS = "followers";
+    public ArrayList<ParseUser> followers;
 
     //setters and getters for Parse project object
+
 
     public String getName(){
         return getString(KEY_NAME);
@@ -57,6 +64,22 @@ public class Project extends ParseObject {
         put(KEY_REQUESTS, requests);
     }
 
+    public ArrayList<ParseUser> getFollowers(){
+        return followers;
+    }
+
+    public void setFollowers(){
+        followers = new ArrayList<>();
+    }
+
+    public void addFollower(ParseUser user){
+        followers.add(user);
+    }
+    public void removeFollower(ParseUser user){
+        followers.remove(user);
+    }
+
+
     public static class Query extends ParseQuery<Project> {
         public Query(){
             super(Project.class);
@@ -75,6 +98,7 @@ public class Project extends ParseObject {
     }
 
 
+    public Project(){}
 
 
 
