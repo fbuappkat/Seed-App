@@ -84,6 +84,7 @@ public class createProjectActivity extends AppCompatActivity {
                 }
                 Intent create2main = new Intent(createProjectActivity.this, MainActivity.class);
                 startActivity(create2main);
+                finish();
             }
         });
     }
@@ -108,7 +109,7 @@ public class createProjectActivity extends AppCompatActivity {
         });
     }
 
-    //add request for project to listview and corresponding arraylists
+    //add request for project to listview and corresponding arraylists, add info to adapter
     public void onAddRequest(View v){
         EditText etRequest = findViewById(R.id.etRequest);
         EditText etPrice = findViewById(R.id.etPrice);
