@@ -72,4 +72,220 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/paymentsHolder"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+        <ImageView
+            android:id="@+id/ivNextPayment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_payments" />
+
+        <TextView
+            android:id="@+id/tvPayment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="Payment Methods"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toBottomOf="@+id/ivNextPayment"
+            app:layout_constraintStart_toEndOf="@+id/ivNextPayment"
+            app:layout_constraintTop_toTopOf="@+id/ivNextPayment" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="12dp"
+            android:layout_height="10dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvPayment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvPayment"
+            app:srcCompat="@drawable/ic_next" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/depositHolder"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/paymentsHolder">
+
+        <ImageView
+            android:id="@+id/ivNextDeposit"
+            android:layout_width="12dp"
+            android:layout_height="10dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvDeposit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvDeposit"
+            app:srcCompat="@drawable/ic_next" />
+
+        <ImageView
+            android:id="@+id/ivDeposit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_deposit" />
+
+        <TextView
+            android:id="@+id/tvDeposit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="Deposit Funds"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toBottomOf="@+id/ivDeposit"
+            app:layout_constraintStart_toEndOf="@+id/ivDeposit"
+            app:layout_constraintTop_toTopOf="@+id/ivDeposit" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/withdrawHolder"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/depositHolder">
+
+        <ImageView
+            android:id="@+id/ivNextWithdraw"
+            android:layout_width="12dp"
+            android:layout_height="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvWithdraw"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvWithdraw"
+            app:srcCompat="@drawable/ic_next" />
+
+        <ImageView
+            android:id="@+id/ivWithdraw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_withdraw" />
+
+        <TextView
+            android:id="@+id/tvWithdraw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="Withdraw Funds"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toBottomOf="@+id/ivWithdraw"
+            app:layout_constraintStart_toEndOf="@+id/ivWithdraw"
+            app:layout_constraintTop_toTopOf="@+id/ivWithdraw" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/ivNextTransaction"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/withdrawHolder">
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="12dp"
+            android:layout_height="10dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvTransaction"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvTransaction"
+            app:srcCompat="@drawable/ic_next" />
+
+        <ImageView
+            android:id="@+id/ivTransaction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_transaction" />
+
+        <TextView
+            android:id="@+id/tvTransaction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="Transaction History"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toBottomOf="@+id/ivTransaction"
+            app:layout_constraintStart_toEndOf="@+id/ivTransaction"
+            app:layout_constraintTop_toTopOf="@+id/ivTransaction" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/passwordHolder"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivNextTransaction">
+
+        <ImageView
+            android:id="@+id/ivNextPassword"
+            android:layout_width="12dp"
+            android:layout_height="10dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvPassword"
+            app:srcCompat="@drawable/ic_next" />
+
+        <ImageView
+            android:id="@+id/ivPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_lock" />
+
+        <TextView
+            android:id="@+id/tvPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="Change Password"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toBottomOf="@+id/ivPassword"
+            app:layout_constraintStart_toEndOf="@+id/ivPassword"
+            app:layout_constraintTop_toTopOf="@+id/ivPassword" />
+    </android.support.constraint.ConstraintLayout>
+
 </android.support.constraint.ConstraintLayout>
