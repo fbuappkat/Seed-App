@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.ManageAccountActivity"></activity>
+        <activity android:name=".Activities.ProjectDetailsActivity"></activity>
+        <activity android:name=".Activities.ManageAccountActivity" />
         <activity android:name=".Activities.EditAccountActivity" />
         <activity android:name=".Activities.AddUpdateActivity" />
         <activity android:name=".Activities.SignupActivity" />
