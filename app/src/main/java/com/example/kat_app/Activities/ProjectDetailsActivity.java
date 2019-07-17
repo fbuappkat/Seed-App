@@ -73,13 +73,19 @@ public class ProjectDetailsActivity extends AppCompatActivity {
 
 
         //Follow button
-        //final String followers = testProj.getFollowers().toString();
+
+        if (!proj.getFollowers().toString().contains(ParseUser.getCurrentUser().getObjectId())){
+            btnFollow.setText("Follow");
+        } else {
+            btnFollow.setText("Unfollow");
+        }
 
         btnFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!proj.getFollowers().toString().contains(ParseUser.getCurrentUser().getObjectId())){
                     proj.add("followers", ParseUser.getCurrentUser());
+                    tvFollowers.setText("Followers: " + (proj.getFollowers().length()));
                     proj.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
@@ -92,9 +98,11 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                     btnFollow.setText("Unfollow");
                 } else {
                     btnFollow.setText("Follow");
+
                     ArrayList<ParseUser> remove = new ArrayList<>();
                     remove.add(ParseUser.getCurrentUser());
                     proj.removeAll("followers", remove);
+                    tvFollowers.setText("Followers: " + (proj.getFollowers().length()));
                     proj.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
