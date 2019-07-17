@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">KAT-app</string>
+
+    <string-array name="projects">
+        <item>"Meet Zuck"</item>
+        <item>"Don't get FB 15"</item>
+    </string-array>
 </resources>

@@ -16,11 +16,11 @@
         app:layout_constraintEnd_toEndOf="@+id/ivThumbnail"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="@+id/ivProfileImage"
+        app:layout_constraintStart_toStartOf="@+id/ivProfileImageUpdate"
         app:layout_constraintTop_toBottomOf="@+id/tvTimeAgo" />
 
     <ImageView
-        android:id="@+id/ivProfileImage"
+        android:id="@+id/ivProfileImageUpdate"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginStart="8dp"
@@ -52,8 +52,8 @@
         android:text="User X liked your project."
         android:textColor="#6C6D6D"
         app:layout_constraintEnd_toStartOf="@+id/ivThumbnail"
-        app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
-        app:layout_constraintTop_toTopOf="@+id/ivProfileImage" />
+        app:layout_constraintStart_toEndOf="@+id/ivProfileImageUpdate"
+        app:layout_constraintTop_toTopOf="@+id/ivProfileImageUpdate" />
 
     <ImageView
         android:id="@+id/ivThumbnail"

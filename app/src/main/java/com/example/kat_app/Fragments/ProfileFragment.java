@@ -2,11 +2,9 @@ package com.example.kat_app.Fragments;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +15,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Activities.LoginActivity;
-import com.example.kat_app.Activities.MainActivity;
 import com.example.kat_app.R;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -59,7 +56,7 @@ public class ProfileFragment extends Fragment {
         tvProjectsCount = view.findViewById(R.id.tvProjectsCount);
         tvInvestmentsCount = view.findViewById(R.id.tvInvestmentsCount);
         tvDescription = view.findViewById(R.id.tvDescription);
-        ivProfileImage = view.findViewById(R.id.ivProfileImage);
+        ivProfileImage = view.findViewById(R.id.ivProfileImageUpdate);
 
         ParseUser currUser = ParseUser.getCurrentUser();
 
@@ -84,7 +81,7 @@ public class ProfileFragment extends Fragment {
 
     private void setLogoutButton(View view) {
         // Find reference for the view
-        ivLogout = view.findViewById(R.id.ivLogout);
+        ivLogout = view.findViewById(R.id.ivUpdateToFeed);
 
         // Make the logout image clickable and open up dialog on click
         ivLogout.setClickable(true);
