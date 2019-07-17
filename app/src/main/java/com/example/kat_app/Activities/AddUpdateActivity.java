@@ -12,6 +12,7 @@ import com.example.kat_app.Fragments.FeedFragment;
 import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
 import com.parse.ParseException;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 public class AddUpdateActivity extends AppCompatActivity {
@@ -31,15 +32,15 @@ public class AddUpdateActivity extends AppCompatActivity {
         btnAddUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postUpdate(etUpdate.getText().toString());
+                postUpdate(etUpdate.getText().toString(), ParseUser.getCurrentUser());
             }
         });
     }
 
-    private void postUpdate(String update) {
+    private void postUpdate(String update, ParseUser currentUser) {
         Update newUpdate = new Update();
         newUpdate.setCaption(update);
-        //update.setUser(parseUser);
+        newUpdate.setUser(currentUser);
         newUpdate.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {

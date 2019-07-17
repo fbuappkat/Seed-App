@@ -14,8 +14,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
+        android:inputType="textMultiLine|text"
+        android:text="What's new with your project?"
         app:layout_constraintEnd_toStartOf="@+id/btnAddUpdate"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

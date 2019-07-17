@@ -72,7 +72,6 @@ public class LoginActivity extends AppCompatActivity {
                     Log.e("LoginActivity", "Login error");
                     Toast.makeText(LoginActivity.this, "Login credentials incorrect", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
-                    finish();
                 }
             }
         });

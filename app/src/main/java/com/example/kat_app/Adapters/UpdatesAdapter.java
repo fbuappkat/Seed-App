@@ -8,10 +8,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
+import org.json.JSONArray;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -56,24 +63,18 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvUser;
-        //private ImageView ivImage;
         private TextView tvCaption;
         private TextView tvRelativeTime;
-        /*private TextView tvHandle2;
         private TextView tvNumLikes;
-        private ImageButton btnLike;*/
+        private ImageButton btnLike;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvUser = itemView.findViewById(R.id.tvUser);
-            //ivImage = itemView.findViewById(R.id.ivDetailsImage);
             tvCaption = itemView.findViewById(R.id.tvCaption);
-            //tvHandle2 = itemView.findViewById(R.id.tvDetailsHandle2);
             tvRelativeTime = itemView.findViewById(R.id.tvRelativeTime);
-            /*tvNumLikes = itemView.findViewById(R.id.tvDetailsNumLikes);
+            tvNumLikes = itemView.findViewById(R.id.tvNumLikes);
             btnLike = itemView.findViewById(R.id.btnLike);
-            //add itemView's OnClickListener
-            itemView.setOnClickListener(this);*/
         }
 
         /*@Override
@@ -95,37 +96,33 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
 
         //add in data for specific user's post
         public void bind(final Update update) {
-            tvUser.setText("test");
+            //tvUser.setText(update.getUser().getUsername());
             tvCaption.setText(update.getCaption());
             tvRelativeTime.setText(getRelativeTimeAgo(String.valueOf(update.getCreatedAt())));
-            //tvNumLikes.setText(Integer.toString(post.getNumLikes()));
-           /* JSONArray v = post.userLikes();
+            tvNumLikes.setText(Integer.toString(update.getNumLikes()));
+            JSONArray v = update.userLikes();
             if (v != null) {
                 tvNumLikes.setText(Integer.toString(v.length()));
             } else {
                 tvNumLikes.setText("0");
             }
-            if(post.isLiked()) {
+            if(update.isLiked()) {
                 btnLike.setImageResource(R.drawable.ufi_heart_active);
             } else {
                 btnLike.setImageResource(R.drawable.ufi_heart);
             }
-            ParseFile image = post.getImage();
-            if (image != null) {
-                Glide.with(context).load(image.getUrl()).into(ivImage);
-            }
             btnLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (!post.isLiked()) {
+                    if (!update.isLiked()) {
                         btnLike.setImageResource(R.drawable.ufi_heart_active);
                         int position = getAdapterPosition();
-                        Post post = posts.get(position);
-                        int curLikes = post.getNumLikes();
+                        Update update = updates.get(position);
+                        int curLikes = update.getNumLikes();
                         //add current user to list of users who liked this post
-                        post.likePost(ParseUser.getCurrentUser());
+                        update.likePost(ParseUser.getCurrentUser());
 
-                        post.saveInBackground(new SaveCallback() {
+                        update.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(com.parse.ParseException e) {
                                 if (e != null) {
@@ -138,12 +135,12 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                     } else {
                         btnLike.setImageResource(R.drawable.ufi_heart);
                         int position = getAdapterPosition();
-                        Post post = posts.get(position);
-                        int curLikes = post.getNumLikes();
+                        Update update = updates.get(position);
+                        int curLikes = update.getNumLikes();
                         //add current user to list of users who liked this post
-                        post.unlikePost(ParseUser.getCurrentUser());
+                        update.unlikePost(ParseUser.getCurrentUser());
 
-                        post.saveInBackground(new SaveCallback() {
+                        update.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(com.parse.ParseException e) {
                                 if (e != null) {
@@ -156,7 +153,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                     }
 
                 }
-            });*/
+            });
         }
     }
 

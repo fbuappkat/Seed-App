@@ -57,6 +57,7 @@ public class FeedFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
         rvFeed = view.findViewById(R.id.rvFeed);
         btnLogout= view.findViewById(R.id.btnLogout);
         btnGoToAddUpdate = view.findViewById(R.id.btnGoToAddUpdate);
@@ -114,7 +115,6 @@ public class FeedFragment extends Fragment {
     protected void queryUpdates() {
         ParseQuery<Update> updateQuery = new ParseQuery<Update>(Update.class);
         //updateQuery.include(Update.KEY_USER);
-        //postQuery.setLimit(limit);
         updateQuery.addDescendingOrder(Update.KEY_CREATED_AT);
 
         updateQuery.findInBackground(new FindCallback<Update>() {
@@ -126,11 +126,6 @@ public class FeedFragment extends Fragment {
                     return;
                 }
                 updates.addAll(posts);
-                Log.d(TAG,Integer.toString(updates.size()));
-                for (int i = 0; i < updates.size(); i++) {
-                    Update update = updates.get(i);
-                    Log.d(TAG,"Update: " + update.getCaption() + update.getUser());
-                }
                 adapter.notifyDataSetChanged();
                 swipeContainer.setRefreshing(false);
             }
