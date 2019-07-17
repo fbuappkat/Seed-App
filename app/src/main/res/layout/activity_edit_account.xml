@@ -78,7 +78,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvUpload"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
@@ -88,30 +88,98 @@
         android:id="@+id/tvUpload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:clickable="true"
         android:fontFamily="@font/montserrat_semibold"
         android:text="Change Profile Photo"
         android:textColor="@color/kat_orange_1"
-        app:layout_constraintEnd_toEndOf="@+id/ivProfileImage"
-        app:layout_constraintStart_toStartOf="@+id/ivProfileImage"
-        app:layout_constraintTop_toBottomOf="@+id/ivProfileImage" />
+        app:layout_constraintBottom_toBottomOf="@+id/ivProfileImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
+        app:layout_constraintTop_toTopOf="@+id/ivProfileImage" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout3"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/gradient"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvUpload">
+        app:layout_constraintTop_toBottomOf="@+id/ivProfileImage">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/BioHolder"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/round"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/locationHolder">
+
+            <Button
+                android:id="@+id/bEditBio"
+                android:layout_width="49dp"
+                android:layout_height="24dp"
+                android:layout_gravity="left"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/transparent"
+                android:contextClickable="false"
+                android:fontFamily="@font/montserrat_semibold"
+                android:text="Edit"
+                android:textAllCaps="false"
+                android:textColor="@color/kat_orange_1"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/etCurrBio"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvBio" />
+
+            <TextView
+                android:id="@+id/tvBio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/montserrat_light"
+                android:text="Biography"
+                android:textColor="@color/kat_grey_2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/etCurrBio"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/montserrat_regular"
+                android:gravity="start"
+                android:text="This is placeholder text to represent a user's biography."
+                android:textColor="#000000"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/bEditBio"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvBio" />
+        </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/nameHolder"
             android:layout_width="0dp"
-            android:layout_height="90dp"
+            android:layout_height="70dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
@@ -125,31 +193,59 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/montserrat_light"
                 android:text="Name"
                 android:textColor="@color/kat_grey_2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tvCurrName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <Button
+                android:id="@+id/bEditName"
+                android:layout_width="49dp"
+                android:layout_height="24dp"
+                android:layout_gravity="left"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/transparent"
+                android:contextClickable="false"
+                android:fontFamily="@font/montserrat_semibold"
+                android:text="Edit"
+                android:textAllCaps="false"
+                android:textColor="@color/kat_orange_1"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/etCurrName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvName" />
+
+            <EditText
+                android:id="@+id/etCurrName"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/transparent"
                 android:fontFamily="@font/montserrat_regular"
+                android:gravity="start"
+                android:inputType="text"
+                android:singleLine="true"
                 android:text="John Doe"
                 android:textColor="#000000"
                 android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/bEditName"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/emailHolder"
             android:layout_width="0dp"
-            android:layout_height="90dp"
+            android:layout_height="70dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
@@ -159,30 +255,55 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/usernameHolder">
 
+            <Button
+                android:id="@+id/bEditEmail"
+                android:layout_width="49dp"
+                android:layout_height="24dp"
+                android:layout_gravity="left"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/transparent"
+                android:contextClickable="false"
+                android:fontFamily="@font/montserrat_semibold"
+                android:text="Edit"
+                android:textAllCaps="false"
+                android:textColor="@color/kat_orange_1"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/etCurrEmail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvEmail" />
+
             <TextView
                 android:id="@+id/tvEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/montserrat_light"
                 android:text="Email"
                 android:textColor="@color/kat_grey_2"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tvCurrEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <EditText
+                android:id="@+id/etCurrEmail"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/transparent"
                 android:fontFamily="@font/montserrat_regular"
+                android:gravity="start"
+                android:inputType="textEmailAddress"
+                android:singleLine="true"
                 android:text="johndoe@email.com"
                 android:textColor="#000000"
                 android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/bEditEmail"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
         </android.support.constraint.ConstraintLayout>
@@ -190,7 +311,7 @@
         <android.support.constraint.ConstraintLayout
             android:id="@+id/usernameHolder"
             android:layout_width="0dp"
-            android:layout_height="90dp"
+            android:layout_height="70dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
@@ -199,74 +320,122 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nameHolder">
 
+            <Button
+                android:id="@+id/bEditUsername"
+                android:layout_width="49dp"
+                android:layout_height="24dp"
+                android:layout_gravity="left"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/transparent"
+                android:contextClickable="false"
+                android:fontFamily="@font/montserrat_semibold"
+                android:text="Edit"
+                android:textAllCaps="false"
+                android:textColor="@color/kat_orange_1"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/etCurrUsername"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvUsername" />
+
             <TextView
                 android:id="@+id/tvUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/montserrat_light"
                 android:text="Username"
                 android:textColor="@color/kat_grey_2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <EditText
+                android:id="@+id/etCurrUsername"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/montserrat_regular"
+                android:gravity="start"
+                android:inputType="text"
+                android:maxLength="15"
+                android:singleLine="true"
+                android:text="johndoe"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/bEditUsername"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvUsername" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/locationHolder"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/round"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emailHolder">
+
+            <Button
+                android:id="@+id/bEditLocation"
+                android:layout_width="49dp"
+                android:layout_height="24dp"
+                android:layout_gravity="left"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/transparent"
+                android:contextClickable="false"
+                android:fontFamily="@font/montserrat_semibold"
+                android:text="Edit"
+                android:textAllCaps="false"
+                android:textColor="@color/kat_orange_1"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvCurrLocation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvLocation" />
+
             <TextView
-                android:id="@+id/tvCurrUsername"
+                android:id="@+id/tvLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:fontFamily="@font/montserrat_regular"
-                android:text="johndoe"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvUsername" />
-        </android.support.constraint.ConstraintLayout>
-
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/bioHolder"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/round"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emailHolder">
-
-            <TextView
-                android:id="@+id/tvBiography"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
                 android:fontFamily="@font/montserrat_light"
-                android:text="Biography"
+                android:text="Location"
                 android:textColor="@color/kat_grey_2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tvCurrBio"
+                android:id="@+id/tvCurrLocation"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 android:fontFamily="@font/montserrat_regular"
-                android:inputType="textFilter|textMultiLine"
-                android:text="This is placeholder text for a user's biography"
+                android:text="Menlo Park, CA"
                 android:textColor="#000000"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/bEditLocation"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvBiography" />
+                app:layout_constraintTop_toBottomOf="@+id/tvLocation" />
         </android.support.constraint.ConstraintLayout>
+
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

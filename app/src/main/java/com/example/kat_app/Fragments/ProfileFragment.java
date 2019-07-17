@@ -1,6 +1,7 @@
 package com.example.kat_app.Fragments;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -33,7 +34,6 @@ public class ProfileFragment extends Fragment {
     private ImageView ivSettings;
     private ImageView ivEdit;
 
-    FragmentManager childFragmentManager;
 
     private static final String KEY_NAME = "name";
     private static final String KEY_PROFILE_IMAGE = "profile_image";
@@ -44,14 +44,11 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_profile, container, false);
 
-
-
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
 
         setProfileInfo(view);
         setEditAccountButton(view);
@@ -103,9 +100,6 @@ public class ProfileFragment extends Fragment {
     private void setSettingsButton(View view) {
         // Find reference for the view
         ivSettings = view.findViewById(R.id.ivSettings);
-
-        // Get the fragment manager
-        childFragmentManager = getChildFragmentManager();
 
         // Set up the settings button to open manage account fragment
         ivSettings.setOnClickListener(new View.OnClickListener() {
