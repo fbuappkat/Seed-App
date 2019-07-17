@@ -2,14 +2,14 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ConstraintLayout"
+    android:id="@+id/profileView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/kat_white">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout2"
-        android:layout_width="match_parent"
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,48 +30,46 @@
                 android:layout_height="wrap_content"
                 android:background="@color/kat_white">
 
-                <Button
-                    android:id="@+id/bSave"
-                    android:layout_width="49dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="8dp"
-                    android:background="@drawable/button"
-                    android:contextClickable="false"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:text="Save"
-                    android:textAllCaps="false"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp" />
-
                 <TextView
-                    android:id="@+id/tvEditAccount"
+                    android:id="@+id/tvManageAccount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/montserrat_semibold"
-                    android:text="Edit Account"
+                    android:text="Manage Account"
                     android:textColor="#000000"
-                    android:textSize="18sp" />
+                    android:textSize="20sp" />
 
-                <Button
-                    android:id="@+id/bCancel"
-                    android:layout_width="49dp"
+                <ImageView
+                    android:id="@+id/ivBack"
+                    android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="left"
                     android:layout_marginRight="8dp"
-                    android:background="@android:color/transparent"
-                    android:contextClickable="false"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:text="@android:string/cancel"
-                    android:textAllCaps="false"
-                    android:textColor="#000000"
-                    android:textSize="14sp" />
+                    android:background="@drawable/ic_back"
+                    android:clickable="true" />
 
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.AppBarLayout>
 
     </android.support.constraint.ConstraintLayout>
+
+    <Button
+        android:id="@+id/bLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_gravity="left"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/transparent"
+        android:contextClickable="false"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="Log Out"
+        android:textAllCaps="false"
+        android:textColor="@color/kat_orange_1"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

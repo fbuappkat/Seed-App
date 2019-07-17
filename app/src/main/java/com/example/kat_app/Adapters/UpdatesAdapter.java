@@ -4,17 +4,14 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
-import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -70,7 +67,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
 
         public ViewHolder(View itemView) {
             super(itemView);
-            tvUser = itemView.findViewById(R.id.tvUser);
+            tvUser = itemView.findViewById(R.id.tvEditAccount);
             tvCaption = itemView.findViewById(R.id.tvCaption);
             tvRelativeTime = itemView.findViewById(R.id.tvRelativeTime);
             tvNumLikes = itemView.findViewById(R.id.tvNumLikes);

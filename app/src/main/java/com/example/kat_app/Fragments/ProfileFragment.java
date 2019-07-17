@@ -1,21 +1,20 @@
 package com.example.kat_app.Fragments;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Activities.EditAccountActivity;
-import com.example.kat_app.Activities.LoginActivity;
+import com.example.kat_app.Activities.ManageAccountActivity;
 import com.example.kat_app.R;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -34,6 +33,8 @@ public class ProfileFragment extends Fragment {
     private ImageView ivSettings;
     private ImageView ivEdit;
 
+    FragmentManager childFragmentManager;
+
     private static final String KEY_NAME = "name";
     private static final String KEY_PROFILE_IMAGE = "profile_image";
     private static final String KEY_BIO = "bio";
@@ -42,14 +43,19 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_profile, container, false);
+
+
+
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         setProfileInfo(view);
         setEditAccountButton(view);
+        setSettingsButton(view);
     }
 
     private void setProfileInfo(View view) {
@@ -89,6 +95,23 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), EditAccountActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void setSettingsButton(View view) {
+        // Find reference for the view
+        ivSettings = view.findViewById(R.id.ivSettings);
+
+        // Get the fragment manager
+        childFragmentManager = getChildFragmentManager();
+
+        // Set up the settings button to open manage account fragment
+        ivSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ManageAccountActivity.class);
                 startActivity(intent);
             }
         });

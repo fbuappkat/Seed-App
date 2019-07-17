@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ConstraintLayout"
+    android:id="@+id/profileView"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -38,7 +38,7 @@
                     android:background="@drawable/ic_settings" />
 
                 <TextView
-                    android:id="@+id/tvEditAccount"
+                    android:id="@+id/tvProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -52,7 +52,6 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="left"
-                    android:layout_marginRight="8dp"
                     android:background="@drawable/ic_edit"
                     android:clickable="true" />
 
@@ -231,19 +230,18 @@
         app:layout_constraintTop_toBottomOf="@+id/line2">
 
         <TextView
-            android:id="@+id/qmap_2"
+            android:id="@+id/tvBio"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_gravity="center_vertical"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="24dp"
             android:background="@drawable/round"
-            android:gravity="center"
-            android:text="2"
-            android:textColor="@color/kat_orange_1"
-            android:textStyle="bold"
+            android:fontFamily="@font/montserrat_regular"
+            android:padding="16dp"
+            android:text="Biography"
+            android:textColor="@color/kat_grey_1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
