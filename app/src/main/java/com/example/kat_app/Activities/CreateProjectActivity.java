@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.kat_app.Project;
@@ -30,6 +31,7 @@ public class CreateProjectActivity extends AppCompatActivity {
     private Button btnPublish;
     private EditText etName;
     private EditText etDescription;
+    private Spinner spinnerCategories;
     public ConstraintLayout constraintLayout;
 
     Hashtable<String, Integer> allRequests;
@@ -52,6 +54,13 @@ public class CreateProjectActivity extends AppCompatActivity {
         lvRequest = findViewById(R.id.lvRequests);
         etDescription = findViewById(R.id.etDescription);
         etName = findViewById(R.id.etName);
+        spinnerCategories = findViewById(R.id.spinnerCategory);
+
+        //setup spinner
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(CreateProjectActivity.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.categories));
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinnerCategories.setAdapter(spinnerAdapter);
 
 
         //create new edit text for specific item requests
@@ -78,7 +87,8 @@ public class CreateProjectActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name = etName.getText().toString();
                 String description = etDescription.getText().toString();
-                Project proj = createProject(name, description, ParseUser.getCurrentUser());
+                String category = spinnerCategories.getSelectedItem().toString();
+                Project proj = createProject(name, description, ParseUser.getCurrentUser(), category);
                 for(int i = 0; i < requests.size(); i++){
                     createRequest(requests.get(i), prices.get(i), proj);
                 }
@@ -126,10 +136,11 @@ public class CreateProjectActivity extends AppCompatActivity {
     }
 
     //create project and upload to Parse, return project to be used in createRequest
-    private Project createProject(String name, String description, ParseUser user){
+    private Project createProject(String name, String description, ParseUser user, String category){
         final Project newProject = new Project();
         newProject.setDescription(description);
         newProject.setName(name);
+        newProject.setCategory(category);
         newProject.setUser(user);
         JSONArray emptyFollowers = new JSONArray();
         JSONArray emptyInvestors = new JSONArray();

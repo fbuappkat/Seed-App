@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">KAT-app</string>
+
+    <string-array name="categories">
+        <item>Category 1</item>
+        <item>Category 2</item>
+        <item>Category 3</item>
+        <item>Category 4</item>
+        <item>Category 5</item>
+    </string-array>
+
 </resources>

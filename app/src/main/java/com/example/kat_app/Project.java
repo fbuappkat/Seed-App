@@ -23,6 +23,7 @@ public class Project extends ParseObject implements Parcelable {
     private final static String KEY_USER = "author";
     private final static String KEY_REQUESTS = "requests";
     private final static String KEY_FOLLOWERS = "followers";
+    private final static String KEY_CATEGORY = "category";
     public ArrayList<ParseUser> followers;
 
     //setters and getters for Parse project object
@@ -60,12 +61,16 @@ public class Project extends ParseObject implements Parcelable {
         put(KEY_USER, user);
     }
 
-    public ParseObject getRequests(){
-        return getParseObject(KEY_REQUESTS);
+    public void setCategory(String category){
+        put(KEY_CATEGORY, category);
     }
 
-    public void setRequests(ParseObject requests){
-        put(KEY_REQUESTS, requests);
+    public String getCategory(){
+        return getString(KEY_CATEGORY);
+    }
+
+    public ParseObject getRequests(){
+        return getParseObject(KEY_REQUESTS);
     }
 
     public JSONArray getFollowers(){

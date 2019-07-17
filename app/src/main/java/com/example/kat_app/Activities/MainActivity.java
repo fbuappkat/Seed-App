@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
         setStatusBarColor(R.color.kat_orange_1);
 
-
         // Find references for the views
         toolbar =   findViewById(R.id.toolbar);
         bottomNav = findViewById(R.id.bottomNav);
