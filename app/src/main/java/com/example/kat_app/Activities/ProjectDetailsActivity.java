@@ -84,15 +84,11 @@ public class ProjectDetailsActivity extends AppCompatActivity {
 
         //Follow button
         //final String followers = testProj.getFollowers().toString();
-        if (testProj.getFollowers().contains(ParseUser.getCurrentUser())){
-            btnFollow.setText("Unfollow");
-        } else {
-            btnFollow.setText("Follow");
-        }
+
         btnFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!testProj.getFollowers().contains(ParseUser.getCurrentUser())){
+                if (!testProj.getFollowers().toString().contains(ParseUser.getCurrentUser().getObjectId())){
                     testProj.addFollower(ParseUser.getCurrentUser());
                     Toast.makeText(ProjectDetailsActivity.this, "Project followed!", Toast.LENGTH_SHORT).show();
                     btnFollow.setText("Unfollow");
