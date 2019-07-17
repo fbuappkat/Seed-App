@@ -91,10 +91,8 @@ public class Update extends ParseObject {
         put(KEY_PROJECT, project);
     }
 
+    //TODO comments add twice
     public void addComment(String comment) {
-        /*Map<ParseUser, String> commentMap = new HashMap<ParseUser, String>();
-        commentMap.put(u, comment);
-        add(KEY_COMMENTS, commentMap);*/
         Log.d("comment", "comment " + comment);
         add(KEY_COMMENTS, comment);
     }

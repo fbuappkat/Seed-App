@@ -68,7 +68,7 @@ android:background="@color/kat_white">
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvComments"
+            android:id="@+id/rvFeed"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"

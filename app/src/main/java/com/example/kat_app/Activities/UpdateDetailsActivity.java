@@ -7,11 +7,15 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.kat_app.Adapters.CommentsAdapter;
 import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
+import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,6 +37,8 @@ public class UpdateDetailsActivity extends AppCompatActivity {
     protected CommentsAdapter adapter;
     protected SwipeRefreshLayout swipeContainer;
     protected List<String> comments;
+    private Button btnComment;
+    private EditText etComment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +52,8 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         tvTime = findViewById(R.id.tvRelativeTime);
         tvCaption = findViewById(R.id.tvCaption);
         rvComments = findViewById(R.id.rvComments);
+        btnComment = findViewById(R.id.btnAddComment);
+        etComment = findViewById(R.id.etComment);
 
         try {
             String username = update.getUser().fetchIfNeeded().getString("username");
@@ -84,6 +92,18 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(android.R.color.holo_orange_dark,
                 android.R.color.holo_orange_light);
+
+        btnComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final ParseUser user = ParseUser.getCurrentUser();
+                final String comment = etComment.getText().toString();
+                update.addComment(comment);
+                etComment.setText("");
+                queryComments();
+            }
+        });
+
         queryComments();
     }
 

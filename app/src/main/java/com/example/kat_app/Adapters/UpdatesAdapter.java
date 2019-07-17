@@ -104,11 +104,11 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
             int position = getAdapterPosition();
             // make sure the position exists in the view
             if (position != RecyclerView.NO_POSITION) {
-                // get the movie at the position, this won't work if the class is static
+                // get the update at the position, this won't work if the class is static
                 Update update = updates.get(position);
                 // create intent for the new activity
                 Intent intent = new Intent(context, UpdateDetailsActivity.class);
-                //serialize the movie using parceler, use its short name as a key
+                //serialize the update using parceler, use its short name as a key
                 intent.putExtra(Update.class.getSimpleName(), Parcels.wrap(update));
                 // show the activity
                 context.startActivity(intent);
@@ -166,47 +166,22 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
             } else {
                 btnLike.setImageResource(R.drawable.ufi_heart);
             }
-            btnLike.setOnClickListener(new View.OnClickListener() {
+            btnGoToComments.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (!update.isLiked()) {
-                        btnLike.setImageResource(R.drawable.ufi_heart_active);
-                        int position = getAdapterPosition();
+                    // get item position
+                    int position = getAdapterPosition();
+                    // make sure the position exists in the view
+                    if (position != RecyclerView.NO_POSITION) {
+                        // get the update at the position, this won't work if the class is static
                         Update update = updates.get(position);
-                        int curLikes = update.getNumLikes();
-                        //add current user to list of users who liked this post
-                        update.likePost(currUser);
-
-                        update.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(com.parse.ParseException e) {
-                                if (e != null) {
-                                    e.printStackTrace();
-                                    return;
-                                }
-                            }
-                        });
-                        notifyDataSetChanged();
-                    } else {
-                        btnLike.setImageResource(R.drawable.ufi_heart);
-                        int position = getAdapterPosition();
-                        Update update = updates.get(position);
-                        int curLikes = update.getNumLikes();
-                        //add current user to list of users who liked this post
-                        update.unlikePost(currUser);
-
-                        update.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(com.parse.ParseException e) {
-                                if (e != null) {
-                                    e.printStackTrace();
-                                    return;
-                                }
-                            }
-                        });
-                        notifyDataSetChanged();
+                        // create intent for the new activity
+                        Intent feedToDetails = new Intent(context, UpdateDetailsActivity.class);
+                        //serialize the update using parceler, use its short name as a key
+                        feedToDetails.putExtra(Update.class.getSimpleName(), Parcels.wrap(update));
+                        // show the activity
+                        context.startActivity(feedToDetails);
                     }
-
                 }
             });
 

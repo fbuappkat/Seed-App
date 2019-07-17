@@ -52,7 +52,7 @@ public class FeedFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        rvFeed = view.findViewById(R.id.rvComments);
+        rvFeed = view.findViewById(R.id.rvFeed);
         setAddButton(view);
 
         // create the data source
