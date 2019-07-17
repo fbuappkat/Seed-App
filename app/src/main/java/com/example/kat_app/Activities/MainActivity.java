@@ -1,6 +1,5 @@
 package com.example.kat_app.Activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -32,9 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setStatusBarColor(R.color.kat_orange_1);
-
-        Intent test = new Intent(this, ProjectDetailsActivity.class);
-        startActivity(test);
+        
 
         // Find references for the views
         toolbar =   findViewById(R.id.toolbar);
