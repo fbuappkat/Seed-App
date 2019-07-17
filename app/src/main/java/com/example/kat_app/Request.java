@@ -14,8 +14,8 @@ public class Request extends ParseObject {
 
     //setters and getters for Parse project object
 
-    public String getPrice(){
-        return getString(KEY_PRICE);
+    public Float getPrice(){
+        return getNumber(KEY_PRICE).floatValue();
     }
 
     public void setPrice(Float price){

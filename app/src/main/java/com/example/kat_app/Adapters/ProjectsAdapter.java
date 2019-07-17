@@ -18,10 +18,13 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
     private Context context;
     private List<Project> projects;
     private final String TAG = "UpdatesAdapter";
+    private OnClickListener monClickListener;
 
-    public ProjectsAdapter(Context context, List<Project> projects) {
+
+    public ProjectsAdapter(Context context, List<Project> projects, OnClickListener onClickListener) {
         this.context = context;
         this.projects = projects;
+        this.monClickListener = onClickListener;
     }
 
     @NonNull
@@ -34,7 +37,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ProjectsAdapter.ViewHolder holder, int position) {
         Project project = projects.get(position);
-        holder.bind(project);
+        holder.bind(project, monClickListener);
     }
 
     @Override
@@ -43,8 +46,9 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
         return projects.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        OnClickListener onClickListener;
         private TextView tvName;
         private TextView tvAuthor;
         private TextView tvInvestors;
@@ -60,13 +64,25 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
 
 
         //add in data for specific user's post
-        public void bind(final Project project) {
+        public void bind(final Project project, OnClickListener onClickListener) {
             ParseUser user = project.getUser();
             tvName.setText(project.getName());
             tvAuthor.setText("Username");
             tvInvestors.setText("Investors: " + project.getInvestors().length());
             tvFollowers.setText("Followers: " + project.getFollowers().length());
+            this.onClickListener  = onClickListener;
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            onClickListener.onClick(getAdapterPosition());
+        }
+
+
+    }
+    public interface OnClickListener{
+        void onClick(int position);
     }
 
 //    // Clean all elements of the recycler

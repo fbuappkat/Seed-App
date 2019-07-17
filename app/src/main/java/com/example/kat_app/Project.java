@@ -1,5 +1,7 @@
 package com.example.kat_app;
 
+import android.os.Parcelable;
+
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -11,9 +13,9 @@ import org.parceler.Parcel;
 
 import java.util.ArrayList;
 
-@Parcel
 @ParseClassName("Project")
-public class Project extends ParseObject {
+@Parcel
+public class Project extends ParseObject implements Parcelable {
     //fields
     private final static String KEY_DESCRIPTION = "description";
     private final static String KEY_NAME = "name";
@@ -49,6 +51,7 @@ public class Project extends ParseObject {
     public void setImage(ParseFile image){
         put(KEY_IMAGE, image);
     }
+
     public ParseUser getUser(){
         return getParseUser(KEY_USER);
     }
@@ -71,17 +74,6 @@ public class Project extends ParseObject {
 
     public JSONArray getInvestors(){
         return getJSONArray("investors");
-    }
-
-    public void setFollowers(){
-        followers = new ArrayList<>();
-    }
-
-    public void addFollower(ParseUser user){
-        followers.add(user);
-    }
-    public void removeFollower(ParseUser user){
-        followers.remove(user);
     }
 
 
