@@ -24,7 +24,7 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class createProjectActivity extends AppCompatActivity {
+public class CreateProjectActivity extends AppCompatActivity {
 
     private Button btnAdd;
     private Button btnPublish;
@@ -45,7 +45,7 @@ public class createProjectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_project);
 
 
-        //link xml
+        //link fileprovider
         btnAdd = findViewById(R.id.btnAdd);
         btnPublish = findViewById(R.id.btnPublish);
         constraintLayout = (ConstraintLayout) findViewById(R.id.root);
@@ -82,7 +82,7 @@ public class createProjectActivity extends AppCompatActivity {
                 for(int i = 0; i < requests.size(); i++){
                     createRequest(requests.get(i), prices.get(i), proj);
                 }
-                Intent create2main = new Intent(createProjectActivity.this, MainActivity.class);
+                Intent create2main = new Intent(CreateProjectActivity.this, MainActivity.class);
                 startActivity(create2main);
                 finish();
             }
@@ -140,11 +140,11 @@ public class createProjectActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e==null){
                     Log.d("ProjectCreate", "create Project Success!");
-                    Toast.makeText(createProjectActivity.this, "Project created!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CreateProjectActivity.this, "Project created!", Toast.LENGTH_LONG).show();
                 }else{
                     e.printStackTrace();
                     Log.e("ProjectCreate", "Failed creating project");
-                    Toast.makeText(createProjectActivity.this, "Post creation Failed :(", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CreateProjectActivity.this, "Post creation Failed :(", Toast.LENGTH_LONG).show();
                 }
             }
         });

@@ -29,7 +29,7 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        //link button and edittexts to xml
+        //link button and edittexts to fileprovider
         btnSignup = findViewById(R.id.btnSignup);
         etName = findViewById(R.id.etName);
         etUsername = findViewById(R.id.etUsername);

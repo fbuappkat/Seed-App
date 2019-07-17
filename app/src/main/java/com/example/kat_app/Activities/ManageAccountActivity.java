@@ -3,6 +3,7 @@ package com.example.kat_app.Activities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import com.parse.ParseUser;
 public class ManageAccountActivity extends AppCompatActivity {
 
     private ImageView ivBack;
+    private ConstraintLayout paymentHolder;
     private Button bLogout;
     Context context;
 
@@ -25,6 +27,13 @@ public class ManageAccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_account);
+
+        paymentHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         setStatusBarColor(R.color.kat_white);
         setBackButton();

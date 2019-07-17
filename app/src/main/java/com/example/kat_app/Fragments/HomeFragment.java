@@ -10,8 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.kat_app.Activities.ProjectDetailsActivity;
+import com.example.kat_app.Activities.CreateProjectActivity;
 import com.example.kat_app.Adapters.ProjectsAdapter;
 import com.example.kat_app.Project;
 import com.example.kat_app.R;
@@ -27,6 +29,7 @@ import java.util.List;
 public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickListener {
 
     RecyclerView rvProjects;
+    private ImageView ivAdd;
     protected List<Project> projects;
     protected ProjectsAdapter adapter;
 
@@ -41,6 +44,16 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        ivAdd = view.findViewById(R.id.ivAdd);
+
+        ivAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CreateProjectActivity.class);
+                startActivity(intent);
+            }
+        });
 
         rvProjects = view.findViewById(R.id.rvProjects);
 

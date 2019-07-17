@@ -1,5 +1,6 @@
 package com.example.kat_app.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,6 +17,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -224,6 +226,8 @@ public class EditAccountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 etCurrName.setEnabled(true);
                 etCurrName.getText().clear();
+                etCurrName.requestFocus();
+                showKeyboard();
             }
         });
 
@@ -233,6 +237,8 @@ public class EditAccountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 etCurrUsername.setEnabled(true);
                 etCurrUsername.getText().clear();
+                etCurrUsername.requestFocus();
+                showKeyboard();
             }
         });
 
@@ -242,6 +248,8 @@ public class EditAccountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 etCurrEmail.setEnabled(true);
                 etCurrEmail.getText().clear();
+                etCurrEmail.requestFocus();
+                showKeyboard();
             }
         });
 
@@ -251,6 +259,8 @@ public class EditAccountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 etCurrBio.setEnabled(true);
                 etCurrBio.getText().clear();
+                etCurrBio.requestFocus();
+                showKeyboard();
             }
         });
     }
@@ -298,5 +308,10 @@ public class EditAccountActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void showKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 }

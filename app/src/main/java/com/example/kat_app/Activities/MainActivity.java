@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             case R.id.navHome:
                                 fragment = new HomeFragment();
-                                showToolbar();
                                 setStatusBarColor(R.color.kat_orange_1);
+                                hideToolbar();
                                 break;
                             case R.id.navUser:
                                 setStatusBarColor(R.color.kat_white);
