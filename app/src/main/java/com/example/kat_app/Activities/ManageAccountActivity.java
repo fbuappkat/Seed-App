@@ -28,10 +28,14 @@ public class ManageAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_account);
 
+        paymentHolder = findViewById(R.id.passwordHolder);
+
+
         paymentHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(ManageAccountActivity.this, AddCardActivity.class);
+                startActivity(intent);
             }
         });
 
