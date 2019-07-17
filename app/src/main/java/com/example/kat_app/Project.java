@@ -6,6 +6,9 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import org.parceler.Parcel;
+
+@Parcel
 @ParseClassName("Project")
 public class Project extends ParseObject {
     //fields
@@ -17,6 +20,7 @@ public class Project extends ParseObject {
 
 
     //setters and getters for Parse project object
+
 
     public String getName(){
         return getString(KEY_NAME);
@@ -75,6 +79,7 @@ public class Project extends ParseObject {
     }
 
 
+    public Project(){}
 
 
 
