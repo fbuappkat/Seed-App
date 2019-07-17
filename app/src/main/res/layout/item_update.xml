@@ -74,7 +74,7 @@
         app:srcCompat="@drawable/ufi_heart" />
 
     <ImageButton
-        android:id="@+id/btnComment"
+        android:id="@+id/btnGoToComments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -92,7 +92,7 @@
         android:layout_marginTop="8dp"
         android:text="NumComments"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/btnComment"
+        app:layout_constraintStart_toEndOf="@+id/btnGoToComments"
         app:layout_constraintTop_toBottomOf="@+id/tvCaption" />
 
     <TextView

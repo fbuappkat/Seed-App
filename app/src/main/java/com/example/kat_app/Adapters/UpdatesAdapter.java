@@ -79,6 +79,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
         private TextView tvProject;
         private EditText etComment;
         private Button btnAddComment;
+        private ImageButton btnGoToComments;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -92,6 +93,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
             tvProject = itemView.findViewById(R.id.tvProject);
             etComment = itemView.findViewById(R.id.etAddComment);
             btnAddComment = itemView.findViewById(R.id.btnPostComment);
+            btnGoToComments = itemView.findViewById(R.id.btnGoToComments);
             //add itemView's OnClickListener
             itemView.setOnClickListener(this);
         }
@@ -149,6 +151,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                     final String comment = etComment.getText().toString();
                     update.addComment(comment);
                     etComment.setText("");
+                    notifyDataSetChanged();
                 }
             });
 
@@ -163,6 +166,50 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
             } else {
                 btnLike.setImageResource(R.drawable.ufi_heart);
             }
+            btnLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!update.isLiked()) {
+                        btnLike.setImageResource(R.drawable.ufi_heart_active);
+                        int position = getAdapterPosition();
+                        Update update = updates.get(position);
+                        int curLikes = update.getNumLikes();
+                        //add current user to list of users who liked this post
+                        update.likePost(currUser);
+
+                        update.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(com.parse.ParseException e) {
+                                if (e != null) {
+                                    e.printStackTrace();
+                                    return;
+                                }
+                            }
+                        });
+                        notifyDataSetChanged();
+                    } else {
+                        btnLike.setImageResource(R.drawable.ufi_heart);
+                        int position = getAdapterPosition();
+                        Update update = updates.get(position);
+                        int curLikes = update.getNumLikes();
+                        //add current user to list of users who liked this post
+                        update.unlikePost(currUser);
+
+                        update.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(com.parse.ParseException e) {
+                                if (e != null) {
+                                    e.printStackTrace();
+                                    return;
+                                }
+                            }
+                        });
+                        notifyDataSetChanged();
+                    }
+
+                }
+            });
+
             btnLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
