@@ -71,6 +71,8 @@ public class SignupActivity extends AppCompatActivity {
         user.setPassword(password);
         user.setEmail(email);
         user.put("name",name);
+        user.put("balance",0);
+
 
         //signup in background, check if successful, return to home
         user.signUpInBackground(new SignUpCallback() {

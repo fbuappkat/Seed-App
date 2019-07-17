@@ -9,6 +9,10 @@
 
     <color name="kat_grey_1">#C1BBB0</color>
     <color name="kat_grey_2">#878E88</color>
+    <color name="kat_grey_3">#CCFFFFFF</color>
+    <color name="kat_grey_4">#1affffff</color>
+    <color name="kat_grey_5">#66ffffff</color>
 
+    <color name="kat_white">#FFFFFF</color>
     <color name="kat_off_white">#FFF8F0</color>
 </resources>
