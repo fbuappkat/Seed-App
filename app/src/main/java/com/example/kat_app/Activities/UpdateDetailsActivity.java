@@ -10,6 +10,7 @@ import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kat_app.Adapters.CommentsAdapter;
@@ -40,6 +41,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
     protected List<String> comments;
     private Button btnComment;
     private EditText etComment;
+    private ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +116,8 @@ public class UpdateDetailsActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         });
+
+        setBackButton();
     }
 
     // return how long ago relative to current time tweet was sent
@@ -144,5 +148,18 @@ public class UpdateDetailsActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private void setBackButton() {
+        // Find reference for the view
+        ivBack = findViewById(R.id.ivDetailsToFeed);
+
+        // Set on-click listener for for image view to launch edit account activity
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 }

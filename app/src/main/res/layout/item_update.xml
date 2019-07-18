@@ -145,4 +145,13 @@
         android:textColor="@color/kat_orange_2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvUserFollows"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/tvProject"
+        app:layout_constraintTop_toBottomOf="@+id/tvEditAccount" />
 </android.support.constraint.ConstraintLayout>

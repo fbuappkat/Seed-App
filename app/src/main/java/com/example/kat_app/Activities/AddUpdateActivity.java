@@ -1,6 +1,5 @@
 package com.example.kat_app.Activities;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,9 +12,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.kat_app.Adapters.ProjectsAdapter;
 import com.example.kat_app.Adapters.SpinAdapter;
-import com.example.kat_app.Fragments.FeedFragment;
 import com.example.kat_app.Models.Update;
 import com.example.kat_app.Project;
 import com.example.kat_app.R;
@@ -37,6 +34,7 @@ public class AddUpdateActivity extends AppCompatActivity {
     protected Project[] projects;
     protected SpinAdapter spinAdapter;
     private Project chosenProject;
+    private ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +102,8 @@ public class AddUpdateActivity extends AppCompatActivity {
                     etUpdate.setText("What's new with your project?");
             }
         });
+
+        setBackButton();
     }
 
     public void getSelectedUser(View v) {
@@ -157,5 +157,18 @@ public class AddUpdateActivity extends AppCompatActivity {
         /*for (int i = 0; i < projects.length; i++) {
             Log.d("project",projects[i].getName());
         }*/
+    }
+
+    private void setBackButton() {
+        // Find reference for the view
+        ivBack = findViewById(R.id.ivUpdateToFeed);
+
+        // Set on-click listener for for image view to launch edit account activity
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 }

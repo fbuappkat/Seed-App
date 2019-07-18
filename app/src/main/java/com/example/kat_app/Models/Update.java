@@ -25,6 +25,7 @@ public class Update extends ParseObject {
     public static final String KEY_NUM_LIKED_BY = "likedBy";
     public static final String KEY_COMMENTS = "comments";
     public static final String KEY_PROJECT = "project";
+    public static final String KEY_PROJECT_POINTER = "projectPointer";
 
     public JSONArray userLikes() {
         return getJSONArray(KEY_NUM_LIKED_BY);
@@ -39,6 +40,8 @@ public class Update extends ParseObject {
     }
 
     public void likePost(ParseUser u) { add(KEY_NUM_LIKED_BY, u); }
+
+    public ParseObject getProjectPointer() { return getParseObject(KEY_PROJECT_POINTER); }
 
     public void unlikePost(ParseUser currentUser) {
         ArrayList<ParseUser> users = new ArrayList<>();

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +19,18 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Activities.UpdateDetailsActivity;
 import com.example.kat_app.Models.Update;
+import com.example.kat_app.Project;
 import com.example.kat_app.R;
+import com.parse.FindCallback;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.parceler.Parcels;
 
 import java.text.ParseException;
@@ -43,6 +50,8 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
     private final String TAG = "UpdatesAdapter";
     private final ParseUser currUser = ParseUser.getCurrentUser();
     private static final String KEY_PROFILE_IMAGE = "profile_image";
+    private boolean userInFollowList;
+    private final static String KEY_FOLLOWERS = "followers";
 
     public UpdatesAdapter(Context context, List<Update> updates) {
         this.context = context;
@@ -59,10 +68,45 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Update update = updates.get(position);
-        //TODO if update's project is followed by the current user, display it in updates list
-        /*if (update.getProject().getFollowers().includes(currUser)) {
+        final ParseObject project = update.getProjectPointer();
+        final ParseQuery<Project> projectQuery = new ParseQuery<Project>(Project.class);
 
-        }*/
+        projectQuery.findInBackground(new FindCallback<Project>() {
+            @Override
+            public void done(List<Project> posts, com.parse.ParseException e) {
+                if (e != null) {
+                    Log.e(TAG,"Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+                //TODO FIX ME
+                try {
+                    Log.d(TAG,"projectID: " + project.getClassName());
+                    JSONArray followers = project.fetchIfNeeded().getJSONArray("followers");
+                    for (int i = 0; i < followers.length(); i++) {
+                        JSONObject jsonobject = followers.getJSONObject(i);
+                        String userID = jsonobject.getString("objectId");
+                        String currUserID = currUser.getObjectId();
+                        Log.d(TAG, "userID: " + userID + " project user id: " + currUserID);
+                        if (userID == currUserID) {
+                            userInFollowList = true;
+                            break;
+                        }
+                        Log.d(TAG, Boolean.toString(userInFollowList));
+                    }
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                } catch (com.parse.ParseException e1) {
+                    e1.printStackTrace();
+                }
+
+            }
+        });
+
+        //TODO fix this
+        if (userInFollowList) {
+
+        }
         holder.bind(update);
     }
 
@@ -85,6 +129,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
         private EditText etComment;
         private Button btnAddComment;
         private ImageButton btnGoToComments;
+        private TextView tvUserFollows;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -100,6 +145,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
             etComment = itemView.findViewById(R.id.etAddComment);
             btnAddComment = itemView.findViewById(R.id.btnPostComment);
             btnGoToComments = itemView.findViewById(R.id.btnGoToComments);
+            tvUserFollows = itemView.findViewById(R.id.tvUserFollows);
             //add itemView's OnClickListener
             itemView.setOnClickListener(this);
         }
@@ -133,7 +179,8 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
             tvRelativeTime.setText(getRelativeTimeAgo(String.valueOf(update.getCreatedAt())));
             tvNumLikes.setText(Integer.toString(update.getNumLikes()));
             tvNumComments.setText(Integer.toString(update.getNumComments()));
-            tvProject.setText(update.getProject());
+            tvProject.setText(update.getProjectPointer().getObjectId());
+            tvUserFollows.setText(userInFollowList ? "true" : "false");
 
             ParseFile profileImage = update.getUser().getParseFile(KEY_PROFILE_IMAGE);
             if (profileImage != null) {
