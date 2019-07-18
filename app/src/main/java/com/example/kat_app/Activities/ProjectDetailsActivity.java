@@ -65,7 +65,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
 
         //set text views
         tvName.setText(proj.getName());
-        //Todo figure out how to get user object
+        //Todo figure out how to get user object without it acting strange for names (on here and adapter)
         tvAuthor.setText("By: " + "Name" + " (@" + "Username" + ")");
         tvDescription.setText(proj.getDescription());
         tvInvestors.setText("Investors: " + proj.getInvestors().length());
