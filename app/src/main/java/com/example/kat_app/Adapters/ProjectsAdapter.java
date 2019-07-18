@@ -3,6 +3,7 @@ package com.example.kat_app.Adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,9 @@ import android.widget.TextView;
 
 import com.example.kat_app.Project;
 import com.example.kat_app.R;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.List;
@@ -62,6 +66,25 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
             tvInvestors = itemView.findViewById(R.id.tvInvestors);
         }
 
+        protected void queryUser(final Project project) {
+            ParseQuery<ParseUser> projectQuery = new ParseQuery<ParseUser>(ParseUser.class);
+
+            projectQuery.whereEqualTo("objectId", project.getUser().getObjectId());
+            projectQuery.findInBackground(new FindCallback<ParseUser>() {
+                @Override
+                public void done(List<ParseUser> posts, ParseException e) {
+                    if (e != null) {
+                        Log.e("Query requests","Error with query");
+                        e.printStackTrace();
+                        return;
+                    }
+                    ParseUser user = posts.get(0);
+                    tvAuthor.setText("@" + user.getUsername());
+                }
+
+            });
+        }
+
 
         //add in data for specific user's post
         public void bind(final Project project, OnClickListener onClickListener) {
@@ -70,8 +93,11 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
             tvAuthor.setText("Username");
             tvInvestors.setText("Investors: " + project.getInvestors().length());
             tvFollowers.setText("Followers: " + project.getFollowers().length());
+            queryUser(project);
             this.onClickListener  = onClickListener;
             itemView.setOnClickListener(this);
+
+
         }
 
         @Override
@@ -85,16 +111,6 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
         void onClick(int position);
     }
 
-//    // Clean all elements of the recycler
-//    public void clear() {
-//        updates.clear();
-//        notifyDataSetChanged();
-//    }
-//
-//    // Add a list of items -- change to type used
-//    public void addAll(List<Update> list) {
-//        updates.addAll(list);
-//        notifyDataSetChanged();
-//    }
+
 
 }

@@ -65,11 +65,11 @@ public class ProjectDetailsActivity extends AppCompatActivity {
 
         //set text views
         tvName.setText(proj.getName());
-        //Todo figure out how to get user object without it acting strange for names (on here and adapter)
-        tvAuthor.setText("By: " + "Name" + " (@" + "Username" + ")");
         tvDescription.setText(proj.getDescription());
         tvInvestors.setText("Investors: " + proj.getInvestors().length());
         tvFollowers.setText("Followers: " + proj.getFollowers().length());
+
+        queryUser();
 
 
         //Follow button
@@ -154,6 +154,25 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                 tvFunds.setText("Funds: " + "0" + "/" + getTotal(requests));
                 makePieChart();
             }
+        });
+    }
+
+    protected void queryUser() {
+        ParseQuery<ParseUser> projectQuery = new ParseQuery<ParseUser>(ParseUser.class);
+
+        projectQuery.whereEqualTo("objectId", proj.getUser().getObjectId());
+        projectQuery.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> posts, ParseException e) {
+                if (e != null) {
+                    Log.e("Query requests","Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+                ParseUser user = posts.get(0);
+                tvAuthor.setText("By: " + user.get("name") + " (@" + user.getUsername() + ")");
+            }
+
         });
     }
 
