@@ -1,20 +1,25 @@
 package com.example.kat_app.Fragments;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Activities.LoginActivity;
+import com.example.kat_app.Activities.EditAccountActivity;
+import com.example.kat_app.Activities.ManageAccountActivity;
 import com.example.kat_app.R;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -26,19 +31,23 @@ public class ProfileFragment extends Fragment {
     private ImageView ivProfileImage;
     private TextView tvName;
     private TextView tvUsername;
+    private TextView tvBalanceCount;
     private TextView tvProjectsCount;
     private TextView tvInvestmentsCount;
-    private TextView tvDescription;
-    private ImageView ivLogout;
+    private TextView tvBio;
+    private ImageView ivSettings;
     private ImageView ivEdit;
+
 
     private static final String KEY_NAME = "name";
     private static final String KEY_PROFILE_IMAGE = "profile_image";
-    private static final String KEY_DESCRIPTION = "description";
+    private static final String KEY_BIO = "bio";
+    private static final String KEY_BALANCE = "balance";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_profile, container, false);
+
     }
 
     @Override
@@ -46,7 +55,8 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         setProfileInfo(view);
-        setLogoutButton(view);
+        setEditAccountButton(view);
+        setSettingsButton(view);
     }
 
     private void setProfileInfo(View view) {
@@ -55,14 +65,17 @@ public class ProfileFragment extends Fragment {
         tvUsername = view.findViewById(R.id.tvUsername);
         tvProjectsCount = view.findViewById(R.id.tvProjectsCount);
         tvInvestmentsCount = view.findViewById(R.id.tvInvestmentsCount);
-        tvDescription = view.findViewById(R.id.tvDescription);
         ivProfileImage = view.findViewById(R.id.ivProfileImageUpdate);
+        tvBalanceCount = view.findViewById(R.id.tvBalanceCount);
+        tvBio = view.findViewById(R.id.tvBio);
+        ivProfileImage = view.findViewById(R.id.ivProfileImage);
 
         ParseUser currUser = ParseUser.getCurrentUser();
 
         tvName.setText(currUser.getString(KEY_NAME));
         tvUsername.setText("@" + currUser.getUsername());
-        tvDescription.setText(currUser.getString(KEY_DESCRIPTION));
+        tvBalanceCount.setText("$" + currUser.getInt(KEY_BALANCE));
+        tvBio.setText(currUser.getString(KEY_BIO));
 
         ParseFile profileImage = currUser.getParseFile(KEY_PROFILE_IMAGE);
         if (profileImage != null) {
@@ -79,45 +92,31 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    private void setLogoutButton(View view) {
+    private void setEditAccountButton(View view) {
         // Find reference for the view
-        ivLogout = view.findViewById(R.id.ivUpdateToFeed);
+        //ivEdit = view.findViewById(R.id.ivEdit);
 
-        // Make the logout image clickable and open up dialog on click
-        ivLogout.setClickable(true);
-        ivLogout.setOnClickListener(new View.OnClickListener() {
+        // Set on-click listener for for image view to launch edit account activity
+        ivEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Log Out");
-                builder.setIcon(R.drawable.ic_alert);
-                builder.setMessage("Are you sure you want to log out?");
-                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                Intent intent = new Intent(getActivity(), EditAccountActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
 
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ParseUser.logOut();
-                        final Intent intent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(intent);
-                        getActivity().finish();
-                        dialog.dismiss();
+    private void setSettingsButton(View view) {
+        // Find reference for the view
+        //ivLogout = view.findViewById(R.id.ivUpdateToFeed);
+        ivSettings = view.findViewById(R.id.ivSettings);
 
-                    }
-                });
-                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-
-                AlertDialog alert = builder.create();
-                alert.show();
-                Button negButton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
-                negButton.setTextColor(getResources().getColor(R.color.kat_orange_1));
-                Button posButton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
-                posButton.setTextColor(getResources().getColor(R.color.kat_orange_1));
+        // Set up the settings button to open manage account fragment
+        ivSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ManageAccountActivity.class);
+                startActivity(intent);
             }
         });
     }

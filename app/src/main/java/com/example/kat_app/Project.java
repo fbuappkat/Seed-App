@@ -1,22 +1,32 @@
 package com.example.kat_app;
 
+import android.os.Parcelable;
+
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
+import org.parceler.Parcel;
+
+import java.util.ArrayList;
+
 @ParseClassName("Project")
-public class Project extends ParseObject {
+@Parcel
+public class Project extends ParseObject implements Parcelable {
     //fields
     private final static String KEY_DESCRIPTION = "description";
     private final static String KEY_NAME = "name";
     private final static String KEY_IMAGE = "image";
     private final static String KEY_USER = "author";
     private final static String KEY_REQUESTS = "requests";
-
+    private final static String KEY_FOLLOWERS = "followers";
+    public ArrayList<ParseUser> followers;
 
     //setters and getters for Parse project object
+
 
     public String getName(){
         return getString(KEY_NAME);
@@ -41,6 +51,7 @@ public class Project extends ParseObject {
     public void setImage(ParseFile image){
         put(KEY_IMAGE, image);
     }
+
     public ParseUser getUser(){
         return getParseUser(KEY_USER);
     }
@@ -56,6 +67,15 @@ public class Project extends ParseObject {
     public void setRequests(ParseObject requests){
         put(KEY_REQUESTS, requests);
     }
+
+    public JSONArray getFollowers(){
+        return getJSONArray("followers");
+    }
+
+    public JSONArray getInvestors(){
+        return getJSONArray("investors");
+    }
+
 
     public static class Query extends ParseQuery<Project> {
         public Query(){
@@ -75,6 +95,7 @@ public class Project extends ParseObject {
     }
 
 
+    public Project(){}
 
 
 

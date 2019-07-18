@@ -3,17 +3,25 @@
     package="com.example.kat_app">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".Data.ParseApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
         <activity android:name=".Activities.UpdateDetailsActivity"></activity>
+        <activity android:name=".Activities.AddCardActivity"></activity>
+        <activity android:name=".Activities.ProjectDetailsActivity" />
+        <activity android:name=".Activities.ManageAccountActivity" />
+        <activity android:name=".Activities.CreateProjectActivity" />
+        <activity android:name=".Activities.EditAccountActivity" />
+
         <activity android:name=".Activities.AddUpdateActivity" />
         <activity android:name=".Activities.SignupActivity" />
         <activity android:name=".Activities.LoginActivity">

@@ -70,6 +70,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView tvUser;
+        private TextView tvUser2;
         private TextView tvCaption;
         private TextView tvRelativeTime;
         private TextView tvNumLikes;
@@ -83,7 +84,8 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
 
         public ViewHolder(View itemView) {
             super(itemView);
-            tvUser = itemView.findViewById(R.id.tvCommentsHeader);
+            tvUser2 = itemView.findViewById(R.id.tvCommentsHeader);
+            tvUser = itemView.findViewById(R.id.tvEditAccount);
             tvCaption = itemView.findViewById(R.id.tvCaption);
             tvRelativeTime = itemView.findViewById(R.id.tvRelativeTime);
             tvNumLikes = itemView.findViewById(R.id.tvNumLikes);
@@ -119,7 +121,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
         public void bind(final Update update) {
             try {
                 String username = update.getUser().fetchIfNeeded().getString("username");
-                tvUser.setText(username);
+                tvUser2.setText(username);
             } catch (com.parse.ParseException e) {
                 e.printStackTrace();
             }

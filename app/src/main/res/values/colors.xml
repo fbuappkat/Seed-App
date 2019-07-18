@@ -5,14 +5,14 @@
     <color name="colorAccent">@color/kat_orange_2</color>
 
     <color name="kat_orange_1">#F98A61</color>
-    <color name="kat_orange_2">#FA7921</color>
+    <color name="kat_orange_2">#FBA789</color>
 
-    <color name="kat_grey_1">#C1BBB0</color>
-    <color name="kat_grey_2">#878E88</color>
-    <color name="kat_grey_3">#CCFFFFFF</color>
+    <color name="kat_grey_1">#404040</color>
+    <color name="kat_grey_2">#808080</color>
+    <color name="kat_grey_3">#BFBFBF</color>
     <color name="kat_grey_4">#1affffff</color>
     <color name="kat_grey_5">#66ffffff</color>
 
     <color name="kat_white">#FFFFFF</color>
-    <color name="kat_off_white">#FFF8F0</color>
+    <color name="kat_off_white">#EFEFEF</color>
 </resources>

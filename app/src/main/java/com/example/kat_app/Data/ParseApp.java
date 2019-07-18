@@ -15,8 +15,6 @@ public class ParseApp extends Application {
         super.onCreate();
 
         ParseObject.registerSubclass(Update.class);
-
-        //Todo - register Post subclass once made in Parse
         ParseObject.registerSubclass(Project.class);
         ParseObject.registerSubclass(Request.class);
 

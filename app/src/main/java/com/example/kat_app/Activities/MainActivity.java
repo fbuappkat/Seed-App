@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         setStatusBarColor(R.color.kat_orange_1);
 
+
         // Find references for the views
         toolbar =   findViewById(R.id.toolbar);
         bottomNav = findViewById(R.id.bottomNav);
@@ -54,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             case R.id.navHome:
                                 fragment = new HomeFragment();
-                                showToolbar();
                                 setStatusBarColor(R.color.kat_orange_1);
+                                hideToolbar();
                                 break;
                             case R.id.navUser:
                                 setStatusBarColor(R.color.kat_white);
