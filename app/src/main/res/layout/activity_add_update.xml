@@ -30,6 +30,14 @@ android:background="@color/kat_white">
             android:layout_height="wrap_content"
             android:background="@color/kat_white">
 
+            <ImageView
+                android:id="@+id/ivUpdateToFeed"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="left"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/back" />
+
             <TextView
                 android:id="@+id/tvCommentsHeader"
                 android:layout_width="wrap_content"
@@ -76,7 +84,7 @@ android:background="@color/kat_white">
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sProjectChoice" />
+        app:layout_constraintTop_toBottomOf="@+id/ivUpdateImage" />
 
     <Spinner
         android:id="@+id/sProjectChoice"
@@ -102,5 +110,17 @@ android:background="@color/kat_white">
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+    <ImageView
+        android:id="@+id/ivUpdateImage"
+        android:layout_width="0dp"
+        android:layout_height="242dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sProjectChoice"
+        app:srcCompat="@color/kat_orange_1" />
 
 </android.support.constraint.ConstraintLayout>

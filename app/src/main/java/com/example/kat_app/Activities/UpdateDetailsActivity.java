@@ -10,6 +10,7 @@ import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kat_app.Adapters.CommentsAdapter;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+/* UpdateDetailsActivity displays all the comments associated with an update. */
 public class UpdateDetailsActivity extends AppCompatActivity {
 
     private TextView tvUser;
@@ -40,6 +42,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
     protected List<String> comments;
     private Button btnComment;
     private EditText etComment;
+    private ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +56,6 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         tvTime = findViewById(R.id.tvRelativeTime);
         tvCaption = findViewById(R.id.tvCaption);
         rvComments = findViewById(R.id.rvComments);
-        btnComment = findViewById(R.id.btnAddComment);
         etComment = findViewById(R.id.etComment);
 
         try {
@@ -96,6 +98,12 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         swipeContainer.setColorSchemeResources(android.R.color.holo_orange_dark,
                 android.R.color.holo_orange_light);
 
+        setCommentButton();
+        setBackButton();
+    }
+
+    private void setCommentButton() {
+        btnComment = findViewById(R.id.btnAddComment);
         btnComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,5 +152,18 @@ public class UpdateDetailsActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private void setBackButton() {
+        // Find reference for the view
+        ivBack = findViewById(R.id.ivDetailsToFeed);
+
+        // Set on-click listener for for image view to launch edit account activity
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 }

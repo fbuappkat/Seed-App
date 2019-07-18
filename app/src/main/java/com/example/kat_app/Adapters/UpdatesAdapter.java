@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,14 +17,21 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.kat_app.Activities.OtherUserProfileActivity;
 import com.example.kat_app.Activities.UpdateDetailsActivity;
 import com.example.kat_app.Models.Update;
+import com.example.kat_app.Project;
 import com.example.kat_app.R;
+import com.parse.FindCallback;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.parceler.Parcels;
 
 import java.text.ParseException;
@@ -43,6 +51,8 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
     private final String TAG = "UpdatesAdapter";
     private final ParseUser currUser = ParseUser.getCurrentUser();
     private static final String KEY_PROFILE_IMAGE = "profile_image";
+    private boolean userInFollowList;
+    private final static String KEY_FOLLOWERS = "followers";
 
     public UpdatesAdapter(Context context, List<Update> updates) {
         this.context = context;
@@ -59,11 +69,29 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Update update = updates.get(position);
-        //TODO if update's project is followed by the current user, display it in updates list
-        /*if (update.getProject().getFollowers().includes(currUser)) {
 
-        }*/
-        holder.bind(update);
+        final ParseObject project = update.getProjectPointer();
+
+        try {
+            JSONArray followers = project.fetchIfNeeded().getJSONArray("followers");
+            for (int i = 0; i < followers.length(); i++) {
+                JSONObject jsonobject = followers.getJSONObject(i);
+                String userID = jsonobject.getString("objectId");
+                String currUserID = currUser.getObjectId();
+                if (Boolean.toString(userID.equals(currUserID)).equals("true")) {
+                    userInFollowList = true;
+                    break;
+                }
+            }
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        } catch (com.parse.ParseException e1) {
+            e1.printStackTrace();
+        }
+
+        if (userInFollowList) {
+            holder.bind(update);
+        }
     }
 
     @Override
@@ -88,7 +116,6 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
 
         public ViewHolder(View itemView) {
             super(itemView);
-           // tvUser2 = itemView.findViewById(R.id.tvCommentsHeader);
             tvUser = itemView.findViewById(R.id.tvEditAccount);
             tvCaption = itemView.findViewById(R.id.tvCaption);
             tvRelativeTime = itemView.findViewById(R.id.tvRelativeTime);
@@ -123,6 +150,8 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
 
         //add in data for specific user's post
         public void bind(final Update update) {
+
+            Log.d(TAG,Boolean.toString(userInFollowList));
             try {
                 String username = update.getUser().fetchIfNeeded().getString("username");
                 tvUser.setText(username);
@@ -133,7 +162,8 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
             tvRelativeTime.setText(getRelativeTimeAgo(String.valueOf(update.getCreatedAt())));
             tvNumLikes.setText(Integer.toString(update.getNumLikes()));
             tvNumComments.setText(Integer.toString(update.getNumComments()));
-            tvProject.setText(update.getProject());
+            //TODO make this get the actual project
+            tvProject.setText("test");
 
             ParseFile profileImage = update.getUser().getParseFile(KEY_PROFILE_IMAGE);
             if (profileImage != null) {
@@ -179,6 +209,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
             } else {
                 btnLike.setImageResource(R.drawable.ufi_heart);
             }
+
             btnGoToComments.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -239,6 +270,22 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                         notifyDataSetChanged();
                     }
 
+                }
+            });
+
+            tvUser.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // get item position
+                    int position = getAdapterPosition();
+                    // get the update at the position, this won't work if the class is static
+                    Update update = updates.get(position);
+                    // create intent for the new activity
+                    Intent feedToProfile = new Intent(context, OtherUserProfileActivity.class);
+                    //serialize the update using parceler, use its short name as a key
+                    feedToProfile.putExtra(Update.class.getSimpleName(), Parcels.wrap(update));
+                    // show the activity
+                    context.startActivity(feedToProfile);
                 }
             });
         }
