@@ -5,4 +5,12 @@
         <item>"Meet Zuck"</item>
         <item>"Don't get FB 15"</item>
     </string-array>
+
+    <string-array name="categories">
+        <item>Category 1</item>
+        <item>Category 2</item>
+        <item>Category 3</item>
+        <item>Category 4</item>
+        <item>Category 5</item>
+    </string-array>
 </resources>
