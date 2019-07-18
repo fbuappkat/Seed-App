@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+/* UpdateDetailsActivity displays all the comments associated with an update. */
 public class UpdateDetailsActivity extends AppCompatActivity {
 
     private TextView tvUser;
@@ -55,7 +56,6 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         tvTime = findViewById(R.id.tvRelativeTime);
         tvCaption = findViewById(R.id.tvCaption);
         rvComments = findViewById(R.id.rvComments);
-        btnComment = findViewById(R.id.btnAddComment);
         etComment = findViewById(R.id.etComment);
 
         try {
@@ -98,6 +98,12 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         swipeContainer.setColorSchemeResources(android.R.color.holo_orange_dark,
                 android.R.color.holo_orange_light);
 
+        setCommentButton();
+        setBackButton();
+    }
+
+    private void setCommentButton() {
+        btnComment = findViewById(R.id.btnAddComment);
         btnComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,8 +122,6 @@ public class UpdateDetailsActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         });
-
-        setBackButton();
     }
 
     // return how long ago relative to current time tweet was sent

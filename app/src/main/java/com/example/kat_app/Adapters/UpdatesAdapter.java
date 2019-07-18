@@ -83,7 +83,6 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                     break;
                 }
             }
-            Log.d(TAG, Boolean.toString(userInFollowList));
         } catch (JSONException e1) {
             e1.printStackTrace();
         } catch (com.parse.ParseException e1) {
@@ -160,7 +159,6 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                 e.printStackTrace();
             }
             tvCaption.setText(update.getCaption());
-            Log.d(TAG,"hi");
             tvRelativeTime.setText(getRelativeTimeAgo(String.valueOf(update.getCreatedAt())));
             tvNumLikes.setText(Integer.toString(update.getNumLikes()));
             tvNumComments.setText(Integer.toString(update.getNumComments()));

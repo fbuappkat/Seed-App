@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/* AddUpdateActivity allows the user to add an update about a specific project. */
 public class AddUpdateActivity extends AppCompatActivity {
 
     private Button btnAddUpdate;
@@ -62,12 +63,48 @@ public class AddUpdateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_update);
 
-        btnAddUpdate = findViewById(R.id.ivAddUpdate);
-        etUpdate = findViewById(R.id.etUpdateCaption);
         getProjects();
-        spinner = findViewById(R.id.sProjectChoice);
         LoadingBar = new ProgressDialog(this);
         ivUpdateImage = findViewById(R.id.ivUpdateImage);
+
+        setBackButton();
+        setAddUpdateButton();
+        setSpinner();
+        setETUpdate();
+        //setUploadUpdateImage();
+    }
+
+    private void setAddUpdateButton() {
+        btnAddUpdate = findViewById(R.id.ivAddUpdate);
+        btnAddUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String caption = etUpdate.getText().toString();
+                ParseUser currUser = ParseUser.getCurrentUser();
+                /*if (photoFile == null || ivUpdateImage.getDrawable() == null) {
+                    Log.e(TAG, "no photo to submit");
+                    Toast.makeText(context,"No photo to display!", Toast.LENGTH_SHORT).show();
+                } else {*/
+                postUpdate(caption, currUser, chosenProject.getName());
+                //}
+            }
+        });
+    }
+
+    private void setETUpdate() {
+        etUpdate = findViewById(R.id.etUpdateCaption);
+        etUpdate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                    etUpdate.setText("");
+                else
+                    etUpdate.setText("What's new with your project?");
+            }
+        });
+    }
+
+    private void setSpinner() {
+        spinner = findViewById(R.id.sProjectChoice);
 
         List<Project> projectList = new ArrayList<>();
         Project projectList1 = new Project();
@@ -98,41 +135,6 @@ public class AddUpdateActivity extends AppCompatActivity {
 
             }
         });
-
-        etUpdate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus)
-                    etUpdate.setText("");
-                else
-                    etUpdate.setText("What's new with your project?");
-            }
-        });
-
-        btnAddUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String caption = etUpdate.getText().toString();
-                ParseUser currUser = ParseUser.getCurrentUser();
-                /*if (photoFile == null || ivUpdateImage.getDrawable() == null) {
-                    Log.e(TAG, "no photo to submit");
-                    Toast.makeText(context,"No photo to display!", Toast.LENGTH_SHORT).show();
-                } else {*/
-                    postUpdate(caption, currUser, chosenProject.getName());
-                //}
-            }
-        });
-
-        etUpdate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus)
-                    etUpdate.setText("");
-                else
-                    etUpdate.setText("What's new with your project?");
-            }
-        });
-
-        setBackButton();
-        //setUploadUpdateImage();
     }
 
     private void setUploadUpdateImage() {

@@ -111,11 +111,11 @@ public class OtherUserProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // create intent for the new activity
-                Intent otherProfileToChat = new Intent(context, UpdateDetailsActivity.class);
+                /*Intent otherProfileToChat = new Intent(context, UpdateDetailsActivity.class);
                 //serialize the update using parceler, use its short name as a key
                 //otherProfileToChat.putExtra(Update.class.getSimpleName(), Parcels.wrap(user));
                 // show the activity
-                startActivity(otherProfileToChat);
+                startActivity(otherProfileToChat);*/
             }
         });
     }
