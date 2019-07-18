@@ -47,6 +47,14 @@
                     android:background="@drawable/back"
                     android:clickable="true" />
 
+                <ImageView
+                    android:id="@+id/ivChat"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="right"
+                    android:background="@drawable/ufi_comment"
+                    android:clickable="true" />
+
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.AppBarLayout>

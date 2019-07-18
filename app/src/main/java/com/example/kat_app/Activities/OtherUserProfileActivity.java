@@ -1,5 +1,7 @@
 package com.example.kat_app.Activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -35,6 +37,9 @@ public class OtherUserProfileActivity extends AppCompatActivity {
     private static final String KEY_BIO = "bio";
     private static final String KEY_BALANCE = "balance";
     private ImageView ivBack;
+    private ImageView ivChat;
+    Context context;
+    ParseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +47,11 @@ public class OtherUserProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_other_user_profile);
 
         Update update = (Update) Parcels.unwrap(getIntent().getParcelableExtra(Update.class.getSimpleName()));
-        ParseUser user = update.getUser();
+        user = update.getUser();
 
         setProfileInfo(user);
         setBackButton();
+        setChatButton();
     }
 
     private void setProfileInfo(ParseUser user) {
@@ -92,6 +98,24 @@ public class OtherUserProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+    }
+
+    private void setChatButton() {
+        // Find reference for the view
+        ivChat = findViewById(R.id.ivChat);
+
+        // Set on-click listener for for image view to launch edit account activity
+        ivChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // create intent for the new activity
+                Intent otherProfileToChat = new Intent(context, UpdateDetailsActivity.class);
+                //serialize the update using parceler, use its short name as a key
+                //otherProfileToChat.putExtra(Update.class.getSimpleName(), Parcels.wrap(user));
+                // show the activity
+                startActivity(otherProfileToChat);
             }
         });
     }

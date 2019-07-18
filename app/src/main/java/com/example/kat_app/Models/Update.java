@@ -43,6 +43,8 @@ public class Update extends ParseObject {
 
     public ParseObject getProjectPointer() { return getParseObject(KEY_PROJECT_POINTER); }
 
+    public void setProjectPointer(String pointer) { put(KEY_PROJECT_POINTER, pointer); }
+
     public void unlikePost(ParseUser currentUser) {
         ArrayList<ParseUser> users = new ArrayList<>();
         users.add(currentUser);

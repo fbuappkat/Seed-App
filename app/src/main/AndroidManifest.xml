@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.OtherUserProfileActivity"></activity>
+        <activity android:name=".Activities.ChatActivity"></activity>
+        <activity android:name=".Activities.OtherUserProfileActivity" />
         <activity
             android:name=".Activities.MoreDetailsActivity"
             android:theme="@style/AppTheme.moreDetials" />
