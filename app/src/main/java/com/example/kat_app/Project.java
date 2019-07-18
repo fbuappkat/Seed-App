@@ -14,7 +14,6 @@ import org.parceler.Parcel;
 import java.util.ArrayList;
 
 @ParseClassName("Project")
-@Parcel
 public class Project extends ParseObject implements Parcelable {
     //fields
     private final static String KEY_DESCRIPTION = "description";

@@ -3,12 +3,6 @@ package com.example.kat_app.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +11,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.kat_app.Activities.LoginActivity;
 import com.example.kat_app.Activities.EditAccountActivity;
 import com.example.kat_app.Activities.ManageAccountActivity;
 import com.example.kat_app.R;
@@ -94,7 +87,7 @@ public class ProfileFragment extends Fragment {
 
     private void setEditAccountButton(View view) {
         // Find reference for the view
-        //ivEdit = view.findViewById(R.id.ivEdit);
+        ivEdit = view.findViewById(R.id.ivEdit);
 
         // Set on-click listener for for image view to launch edit account activity
         ivEdit.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +101,6 @@ public class ProfileFragment extends Fragment {
 
     private void setSettingsButton(View view) {
         // Find reference for the view
-        //ivLogout = view.findViewById(R.id.ivUpdateToFeed);
         ivSettings = view.findViewById(R.id.ivSettings);
 
         // Set up the settings button to open manage account fragment
