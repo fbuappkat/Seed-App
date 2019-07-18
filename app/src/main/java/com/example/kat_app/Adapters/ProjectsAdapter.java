@@ -1,6 +1,7 @@
 package com.example.kat_app.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -41,6 +42,12 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ProjectsAdapter.ViewHolder holder, int position) {
         Project project = projects.get(position);
+        if (position%2 == 0) {
+            holder.view.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        else{
+            holder.view.setBackgroundColor(Color.parseColor("#EFEFEF"));
+        }
         holder.bind(project, monClickListener);
     }
 
@@ -57,9 +64,11 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
         private TextView tvAuthor;
         private TextView tvInvestors;
         private TextView tvFollowers;
+        View view;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            view = itemView;
             tvName = itemView.findViewById(R.id.tvName);
             tvAuthor = itemView.findViewById(R.id.tvAuthor);
             tvFollowers = itemView.findViewById(R.id.tvFollowers);
@@ -88,7 +97,6 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
 
         //add in data for specific user's post
         public void bind(final Project project, OnClickListener onClickListener) {
-            ParseUser user = project.getUser();
             tvName.setText(project.getName());
             tvAuthor.setText("Username");
             tvInvestors.setText("Investors: " + project.getInvestors().length());
