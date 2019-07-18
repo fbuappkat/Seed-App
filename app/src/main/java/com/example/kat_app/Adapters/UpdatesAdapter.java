@@ -149,14 +149,21 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                         .into(ivProfileImage);
             }
 
-            //TODO make comments work
             btnAddComment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final ParseUser user = ParseUser.getCurrentUser();
                     final String comment = etComment.getText().toString();
                     update.addComment(comment);
                     etComment.setText("");
+                    update.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(com.parse.ParseException e) {
+                            if (e != null) {
+                                e.printStackTrace();
+                                return;
+                            }
+                        }
+                    });
                     notifyDataSetChanged();
                 }
             });

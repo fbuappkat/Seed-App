@@ -38,11 +38,7 @@ public class Update extends ParseObject {
         return getJSONArray(KEY_COMMENTS);
     }
 
-    public void likePost(ParseUser u) {
-        add(KEY_NUM_LIKED_BY, u);
-        //TODO make comments post outside of here
-        add(KEY_COMMENTS, "test");
-    }
+    public void likePost(ParseUser u) { add(KEY_NUM_LIKED_BY, u); }
 
     public void unlikePost(ParseUser currentUser) {
         ArrayList<ParseUser> users = new ArrayList<>();
@@ -93,7 +89,6 @@ public class Update extends ParseObject {
         put(KEY_PROJECT, project);
     }
 
-    //TODO comments add twice
     public void addComment(String comment) {
         Log.d("comment", "comment " + comment);
         add(KEY_COMMENTS, comment);
