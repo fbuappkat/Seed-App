@@ -14,7 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.MoreDetailsActivity" android:theme="@style/AppTheme.moreDetials"></activity>
+        <activity android:name=".Activities.OtherUserProfileActivity"></activity>
+        <activity
+            android:name=".Activities.MoreDetailsActivity"
+            android:theme="@style/AppTheme.moreDetials" />
         <activity android:name=".Activities.UpdateDetailsActivity" />
         <activity android:name=".Activities.AddCardActivity" />
         <activity android:name=".Activities.ProjectDetailsActivity" />

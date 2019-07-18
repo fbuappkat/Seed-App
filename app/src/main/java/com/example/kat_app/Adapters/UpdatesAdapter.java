@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.kat_app.Activities.OtherUserProfileActivity;
 import com.example.kat_app.Activities.UpdateDetailsActivity;
 import com.example.kat_app.Models.Update;
 import com.example.kat_app.Project;
@@ -226,6 +227,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
             } else {
                 btnLike.setImageResource(R.drawable.ufi_heart);
             }
+
             btnGoToComments.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -286,6 +288,22 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                         notifyDataSetChanged();
                     }
 
+                }
+            });
+
+            tvUser.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // get item position
+                    int position = getAdapterPosition();
+                    // get the update at the position, this won't work if the class is static
+                    Update update = updates.get(position);
+                    // create intent for the new activity
+                    Intent feedToProfile = new Intent(context, OtherUserProfileActivity.class);
+                    //serialize the update using parceler, use its short name as a key
+                    feedToProfile.putExtra(Update.class.getSimpleName(), Parcels.wrap(update));
+                    // show the activity
+                    context.startActivity(feedToProfile);
                 }
             });
         }
