@@ -23,7 +23,6 @@ import com.parse.SaveCallback;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 public class CreateProjectActivity extends AppCompatActivity {
 
@@ -34,7 +33,6 @@ public class CreateProjectActivity extends AppCompatActivity {
     private Spinner spinnerCategories;
     public ConstraintLayout constraintLayout;
 
-    Hashtable<String, Integer> allRequests;
     ArrayList<String> requests;
     ArrayList<Float> prices;
     ArrayList<String> requestWithPrice;

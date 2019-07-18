@@ -122,6 +122,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent moreDetails = new Intent(ProjectDetailsActivity.this, MoreDetailsActivity.class);
+                moreDetails.putExtra("project", Parcels.wrap(proj));
                 startActivity(moreDetails);
             }
         });

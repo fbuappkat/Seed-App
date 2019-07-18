@@ -1,14 +1,18 @@
 package com.example.kat_app;
 
+import android.os.Parcelable;
+
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
+
 @ParseClassName("Request")
-public class Request extends ParseObject {
+public class Request extends ParseObject implements Parcelable {
     //fields
     private final static String KEY_REQUEST = "request";
     private final static String KEY_PRICE = "price";
-    private final static String KEY_PROJECT = "project"
+    private final static String KEY_PROJECT = "project";
+    private final static String KEY_RECEIVED = "received"
     ;
 
 
@@ -16,6 +20,10 @@ public class Request extends ParseObject {
 
     public Float getPrice(){
         return getNumber(KEY_PRICE).floatValue();
+    }
+
+    public Float getReceived(){
+        return getNumber(KEY_RECEIVED).floatValue();
     }
 
     public void setPrice(Float price){
@@ -29,6 +37,7 @@ public class Request extends ParseObject {
     public void setRequest(String request){
         put(KEY_REQUEST, request);
     }
+
     public String getProject(){
         return getString(KEY_PROJECT);
     }
@@ -36,6 +45,11 @@ public class Request extends ParseObject {
     public void setProject(Project proj){
         put(KEY_PROJECT, proj);
     }
+
+    public Request(){}
+
+
+
 
 
 
