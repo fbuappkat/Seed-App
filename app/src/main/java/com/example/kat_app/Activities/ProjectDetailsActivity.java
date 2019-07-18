@@ -1,5 +1,6 @@
 package com.example.kat_app.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -40,6 +41,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     private TextView tvFunds;
     private Button btnFollow;
     private Button btnInvest;
+    private Button btnMore;
     private ArrayList<Request> requests;
     private Project proj;
 
@@ -60,6 +62,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         tvFunds = findViewById(R.id.tvFunds);
         btnFollow = findViewById(R.id.btnFollow);
         btnInvest = findViewById(R.id.btnInvest);
+        btnMore = findViewById(R.id.btnMoreDetails);
         queryRequests();
 
 
@@ -112,6 +115,14 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                         }
                     });
                 }
+            }
+        });
+
+        btnMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent moreDetails = new Intent(ProjectDetailsActivity.this, MoreDetailsActivity.class);
+                startActivity(moreDetails);
             }
         });
     }
