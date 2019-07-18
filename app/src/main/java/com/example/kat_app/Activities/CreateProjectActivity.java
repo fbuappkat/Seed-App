@@ -113,7 +113,7 @@ public class CreateProjectActivity extends AppCompatActivity {
                     Log.d("RequestCreate", "create Request Success!");
                 }else{
                     e.printStackTrace();
-                    Log.e("RequestCreate", "Failed creating project");
+                    Log.e("RequestCreate", "Failed creating request");
                 }
             }
         });
@@ -140,7 +140,7 @@ public class CreateProjectActivity extends AppCompatActivity {
         final Project newProject = new Project();
         newProject.setDescription(description);
         newProject.setName(name);
-        newProject.setCategory(category);
+        //newProject.setCategory(category);
         newProject.setUser(user);
         JSONArray emptyFollowers = new JSONArray();
         JSONArray emptyInvestors = new JSONArray();
