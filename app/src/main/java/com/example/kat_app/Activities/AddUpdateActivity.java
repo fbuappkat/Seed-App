@@ -1,5 +1,6 @@
 package com.example.kat_app.Activities;
 
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +36,7 @@ public class AddUpdateActivity extends AppCompatActivity {
     protected SpinAdapter spinAdapter;
     private Project chosenProject;
     private ImageView ivBack;
+    private ProgressDialog LoadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class AddUpdateActivity extends AppCompatActivity {
         etUpdate = findViewById(R.id.etUpdateCaption);
         getProjects();
         spinner = findViewById(R.id.sProjectChoice);
+        LoadingBar= new ProgressDialog(this);
 
         List<Project> projectList = new ArrayList<>();
         Project projectList1 = new Project();
@@ -120,6 +123,7 @@ public class AddUpdateActivity extends AppCompatActivity {
     }
 
     private void postUpdate(String update, ParseUser currentUser, String project) {
+        showLoadingBar();
         Update newUpdate = new Update();
         newUpdate.setCaption(update);
         newUpdate.setUser(currentUser);
@@ -134,6 +138,7 @@ public class AddUpdateActivity extends AppCompatActivity {
                 }
                 Log.d(TAG, "Success!");
                 etUpdate.setText("");
+                LoadingBar.hide();
             }
         });
     }
@@ -170,5 +175,12 @@ public class AddUpdateActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+    }
+
+    private void showLoadingBar() {
+        LoadingBar.setTitle("Posting to KAT");
+        LoadingBar.setMessage("Give us a moment! Your update will be live soon.");
+        LoadingBar.setCanceledOnTouchOutside(true);
+        LoadingBar.show();
     }
 }
