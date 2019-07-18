@@ -71,13 +71,15 @@ android:background="@color/kat_white">
 
     <EditText
         android:id="@+id/etComment"
-        android:layout_width="285dp"
-        android:layout_height="38dp"
+        android:layout_width="313dp"
+        android:layout_height="41dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
         android:gravity="start|top"
+        android:hint="Add comment here..."
         android:inputType="textMultiLine"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -89,7 +91,7 @@ android:background="@color/kat_white">
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@android:color/transparent"
-        android:text="Add Comment"
+        android:text="POST"
         android:textColor="@color/kat_orange_2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

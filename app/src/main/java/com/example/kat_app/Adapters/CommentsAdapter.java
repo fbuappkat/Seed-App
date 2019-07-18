@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.kat_app.R;
+import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
 

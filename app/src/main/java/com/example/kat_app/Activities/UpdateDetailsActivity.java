@@ -16,6 +16,7 @@ import com.example.kat_app.Adapters.CommentsAdapter;
 import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -88,6 +89,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
                 comments.clear();
                 adapter.clear();
                 queryComments();
+                swipeContainer.setRefreshing(false);
             }
         });
         // Configure the refreshing colors
@@ -97,11 +99,19 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         btnComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final ParseUser user = ParseUser.getCurrentUser();
                 final String comment = etComment.getText().toString();
                 update.addComment(comment);
                 etComment.setText("");
-                queryComments();
+                update.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(com.parse.ParseException e) {
+                        if (e != null) {
+                            e.printStackTrace();
+                            return;
+                        }
+                    }
+                });
+                adapter.notifyDataSetChanged();
             }
         });
     }

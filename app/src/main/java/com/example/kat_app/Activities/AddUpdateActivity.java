@@ -154,8 +154,8 @@ public class AddUpdateActivity extends AppCompatActivity {
                 //adapter.notifyDataSetChanged();
             }
         });
-        for (int i = 0; i < projects.length; i++) {
+        /*for (int i = 0; i < projects.length; i++) {
             Log.d("project",projects[i].getName());
-        }
+        }*/
     }
 }
