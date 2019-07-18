@@ -9,7 +9,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
-import org.parceler.Parcel;
 
 import java.util.ArrayList;
 
@@ -26,7 +25,6 @@ public class Project extends ParseObject implements Parcelable {
     public ArrayList<ParseUser> followers;
 
     //setters and getters for Parse project object
-
 
     public String getName(){
         return getString(KEY_NAME);

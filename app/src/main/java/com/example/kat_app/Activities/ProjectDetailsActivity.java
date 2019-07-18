@@ -1,5 +1,6 @@
 package com.example.kat_app.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -40,6 +41,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     private TextView tvFunds;
     private Button btnFollow;
     private Button btnInvest;
+    private Button btnMore;
     private ArrayList<Request> requests;
     private Project proj;
 
@@ -60,16 +62,17 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         tvFunds = findViewById(R.id.tvFunds);
         btnFollow = findViewById(R.id.btnFollow);
         btnInvest = findViewById(R.id.btnInvest);
+        btnMore = findViewById(R.id.btnMoreDetails);
         queryRequests();
 
 
         //set text views
         tvName.setText(proj.getName());
-        //Todo figure out how to get user object without it acting strange for names (on here and adapter)
-        tvAuthor.setText("By: " + "Name" + " (@" + "Username" + ")");
         tvDescription.setText(proj.getDescription());
         tvInvestors.setText("Investors: " + proj.getInvestors().length());
         tvFollowers.setText("Followers: " + proj.getFollowers().length());
+
+        queryUser();
 
 
         //Follow button
@@ -114,6 +117,14 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent moreDetails = new Intent(ProjectDetailsActivity.this, MoreDetailsActivity.class);
+                startActivity(moreDetails);
+            }
+        });
     }
 
     public void makePieChart(){
@@ -154,6 +165,25 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                 tvFunds.setText("Funds: " + "0" + "/" + getTotal(requests));
                 makePieChart();
             }
+        });
+    }
+
+    protected void queryUser() {
+        ParseQuery<ParseUser> projectQuery = new ParseQuery<ParseUser>(ParseUser.class);
+
+        projectQuery.whereEqualTo("objectId", proj.getUser().getObjectId());
+        projectQuery.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> posts, ParseException e) {
+                if (e != null) {
+                    Log.e("Query requests","Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+                ParseUser user = posts.get(0);
+                tvAuthor.setText("By: " + user.get("name") + " (@" + user.getUsername() + ")");
+            }
+
         });
     }
 
