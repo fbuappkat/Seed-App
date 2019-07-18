@@ -84,7 +84,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
 
         public ViewHolder(View itemView) {
             super(itemView);
-            tvUser2 = itemView.findViewById(R.id.tvCommentsHeader);
+           // tvUser2 = itemView.findViewById(R.id.tvCommentsHeader);
             tvUser = itemView.findViewById(R.id.tvEditAccount);
             tvCaption = itemView.findViewById(R.id.tvCaption);
             tvRelativeTime = itemView.findViewById(R.id.tvRelativeTime);
@@ -121,7 +121,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
         public void bind(final Update update) {
             try {
                 String username = update.getUser().fetchIfNeeded().getString("username");
-                tvUser2.setText(username);
+                tvUser.setText(username);
             } catch (com.parse.ParseException e) {
                 e.printStackTrace();
             }
