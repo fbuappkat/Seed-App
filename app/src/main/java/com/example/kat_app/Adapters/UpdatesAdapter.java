@@ -1,21 +1,30 @@
 package com.example.kat_app.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.kat_app.Activities.UpdateDetailsActivity;
 import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.json.JSONArray;
+import org.parceler.Parcels;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,6 +41,8 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
     private Context context;
     private List<Update> updates;
     private final String TAG = "UpdatesAdapter";
+    private final ParseUser currUser = ParseUser.getCurrentUser();
+    private static final String KEY_PROFILE_IMAGE = "profile_image";
 
     public UpdatesAdapter(Context context, List<Update> updates) {
         this.context = context;
@@ -53,50 +64,99 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        //Log.d(TAG,"item count: " + updates.size());
         return updates.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView tvUser;
+        private TextView tvUser2;
         private TextView tvCaption;
         private TextView tvRelativeTime;
         private TextView tvNumLikes;
         private ImageButton btnLike;
+        private ImageView ivProfileImage;
+        private TextView tvNumComments;
+        private TextView tvProject;
+        private EditText etComment;
+        private Button btnAddComment;
+        private ImageButton btnGoToComments;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            tvUser2 = itemView.findViewById(R.id.tvCommentsHeader);
             tvUser = itemView.findViewById(R.id.tvEditAccount);
             tvCaption = itemView.findViewById(R.id.tvCaption);
             tvRelativeTime = itemView.findViewById(R.id.tvRelativeTime);
             tvNumLikes = itemView.findViewById(R.id.tvNumLikes);
+            tvNumComments = itemView.findViewById(R.id.tvNumComments);
             btnLike = itemView.findViewById(R.id.btnLike);
+            ivProfileImage = itemView.findViewById(R.id.ivProfileImageUpdate);
+            tvProject = itemView.findViewById(R.id.tvProject);
+            etComment = itemView.findViewById(R.id.etAddComment);
+            btnAddComment = itemView.findViewById(R.id.btnPostComment);
+            btnGoToComments = itemView.findViewById(R.id.btnGoToComments);
+            //add itemView's OnClickListener
+            itemView.setOnClickListener(this);
         }
 
-        /*@Override
+        @Override
         public void onClick(View v) {
             // get item position
             int position = getAdapterPosition();
             // make sure the position exists in the view
             if (position != RecyclerView.NO_POSITION) {
-                // get the movie at the position, this won't work if the class is static
-                Update post = posts.get(position);
+                // get the update at the position, this won't work if the class is static
+                Update update = updates.get(position);
                 // create intent for the new activity
-                Intent intent = new Intent(context, PostDetails.class);
-                //serialize the movie using parceler, use its short name as a key
-                intent.putExtra(Post.class.getSimpleName(), Parcels.wrap(post));
+                Intent intent = new Intent(context, UpdateDetailsActivity.class);
+                //serialize the update using parceler, use its short name as a key
+                intent.putExtra(Update.class.getSimpleName(), Parcels.wrap(update));
                 // show the activity
                 context.startActivity(intent);
             }
-        }*/
+        }
 
         //add in data for specific user's post
         public void bind(final Update update) {
-            //tvUser.setText(update.getUser().getUsername());
+            try {
+                String username = update.getUser().fetchIfNeeded().getString("username");
+                tvUser2.setText(username);
+            } catch (com.parse.ParseException e) {
+                e.printStackTrace();
+            }
             tvCaption.setText(update.getCaption());
             tvRelativeTime.setText(getRelativeTimeAgo(String.valueOf(update.getCreatedAt())));
             tvNumLikes.setText(Integer.toString(update.getNumLikes()));
+            tvNumComments.setText(Integer.toString(update.getNumComments()));
+            tvProject.setText(update.getProject());
+
+            ParseFile profileImage = update.getUser().getParseFile(KEY_PROFILE_IMAGE);
+            if (profileImage != null) {
+                Glide.with(context)
+                        .load(profileImage.getUrl())
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(ivProfileImage);
+            }
+            else {
+                Glide.with(context)
+                        .load(R.drawable.default_profile_image)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(ivProfileImage);
+            }
+
+            //TODO make comments work
+            btnAddComment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final ParseUser user = ParseUser.getCurrentUser();
+                    final String comment = etComment.getText().toString();
+                    update.addComment(comment);
+                    etComment.setText("");
+                    notifyDataSetChanged();
+                }
+            });
+
             JSONArray v = update.userLikes();
             if (v != null) {
                 tvNumLikes.setText(Integer.toString(v.length()));
@@ -108,6 +168,25 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
             } else {
                 btnLike.setImageResource(R.drawable.ufi_heart);
             }
+            btnGoToComments.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // get item position
+                    int position = getAdapterPosition();
+                    // make sure the position exists in the view
+                    if (position != RecyclerView.NO_POSITION) {
+                        // get the update at the position, this won't work if the class is static
+                        Update update = updates.get(position);
+                        // create intent for the new activity
+                        Intent feedToDetails = new Intent(context, UpdateDetailsActivity.class);
+                        //serialize the update using parceler, use its short name as a key
+                        feedToDetails.putExtra(Update.class.getSimpleName(), Parcels.wrap(update));
+                        // show the activity
+                        context.startActivity(feedToDetails);
+                    }
+                }
+            });
+
             btnLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -117,7 +196,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                         Update update = updates.get(position);
                         int curLikes = update.getNumLikes();
                         //add current user to list of users who liked this post
-                        update.likePost(ParseUser.getCurrentUser());
+                        update.likePost(currUser);
 
                         update.saveInBackground(new SaveCallback() {
                             @Override
@@ -135,7 +214,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                         Update update = updates.get(position);
                         int curLikes = update.getNumLikes();
                         //add current user to list of users who liked this post
-                        update.unlikePost(ParseUser.getCurrentUser());
+                        update.unlikePost(currUser);
 
                         update.saveInBackground(new SaveCallback() {
                             @Override
@@ -166,7 +245,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
         notifyDataSetChanged();
     }
 
-    // return how long ago relative to current time tweet was sent
+    // return how long ago relative to current time update was posted
     public String getRelativeTimeAgo(String rawJsonDate) {
         String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
         SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);

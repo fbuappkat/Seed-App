@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
                         switch (menuItem.getItemId()) {
                             case R.id.navFeed:
                                 fragment = new FeedFragment();
-                                showToolbar();
-                                setStatusBarColor(R.color.kat_orange_1);
+                                hideToolbar();
+                                setStatusBarColor(R.color.kat_white);
                                 break;
                             case R.id.navHome:
                                 fragment = new HomeFragment();

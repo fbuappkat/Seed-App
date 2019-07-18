@@ -12,12 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.example.kat_app.Activities.AddUpdateActivity;
-import com.example.kat_app.Activities.LoginActivity;
 import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
 import com.example.kat_app.Adapters.UpdatesAdapter;
@@ -25,8 +22,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +33,6 @@ import java.util.List;
 public class FeedFragment extends Fragment {
 
     protected  RecyclerView rvFeed;
-    private Button btnLogout;
     public static final String TAG = "FeedFragment";
     protected UpdatesAdapter adapter;
     protected List<Update> updates;
@@ -46,7 +40,7 @@ public class FeedFragment extends Fragment {
     private int limit;
     // Store a member variable for the listener
     private com.codepath.instagram.EndlessRecyclerViewScrollListener scrollListener;
-    private Button btnGoToAddUpdate;
+    private ImageView btnGoToAddUpdate;
 
     // onCreateView to inflate the view
     @Nullable
@@ -59,26 +53,7 @@ public class FeedFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         rvFeed = view.findViewById(R.id.rvFeed);
-        btnLogout= view.findViewById(R.id.btnLogout);
-        btnGoToAddUpdate = view.findViewById(R.id.btnGoToAddUpdate);
-
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ParseUser.logOut();
-                ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
-                Intent TimelineToLogin = new Intent(getContext(), LoginActivity.class);
-                startActivity(TimelineToLogin);
-            }
-        });
-
-        btnGoToAddUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent TimelineToUpdate = new Intent(getContext(), AddUpdateActivity.class);
-                startActivity(TimelineToUpdate);
-            }
-        });
+        setAddButton(view);
 
         // create the data source
         updates = new ArrayList<>();
@@ -128,6 +103,21 @@ public class FeedFragment extends Fragment {
                 updates.addAll(posts);
                 adapter.notifyDataSetChanged();
                 swipeContainer.setRefreshing(false);
+            }
+        });
+    }
+
+    private void setAddButton(View view) {
+        // Find reference for the view
+        btnGoToAddUpdate = view.findViewById(R.id.ivAddUpdate);
+
+        // Make the update image clickable
+        btnGoToAddUpdate.setClickable(true);
+        btnGoToAddUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent TimelineToUpdate = new Intent(getContext(), AddUpdateActivity.class);
+                startActivity(TimelineToUpdate);
             }
         });
     }
