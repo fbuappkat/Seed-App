@@ -118,6 +118,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
             }
         });
 
+        //moredetails button
         btnMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,8 +127,19 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                 startActivity(moreDetails);
             }
         });
+
+        //invest button
+        btnInvest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent invest = new Intent(ProjectDetailsActivity.this, InvestActivity.class);
+                invest.putExtra("project", Parcels.wrap(proj));
+                startActivity(invest);
+            }
+        });
     }
 
+    //create piechart for request breakdown
     public void makePieChart(){
         pcBreakdown = findViewById(R.id.pcBreakdown);
         pcBreakdown.setUsePercentValues(false);
@@ -148,6 +160,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         pcBreakdown.animateXY(1400, 1400);
     }
 
+    //get all requests linked to project
     protected void queryRequests() {
         ParseQuery<Request> projectQuery = new ParseQuery<Request>(Request.class);
 
@@ -169,6 +182,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         });
     }
 
+    //get user associated with project
     protected void queryUser() {
         ParseQuery<ParseUser> projectQuery = new ParseQuery<ParseUser>(ParseUser.class);
 
@@ -188,6 +202,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         });
     }
 
+    //get total funds requested from project
     private float getTotal(ArrayList<Request> reqs){
         float tot = 0;
         for (int i = 0; i < reqs.size(); i++){
