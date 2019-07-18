@@ -66,6 +66,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
 
         // create the data source
         comments = new ArrayList<>();
+        queryComments();
         // create the adapter
         adapter = new CommentsAdapter(comments);
         // add line between items
@@ -103,8 +104,6 @@ public class UpdateDetailsActivity extends AppCompatActivity {
                 queryComments();
             }
         });
-
-        queryComments();
     }
 
     // return how long ago relative to current time tweet was sent
@@ -134,7 +133,6 @@ public class UpdateDetailsActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            adapter.addAll(comments);
         }
     }
 }

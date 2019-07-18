@@ -40,6 +40,8 @@ public class Update extends ParseObject {
 
     public void likePost(ParseUser u) {
         add(KEY_NUM_LIKED_BY, u);
+        //TODO make comments post outside of here
+        add(KEY_COMMENTS, "test");
     }
 
     public void unlikePost(ParseUser currentUser) {

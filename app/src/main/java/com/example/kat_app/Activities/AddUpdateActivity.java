@@ -5,25 +5,38 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.example.kat_app.Adapters.ProjectsAdapter;
+import com.example.kat_app.Adapters.SpinAdapter;
 import com.example.kat_app.Fragments.FeedFragment;
 import com.example.kat_app.Models.Update;
+import com.example.kat_app.Project;
 import com.example.kat_app.R;
+import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddUpdateActivity extends AppCompatActivity {
 
     private Button btnAddUpdate;
     private EditText etUpdate;
     private final String TAG = "Add Update Activity";
-    private Spinner sProjectChoice;
+    private Spinner spinner;
+    protected Project[] projects;
+    protected SpinAdapter spinAdapter;
+    private Project chosenProject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,22 +45,36 @@ public class AddUpdateActivity extends AppCompatActivity {
 
         btnAddUpdate = findViewById(R.id.ivAddUpdate);
         etUpdate = findViewById(R.id.etUpdateCaption);
-        sProjectChoice = findViewById(R.id.sProjectChoice);
-        final ArrayAdapter<String> projectAdapter = new ArrayAdapter<String>(AddUpdateActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.projects));
+        getProjects();
+        spinner = findViewById(R.id.sProjectChoice);
 
-        projectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sProjectChoice.setAdapter(projectAdapter);
+        List<Project> projectList = new ArrayList<>();
+        Project projectList1 = new Project();
+        projectList1.setName("katie");
+        projectList.add(projectList1);
+        Project projectList2 = new Project();
+        projectList2.setName("timi");
+        projectList.add(projectList2);
+        Project projectList3 = new Project();
+        projectList3.setName("andrew");
+        projectList.add(projectList3);
 
-        btnAddUpdate.setOnClickListener(new View.OnClickListener() {
+        ArrayAdapter<Project> adapter = new ArrayAdapter<Project>(this,
+                android.R.layout.simple_spinner_item, projectList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                String caption = etUpdate.getText().toString();
-                ParseUser currUser = ParseUser.getCurrentUser();
-                //TODO fix get adapter position
-                //String project = projectAdapter.getPosition();
-                //TODO make this get the real project
-                String project = "test";
-                postUpdate(caption, currUser, project);
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                chosenProject = (Project) parent.getSelectedItem();
+                //displayUserData(project);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
@@ -59,6 +86,37 @@ public class AddUpdateActivity extends AppCompatActivity {
                     etUpdate.setText("What's new with your project?");
             }
         });
+
+        btnAddUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String caption = etUpdate.getText().toString();
+                ParseUser currUser = ParseUser.getCurrentUser();
+                postUpdate(caption, currUser, chosenProject.getName());
+            }
+        });
+
+        etUpdate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                    etUpdate.setText("");
+                else
+                    etUpdate.setText("What's new with your project?");
+            }
+        });
+    }
+
+    public void getSelectedUser(View v) {
+        Project user = (Project) spinner.getSelectedItem();
+        displayUserData(user);
+    }
+
+    private void displayUserData(Project user) {
+        String name = user.getName();
+
+        String userData = "Name: " + name;
+
+        Toast.makeText(this, userData, Toast.LENGTH_LONG).show();
     }
 
     private void postUpdate(String update, ParseUser currentUser, String project) {
@@ -78,5 +136,26 @@ public class AddUpdateActivity extends AppCompatActivity {
                 etUpdate.setText("");
             }
         });
+    }
+
+    private void getProjects() {
+        ParseQuery<Project> projectQuery = new ParseQuery<Project>("Project");
+        projectQuery.addDescendingOrder("createdAt");
+
+        projectQuery.findInBackground(new FindCallback<Project>() {
+            @Override
+            public void done(List<Project> projects, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG,"Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+                projects.addAll(projects);
+                //adapter.notifyDataSetChanged();
+            }
+        });
+        for (int i = 0; i < projects.length; i++) {
+            Log.d("project",projects[i].getName());
+        }
     }
 }

@@ -59,6 +59,10 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Update update = updates.get(position);
+        //TODO if update's project is followed by the current user, display it in updates list
+        /*if (update.getProject().getFollowers().includes(currUser)) {
+
+        }*/
         holder.bind(update);
     }
 
