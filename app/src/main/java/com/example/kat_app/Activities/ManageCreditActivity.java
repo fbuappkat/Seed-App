@@ -1,6 +1,8 @@
 package com.example.kat_app.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,6 +13,7 @@ import com.parse.ParseUser;
 
 public class ManageCreditActivity extends AppCompatActivity {
 
+    private ConstraintLayout depositHolder;
     private ImageView ivBack;
     private TextView tvName;
     private TextView tvCurrBalanceCount;
@@ -23,8 +26,24 @@ public class ManageCreditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_credit);
 
+        setDepositCreditOption();
         setBackButton();
         setProfileInfo();
+    }
+
+    private void setDepositCreditOption() {
+        // Find reference for the view
+        depositHolder = findViewById(R.id.depositHolder);
+
+        // Open deposit credit options on click
+        depositHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ManageCreditActivity.this, PayPalCheckoutActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void setProfileInfo() {

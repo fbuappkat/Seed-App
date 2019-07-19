@@ -163,7 +163,7 @@
                 android:id="@+id/Balance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="76dp"
+                android:layout_marginEnd="84dp"
                 android:fontFamily="@font/montserrat_regular"
                 android:text="Balance"
                 android:textColor="#000000"
@@ -175,12 +175,15 @@
                 android:id="@+id/tvCurrBalanceCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
                 android:fontFamily="@font/montserrat_semibold"
-                android:text="$0"
+                android:text="$10,000.00"
                 android:textColor="#000000"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/Balance" />
 
             <TextView

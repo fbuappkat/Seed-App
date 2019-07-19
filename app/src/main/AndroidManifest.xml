@@ -25,6 +25,7 @@
         <activity android:name=".Activities.ProjectDetailsActivity" />
         <activity android:name=".Activities.ManageAccountActivity" />
         <activity android:name=".Activities.ManageCreditActivity" />
+        <activity android:name=".Activities.PayPalCheckoutActivity" />
         <activity android:name=".Activities.CreateProjectActivity" />
         <activity android:name=".Activities.EditProfileActivity" />
         <activity android:name=".Activities.AddUpdateActivity" />
