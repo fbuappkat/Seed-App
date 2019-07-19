@@ -12,10 +12,12 @@ import android.widget.Toast;
 import com.example.kat_app.Project;
 import com.example.kat_app.R;
 import com.example.kat_app.Request;
+import com.example.kat_app.Transaction;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
 
@@ -93,17 +95,36 @@ public class ConfirmInvestActivity extends AppCompatActivity {
             Toast.makeText(this, "You do not have enough in your balance to invest this amount!", Toast.LENGTH_LONG).show();
         } else {
             investUser.put("balance", curBalanceInvestor - toInvest);
-            receiveUser.put("balance", curBalanceOwner + toInvest);
             request.put("received", curRequestFunds + toInvest);
             request.saveInBackground();
             investUser.saveInBackground();
             receiveUser.saveInBackground();
+            createTransaction(toInvest, investUser, project, request);
+            Toast.makeText(ConfirmInvestActivity.this, "Investment succesful!", Toast.LENGTH_LONG).show();
             Intent finished = new Intent(ConfirmInvestActivity.this, MainActivity.class);
             startActivity(finished);
             finish();
         }
     }
 
+    public void createTransaction(float amount, ParseUser sender, Project project, Request request){
+        final Transaction transaction = new Transaction();
+        transaction.setAmount(amount);
+        transaction.setSender(sender);
+        transaction.setProject(project);
+        transaction.setRequest(request);
+        transaction.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e==null){
+                    Log.d("TransactionCreate", "create Transaction Success!");
+                }else{
+                    e.printStackTrace();
+                    Log.e("TransactionCreate", "Failed creating Transaction");
+                }
+            }
+        });
+    }
 
     //get logged in user and display balance
     protected void queryCurrentUser() {

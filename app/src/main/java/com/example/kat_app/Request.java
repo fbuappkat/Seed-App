@@ -50,7 +50,4 @@ public class Request extends ParseObject implements Parcelable {
 
 
 
-
-
-
 }
