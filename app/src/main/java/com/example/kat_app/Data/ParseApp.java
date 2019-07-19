@@ -5,6 +5,7 @@ import android.app.Application;
 import com.example.kat_app.Models.Update;
 import com.example.kat_app.Project;
 import com.example.kat_app.Request;
+import com.example.kat_app.Transaction;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -20,6 +21,8 @@ public class ParseApp extends Application {
         ParseObject.registerSubclass(Update.class);
         ParseObject.registerSubclass(Project.class);
         ParseObject.registerSubclass(Request.class);
+        ParseObject.registerSubclass(Transaction.class);
+
 
 
         // Use for monitoring Parse network traffic

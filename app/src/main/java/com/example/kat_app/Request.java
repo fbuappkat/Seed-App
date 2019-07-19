@@ -38,8 +38,8 @@ public class Request extends ParseObject implements Parcelable {
         put(KEY_REQUEST, request);
     }
 
-    public String getProject(){
-        return getString(KEY_PROJECT);
+    public Project getProject(){
+        return (Project) getParseObject(KEY_PROJECT);
     }
 
     public void setProject(Project proj){
@@ -47,9 +47,6 @@ public class Request extends ParseObject implements Parcelable {
     }
 
     public Request(){}
-
-
-
 
 
 

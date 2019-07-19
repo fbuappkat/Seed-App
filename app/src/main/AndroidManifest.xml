@@ -6,8 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:name=".Data.ParseApp"
@@ -16,12 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
-        <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCQRd9o47IC82bxDdE8l-C3VJTj7V2sDmA"/>
-
-        <activity android:name=".Activities.InvestActivity"></activity>
-        <activity android:name=".Activities.ChatActivity"></activity>
+        <activity android:name=".Activities.ConfirmInvestActivity"></activity>
+        <activity android:name=".Activities.InvestActivity" />
+        <activity android:name=".Activities.ChatActivity" />
         <activity android:name=".Activities.OtherUserProfileActivity" />
         <activity
             android:name=".Activities.MoreDetailsActivity"
