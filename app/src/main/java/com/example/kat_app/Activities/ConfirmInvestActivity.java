@@ -60,7 +60,6 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         request = Parcels.unwrap(getIntent().getParcelableExtra("request"));
         toInvest = getIntent().getFloatExtra("toInvest", 0);
 
-
         //setValues
         tvPrice.setText("Invested so far: " + request.getReceived() + "/" + request.getPrice());
         tvRequest.setText("Request: " + request.getRequest());
