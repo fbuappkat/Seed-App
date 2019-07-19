@@ -176,7 +176,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                 }
                 requests = new ArrayList<>();
                 requests.addAll(posts);
-                tvFunds.setText("Funds: " + "0" + "/" + getTotal(requests));
+                tvFunds.setText("Funds: " + getTotalFunds(requests) + "/" + getTotal(requests));
                 makePieChart();
             }
         });
@@ -207,6 +207,15 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         float tot = 0;
         for (int i = 0; i < reqs.size(); i++){
             tot += reqs.get(i).getPrice();
+        }
+        return tot;
+    }
+
+    //get funds received
+    private float getTotalFunds(ArrayList<Request> reqs){
+        float tot = 0;
+        for (int i = 0; i < reqs.size(); i++){
+            tot += reqs.get(i).getReceived();
         }
         return tot;
     }

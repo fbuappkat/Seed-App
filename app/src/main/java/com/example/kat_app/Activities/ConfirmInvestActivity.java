@@ -101,6 +101,17 @@ public class ConfirmInvestActivity extends AppCompatActivity {
             receiveUser.saveInBackground();
             createTransaction(toInvest, investUser, project, request);
             Toast.makeText(ConfirmInvestActivity.this, "Investment succesful!", Toast.LENGTH_LONG).show();
+            if (!project.getInvestors().toString().contains(ParseUser.getCurrentUser().getObjectId())){
+                project.add("investors", ParseUser.getCurrentUser());
+            }
+            project.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null){
+                        e.printStackTrace();
+                    }
+                }
+            });
             Intent finished = new Intent(ConfirmInvestActivity.this, MainActivity.class);
             startActivity(finished);
             finish();
