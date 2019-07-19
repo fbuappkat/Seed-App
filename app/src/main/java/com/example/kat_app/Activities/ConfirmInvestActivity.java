@@ -10,10 +10,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.kat_app.Project;
+import com.example.kat_app.Models.Balance;
+import com.example.kat_app.Models.Project;
+import com.example.kat_app.Models.Request;
+import com.example.kat_app.Models.Transaction;
 import com.example.kat_app.R;
-import com.example.kat_app.Request;
-import com.example.kat_app.Transaction;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -35,8 +36,10 @@ public class ConfirmInvestActivity extends AppCompatActivity {
     private Button btnConfirm;
     private Request request;
     private Project project;
-    private ParseUser investUser;
+    private ParseUser investUser = ParseUser.getCurrentUser();
     private ParseUser receiveUser;
+    private Balance recieverBalance;
+    private Balance investorBalance;
     private float toInvest;
 
     @Override
@@ -63,7 +66,9 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         tvRequest.setText("Request: " + request.getRequest());
         tvConfirm.setText("Are you sure you want to invest $" + toInvest + "0?");
         //get user and set balance
-        queryCurrentUser();
+        queryUserBalance(ParseUser.getCurrentUser());
+
+
         //get project and set project name
         queryProject(request);
 
@@ -93,18 +98,22 @@ public class ConfirmInvestActivity extends AppCompatActivity {
     //invest funds
     public void invest(){
         //get current balance and request funds received so far
-        float curBalanceInvestor = Float.parseFloat(investUser.get("balance").toString());
+        //float curBalanceInvestor = Float.parseFloat(investUser.get("balance").toString());
+        float curBalanceInvestor = Float.parseFloat(investorBalance.getAmount().toString());
+        float curBalanceReceiver = Float.parseFloat(recieverBalance.getAmount().toString());
         float curRequestFunds = request.getReceived();
         //check if investor has enough funds
         if (curBalanceInvestor < toInvest){
             Toast.makeText(this, "You do not have enough in your balance to invest this amount!", Toast.LENGTH_LONG).show();
         } else {
-            //chance balance and put into request
-            investUser.put("balance", curBalanceInvestor - toInvest);
+            //change balance and put into request
+            investorBalance.put("amount", curBalanceInvestor - toInvest);
+            recieverBalance.put("amount", curBalanceReceiver + toInvest);
             request.put("received", curRequestFunds + toInvest);
             //save values
             request.saveInBackground();
-            investUser.saveInBackground();
+            investorBalance.saveInBackground();
+            recieverBalance.saveInBackground();
             //create transaction for history
             createTransaction(toInvest, investUser, project, request);
             Toast.makeText(ConfirmInvestActivity.this, "Investment succesful!", Toast.LENGTH_LONG).show();
@@ -147,26 +156,25 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         });
     }
 
-    //get logged in user and display balance
-    protected void queryCurrentUser() {
-        ParseQuery<ParseUser> projectQuery = new ParseQuery<ParseUser>(ParseUser.class);
-
-        projectQuery.whereEqualTo("objectId", ParseUser.getCurrentUser().getObjectId());
-        projectQuery.findInBackground(new FindCallback<ParseUser>() {
-            @Override
-            public void done(List<ParseUser> posts, ParseException e) {
-                if (e != null) {
-                    Log.e("Query requests","Error with query");
-                    e.printStackTrace();
-                    return;
-                }
-                investUser = posts.get(0);
-                tvBalance.setText("Your current balance: $" + investUser.getNumber("balance"));
-
-            }
-
-        });
-    }
+//    get logged in user and display balance
+//    protected void queryCurrentUser() {
+//        ParseQuery<ParseUser> projectQuery = new ParseQuery<ParseUser>(ParseUser.class);
+//
+//        projectQuery.whereEqualTo("objectId", ParseUser.getCurrentUser().getObjectId());
+//        projectQuery.findInBackground(new FindCallback<ParseUser>() {
+//            @Override
+//            public void done(List<ParseUser> posts, ParseException e) {
+//                if (e != null) {
+//                    Log.e("Query requests","Error with query");
+//                    e.printStackTrace();
+//                    return;
+//                }
+//                investUser = posts.get(0);
+//                tvBalance.setText("Your current balance: $" + investUser.getNumber("balance"));
+//            }
+//
+//        });
+//    }
 
     //get project from request pointer and set name
     protected void queryProject(Request req) {
@@ -184,6 +192,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
                 project = posts.get(0);
                 tvProject.setText("Project: " + project.getName());
                 queryProjectOwner(project);
+
             }
 
         });
@@ -203,10 +212,47 @@ public class ConfirmInvestActivity extends AppCompatActivity {
                     return;
                 }
                 receiveUser = posts.get(0);
+                queryReceiverBalance(receiveUser);
             }
 
         });
     }
 
+    protected void queryReceiverBalance(ParseUser user) {
+        ParseQuery<Balance> projectQuery = new ParseQuery<>(Balance.class);
+
+        projectQuery.whereEqualTo("objectId", user.getParseObject("money").getObjectId());
+        projectQuery.findInBackground(new FindCallback<Balance>() {
+            @Override
+            public void done(List<Balance> posts, ParseException e) {
+                if (e != null) {
+                    Log.e("Query receiver balance","Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+                recieverBalance = posts.get(0);
+            }
+
+        });
+    }
+
+    protected void queryUserBalance(ParseUser user) {
+        ParseQuery<Balance> projectQuery = new ParseQuery<>(Balance.class);
+
+        projectQuery.whereEqualTo("objectId", user.getParseObject("money").getObjectId());
+        projectQuery.findInBackground(new FindCallback<Balance>() {
+            @Override
+            public void done(List<Balance> posts, ParseException e) {
+                if (e != null) {
+                    Log.e("Query user balance","Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+                investorBalance = posts.get(0);
+                tvBalance.setText("Your current balance: $" + investorBalance.getNumber("amount"));
+            }
+
+        });
+    }
 
 }

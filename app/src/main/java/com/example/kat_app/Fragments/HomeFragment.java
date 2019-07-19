@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import com.example.kat_app.Activities.ProjectDetailsActivity;
 import com.example.kat_app.Activities.CreateProjectActivity;
 import com.example.kat_app.Adapters.ProjectsAdapter;
-import com.example.kat_app.Project;
+import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;

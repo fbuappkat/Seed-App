@@ -9,9 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.kat_app.Models.Balance;
 import com.example.kat_app.R;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
 
@@ -65,14 +67,13 @@ public class SignupActivity extends AppCompatActivity {
 
     //create new user object on parse database
     private void signup(String username, String password, String email, String name) {
-        ParseUser user = new ParseUser();
+        final ParseUser user = new ParseUser();
         // Set core properties
         user.setUsername(username);
         user.setPassword(password);
         user.setEmail(email);
         user.put("name",name);
         user.put("balance",0);
-
 
         //signup in background, check if successful, return to home
         user.signUpInBackground(new SignUpCallback() {
@@ -88,7 +89,29 @@ public class SignupActivity extends AppCompatActivity {
                     Log.e("LoginActivity", "Sign up failure");
                     e.printStackTrace();
                 }
+                final Balance balance = new Balance();
+                balance.setUser(user);
+                balance.setAmount(0);
+
+
+
+
+                balance.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null){
+                            e.printStackTrace();
+                        }
+                        user.put("money", balance);
+                        user.saveInBackground();
+                    }
+
+                });
             }
         });
+
+
+
+
     }
 }

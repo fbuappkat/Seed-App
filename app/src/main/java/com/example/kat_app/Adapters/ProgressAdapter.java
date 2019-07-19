@@ -10,7 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.kat_app.R;
-import com.example.kat_app.Request;
+import com.example.kat_app.Models.Request;
 
 import java.util.List;
 

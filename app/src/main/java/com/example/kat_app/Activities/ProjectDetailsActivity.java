@@ -9,9 +9,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.kat_app.Project;
+import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
-import com.example.kat_app.Request;
+import com.example.kat_app.Models.Request;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.kat_app.Project;
+import com.example.kat_app.Models.Project;
 
 public class SpinAdapter extends ArrayAdapter<Project> {
 

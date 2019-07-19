@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.example.kat_app.Activities.ConfirmInvestActivity;
 import com.example.kat_app.R;
-import com.example.kat_app.Request;
+import com.example.kat_app.Models.Request;
 
 import org.parceler.Parcels;
 
