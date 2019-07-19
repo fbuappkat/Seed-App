@@ -21,11 +21,11 @@
             android:name=".Activities.MoreDetailsActivity"
             android:theme="@style/AppTheme.moreDetials" />
         <activity android:name=".Activities.UpdateDetailsActivity" />
-        <activity android:name=".Activities.AddCardActivity" />
         <activity android:name=".Activities.ProjectDetailsActivity" />
         <activity android:name=".Activities.ManageAccountActivity" />
+        <activity android:name=".Activities.ManageCreditActivity" />
         <activity android:name=".Activities.CreateProjectActivity" />
-        <activity android:name=".Activities.EditAccountActivity" />
+        <activity android:name=".Activities.EditProfileActivity" />
         <activity android:name=".Activities.AddUpdateActivity" />
         <activity android:name=".Activities.SignupActivity" />
         <activity android:name=".Activities.LoginActivity">
