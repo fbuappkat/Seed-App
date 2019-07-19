@@ -85,7 +85,11 @@ public class EditProfileActivity extends AppCompatActivity {
         setStatusBarColor(R.color.kat_white);
         setUploadProfileImage();
         setCancelButton();
-        setTextInputs();
+        try {
+            setTextInputs();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         setEditButtons();
         setSaveButton();
     }
@@ -207,13 +211,14 @@ public class EditProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void setTextInputs() {
+    private void setTextInputs() throws IOException {
         // Find references for the views
         etCurrName = findViewById(R.id.etCurrName);
         etCurrUsername = findViewById(R.id.etCurrUsername);
         etCurrEmail = findViewById(R.id.etCurrEmail);
         etCurrBio = findViewById(R.id.etCurrBio);
         tvCurrLocation = findViewById(R.id.tvCurrLocation);
+        TextView tvLocation = findViewById(R.id.tvLocation);
 
         // Set initial text to current user's info
         ParseUser currUser = ParseUser.getCurrentUser();
@@ -221,6 +226,7 @@ public class EditProfileActivity extends AppCompatActivity {
         etCurrUsername.setText(currUser.getUsername());
         etCurrEmail.setText(currUser.getEmail());
         etCurrBio.setText(currUser.getString(KEY_BIO));
+        tvCurrLocation.setText(setLocation(currUser.getParseGeoPoint(KEY_LOCATION)));
 
         // Initially disable the text inputs
         etCurrName.setEnabled(false);
