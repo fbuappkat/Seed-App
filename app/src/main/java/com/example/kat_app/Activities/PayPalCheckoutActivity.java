@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.kat_app.R;
@@ -36,11 +38,14 @@ public class PayPalCheckoutActivity extends AppCompatActivity {
     private static PayPalConfiguration config;
     PayPalPayment addCredit;
     Button order;
+    private EditText etCreditAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deposit_credit);
+
+        etCreditAmount = findViewById(R.id.etCreditAmount);
 
         order = findViewById(R.id.order);
         order.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +74,7 @@ public class PayPalCheckoutActivity extends AppCompatActivity {
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
         startService(intent);
 
-        addCredit = new PayPalPayment(new BigDecimal(String.valueOf("250.37")), "USD", "Payment", PayPalPayment.PAYMENT_INTENT_SALE);
+        addCredit = new PayPalPayment(new BigDecimal(etCreditAmount.getText().toString()), "USD", "Payment", PayPalPayment.PAYMENT_INTENT_SALE);
         Intent payment = new Intent(this, PaymentActivity.class);
         payment.putExtra(PaymentActivity.EXTRA_PAYMENT, addCredit);
         payment.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
