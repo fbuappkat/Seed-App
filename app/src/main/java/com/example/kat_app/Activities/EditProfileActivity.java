@@ -3,7 +3,12 @@ package com.example.kat_app.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
+import com.parse.ParseGeoPoint;
+import com.schibstedspain.leku.LocationPickerActivity;
+
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -35,19 +40,22 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.schibstedspain.leku.LocationPickerActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class EditProfileActivity extends AppCompatActivity {
 
     private TextView tvUpload;
+    private TextView tvCurrLocation;
     private ImageView ivProfileImage;
     private EditText etCurrName;
     private EditText etCurrUsername;
     private EditText etCurrEmail;
-    private EditText etCurrLocation;
     private EditText etCurrBio;
     private Button bEditName;
     private Button bEditUsername;
@@ -56,11 +64,14 @@ public class EditProfileActivity extends AppCompatActivity {
     private Button bEditLocation;
     private Button bSave;
     private Button bCancel;
+    private Double latitude;
+    private Double longitude;
 
     private static final String TAG = "EditProfileActivity";
     private static final String KEY_NAME = "name";
     private static final String KEY_PROFILE_IMAGE = "profile_image";
     private static final String KEY_BIO = "bio";
+    private static final String KEY_LOCATION = "location";
 
     private final static int PLACE_PICKER_REQUEST = 1;
     private final static int PICK_PHOTO_CODE = 1034;
@@ -154,7 +165,15 @@ public class EditProfileActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data)  {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
-                Place place = PlacePicker.getPlace(data, this);
+                if (data != null) {
+                    latitude = data.getDoubleExtra("latitude", 0.0D);
+                    longitude = data.getDoubleExtra("longitude", 0.0D);
+                    try {
+                        tvCurrLocation.setText(setLocation(new ParseGeoPoint(latitude, longitude)));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
 
@@ -194,6 +213,7 @@ public class EditProfileActivity extends AppCompatActivity {
         etCurrUsername = findViewById(R.id.etCurrUsername);
         etCurrEmail = findViewById(R.id.etCurrEmail);
         etCurrBio = findViewById(R.id.etCurrBio);
+        tvCurrLocation = findViewById(R.id.tvCurrLocation);
 
         // Set initial text to current user's info
         ParseUser currUser = ParseUser.getCurrentUser();
@@ -283,14 +303,11 @@ public class EditProfileActivity extends AppCompatActivity {
         bEditLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-                try {
-                    startActivityForResult(builder.build(EditProfileActivity.this), PLACE_PICKER_REQUEST);
-                } catch (GooglePlayServicesRepairableException e) {
-                    e.printStackTrace();
-                } catch (GooglePlayServicesNotAvailableException e) {
-                    e.printStackTrace();
-                }
+                Intent locationPickerIntent = new LocationPickerActivity.Builder()
+                        .withGooglePlacesEnabled()
+                        .build(EditProfileActivity.this);
+
+                startActivityForResult(locationPickerIntent, PLACE_PICKER_REQUEST);
             }
         });
     }
@@ -321,6 +338,10 @@ public class EditProfileActivity extends AppCompatActivity {
         currUser.setEmail(etCurrEmail.getText().toString());
         currUser.put(KEY_BIO, etCurrBio.getText().toString());
 
+        if (latitude != null && longitude != null) {
+            currUser.put(KEY_LOCATION, new ParseGeoPoint(latitude, longitude));
+        }
+
         // Check if user uploaded new profile photo
         if (photoFile != null) {
             currUser.put(KEY_PROFILE_IMAGE, photoFile);
@@ -339,6 +360,22 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private String setLocation(ParseGeoPoint pickedLocation) throws IOException {
+        if (pickedLocation == null) {
+            return "No Location";
+        }
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(this, Locale.getDefault());
+
+        addresses = geocoder.getFromLocation(pickedLocation.getLatitude(), pickedLocation.getLongitude(), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+
+        String state = addresses.get(0).getAdminArea();
+        String country = addresses.get(0).getCountryName();
+
+        return state + ", " + country;
     }
 
     private void showKeyboard() {
