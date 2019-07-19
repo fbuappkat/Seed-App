@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.kat_app.Project;
+import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;

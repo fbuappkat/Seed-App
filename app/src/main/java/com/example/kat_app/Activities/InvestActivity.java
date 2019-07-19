@@ -10,9 +10,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.kat_app.Adapters.InvestAdapter;
-import com.example.kat_app.Project;
+import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
-import com.example.kat_app.Request;
+import com.example.kat_app.Models.Request;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;

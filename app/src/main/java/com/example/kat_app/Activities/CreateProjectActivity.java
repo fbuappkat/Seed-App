@@ -13,9 +13,9 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.kat_app.Project;
+import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
-import com.example.kat_app.Request;
+import com.example.kat_app.Models.Request;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;

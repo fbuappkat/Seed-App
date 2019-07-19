@@ -1,4 +1,4 @@
-package com.example.kat_app;
+package com.example.kat_app.Models;
 
 import android.os.Parcelable;
 

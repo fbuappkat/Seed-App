@@ -4,27 +4,37 @@ import android.os.Parcelable;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 
 @ParseClassName("Balance")
 public class Balance extends ParseObject implements Parcelable {
-
     //fields
-    private final static String KEY_BALANCE = "amount";
+    private final static String KEY_AMOUNT = "amount";
+    private final static String KEY_USER = "user";
 
-    public Balance() {
-
-    }
 
     //setters and getters for Parse project object
 
-    public double getBalanceAmount(){
-        return getDouble(KEY_BALANCE);
+    public Float getAmount(){
+        return getNumber(KEY_AMOUNT).floatValue();
     }
 
-    public void setBalance(String name){
-        put(KEY_BALANCE, name);
+    public void setAmount(float amt){
+        put(KEY_AMOUNT, amt);
     }
+
+    public ParseUser getUser(){
+        return getParseUser(KEY_USER);
+    }
+
+    public void setUser(ParseUser user){
+        put(KEY_USER, user);
+    }
+
+
+
+    public Balance(){}
 
 
 

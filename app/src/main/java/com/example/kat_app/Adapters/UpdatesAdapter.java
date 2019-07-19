@@ -20,12 +20,9 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Activities.OtherUserProfileActivity;
 import com.example.kat_app.Activities.UpdateDetailsActivity;
 import com.example.kat_app.Models.Update;
-import com.example.kat_app.Project;
 import com.example.kat_app.R;
-import com.parse.FindCallback;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
