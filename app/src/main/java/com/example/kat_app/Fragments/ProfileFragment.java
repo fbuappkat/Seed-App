@@ -17,9 +17,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Activities.EditProfileActivity;
 import com.example.kat_app.Activities.ManageAccountActivity;
 import com.example.kat_app.Models.Balance;
-import com.example.kat_app.Project;
 import com.example.kat_app.R;
-import com.example.kat_app.Request;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -124,7 +122,7 @@ public class ProfileFragment extends Fragment {
 
                 balance = accounts.get(0);
 
-                tvBalanceCount.setText("$" + balance.getBalanceAmount());
+                tvBalanceCount.setText("$" + balance.getAmount());
             }
         });
     }

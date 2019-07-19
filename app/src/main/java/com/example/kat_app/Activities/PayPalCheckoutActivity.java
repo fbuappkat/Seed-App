@@ -44,8 +44,8 @@ public class PayPalCheckoutActivity extends AppCompatActivity {
     private static PayPalConfiguration config;
     PayPalPayment addCredit;
     Button order;
-    private double currBalance;
-    private double addedCredits;
+    private float currBalance;
+    private float addedCredits;
     private EditText etCreditAmount;
 
     @Override
@@ -80,7 +80,7 @@ public class PayPalCheckoutActivity extends AppCompatActivity {
 
     private void MakePayment() {
 
-        addedCredits = Double.parseDouble(etCreditAmount.getText().toString());
+        addedCredits = Float.parseFloat(etCreditAmount.getText().toString());
 
         Intent intent = new Intent(this, PayPalService.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
@@ -111,7 +111,7 @@ public class PayPalCheckoutActivity extends AppCompatActivity {
                         Toast.makeText(this, "Payment Successful!", Toast.LENGTH_LONG).show();
 
 
-                        Double newBalance = currBalance + addedCredits;
+                        Float newBalance = currBalance + addedCredits;
                         ParseUser currUser = ParseUser.getCurrentUser();
                         queryBalance(currUser, newBalance);
 
@@ -163,13 +163,13 @@ public class PayPalCheckoutActivity extends AppCompatActivity {
                 }
 
                 Balance balance = accounts.get(0);
-                currBalance = balance.getBalanceAmount();
+                currBalance = balance.getAmount();
             }
         });
     }
 
     //get  update the user's balance r
-    protected void queryBalance(ParseUser currUser, final Double amount) {
+    protected void queryBalance(ParseUser currUser, final float amount) {
         final ParseQuery<Balance> balanceQuery = new ParseQuery<>(Balance.class);
 
         balanceQuery.whereEqualTo("user", currUser);
@@ -182,7 +182,6 @@ public class PayPalCheckoutActivity extends AppCompatActivity {
                     return;
                 }
 
-                Double test = amount;
                 Balance balance = accounts.get(0);
                 balance.put("amount", amount);
                 balance.saveInBackground();

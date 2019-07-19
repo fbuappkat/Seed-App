@@ -82,7 +82,7 @@ public class ManageCreditActivity extends AppCompatActivity {
 
                 balance = accounts.get(0);
 
-                tvCurrBalanceCount.setText("$" + balance.getBalanceAmount());
+                tvCurrBalanceCount.setText("$" + balance.getAmount());
             }
         });
     }
