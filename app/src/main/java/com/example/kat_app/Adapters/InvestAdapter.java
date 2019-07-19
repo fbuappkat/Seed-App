@@ -1,21 +1,28 @@
 package com.example.kat_app.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.kat_app.Activities.ConfirmInvestActivity;
 import com.example.kat_app.R;
 import com.example.kat_app.Request;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
 public class InvestAdapter extends RecyclerView.Adapter<InvestAdapter.ViewHolder> {
-    private Context context;
+    private static Context context;
     private List<Request> requests;
 
 
@@ -47,6 +54,8 @@ public class InvestAdapter extends RecyclerView.Adapter<InvestAdapter.ViewHolder
 
         private TextView tvReq;
         private TextView tvProg;
+        private EditText etInvest;
+        private Button btnInvest;
         private ProgressBar pbReq;
 
         View view;
@@ -56,7 +65,10 @@ public class InvestAdapter extends RecyclerView.Adapter<InvestAdapter.ViewHolder
             view = itemView;
             tvReq = itemView.findViewById(R.id.tvRequest);
             tvProg = itemView.findViewById(R.id.tvProgress);
+            etInvest = itemView.findViewById(R.id.etInvest);
             pbReq = itemView.findViewById(R.id.pbInvested);
+
+            btnInvest = itemView.findViewById(R.id.btnInvest);
 
         }
 
@@ -68,7 +80,20 @@ public class InvestAdapter extends RecyclerView.Adapter<InvestAdapter.ViewHolder
             tvReq.setText(request.getRequest());
             tvProg.setText(request.getReceived() + "/" + request.getPrice() + " (" + percent + "%)");
             pbReq.setProgress(percent);
-
+            btnInvest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String toInvest = etInvest.getText().toString();
+                    if (!toInvest.isEmpty()) {
+                        Intent confirm = new Intent(context, ConfirmInvestActivity.class);
+                        confirm.putExtra("request", Parcels.wrap(request));
+                        confirm.putExtra("toInvest", Float.parseFloat(etInvest.getText().toString()));
+                        context.startActivity(confirm);
+                    } else {
+                        Toast.makeText(context, "Please enter an amount to invest", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
 
 
