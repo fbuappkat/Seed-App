@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.kat_app.Activities.EditAccountActivity;
+import com.example.kat_app.Activities.EditProfileActivity;
 import com.example.kat_app.Activities.ManageAccountActivity;
 import com.example.kat_app.R;
 import com.parse.ParseFile;
@@ -93,7 +93,7 @@ public class ProfileFragment extends Fragment {
         ivEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), EditAccountActivity.class);
+                Intent intent = new Intent(getActivity(), EditProfileActivity.class);
                 startActivity(intent);
             }
         });

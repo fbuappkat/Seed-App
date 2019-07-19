@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">@color/kat_white</color>
     <color name="colorAccent">@color/kat_orange_2</color>
 
+    <color name="kat_orange_3">#EA8965</color>
     <color name="kat_orange_1">#F98A61</color>
     <color name="kat_orange_2">#FBA789</color>
 

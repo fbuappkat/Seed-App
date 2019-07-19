@@ -19,7 +19,7 @@ import com.parse.ParseUser;
 public class ManageAccountActivity extends AppCompatActivity {
 
     private ImageView ivBack;
-    private ConstraintLayout paymentHolder;
+    private ConstraintLayout creditsHolder;
     private Button bLogout;
     Context context;
 
@@ -28,13 +28,13 @@ public class ManageAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_account);
 
-        paymentHolder = findViewById(R.id.passwordHolder);
+        creditsHolder = findViewById(R.id.creditHolder);
 
 
-        paymentHolder.setOnClickListener(new View.OnClickListener() {
+        creditsHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ManageAccountActivity.this, AddCardActivity.class);
+                Intent intent = new Intent(ManageAccountActivity.this, ManageCreditActivity.class);
                 startActivity(intent);
             }
         });

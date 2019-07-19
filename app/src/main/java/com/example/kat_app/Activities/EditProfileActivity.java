@@ -36,7 +36,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
-public class EditAccountActivity extends AppCompatActivity {
+public class EditProfileActivity extends AppCompatActivity {
 
     private TextView tvUpload;
     private ImageView ivProfileImage;
@@ -52,7 +52,7 @@ public class EditAccountActivity extends AppCompatActivity {
     private Button bSave;
     private Button bCancel;
 
-    private static final String TAG = "EditAccountActivity";
+    private static final String TAG = "EditProfileActivity";
     private static final String KEY_NAME = "name";
     private static final String KEY_PROFILE_IMAGE = "profile_image";
     private static final String KEY_BIO = "bio";
@@ -170,7 +170,7 @@ public class EditAccountActivity extends AppCompatActivity {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             chosenImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             byte[] image = stream.toByteArray();
-            photoFile = new ParseFile(etCurrUsername + "profile_pic.jpg", image);
+            photoFile = new ParseFile(etCurrUsername.getText().toString() + "profile_pic.jpg", image);
         }
     }
 
