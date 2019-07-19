@@ -13,7 +13,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.kat_app.Models.Balance;
 import com.example.kat_app.R;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.paypal.android.sdk.payments.PayPalAuthorization;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
@@ -26,6 +30,7 @@ import com.paypal.android.sdk.payments.PaymentConfirmation;
 import org.json.JSONException;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class PayPalCheckoutActivity extends AppCompatActivity {
 
@@ -39,7 +44,8 @@ public class PayPalCheckoutActivity extends AppCompatActivity {
     private static PayPalConfiguration config;
     PayPalPayment addCredit;
     Button order;
-    private int newBalance;
+    private double currBalance;
+    private double addedCredits;
     private EditText etCreditAmount;
 
     @Override
@@ -57,6 +63,8 @@ public class PayPalCheckoutActivity extends AppCompatActivity {
             }
         });
 
+        ParseUser currUser = ParseUser.getCurrentUser();
+        queryBalance(currUser);
         configPayPal();
     }
 
@@ -72,7 +80,7 @@ public class PayPalCheckoutActivity extends AppCompatActivity {
 
     private void MakePayment() {
 
-        newBalance = Integer.parseInt(etCreditAmount.getText().toString());
+        addedCredits = Double.parseDouble(etCreditAmount.getText().toString());
 
         Intent intent = new Intent(this, PayPalService.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
@@ -102,13 +110,10 @@ public class PayPalCheckoutActivity extends AppCompatActivity {
                                 .toString(4));
                         Toast.makeText(this, "Payment Successful!", Toast.LENGTH_LONG).show();
 
+
+                        Double newBalance = currBalance + addedCredits;
                         ParseUser currUser = ParseUser.getCurrentUser();
-
-                        int currBalance = currUser.getInt("balance");
-                        newBalance = currBalance + newBalance;
-
-                        currUser.put("balance", newBalance);
-                        currUser.saveInBackground();
+                        queryBalance(currUser, newBalance);
 
                         Intent intent = new Intent(PayPalCheckoutActivity.this, ManageCreditActivity.class);
                         startActivity(intent);
@@ -141,6 +146,48 @@ public class PayPalCheckoutActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    //get balance from user pointer
+    protected void queryBalance(ParseUser currUser) {
+        final ParseQuery<Balance> balanceQuery = new ParseQuery<>(Balance.class);
+
+        balanceQuery.whereEqualTo("user", currUser);
+        balanceQuery.findInBackground(new FindCallback<Balance>() {
+            @Override
+            public void done(List<Balance> accounts, ParseException e) {
+                if (e != null) {
+                    Log.e("Query requests","Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+
+                Balance balance = accounts.get(0);
+                currBalance = balance.getBalanceAmount();
+            }
+        });
+    }
+
+    //get  update the user's balance r
+    protected void queryBalance(ParseUser currUser, final Double amount) {
+        final ParseQuery<Balance> balanceQuery = new ParseQuery<>(Balance.class);
+
+        balanceQuery.whereEqualTo("user", currUser);
+        balanceQuery.findInBackground(new FindCallback<Balance>() {
+            @Override
+            public void done(List<Balance> accounts, ParseException e) {
+                if (e != null) {
+                    Log.e("Query requests","Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+
+                Double test = amount;
+                Balance balance = accounts.get(0);
+                balance.put("amount", amount);
+                balance.saveInBackground();
+            }
+        });
     }
 }
 

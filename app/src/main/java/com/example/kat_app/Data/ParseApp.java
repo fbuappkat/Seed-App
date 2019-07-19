@@ -2,6 +2,7 @@ package com.example.kat_app.Data;
 
 import android.app.Application;
 
+import com.example.kat_app.Models.Balance;
 import com.example.kat_app.Models.Update;
 import com.example.kat_app.Project;
 import com.example.kat_app.Request;
@@ -22,6 +23,7 @@ public class ParseApp extends Application {
         ParseObject.registerSubclass(Project.class);
         ParseObject.registerSubclass(Request.class);
         ParseObject.registerSubclass(Transaction.class);
+        ParseObject.registerSubclass(Balance.class);
 
 
 

@@ -5,6 +5,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Activities.EditProfileActivity;
 import com.example.kat_app.Activities.ManageAccountActivity;
+import com.example.kat_app.Models.Balance;
+import com.example.kat_app.Project;
 import com.example.kat_app.R;
+import com.example.kat_app.Request;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.io.IOException;
@@ -38,6 +45,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvBio;
     private ImageView ivSettings;
     private ImageView ivEdit;
+    private Balance balance;
 
     private static final String KEY_NAME = "name";
     private static final String KEY_PROFILE_IMAGE = "profile_image";
@@ -80,7 +88,8 @@ public class ProfileFragment extends Fragment {
 
         tvName.setText(currUser.getString(KEY_NAME));
         tvUsername.setText("@" + currUser.getUsername());
-        tvBalanceCount.setText("$" + currUser.getInt(KEY_BALANCE));
+        //tvBalanceCount.setText("$" + currUser.getInt(KEY_BALANCE));
+        queryBalance(currUser);
         tvBio.setText(currUser.getString(KEY_BIO));
         tvLocation.setText(setLocation(currUser.getParseGeoPoint(KEY_LOCATION)));
 
@@ -97,6 +106,27 @@ public class ProfileFragment extends Fragment {
                     .apply(RequestOptions.circleCropTransform())
                     .into(ivProfileImage);
         }
+    }
+
+    //get balance from user pointer and set balanceHolder
+    protected void queryBalance(ParseUser currUser) {
+        final ParseQuery<Balance> balanceQuery = new ParseQuery<>(Balance.class);
+
+        balanceQuery.whereEqualTo("user", currUser);
+        balanceQuery.findInBackground(new FindCallback<Balance>() {
+            @Override
+            public void done(List<Balance> accounts, ParseException e) {
+                if (e != null) {
+                    Log.e("Query requests","Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+
+                balance = accounts.get(0);
+
+                tvBalanceCount.setText("$" + balance.getBalanceAmount());
+            }
+        });
     }
 
     private void setEditAccountButton(View view) {
