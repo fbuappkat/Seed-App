@@ -1,6 +1,7 @@
 package com.example.kat_app.Activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -70,6 +71,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
 
 
         //confirm and invest
+        btnConfirm.setBackgroundColor(Color.parseColor("#77EE77"));
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,6 +80,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         });
 
         //cancel
+        btnCancel.setBackgroundColor(Color.parseColor("#E43B3B"));
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,20 +90,25 @@ public class ConfirmInvestActivity extends AppCompatActivity {
 
     }
 
+    //invest funds
     public void invest(){
+        //get current balance and request funds received so far
         float curBalanceInvestor = Float.parseFloat(investUser.get("balance").toString());
-        float curBalanceOwner = Float.parseFloat(receiveUser.get("balance").toString());
         float curRequestFunds = request.getReceived();
+        //check if investor has enough funds
         if (curBalanceInvestor < toInvest){
             Toast.makeText(this, "You do not have enough in your balance to invest this amount!", Toast.LENGTH_LONG).show();
         } else {
+            //chance balance and put into request
             investUser.put("balance", curBalanceInvestor - toInvest);
             request.put("received", curRequestFunds + toInvest);
+            //save values
             request.saveInBackground();
             investUser.saveInBackground();
-            receiveUser.saveInBackground();
+            //create transaction for history
             createTransaction(toInvest, investUser, project, request);
             Toast.makeText(ConfirmInvestActivity.this, "Investment succesful!", Toast.LENGTH_LONG).show();
+            //add to investor array
             if (!project.getInvestors().toString().contains(ParseUser.getCurrentUser().getObjectId())){
                 project.add("investors", ParseUser.getCurrentUser());
             }
@@ -112,12 +120,14 @@ public class ConfirmInvestActivity extends AppCompatActivity {
                     }
                 }
             });
+            //go back to feed
             Intent finished = new Intent(ConfirmInvestActivity.this, MainActivity.class);
             startActivity(finished);
             finish();
         }
     }
 
+    //create transaction object and save to parse
     public void createTransaction(float amount, ParseUser sender, Project project, Request request){
         final Transaction transaction = new Transaction();
         transaction.setAmount(amount);
