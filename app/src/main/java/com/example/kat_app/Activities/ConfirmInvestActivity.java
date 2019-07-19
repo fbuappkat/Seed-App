@@ -68,12 +68,8 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         //get user and set balance
         queryUserBalance(ParseUser.getCurrentUser());
 
-
         //get project and set project name
         queryProject(request);
-
-
-
 
         //confirm and invest
         btnConfirm.setBackgroundColor(Color.parseColor("#77EE77"));
@@ -98,7 +94,6 @@ public class ConfirmInvestActivity extends AppCompatActivity {
     //invest funds
     public void invest(){
         //get current balance and request funds received so far
-        //float curBalanceInvestor = Float.parseFloat(investUser.get("balance").toString());
         float curBalanceInvestor = Float.parseFloat(investorBalance.getAmount().toString());
         float curBalanceReceiver = Float.parseFloat(recieverBalance.getAmount().toString());
         float curRequestFunds = request.getReceived();
@@ -156,25 +151,6 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         });
     }
 
-//    get logged in user and display balance
-//    protected void queryCurrentUser() {
-//        ParseQuery<ParseUser> projectQuery = new ParseQuery<ParseUser>(ParseUser.class);
-//
-//        projectQuery.whereEqualTo("objectId", ParseUser.getCurrentUser().getObjectId());
-//        projectQuery.findInBackground(new FindCallback<ParseUser>() {
-//            @Override
-//            public void done(List<ParseUser> posts, ParseException e) {
-//                if (e != null) {
-//                    Log.e("Query requests","Error with query");
-//                    e.printStackTrace();
-//                    return;
-//                }
-//                investUser = posts.get(0);
-//                tvBalance.setText("Your current balance: $" + investUser.getNumber("balance"));
-//            }
-//
-//        });
-//    }
 
     //get project from request pointer and set name
     protected void queryProject(Request req) {
