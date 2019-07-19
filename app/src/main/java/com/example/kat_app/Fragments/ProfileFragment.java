@@ -1,6 +1,8 @@
 package com.example.kat_app.Fragments;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,7 +17,12 @@ import com.example.kat_app.Activities.EditProfileActivity;
 import com.example.kat_app.Activities.ManageAccountActivity;
 import com.example.kat_app.R;
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class ProfileFragment extends Fragment {
 
@@ -25,16 +32,17 @@ public class ProfileFragment extends Fragment {
     private TextView tvName;
     private TextView tvUsername;
     private TextView tvBalanceCount;
+    private TextView tvLocation;
     private TextView tvProjectsCount;
     private TextView tvInvestmentsCount;
     private TextView tvBio;
     private ImageView ivSettings;
     private ImageView ivEdit;
 
-
     private static final String KEY_NAME = "name";
     private static final String KEY_PROFILE_IMAGE = "profile_image";
     private static final String KEY_BIO = "bio";
+    private static final String KEY_LOCATION = "location";
     private static final String KEY_BALANCE = "balance";
 
     @Override
@@ -47,18 +55,23 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        setProfileInfo(view);
+        try {
+            setProfileInfo(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         setEditAccountButton(view);
         setSettingsButton(view);
     }
 
-    private void setProfileInfo(View view) {
+    private void setProfileInfo(View view) throws IOException {
         // Find references for the views
         tvName = view.findViewById(R.id.tvName);
         tvUsername = view.findViewById(R.id.tvUsername);
         tvProjectsCount = view.findViewById(R.id.tvProjectsCount);
         tvInvestmentsCount = view.findViewById(R.id.tvInvestmentsCount);
         ivProfileImage = view.findViewById(R.id.ivProfileImageUpdate);
+        tvLocation = view.findViewById(R.id.tvLocation);
         tvBalanceCount = view.findViewById(R.id.tvBalanceCount);
         tvBio = view.findViewById(R.id.tvBio);
         ivProfileImage = view.findViewById(R.id.ivProfileImage);
@@ -69,6 +82,7 @@ public class ProfileFragment extends Fragment {
         tvUsername.setText("@" + currUser.getUsername());
         tvBalanceCount.setText("$" + currUser.getInt(KEY_BALANCE));
         tvBio.setText(currUser.getString(KEY_BIO));
+        tvLocation.setText(setLocation(currUser.getParseGeoPoint(KEY_LOCATION)));
 
         ParseFile profileImage = currUser.getParseFile(KEY_PROFILE_IMAGE);
         if (profileImage != null) {
@@ -112,4 +126,21 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
+
+    private String setLocation(ParseGeoPoint currLocation) throws IOException {
+        if (currLocation == null) {
+            return "No Location";
+        }
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(getActivity(), Locale.getDefault());
+
+        addresses = geocoder.getFromLocation(currLocation.getLatitude(), currLocation.getLongitude(), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+
+        String state = addresses.get(0).getAdminArea();
+        String country = addresses.get(0).getCountryName();
+
+        return state + ", " + country;
+    }
 }
+

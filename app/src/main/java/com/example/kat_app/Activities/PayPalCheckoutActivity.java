@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.kat_app.R;
+import com.parse.ParseUser;
 import com.paypal.android.sdk.payments.PayPalAuthorization;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalFuturePaymentActivity;
@@ -38,6 +39,7 @@ public class PayPalCheckoutActivity extends AppCompatActivity {
     private static PayPalConfiguration config;
     PayPalPayment addCredit;
     Button order;
+    private int newBalance;
     private EditText etCreditAmount;
 
     @Override
@@ -70,6 +72,8 @@ public class PayPalCheckoutActivity extends AppCompatActivity {
 
     private void MakePayment() {
 
+        newBalance = Integer.parseInt(etCreditAmount.getText().toString());
+
         Intent intent = new Intent(this, PayPalService.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
         startService(intent);
@@ -90,13 +94,25 @@ public class PayPalCheckoutActivity extends AppCompatActivity {
                 PaymentConfirmation confirm = data
                         .getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
 
-                if (confirm == null) {
+                if (confirm != null) {
 
                     try {
                         System.out.println(confirm.toJSONObject().toString(4));
                         System.out.println(confirm.getPayment().toJSONObject()
                                 .toString(4));
                         Toast.makeText(this, "Payment Successful!", Toast.LENGTH_LONG).show();
+
+                        ParseUser currUser = ParseUser.getCurrentUser();
+
+                        int currBalance = currUser.getInt("balance");
+                        newBalance = currBalance + newBalance;
+
+                        currUser.put("balance", newBalance);
+                        currUser.saveInBackground();
+
+                        Intent intent = new Intent(PayPalCheckoutActivity.this, ManageCreditActivity.class);
+                        startActivity(intent);
+                        finish();
                     } catch (JSONException e) {
 
                         Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();

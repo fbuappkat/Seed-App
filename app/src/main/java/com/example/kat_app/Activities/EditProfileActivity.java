@@ -27,6 +27,10 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.R;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -49,6 +53,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private Button bEditUsername;
     private Button bEditEmail;
     private Button bEditBio;
+    private Button bEditLocation;
     private Button bSave;
     private Button bCancel;
 
@@ -57,6 +62,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private static final String KEY_PROFILE_IMAGE = "profile_image";
     private static final String KEY_BIO = "bio";
 
+    private final static int PLACE_PICKER_REQUEST = 1;
     private final static int PICK_PHOTO_CODE = 1034;
     ParseFile photoFile;
 
@@ -146,31 +152,39 @@ public class EditProfileActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)  {
-        if (data != null) {
-            Uri photoUri = data.getData();
-
-            ivProfileImage = findViewById(R.id.ivProfileImage);
-
-            // by this point we have the camera photo on disk
-            Bitmap chosenImage = null;
-            try {
-                chosenImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(data, this);
             }
+        }
 
-            // Load the taken image into a preview
-            Glide.with(this)
-                    .asBitmap()
-                    .load(chosenImage)
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(ivProfileImage);
+        if (requestCode == PICK_PHOTO_CODE) {
+            if (data != null) {
+                Uri photoUri = data.getData();
 
-            // Load the parseFile
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            chosenImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-            byte[] image = stream.toByteArray();
-            photoFile = new ParseFile(etCurrUsername.getText().toString() + "profile_pic.jpg", image);
+                ivProfileImage = findViewById(R.id.ivProfileImage);
+
+                // by this point we have the camera photo on disk
+                Bitmap chosenImage = null;
+                try {
+                    chosenImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                // Load the taken image into a preview
+                Glide.with(this)
+                        .asBitmap()
+                        .load(chosenImage)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(ivProfileImage);
+
+                // Load the parseFile
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                chosenImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                byte[] image = stream.toByteArray();
+                photoFile = new ParseFile(etCurrUsername.getText().toString() + "profile_pic.jpg", image);
+            }
         }
     }
 
@@ -219,6 +233,7 @@ public class EditProfileActivity extends AppCompatActivity {
         bEditUsername = findViewById(R.id.bEditUsername);
         bEditEmail = findViewById(R.id.bEditEmail);
         bEditBio = findViewById(R.id.bEditBio);
+        bEditLocation = findViewById(R.id.bEditLocation);
 
         // Set on click listener for edit buttons to enable respective text inputs
         bEditName.setOnClickListener(new View.OnClickListener() {
@@ -263,7 +278,23 @@ public class EditProfileActivity extends AppCompatActivity {
                 showKeyboard();
             }
         });
+
+        // Set on click listener for edit buttons to enable respective text inputs
+        bEditLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                try {
+                    startActivityForResult(builder.build(EditProfileActivity.this), PLACE_PICKER_REQUEST);
+                } catch (GooglePlayServicesRepairableException e) {
+                    e.printStackTrace();
+                } catch (GooglePlayServicesNotAvailableException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
+
 
     private void finishTextInput(final EditText editText) {
         // Disable the text input once enter key is pressed
