@@ -10,8 +10,6 @@ import com.parse.ParseUser;
 
 import org.json.JSONArray;
 
-import java.util.ArrayList;
-
 
 @ParseClassName("Project")
 public class Project extends ParseObject implements Parcelable {
@@ -20,10 +18,9 @@ public class Project extends ParseObject implements Parcelable {
     private final static String KEY_NAME = "name";
     private final static String KEY_IMAGE = "image";
     private final static String KEY_USER = "author";
-    private final static String KEY_REQUESTS = "requests";
     private final static String KEY_FOLLOWERS = "followers";
     private final static String KEY_CATEGORY = "category";
-    public ArrayList<ParseUser> followers;
+    private final static String KEY_INVESTORS = "investors";
 
     //setters and getters for Parse project object
 
@@ -67,16 +64,12 @@ public class Project extends ParseObject implements Parcelable {
         return getString(KEY_CATEGORY);
     }
 
-    public ParseObject getRequests(){
-        return getParseObject(KEY_REQUESTS);
-    }
-
     public JSONArray getFollowers(){
-        return getJSONArray("followers");
+        return getJSONArray(KEY_FOLLOWERS);
     }
 
     public JSONArray getInvestors(){
-        return getJSONArray("investors");
+        return getJSONArray(KEY_INVESTORS);
     }
 
 

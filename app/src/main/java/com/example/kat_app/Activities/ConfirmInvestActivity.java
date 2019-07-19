@@ -38,7 +38,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
     private Project project;
     private ParseUser investUser = ParseUser.getCurrentUser();
     private ParseUser receiveUser;
-    private Balance recieverBalance;
+    private Balance receiverBalance;
     private Balance investorBalance;
     private float toInvest;
 
@@ -95,7 +95,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
     public void invest(){
         //get current balance and request funds received so far
         float curBalanceInvestor = Float.parseFloat(investorBalance.getAmount().toString());
-        float curBalanceReceiver = Float.parseFloat(recieverBalance.getAmount().toString());
+        float curBalanceReceiver = Float.parseFloat(receiverBalance.getAmount().toString());
         float curRequestFunds = request.getReceived();
         //check if investor has enough funds
         if (curBalanceInvestor < toInvest){
@@ -103,12 +103,12 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         } else {
             //change balance and put into request
             investorBalance.put("amount", curBalanceInvestor - toInvest);
-            recieverBalance.put("amount", curBalanceReceiver + toInvest);
+            receiverBalance.put("amount", curBalanceReceiver + toInvest);
             request.put("received", curRequestFunds + toInvest);
             //save values
             request.saveInBackground();
             investorBalance.saveInBackground();
-            recieverBalance.saveInBackground();
+            receiverBalance.saveInBackground();
             //create transaction for history
             createTransaction(toInvest, investUser, project, request);
             Toast.makeText(ConfirmInvestActivity.this, "Investment succesful!", Toast.LENGTH_LONG).show();
@@ -206,7 +206,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
                     e.printStackTrace();
                     return;
                 }
-                recieverBalance = posts.get(0);
+                receiverBalance = posts.get(0);
             }
 
         });
