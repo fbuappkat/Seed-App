@@ -142,8 +142,10 @@ public class CreateProjectActivity extends AppCompatActivity {
         newProject.setUser(user);
         JSONArray emptyFollowers = new JSONArray();
         JSONArray emptyInvestors = new JSONArray();
+        JSONArray emptyMedia = new JSONArray();
         newProject.put("followers", emptyFollowers);
         newProject.put("investors", emptyInvestors);
+        newProject.put("media", emptyMedia);
         newProject.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
