@@ -215,7 +215,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
     protected void queryUserBalance(ParseUser user) {
         ParseQuery<Balance> projectQuery = new ParseQuery<>(Balance.class);
 
-        projectQuery.whereEqualTo("objectId", user.getParseObject("money").getObjectId());
+        projectQuery.whereEqualTo("user", user);
         projectQuery.findInBackground(new FindCallback<Balance>() {
             @Override
             public void done(List<Balance> posts, ParseException e) {
