@@ -19,6 +19,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.paypal.android.sdk.payments.PayPalAuthorization;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalFuturePaymentActivity;
@@ -40,6 +41,7 @@ public class PayPalCheckoutActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_PAYMENT = 1;
     private static final int REQUEST_CODE_FUTURE_PAYMENT = 2;
+    private static final int REFRESH_BALANCE_CODE = 3;
     private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX;
     private static PayPalConfiguration config;
     PayPalPayment addCredit;
@@ -98,7 +100,7 @@ public class PayPalCheckoutActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE_PAYMENT) {
-            if (resultCode == Activity.RESULT_OK) {
+            if (resultCode == RESULT_OK) {
                 PaymentConfirmation confirm = data
                         .getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
 
@@ -114,10 +116,6 @@ public class PayPalCheckoutActivity extends AppCompatActivity {
                         Float newBalance = currBalance + addedCredits;
                         ParseUser currUser = ParseUser.getCurrentUser();
                         queryBalance(currUser, newBalance);
-
-                        Intent intent = new Intent(PayPalCheckoutActivity.this, ManageCreditActivity.class);
-                        startActivity(intent);
-                        finish();
                     } catch (JSONException e) {
 
                         Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
@@ -168,7 +166,7 @@ public class PayPalCheckoutActivity extends AppCompatActivity {
         });
     }
 
-    //get  update the user's balance r
+    //update the user's balance
     protected void queryBalance(ParseUser currUser, final float amount) {
         final ParseQuery<Balance> balanceQuery = new ParseQuery<>(Balance.class);
 
@@ -184,9 +182,28 @@ public class PayPalCheckoutActivity extends AppCompatActivity {
 
                 Balance balance = accounts.get(0);
                 balance.put("amount", amount);
-                balance.saveInBackground();
+                balance.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            Log.d(TAG, "Balance updated!");
+                            setResult(RESULT_OK);
+                            onBackPressed();
+                        } else {
+                            Log.e(TAG, "Error while updating balance.");
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
 }
 

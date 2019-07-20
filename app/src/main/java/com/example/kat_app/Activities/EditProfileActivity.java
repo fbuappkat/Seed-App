@@ -359,6 +359,7 @@ public class EditProfileActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     Log.d(TAG, "Details saved successfully!");
+                    setResult(RESULT_OK);
                     onBackPressed();
                 } else {
                     Log.e(TAG, "Error while saving.");
@@ -387,5 +388,11 @@ public class EditProfileActivity extends AppCompatActivity {
     private void showKeyboard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.do_nothing, R.anim.slide_down);
     }
 }

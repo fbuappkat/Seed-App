@@ -2,6 +2,7 @@ package com.example.kat_app.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -27,7 +28,7 @@ public class ManageCreditActivity extends AppCompatActivity {
     private Balance balance;
 
     private static final String KEY_NAME = "name";
-    private static final String KEY_BALANCE = "balance";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +49,8 @@ public class ManageCreditActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ManageCreditActivity.this, PayPalCheckoutActivity.class);
-                startActivity(intent);
-                finish();
+                startActivityForResult(intent, 3);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
     }
@@ -98,5 +99,19 @@ public class ManageCreditActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 3 && resultCode == RESULT_OK) {
+            queryBalance(ParseUser.getCurrentUser());
+        }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

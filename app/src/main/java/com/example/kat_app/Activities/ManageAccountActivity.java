@@ -1,5 +1,6 @@
 package com.example.kat_app.Activities;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.kat_app.Fragments.ProfileFragment;
 import com.example.kat_app.R;
 import com.parse.ParseUser;
 
@@ -36,6 +38,7 @@ public class ManageAccountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ManageAccountActivity.this, ManageCreditActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -113,5 +116,11 @@ public class ManageAccountActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }
