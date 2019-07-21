@@ -91,7 +91,7 @@ public class ManageAccountActivity extends AppCompatActivity {
 
     private void setBackButton() {
         // Find reference for the view
-        ivBack = findViewById(R.id.ivProfileToFeed);
+        ivBack = findViewById(R.id.ivBack);
 
         // Set on-click listener for for image view to launch edit account activity
         ivBack.setOnClickListener(new View.OnClickListener() {

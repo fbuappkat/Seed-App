@@ -49,7 +49,7 @@ public class ManageCreditActivity extends AppCompatActivity {
         depositHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ManageCreditActivity.this, BraintreeCheckoutActivity.class);
+                Intent intent = new Intent(ManageCreditActivity.this, DepositCreditActivity.class);
                 startActivityForResult(intent, 3);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }

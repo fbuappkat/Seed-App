@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -34,55 +37,52 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BraintreeCheckoutActivity extends AppCompatActivity {
+public class DepositCreditActivity extends AppCompatActivity {
 
-    private static final String TAG = "paymentExample";
+    private static final String TAG = "DepositCredit";
 
+    private Button bSubmitPayment;
+    private EditText etCredits;
+    private TextView tvNewBalanceCount;
 
-    private static final int REQUEST_CODE = 1234;
-    String API_GET_TOKEN="http://192.168.64.2/braintree/main.php";
-    String API_CHECKOUT="http://192.168.64.2/braintree/checkout.php";
-
-    String token,amount;
-    HashMap<String,String> paramsHash;
-    Button order;
-    EditText amount2;
+    private HashMap<String,String> paramsHash;
+    private String token;
+    private String amount;
     private float currBalance;
     private float addedCredits;
+
+    private String API_GET_TOKEN="http://192.168.64.2/braintree/main.php";
+    private String API_CHECKOUT="http://192.168.64.2/braintree/checkout.php";
+
+    private static final int REQUEST_CODE = 1234;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_braintree_checkout);
+        setContentView(R.layout.activity_deposit_credit);
 
         MainActivity.setStatusBar(getWindow());
 
-        amount2 =(EditText)findViewById(R.id.amount);
-        order =(Button) findViewById(R.id.order);
+        // Find references for the views
+        etCredits = findViewById(R.id.etCredits);
+        tvNewBalanceCount = findViewById(R.id.tvNewBalanceCount);
 
-        new BraintreeCheckoutActivity.getToken().execute();
+        new DepositCreditActivity.getToken().execute();
 
+        setPaymentButton();
+        queryBalance(ParseUser.getCurrentUser());
 
-
-        order.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                submitPayment();
-            }
-        });
-
-        ParseUser currUser = ParseUser.getCurrentUser();
-        queryBalance(currUser);
     }
 
     private void submitPayment(){
-        String payValue=amount2.getText().toString();
+        String payValue= etCredits.getText().toString().replaceAll("[$,]", "");
 
-        addedCredits = Float.parseFloat(amount2.getText().toString());
+        addedCredits = Float.parseFloat(payValue);
 
         if(!payValue.isEmpty())
         {
@@ -91,20 +91,19 @@ public class BraintreeCheckoutActivity extends AppCompatActivity {
         }
         else
             Toast.makeText(this, "Enter a valid amount for payment", Toast.LENGTH_SHORT).show();
-
     }
 
     private void sendPayments(){
-        RequestQueue queue= Volley.newRequestQueue(BraintreeCheckoutActivity.this);
+        RequestQueue queue= Volley.newRequestQueue(DepositCreditActivity.this);
         StringRequest stringRequest=new StringRequest(Request.Method.POST, API_CHECKOUT,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         if(response.toString().contains("Successful")){
-                            Toast.makeText(BraintreeCheckoutActivity.this, "Payment Success", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DepositCreditActivity.this, "Payment Success", Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            Toast.makeText(BraintreeCheckoutActivity.this, "Payment Failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DepositCreditActivity.this, "Payment Failed", Toast.LENGTH_SHORT).show();
                         }
                         Log.d("Response",response);
                     }
@@ -138,6 +137,7 @@ public class BraintreeCheckoutActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
+
     private class getToken extends AsyncTask {
         ProgressDialog mDailog;
 
@@ -168,7 +168,7 @@ public class BraintreeCheckoutActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mDailog=new ProgressDialog(BraintreeCheckoutActivity.this,android.R.style.Theme_DeviceDefault_Light_Dialog);
+            mDailog=new ProgressDialog(DepositCreditActivity.this,android.R.style.Theme_DeviceDefault_Light_Dialog);
             mDailog.setCancelable(false);
             mDailog.setMessage("Loading Wallet, Please Wait");
             mDailog.show();
@@ -179,6 +179,7 @@ public class BraintreeCheckoutActivity extends AppCompatActivity {
             super.onPostExecute(o);
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode== REQUEST_CODE){
@@ -187,14 +188,14 @@ public class BraintreeCheckoutActivity extends AppCompatActivity {
                 DropInResult result=data.getParcelableExtra(DropInResult.EXTRA_DROP_IN_RESULT);
                 PaymentMethodNonce nonce= result.getPaymentMethodNonce();
                 String strNounce=nonce.getNonce();
-                if(!amount2.getText().toString().isEmpty())
+                if(!etCredits.getText().toString().isEmpty())
                 {
-                    amount=amount2.getText().toString();
+                    amount= etCredits.getText().toString().replaceAll("[$,]", "");;
                     paramsHash=new HashMap<>();
                     paramsHash.put("amount",amount);
                     paramsHash.put("nonce",strNounce);
 
-                    Float newBalance = currBalance + addedCredits;
+                    Float newBalance = round(currBalance + addedCredits);
                     ParseUser currUser = ParseUser.getCurrentUser();
                     queryBalance(currUser, newBalance);
 
@@ -233,6 +234,8 @@ public class BraintreeCheckoutActivity extends AppCompatActivity {
 
                 Balance balance = accounts.get(0);
                 currBalance = balance.getAmount();
+                tvNewBalanceCount.setText("$" + currBalance);
+                etCredits.addTextChangedListener(tweetCharWatcher);
             }
         });
     }
@@ -270,9 +273,64 @@ public class BraintreeCheckoutActivity extends AppCompatActivity {
         });
     }
 
+    // update the user's potential balance
+    private final TextWatcher tweetCharWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        String current = "";
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if(!s.toString().equals(current)){
+                etCredits.removeTextChangedListener(this);
+
+                String cleanString = s.toString().replaceAll("[$,.]", "");
+
+                Float parsed = Float.parseFloat(cleanString);
+                if (parsed == 0F) {
+                    tvNewBalanceCount.setText("$" + currBalance);
+                    tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_black));
+                } else {
+                    tvNewBalanceCount.setText("$" + round(currBalance + (parsed/100)));
+                    tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_orange_2));
+                }
+                String formatted = NumberFormat.getCurrencyInstance().format((parsed/100));
+
+                current = formatted;
+                etCredits.setText(formatted);
+                etCredits.setSelection(formatted.length());
+
+                etCredits.addTextChangedListener(this);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+
+    public void setPaymentButton() {
+        // Find reference for the view
+        bSubmitPayment = findViewById(R.id.bSubmitPayment);
+
+        // submit payment on click
+        bSubmitPayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                submitPayment();
+            }
+        });
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
+    private float round(float value) {
+        return (float) Math.round(value * 100) / 100;
     }
 }

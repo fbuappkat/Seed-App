@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 
+import com.parse.FindCallback;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.schibstedspain.leku.LocationPickerActivity;
 
 import android.location.Address;
@@ -82,6 +85,7 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_account);
 
+
         MainActivity.setStatusBar(getWindow());
         setUploadProfileImage();
         setCancelButton();
@@ -121,6 +125,7 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 changeProfilePic();
+                toggleSave(true);
             }
         });
     }
@@ -229,12 +234,24 @@ public class EditProfileActivity extends AppCompatActivity {
         // Find reference for the view
         bSave = findViewById(R.id.bSave);
 
+        toggleSave(false);
+
         bSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveProfile();
             }
         });
+    }
+
+    private void toggleSave(boolean save) {
+        if (save) {
+            bSave.setEnabled(save);
+            bSave.setAlpha(1F);
+        } else {
+            bSave.setEnabled(save);
+            bSave.setAlpha(1F);
+        }
     }
 
     private void setEditButtons() {
@@ -253,6 +270,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 etCurrName.getText().clear();
                 etCurrName.requestFocus();
                 showKeyboard();
+                toggleSave(true);
             }
         });
 
@@ -264,6 +282,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 etCurrUsername.getText().clear();
                 etCurrUsername.requestFocus();
                 showKeyboard();
+                toggleSave(true);
             }
         });
 
@@ -275,6 +294,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 etCurrEmail.getText().clear();
                 etCurrEmail.requestFocus();
                 showKeyboard();
+                toggleSave(true);
             }
         });
 
@@ -286,6 +306,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 etCurrBio.getText().clear();
                 etCurrBio.requestFocus();
                 showKeyboard();
+                toggleSave(true);
             }
         });
 
@@ -298,6 +319,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         .build(EditProfileActivity.this);
 
                 startActivityForResult(locationPickerIntent, PLACE_PICKER_REQUEST);
+                toggleSave(true);
             }
         });
     }

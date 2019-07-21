@@ -41,7 +41,7 @@
                     android:textSize="20sp" />
 
                 <ImageView
-                    android:id="@+id/ivProfileToFeed"
+                    android:id="@+id/ivBack"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="left"
