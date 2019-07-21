@@ -21,6 +21,7 @@ import java.util.List;
 
 public class ManageCreditActivity extends AppCompatActivity {
 
+    private  ConstraintLayout withdrawHolder;
     private ConstraintLayout depositHolder;
     private ImageView ivBack;
     private TextView tvName;
@@ -31,19 +32,21 @@ public class ManageCreditActivity extends AppCompatActivity {
 
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_credit);
 
         MainActivity.setStatusBar(getWindow());
-        setDepositCreditOption();
+        setCreditOptions();
         setBackButton();
         setProfileInfo();
     }
 
-    private void setDepositCreditOption() {
+    private void setCreditOptions() {
         // Find reference for the view
         depositHolder = findViewById(R.id.depositHolder);
+        withdrawHolder = findViewById(R.id.withdrawHolder);
 
         // Open deposit credit options on click
         depositHolder.setOnClickListener(new View.OnClickListener() {
@@ -54,7 +57,19 @@ public class ManageCreditActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
+
+        // Open deposit credit options on click
+        withdrawHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ManageCreditActivity.this, WithdrawCreditActivity.class);
+                startActivityForResult(intent, 3);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
     }
+
+
 
     private void setProfileInfo() {
         // Find references for the views

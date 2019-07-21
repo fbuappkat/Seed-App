@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +47,8 @@ public class DepositCreditActivity extends AppCompatActivity {
 
     private static final String TAG = "DepositCredit";
 
-    private Button bSubmitPayment;
+    private Button bDepositCredit;
+    private ImageView ivBack;
     private EditText etCredits;
     private TextView tvNewBalanceCount;
 
@@ -74,7 +76,8 @@ public class DepositCreditActivity extends AppCompatActivity {
 
         new DepositCreditActivity.getToken().execute();
 
-        setPaymentButton();
+        setBackButton();
+        setDepositButton();
         queryBalance(ParseUser.getCurrentUser());
 
     }
@@ -235,7 +238,7 @@ public class DepositCreditActivity extends AppCompatActivity {
                 Balance balance = accounts.get(0);
                 currBalance = balance.getAmount();
                 tvNewBalanceCount.setText("$" + currBalance);
-                etCredits.addTextChangedListener(tweetCharWatcher);
+                etCredits.addTextChangedListener(balanceWatcher);
             }
         });
     }
@@ -274,7 +277,7 @@ public class DepositCreditActivity extends AppCompatActivity {
     }
 
     // update the user's potential balance
-    private final TextWatcher tweetCharWatcher = new TextWatcher() {
+    private final TextWatcher balanceWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
@@ -311,15 +314,28 @@ public class DepositCreditActivity extends AppCompatActivity {
         }
     };
 
-    public void setPaymentButton() {
+    public void setDepositButton() {
         // Find reference for the view
-        bSubmitPayment = findViewById(R.id.bSubmitPayment);
+        bDepositCredit = findViewById(R.id.bDepositCredit);
 
         // submit payment on click
-        bSubmitPayment.setOnClickListener(new View.OnClickListener() {
+        bDepositCredit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 submitPayment();
+            }
+        });
+    }
+
+    private void setBackButton() {
+        // Find reference for the view
+        ivBack = findViewById(R.id.ivBack);
+
+        // Set on-click listener for for image view to launch edit account activity
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
     }
