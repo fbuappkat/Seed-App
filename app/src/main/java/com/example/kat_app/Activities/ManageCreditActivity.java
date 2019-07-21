@@ -35,6 +35,7 @@ public class ManageCreditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_credit);
 
+        MainActivity.setStatusBar(getWindow());
         setDepositCreditOption();
         setBackButton();
         setProfileInfo();

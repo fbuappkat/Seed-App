@@ -82,7 +82,7 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_account);
 
-        setStatusBarColor(R.color.kat_white);
+        MainActivity.setStatusBar(getWindow());
         setUploadProfileImage();
         setCancelButton();
         try {
@@ -123,22 +123,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 changeProfilePic();
             }
         });
-    }
-
-    private void setStatusBarColor(int statusBarColor) {
-        Window window = this.getWindow();
-
-        // Make sure that status bar text is still visible
-        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-
-        // clear FLAG_TRANSLUCENT_STATUS flag:
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
-        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-
-        // finally change the color
-        window.setStatusBarColor(this.getResources().getColor(statusBarColor));
     }
 
     private void setCancelButton() {

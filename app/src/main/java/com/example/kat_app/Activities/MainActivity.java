@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setStatusBarColor(R.color.kat_orange_1);
+        setStatusBar(getWindow());
 
         // Find references for the views
         toolbar =   findViewById(R.id.toolbar);
@@ -51,22 +51,18 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.navFeed:
                                 fragment = new FeedFragment();
                                 hideToolbar();
-                                setStatusBarColor(R.color.kat_white);
                                 break;
                             case R.id.navHome:
                                 fragment = new HomeFragment();
-                                setStatusBarColor(R.color.kat_orange_1);
                                 hideToolbar();
                                 break;
                             case R.id.navUser:
-                                setStatusBarColor(R.color.kat_white);
                                 fragment = new ProfileFragment();
                                 hideToolbar();
                                 break;
                             default:
                                 fragment = new FeedFragment();
                                 showToolbar();
-                                setStatusBarColor(R.color.kat_orange_1);
                                 break;
                         }
                         fragmentManager.beginTransaction().replace(R.id.centerView, fragment).commit();
@@ -75,20 +71,9 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    private void setStatusBarColor(int statusBarColor) {
-        Window window = this.getWindow();
-
+    public static void setStatusBar(Window window) {
         // Make sure that status bar text is still visible
         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-
-        // clear FLAG_TRANSLUCENT_STATUS flag:
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
-        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-
-        // finally change the color
-        window.setStatusBarColor(this.getResources().getColor(statusBarColor));
     }
 
     private void hideToolbar() {

@@ -59,6 +59,8 @@ public class BraintreeCheckoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_braintree_checkout);
 
+        MainActivity.setStatusBar(getWindow());
+
         amount2 =(EditText)findViewById(R.id.amount);
         order =(Button) findViewById(R.id.order);
 
