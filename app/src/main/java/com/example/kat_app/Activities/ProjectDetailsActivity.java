@@ -195,8 +195,10 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                     e.printStackTrace();
                     return;
                 }
-                ParseUser user = posts.get(0);
-                tvAuthor.setText("By: " + user.get("name") + " (@" + user.getUsername() + ")");
+                if (posts.size() != 0) {
+                    ParseUser user = posts.get(0);
+                    tvAuthor.setText("By: " + user.get("name") + " (@" + user.getUsername() + ")");
+                }
             }
 
         });

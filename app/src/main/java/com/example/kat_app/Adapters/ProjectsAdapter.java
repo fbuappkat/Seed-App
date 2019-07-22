@@ -12,6 +12,7 @@ import android.support.v7.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.kat_app.Models.Project;
+import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -19,6 +20,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.List;
+import java.util.Locale;
 
 public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHolder> {
     private Context context;
@@ -126,6 +128,32 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
         void onClick(int position);
     }
 
+    // Filter Class
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        projects.clear();
+        if (charText.length() == 0) {
+            projects.addAll(matchingProjects);
+        } else {
+            for (Project project : projects) {
+                if (project.getName().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    matchingProjects.add(project);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
 
+    // Clean all elements of the recycler
+    public void clear() {
+        projects.clear();
+        notifyDataSetChanged();
+    }
+
+    // Add a list of items -- change to type used
+    public void addAll(List<Project> list) {
+        projects.addAll(list);
+        notifyDataSetChanged();
+    }
 
 }

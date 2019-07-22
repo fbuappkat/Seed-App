@@ -3,6 +3,7 @@ package com.example.kat_app.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,7 +35,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
     protected List<Project> projects;
     protected ProjectsAdapter adapter;
     SearchView editsearch;
-
+    protected SwipeRefreshLayout swipeContainer;
 
     public static final String TAG = "HomeFragment";
 
@@ -58,6 +59,8 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
 
             @Override
             public boolean onQueryTextChange(String s) {
+                String text = s;
+                adapter.filter(text);
                 return false;
             }
         });
@@ -83,7 +86,23 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         rvProjects.setAdapter(adapter);
         // set the layout manager on the recycler view
         rvProjects.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        // Lookup the swipe container view
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                projects.clear();
+                adapter.clear();
+                queryProjects();
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_orange_dark,
+                android.R.color.holo_orange_light);
         queryProjects();
     }
 
@@ -102,6 +121,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
                 }
                 projects.addAll(posts);
                 adapter.notifyDataSetChanged();
+                swipeContainer.setRefreshing(false);
             }
         });
     }
