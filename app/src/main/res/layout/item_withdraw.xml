@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvTimeAgo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="1 WEEK AGO"
+        android:textColor="@color/kat_grey_2"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvDeposit"
+        app:layout_constraintTop_toBottomOf="@+id/ivWithdraw" />
+
+    <ImageView
+        android:id="@+id/ivWithdraw"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_withdraw" />
+
+    <TextView
+        android:id="@+id/tvDeposit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="You withdrew"
+        android:textColor="@color/kat_black"
+        app:layout_constraintBottom_toBottomOf="@+id/ivWithdraw"
+        app:layout_constraintStart_toEndOf="@+id/ivWithdraw"
+        app:layout_constraintTop_toTopOf="@+id/ivWithdraw" />
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="from your account."
+        android:textColor="@color/kat_black"
+        app:layout_constraintBottom_toBottomOf="@+id/tvDepositCount"
+        app:layout_constraintStart_toEndOf="@+id/tvDepositCount"
+        app:layout_constraintTop_toTopOf="@+id/tvDepositCount" />
+
+    <TextView
+        android:id="@+id/tvDepositCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="$100.00"
+        android:textColor="@color/kat_orange_1"
+        app:layout_constraintBottom_toBottomOf="@+id/tvDeposit"
+        app:layout_constraintStart_toEndOf="@+id/tvDeposit"
+        app:layout_constraintTop_toTopOf="@+id/tvDeposit" />
+
+</android.support.constraint.ConstraintLayout>

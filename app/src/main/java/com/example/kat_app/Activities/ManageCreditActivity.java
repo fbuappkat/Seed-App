@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kat_app.Models.Balance;
+import com.example.kat_app.Models.Transaction;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -24,11 +25,13 @@ public class ManageCreditActivity extends AppCompatActivity {
 
     private  ConstraintLayout withdrawHolder;
     private ConstraintLayout depositHolder;
+    private ConstraintLayout transactionHolder;
     private ImageButton ivBack;
     private TextView tvName;
     private TextView tvCurrBalanceCount;
     private Balance balance;
 
+    private static final int MANAGE_CREDIT_OPTION = 3;
     private static final String KEY_NAME = "name";
 
 
@@ -48,23 +51,34 @@ public class ManageCreditActivity extends AppCompatActivity {
         // Find reference for the view
         depositHolder = findViewById(R.id.depositHolder);
         withdrawHolder = findViewById(R.id.withdrawHolder);
+        transactionHolder = findViewById(R.id.transactionHolder);
 
-        // Open deposit credit options on click
+        // Open deposit credit option on click
         depositHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ManageCreditActivity.this, DepositCreditActivity.class);
-                startActivityForResult(intent, 3);
+                startActivityForResult(intent, MANAGE_CREDIT_OPTION);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
-        // Open deposit credit options on click
+        // Open withdraw credit option on click
         withdrawHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ManageCreditActivity.this, WithdrawCreditActivity.class);
-                startActivityForResult(intent, 3);
+                startActivityForResult(intent, MANAGE_CREDIT_OPTION);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
+        // Open transaction history option on click
+        transactionHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ManageCreditActivity.this, TransactionHistoryActivity.class);
+                startActivityForResult(intent, MANAGE_CREDIT_OPTION);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
@@ -121,7 +135,7 @@ public class ManageCreditActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 3 && resultCode == RESULT_OK) {
+        if (requestCode == MANAGE_CREDIT_OPTION && resultCode == RESULT_OK) {
             queryBalance(ParseUser.getCurrentUser());
         }
     }
