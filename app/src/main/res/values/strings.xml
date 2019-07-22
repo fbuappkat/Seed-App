@@ -7,11 +7,13 @@
     </string-array>
 
     <string-array name="categories">
-        <item>Category 1</item>
-        <item>Category 2</item>
-        <item>Category 3</item>
-        <item>Category 4</item>
-        <item>Category 5</item>
+        <item>Select a Category</item>
+        <item>Technology</item>
+        <item>Food</item>
+        <item>Social Good</item>
+        <item>Food/Drink</item>
+        <item>Finance</item>
+        <item>Other</item>
     </string-array>
 
     <string name="google_maps_api">AIzaSyAhbFxJMu7hjZ646Pl1e414synTc9l70xk</string>

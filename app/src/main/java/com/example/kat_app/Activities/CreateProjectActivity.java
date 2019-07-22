@@ -21,11 +21,10 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Models.Project;
-import com.example.kat_app.R;
 import com.example.kat_app.Models.Request;
+import com.example.kat_app.R;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -65,7 +64,7 @@ public class CreateProjectActivity extends AppCompatActivity {
 
         //Todo fix bug where requests arent if user hasnt just logged in / created new session
         setUploadProfileImage();
-        
+
         //link fileprovider
         btnAdd = findViewById(R.id.btnAdd);
         btnPublish = findViewById(R.id.btnPublish);
