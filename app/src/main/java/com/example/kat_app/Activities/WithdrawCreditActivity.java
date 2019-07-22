@@ -66,10 +66,13 @@ public class WithdrawCreditActivity extends AppCompatActivity {
             return;
         } else if (email.isEmpty()) {
             Toast.makeText(this, "Enter your paypal account", Toast.LENGTH_SHORT).show();
+            return;
         } else if (confirmEmail.isEmpty()) {
             Toast.makeText(this, "Confirm your paypal account", Toast.LENGTH_SHORT).show();
+            return;
         } else if (email.compareTo(confirmEmail) != 0) {
             Toast.makeText(this, "Paypal accounts don't match", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         Float newBalance = round(currBalance - removedCredits);
@@ -155,7 +158,7 @@ public class WithdrawCreditActivity extends AppCompatActivity {
                     tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_black));
                 } else {
                     tvNewBalanceCount.setText("$" + round(currBalance - (parsed/100)));
-                    tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_orange_2));
+                    tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_green));
                 }
                 String formatted = NumberFormat.getCurrencyInstance().format((parsed/100));
 

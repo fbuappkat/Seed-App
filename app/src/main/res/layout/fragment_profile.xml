@@ -65,6 +65,7 @@
 
     </android.support.constraint.ConstraintLayout>
 
+
     <ImageView
         android:id="@+id/ivProfileImage"
         android:layout_width="150dp"
@@ -128,7 +129,7 @@
         android:id="@+id/tvLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="4dp"
         android:fontFamily="@font/montserrat_light"
         android:text="Menlo Park, CA"
         android:textColor="@color/kat_grey_2"

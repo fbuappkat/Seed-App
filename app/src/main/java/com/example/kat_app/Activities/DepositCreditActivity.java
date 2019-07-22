@@ -59,8 +59,8 @@ public class DepositCreditActivity extends AppCompatActivity {
     private float currBalance;
     private float addedCredits;
 
-    private String API_GET_TOKEN="http://192.168.64.2/braintree/main.php";
-    private String API_CHECKOUT="http://192.168.64.2/braintree/checkout.php";
+    private String API_GET_TOKEN= "https://kat-app-247218.appspot.com/";
+    private String API_CHECKOUT="https://kat-app-247218.appspot.com/";
 
     private static final int REQUEST_CODE = 1234;
 
@@ -155,7 +155,7 @@ public class DepositCreditActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            token=responseBody;
+                            token=responseBody.substring(0, responseBody.indexOf("=") + 1);
                         }
                     });
                 }
@@ -297,7 +297,7 @@ public class DepositCreditActivity extends AppCompatActivity {
                     tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_black));
                 } else {
                     tvNewBalanceCount.setText("$" + round(currBalance + (parsed/100)));
-                    tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_orange_2));
+                    tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_green));
                 }
                 String formatted = NumberFormat.getCurrencyInstance().format((parsed/100));
 
