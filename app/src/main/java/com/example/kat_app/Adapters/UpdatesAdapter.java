@@ -97,9 +97,8 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                     e1.printStackTrace();}
 
 
-                if (userInFollowList) {
-                    hold.bind(update, project.getName().toString());
-                }
+                hold.bind(update, project.getName().toString());
+
 
             }
         });
