@@ -11,11 +11,6 @@
         android:title="">
     </item>
 
-    <item android:id="@+id/navMessages"
-        android:icon="@drawable/ic_chat"
-        android:title="">
-    </item>
-
     <item android:id="@+id/navUser"
         android:icon="@drawable/ic_user"
         android:title="">
