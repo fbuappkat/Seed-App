@@ -1,69 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/ConstraintLayout"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:background="@color/kat_white">
-
-<android.support.constraint.ConstraintLayout
-    android:id="@+id/constraintLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ConstraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:layout_alignParentTop="true"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    android:layout_height="match_parent"
+    android:background="@color/kat_white">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/kat_white">
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/ivUpdateToFeed"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="left"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/back" />
-
-            <TextView
-                android:id="@+id/tvCommentsHeader"
-                android:layout_width="wrap_content"
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/montserrat_regular"
-                android:text="ADD AN UPDATE"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:background="@color/kat_white">
 
-            <Button
-                android:id="@+id/ivAddUpdate"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_gravity="right"
-                android:layout_marginRight="8dp"
-                android:background="@android:color/transparent"
-                android:text="Post"
-                android:textColor="@color/kat_orange_2"
-                android:textSize="18sp" />
+                <ImageView
+                    android:id="@+id/ivUpdateToFeed"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="left"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/back" />
 
-        </android.support.v7.widget.Toolbar>
+                <TextView
+                    android:id="@+id/tvCommentsHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:text="ADD AN UPDATE"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
 
-    </android.support.design.widget.AppBarLayout>
+                <Button
+                    android:id="@+id/ivAddUpdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="8dp"
+                    android:background="@android:color/transparent"
+                    android:text="Post"
+                    android:textColor="@color/kat_orange_2"
+                    android:textSize="18sp" />
 
-</android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.AppBarLayout>
+
+    </android.support.constraint.ConstraintLayout>
 
     <EditText
         android:id="@+id/etUpdateCaption"
@@ -84,7 +84,7 @@ android:background="@color/kat_white">
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivUpdateImage" />
+        app:layout_constraintTop_toBottomOf="@+id/tvUpload3" />
 
     <Spinner
         android:id="@+id/sProjectChoice"
@@ -122,5 +122,19 @@ android:background="@color/kat_white">
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sProjectChoice"
         app:srcCompat="@color/kat_orange_1" />
+
+    <TextView
+        android:id="@+id/tvUpload3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="Add A Picture To Your Update"
+        android:textColor="@color/kat_orange_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivUpdateImage" />
 
 </android.support.constraint.ConstraintLayout>
