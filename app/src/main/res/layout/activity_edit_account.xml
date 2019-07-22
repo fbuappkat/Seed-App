@@ -30,19 +30,36 @@
                 android:layout_height="wrap_content"
                 android:background="@color/kat_white">
 
-                <Button
+                <android.support.constraint.ConstraintLayout
                     android:id="@+id/bSave"
                     android:layout_width="50dp"
-                    android:layout_height="24dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="right"
                     android:layout_marginRight="16dp"
-                    android:background="@drawable/button"
-                    android:contextClickable="false"
-                    android:fontFamily="@font/montserrat_semibold"
-                    android:text="Save"
-                    android:textAllCaps="false"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp" />
+                    android:clickable="true">
+
+                    <Button
+                        android:id="@+id/Save"
+                        android:layout_width="50dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="right"
+                        android:background="@drawable/button"
+                        android:clickable="false"
+                        android:contextClickable="false"
+                        android:cropToPadding="true"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:includeFontPadding="false"
+                        android:text="Save"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </android.support.constraint.ConstraintLayout>
 
                 <TextView
                     android:id="@+id/tvEditAccount"
@@ -57,7 +74,7 @@
                 <Button
                     android:id="@+id/bCancel"
                     android:layout_width="50dp"
-                    android:layout_height="24dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="left"
                     android:background="@android:color/transparent"
                     android:contextClickable="false"
@@ -188,6 +205,7 @@
             android:layout_marginEnd="16dp"
             android:background="@drawable/round"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 

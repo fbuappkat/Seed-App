@@ -15,6 +15,7 @@ import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
@@ -28,6 +29,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,7 +67,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private Button bEditEmail;
     private Button bEditBio;
     private Button bEditLocation;
-    private Button bSave;
+    private Button Save;
+    private ConstraintLayout bSave;
     private Button bCancel;
     private Double latitude;
     private Double longitude;
@@ -233,6 +236,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private void setSaveButton() {
         // Find reference for the view
         bSave = findViewById(R.id.bSave);
+        Save = findViewById(R.id.Save);
 
         toggleSave(false);
 
@@ -245,12 +249,12 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void toggleSave(boolean save) {
-        if (save) {
-            bSave.setEnabled(save);
-            bSave.setAlpha(1F);
+        if (save == false) {
+            bSave.setEnabled(false);
+            Save.setAlpha(0.3F);
         } else {
-            bSave.setEnabled(save);
-            bSave.setAlpha(1F);
+            bSave.setEnabled(true);
+            Save.setAlpha(1F);
         }
     }
 

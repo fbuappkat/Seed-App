@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,8 +44,8 @@ public class ProfileFragment extends Fragment {
     private TextView tvProjectsCount;
     private TextView tvInvestmentsCount;
     private TextView tvBio;
-    private ImageView ivSettings;
-    private ImageView ivEdit;
+    private ImageButton ivSettings;
+    private ImageButton ivEdit;
     private Balance balance;
 
     private static final String KEY_NAME = "name";

@@ -52,7 +52,8 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="right"
-                    android:background="@drawable/ufi_comment"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/ic_chat"
                     android:clickable="true" />
 
             </android.support.v7.widget.Toolbar>
@@ -63,8 +64,8 @@
 
     <ImageView
         android:id="@+id/ivProfileImage"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

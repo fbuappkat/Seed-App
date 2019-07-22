@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,7 +49,7 @@ public class DepositCreditActivity extends AppCompatActivity {
     private static final String TAG = "DepositCredit";
 
     private Button bDepositCredit;
-    private ImageView ivBack;
+    private ImageButton ivBack;
     private EditText etCredits;
     private TextView tvNewBalanceCount;
 

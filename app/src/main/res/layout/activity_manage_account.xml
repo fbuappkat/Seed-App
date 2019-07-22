@@ -40,14 +40,17 @@
                     android:textColor="#000000"
                     android:textSize="20sp" />
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/ivBack"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="left"
                     android:layout_marginRight="8dp"
-                    android:background="@drawable/ic_back"
-                    android:clickable="true" />
+                    android:background="@android:color/transparent"
+                    android:clickable="true"
+                    android:cropToPadding="false"
+                    android:paddingRight="35dp"
+                    app:srcCompat="@drawable/ic_back" />
 
             </android.support.v7.widget.Toolbar>
 
@@ -76,7 +79,9 @@
         android:id="@+id/creditHolder"
         android:layout_width="0dp"
         android:layout_height="50dp"
+        android:background="@drawable/menu_background"
         android:clickable="true"
+        android:focusable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -121,6 +126,7 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/menu_background"
         android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

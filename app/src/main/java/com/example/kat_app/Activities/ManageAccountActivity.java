@@ -4,14 +4,18 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.kat_app.Fragments.ProfileFragment;
@@ -20,7 +24,7 @@ import com.parse.ParseUser;
 
 public class ManageAccountActivity extends AppCompatActivity {
 
-    private ImageView ivBack;
+    private ImageButton ivBack;
     private ConstraintLayout creditsHolder;
     private Button bLogout;
     Context context;
@@ -31,7 +35,6 @@ public class ManageAccountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_manage_account);
 
         creditsHolder = findViewById(R.id.creditHolder);
-
 
         creditsHolder.setOnClickListener(new View.OnClickListener() {
             @Override

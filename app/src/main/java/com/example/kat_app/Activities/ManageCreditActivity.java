@@ -7,6 +7,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,7 +24,7 @@ public class ManageCreditActivity extends AppCompatActivity {
 
     private  ConstraintLayout withdrawHolder;
     private ConstraintLayout depositHolder;
-    private ImageView ivBack;
+    private ImageButton ivBack;
     private TextView tvName;
     private TextView tvCurrBalanceCount;
     private Balance balance;

@@ -28,7 +28,7 @@
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/kat_white">
+                android:background="@android:color/transparent">
 
                 <TextView
                     android:id="@+id/tvManageCredit"
@@ -40,13 +40,16 @@
                     android:textColor="#000000"
                     android:textSize="20sp" />
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/ivBack"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="left"
-                    android:background="@drawable/ic_back"
-                    android:clickable="true" />
+                    android:background="@android:color/transparent"
+                    android:clickable="true"
+                    android:cropToPadding="false"
+                    android:paddingRight="35dp"
+                    android:src="@drawable/ic_back" />
 
             </android.support.v7.widget.Toolbar>
 
@@ -58,7 +61,7 @@
         android:id="@+id/depositHolder"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginTop="8dp"
+        android:background="@drawable/menu_background"
         android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -209,6 +212,7 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/menu_background"
         android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -254,6 +258,7 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/menu_background"
         android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
