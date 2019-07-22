@@ -44,6 +44,8 @@ public class WithdrawCreditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_withdraw_credit);
 
+        MainActivity.setStatusBar(getWindow());
+
         //Find reference for the view
         tvNewBalanceCount = findViewById(R.id.tvNewBalanceCount);
 

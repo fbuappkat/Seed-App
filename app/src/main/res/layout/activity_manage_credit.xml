@@ -256,7 +256,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/ivTransactionHolder"
+        android:id="@+id/transactionHolder"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="8dp"

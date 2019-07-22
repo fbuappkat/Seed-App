@@ -1,6 +1,5 @@
 package com.example.kat_app.Activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -12,11 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 
 import com.example.kat_app.Fragments.FeedFragment;
 import com.example.kat_app.Fragments.HomeFragment;
-import com.example.kat_app.Fragments.MessagesFragment;
 import com.example.kat_app.Fragments.ProfileFragment;
 import com.example.kat_app.R;
 
@@ -61,11 +58,8 @@ public class MainActivity extends AppCompatActivity {
                                 fragment = new ProfileFragment();
                                 hideToolbar();
                                 break;
-                            case R.id.navMessages:
-                                fragment = new MessagesFragment();
-                                hideToolbar();
-                                break;
-                            default:
+
+                                default:
                                 fragment = new FeedFragment();
                                 showToolbar();
                                 break;
