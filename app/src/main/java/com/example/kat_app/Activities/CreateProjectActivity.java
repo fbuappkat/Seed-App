@@ -21,11 +21,11 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Models.Project;
-import com.example.kat_app.R;
 import com.example.kat_app.Models.Request;
+import com.example.kat_app.R;
+import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -63,6 +63,7 @@ public class CreateProjectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_project);
 
+        //Todo fix bug where requests arent if user hasnt just logged in / created new session
         setUploadProfileImage();
 
         //link fileprovider
@@ -106,13 +107,17 @@ public class CreateProjectActivity extends AppCompatActivity {
                 String name = etName.getText().toString();
                 String description = etDescription.getText().toString();
                 String category = spinnerCategories.getSelectedItem().toString();
-                Project proj = createProject(name, description, ParseUser.getCurrentUser(), category, photoFile);
-                for(int i = 0; i < requests.size(); i++){
-                    createRequest(requests.get(i), prices.get(i), proj);
+                if (category != "Select a Category") {
+                    Project proj = createProject(name, description, ParseUser.getCurrentUser(), category, photoFile);
+                    for (int i = 0; i < requests.size(); i++) {
+                        createRequest(requests.get(i), prices.get(i), proj);
+                    }
+                    Intent create2main = new Intent(CreateProjectActivity.this, MainActivity.class);
+                    startActivity(create2main);
+                    finish();
+                } else {
+                    Toast.makeText(CreateProjectActivity.this, "Please select a category!", Toast.LENGTH_SHORT).show();
                 }
-                Intent create2main = new Intent(CreateProjectActivity.this, MainActivity.class);
-                startActivity(create2main);
-                finish();
             }
         });
     }
@@ -182,9 +187,13 @@ public class CreateProjectActivity extends AppCompatActivity {
     //create requests that will be pointing to project it is a part of and upload to Parse
     public void createRequest(String request, Float price, Project project){
         final Request newRequest = new Request();
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        currentUser.setACL(new ParseACL(currentUser));
+        currentUser.saveInBackground();
         newRequest.setPrice(price);
         newRequest.setRequest(request);
         newRequest.setProject(project);
+        newRequest.put("received", 0);
         newRequest.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {

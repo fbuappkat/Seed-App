@@ -5,9 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,14 +15,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Adapters.SpinAdapter;
-import com.example.kat_app.Models.Update;
 import com.example.kat_app.Models.Project;
+import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -41,11 +40,13 @@ public class AddUpdateActivity extends AppCompatActivity {
 
     private Button btnAddUpdate;
     private EditText etUpdate;
+    private TextView tvUpload3;
     private final String TAG = "Add Update Activity";
     private Spinner spinner;
-    protected Project[] projects;
+    protected ArrayList<Project> projects = new ArrayList<>();
     protected SpinAdapter spinAdapter;
     private Project chosenProject;
+    private String chosenProjectName;
     private ImageView ivBack;
     private ProgressDialog LoadingBar;
     private ImageView ivUpdateImage;
@@ -59,15 +60,41 @@ public class AddUpdateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_update);
 
-        getProjects();
+
         LoadingBar = new ProgressDialog(this);
         ivUpdateImage = findViewById(R.id.ivUpdateImage);
 
         setBackButton();
         setAddUpdateButton();
+        setUploadUpdateImage();
         setSpinner();
         setETUpdate();
+        getProjects();
         //setUploadUpdateImage();
+    }
+
+    private void setUploadUpdateImage() {
+        // Find references for the views
+        ivUpdateImage = findViewById(R.id.ivUpdateImage);
+        tvUpload3 = findViewById(R.id.tvUpload3);
+
+        tvUpload3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadUpdatePic();
+            }
+        });
+    }
+
+    public void uploadUpdatePic() {
+        // Create intent for picking a photo from the gallery
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        if (intent.resolveActivity(this.getPackageManager()) != null) {
+            // Bring up gallery to select a photo
+            startActivityForResult(intent, PICK_PHOTO_CODE);
+        }
     }
 
     private void setAddUpdateButton() {
@@ -75,15 +102,15 @@ public class AddUpdateActivity extends AppCompatActivity {
         btnAddUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String caption = etUpdate.getText().toString();
                 ParseUser currUser = ParseUser.getCurrentUser();
                 /*if (photoFile == null || ivUpdateImage.getDrawable() == null) {
                     Log.e(TAG, "no photo to submit");
                     Toast.makeText(context,"No photo to display!", Toast.LENGTH_SHORT).show();
                 } else {*/
-                String chosenProject = spinner.getSelectedItem().toString();
-                postUpdate(caption, currUser, chosenProject);
                 //}
+                queryProject();
             }
         });
     }
@@ -103,19 +130,10 @@ public class AddUpdateActivity extends AppCompatActivity {
     private void setSpinner() {
         spinner = findViewById(R.id.sProjectChoice);
 
-        List<Project> projectList = new ArrayList<>();
-        Project projectList1 = new Project();
-        projectList1.setName("katie");
-        projectList.add(projectList1);
-        Project projectList2 = new Project();
-        projectList2.setName("timi");
-        projectList.add(projectList2);
-        Project projectList3 = new Project();
-        projectList3.setName("andrew");
-        projectList.add(projectList3);
+        ArrayList<String> names = getProjectNames(projects);
 
-        ArrayAdapter<Project> adapter = new ArrayAdapter<Project>(this,
-                android.R.layout.simple_spinner_item, projectList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, names);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapter);
@@ -123,7 +141,7 @@ public class AddUpdateActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                chosenProject = (Project) parent.getSelectedItem();
+                chosenProjectName = parent.getSelectedItem().toString();
                 //displayUserData(project);
             }
 
@@ -134,31 +152,10 @@ public class AddUpdateActivity extends AppCompatActivity {
         });
     }
 
-    private void setUploadUpdateImage() {
-        // Find references for the views
-        ivUpdateImage = findViewById(R.id.ivProfileImage);
-
-        btnAddUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create intent for picking a photo from the gallery
-                Intent intent = new Intent(Intent.ACTION_PICK,
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    // Bring up gallery to select a photo
-                    startActivityForResult(intent, PICK_PHOTO_CODE);
-                }
-            }
-        });
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)  {
         if (data != null) {
             Uri photoUri = data.getData();
-
-            ivUpdateImage = findViewById(R.id.ivProfileImage);
 
             // by this point we have the camera photo on disk
             Bitmap chosenImage = null;
@@ -172,7 +169,6 @@ public class AddUpdateActivity extends AppCompatActivity {
             Glide.with(this)
                     .asBitmap()
                     .load(chosenImage)
-                    .apply(RequestOptions.circleCropTransform())
                     .into(ivUpdateImage);
 
             // Load the parseFile
@@ -183,12 +179,13 @@ public class AddUpdateActivity extends AppCompatActivity {
         }
     }
 
-    private void postUpdate(String update, ParseUser currentUser, String project) {
-        showLoadingBar();
+
+    private void postUpdate(String update, ParseUser currentUser, Project project, ParseFile photoFile) {
+
         Update newUpdate = new Update();
         newUpdate.setCaption(update);
         newUpdate.setUser(currentUser);
-        newUpdate.setProject(project);
+        newUpdate.put("project", project);
         newUpdate.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -206,23 +203,45 @@ public class AddUpdateActivity extends AppCompatActivity {
 
     private void getProjects() {
         ParseQuery<Project> projectQuery = new ParseQuery<Project>("Project");
+        projectQuery.whereEqualTo("author", ParseUser.getCurrentUser());
         projectQuery.addDescendingOrder("createdAt");
+
 
         projectQuery.findInBackground(new FindCallback<Project>() {
             @Override
-            public void done(List<Project> projects, ParseException e) {
+            public void done(List<Project> projs, ParseException e) {
                 if (e != null) {
                     Log.e(TAG,"Error with query");
                     e.printStackTrace();
                     return;
                 }
-                projects.addAll(projects);
-                //adapter.notifyDataSetChanged();
+                projects.addAll(projs);
+                setSpinner();
             }
         });
-        /*for (int i = 0; i < projects.length; i++) {
-            Log.d("project",projects[i].getName());
-        }*/
+    }
+
+    private void queryProject() {
+        ParseQuery<Project> projectQuery = new ParseQuery<Project>("Project");
+        projectQuery.whereEqualTo("name", chosenProjectName);
+
+
+        projectQuery.findInBackground(new FindCallback<Project>() {
+            @Override
+            public void done(List<Project> projs, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG,"Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+                String caption = etUpdate.getText().toString();
+                ParseUser currUser = ParseUser.getCurrentUser();
+                Project selected = projs.get(0);
+                postUpdate(caption, currUser, selected, null);
+                finish();
+
+            }
+        });
     }
 
     private void setBackButton() {
@@ -243,5 +262,13 @@ public class AddUpdateActivity extends AppCompatActivity {
         LoadingBar.setMessage("Give us a moment! Your update will be live soon.");
         LoadingBar.setCanceledOnTouchOutside(true);
         LoadingBar.show();
+    }
+
+    private ArrayList<String> getProjectNames(ArrayList<Project> projs){
+        ArrayList<String> names = new ArrayList<>();
+        for (int i = 0; i < projs.size(); i++){
+            names.add(projs.get(i).getName());
+        }
+        return names;
     }
 }
