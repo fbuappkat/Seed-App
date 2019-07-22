@@ -44,6 +44,7 @@ public class CreateProjectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_project);
 
+        //Todo fix bug where requests arent if user hasnt just logged in / created new session
 
         //link fileprovider
         btnAdd = findViewById(R.id.btnAdd);
