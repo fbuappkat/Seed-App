@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kat_app.Models.Balance;
+import com.example.kat_app.Models.Transaction;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -38,6 +39,8 @@ public class WithdrawCreditActivity extends AppCompatActivity {
 
     private float currBalance;
     private float removedCredits;
+
+    private Transaction withdrawlTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +123,6 @@ public class WithdrawCreditActivity extends AppCompatActivity {
                     e.printStackTrace();
                     return;
                 }
-
                 Balance balance = accounts.get(0);
                 balance.put("amount", amount);
                 balance.saveInBackground(new SaveCallback() {
@@ -129,9 +131,25 @@ public class WithdrawCreditActivity extends AppCompatActivity {
                         if (e == null) {
                             Log.d(TAG, "Balance updated!");
                             setResult(RESULT_OK);
-                            onBackPressed();
                         } else {
                             Log.e(TAG, "Error while updating balance.");
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+                withdrawlTransaction = new Transaction();
+                withdrawlTransaction.put("sender", ParseUser.getCurrentUser());
+                withdrawlTransaction.put("amount", removedCredits);
+                withdrawlTransaction.setType("withdrawl");
+                withdrawlTransaction.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            Log.d(TAG, "transaction saved!");
+                            onBackPressed();
+                        } else {
+                            Log.e(TAG, "Error while saving transaction.");
                             e.printStackTrace();
                         }
                     }
