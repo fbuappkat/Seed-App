@@ -3,7 +3,6 @@ package com.example.kat_app.Models;
 import android.util.Log;
 
 import com.parse.ParseClassName;
-import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -11,8 +10,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /* FBU 2019
    Update defines the elements of an update about a project and getters and setters for each.
@@ -40,6 +37,10 @@ public class Update extends ParseObject {
     }
 
     public void likePost(ParseUser u) { add(KEY_NUM_LIKED_BY, u); }
+
+    public Project getProject() { return (Project) getParseObject(KEY_PROJECT); }
+
+    public void setProject(Project project) { put(KEY_PROJECT, project); }
 
     public ParseObject getProjectPointer() { return getParseObject(KEY_PROJECT_POINTER); }
 
@@ -82,17 +83,11 @@ public class Update extends ParseObject {
         return getString(KEY_CAPTION);
     }
 
-    public String getProject() {
-        return getString(KEY_PROJECT);
-    }
 
     public void setCaption(String caption) {
         put(KEY_CAPTION, caption);
     }
 
-    public void setProject(String project) {
-        put(KEY_PROJECT, project);
-    }
 
     public void addComment(String comment) {
         Log.d("comment", "comment " + comment);

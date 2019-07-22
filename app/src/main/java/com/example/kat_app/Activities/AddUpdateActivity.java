@@ -44,9 +44,10 @@ public class AddUpdateActivity extends AppCompatActivity {
     private TextView tvUpload3;
     private final String TAG = "Add Update Activity";
     private Spinner spinner;
-    protected Project[] projects;
+    protected ArrayList<Project> projects = new ArrayList<>();
     protected SpinAdapter spinAdapter;
     private Project chosenProject;
+    private String chosenProjectName;
     private ImageView ivBack;
     private ProgressDialog LoadingBar;
     private ImageView ivUpdateImage;
@@ -60,7 +61,7 @@ public class AddUpdateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_update);
 
-        getProjects();
+
         LoadingBar = new ProgressDialog(this);
         ivUpdateImage = findViewById(R.id.ivUpdateImage);
 
@@ -69,6 +70,7 @@ public class AddUpdateActivity extends AppCompatActivity {
         setUploadUpdateImage();
         setSpinner();
         setETUpdate();
+        getProjects();
         //setUploadUpdateImage();
     }
 
@@ -101,14 +103,22 @@ public class AddUpdateActivity extends AppCompatActivity {
         btnAddUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                String caption = etUpdate.getText().toString();
+//                ParseUser currUser = ParseUser.getCurrentUser();
+//                /*if (photoFile == null || ivUpdateImage.getDrawable() == null) {
+//                    Log.e(TAG, "no photo to submit");
+//                    Toast.makeText(context,"No photo to display!", Toast.LENGTH_SHORT).show();
+//                } else {*/
+//
+//                postUpdate(caption, currUser, chosenProject.getName());
                 String caption = etUpdate.getText().toString();
                 ParseUser currUser = ParseUser.getCurrentUser();
                 /*if (photoFile == null || ivUpdateImage.getDrawable() == null) {
                     Log.e(TAG, "no photo to submit");
                     Toast.makeText(context,"No photo to display!", Toast.LENGTH_SHORT).show();
                 } else {*/
-                postUpdate(caption, currUser, chosenProject.getName(), photoFile);
                 //}
+                queryProject();
             }
         });
     }
@@ -128,19 +138,10 @@ public class AddUpdateActivity extends AppCompatActivity {
     private void setSpinner() {
         spinner = findViewById(R.id.sProjectChoice);
 
-        List<Project> projectList = new ArrayList<>();
-        Project projectList1 = new Project();
-        projectList1.setName("katie");
-        projectList.add(projectList1);
-        Project projectList2 = new Project();
-        projectList2.setName("timi");
-        projectList.add(projectList2);
-        Project projectList3 = new Project();
-        projectList3.setName("andrew");
-        projectList.add(projectList3);
+        ArrayList<String> names = getProjectNames(projects);
 
-        ArrayAdapter<Project> adapter = new ArrayAdapter<Project>(this,
-                android.R.layout.simple_spinner_item, projectList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, names);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapter);
@@ -148,7 +149,7 @@ public class AddUpdateActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                chosenProject = (Project) parent.getSelectedItem();
+                chosenProjectName = parent.getSelectedItem().toString();
                 //displayUserData(project);
             }
 
@@ -186,13 +187,13 @@ public class AddUpdateActivity extends AppCompatActivity {
         }
     }
 
-    private void postUpdate(String update, ParseUser currentUser, String project, ParseFile photoFile) {
-        showLoadingBar();
+
+    private void postUpdate(String update, ParseUser currentUser, Project project, ParseFile photoFile) {
+
         Update newUpdate = new Update();
         newUpdate.setCaption(update);
         newUpdate.setUser(currentUser);
-        //TODO be able to set project pointers
-        //newUpdate.setProjectPointer("IGXprIUSYd");
+        newUpdate.put("project", project);
         newUpdate.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -210,23 +211,44 @@ public class AddUpdateActivity extends AppCompatActivity {
 
     private void getProjects() {
         ParseQuery<Project> projectQuery = new ParseQuery<Project>("Project");
+        projectQuery.whereEqualTo("author", ParseUser.getCurrentUser());
         projectQuery.addDescendingOrder("createdAt");
+
 
         projectQuery.findInBackground(new FindCallback<Project>() {
             @Override
-            public void done(List<Project> projects, ParseException e) {
+            public void done(List<Project> projs, ParseException e) {
                 if (e != null) {
                     Log.e(TAG,"Error with query");
                     e.printStackTrace();
                     return;
                 }
-                projects.addAll(projects);
-                //adapter.notifyDataSetChanged();
+                projects.addAll(projs);
+                setSpinner();
             }
         });
-        /*for (int i = 0; i < projects.length; i++) {
-            Log.d("project",projects[i].getName());
-        }*/
+    }
+
+    private void queryProject() {
+        ParseQuery<Project> projectQuery = new ParseQuery<Project>("Project");
+        projectQuery.whereEqualTo("name", chosenProjectName);
+
+
+        projectQuery.findInBackground(new FindCallback<Project>() {
+            @Override
+            public void done(List<Project> projs, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG,"Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+                String caption = etUpdate.getText().toString();
+                ParseUser currUser = ParseUser.getCurrentUser();
+                Project selected = projs.get(0);
+                postUpdate(caption, currUser, selected, null);
+
+            }
+        });
     }
 
     private void setBackButton() {
@@ -247,5 +269,13 @@ public class AddUpdateActivity extends AppCompatActivity {
         LoadingBar.setMessage("Give us a moment! Your update will be live soon.");
         LoadingBar.setCanceledOnTouchOutside(true);
         LoadingBar.show();
+    }
+
+    private ArrayList<String> getProjectNames(ArrayList<Project> projs){
+        ArrayList<String> names = new ArrayList<>();
+        for (int i = 0; i < projs.size(); i++){
+            names.add(projs.get(i).getName());
+        }
+        return names;
     }
 }

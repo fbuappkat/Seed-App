@@ -19,10 +19,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Activities.OtherUserProfileActivity;
 import com.example.kat_app.Activities.UpdateDetailsActivity;
+import com.example.kat_app.Models.Project;
 import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
+import com.parse.FindCallback;
 import com.parse.ParseFile;
-import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -65,30 +67,43 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Update update = updates.get(position);
+        final Update update = updates.get(position);
+        final ViewHolder hold = holder;
 
-        final ParseObject project = update.getProjectPointer();
-
-        try {
-            JSONArray followers = project.fetchIfNeeded().getJSONArray("followers");
-            for (int i = 0; i < followers.length(); i++) {
-                JSONObject jsonobject = followers.getJSONObject(i);
-                String userID = jsonobject.getString("objectId");
-                String currUserID = currUser.getObjectId();
-                if (Boolean.toString(userID.equals(currUserID)).equals("true")) {
-                    userInFollowList = true;
-                    break;
+        //Todo make less janky and slow
+        ParseQuery<Project> projectQuery = new ParseQuery<Project>("Project");
+        projectQuery.whereEqualTo("objectId", update.getProject().getObjectId());
+        projectQuery.findInBackground(new FindCallback<Project>() {
+            @Override
+            public void done(List<Project> projs, com.parse.ParseException e) {
+                if (e != null) {
+                    Log.e(TAG,"Error with query");
+                    e.printStackTrace();
+                    return;
                 }
-            }
-        } catch (JSONException e1) {
-            e1.printStackTrace();
-        } catch (com.parse.ParseException e1) {
-            e1.printStackTrace();
-        }
+                Project project = projs.get(0);
+                try {
+                    JSONArray followers = project.getFollowers();
+                    for (int i = 0; i < followers.length(); i++) {
+                        JSONObject jsonobject = followers.getJSONObject(i);
+                        String userID = jsonobject.getString("objectId");
+                        String currUserID = currUser.getObjectId();
+                        if (Boolean.toString(userID.equals(currUserID)).equals("true")) {
+                            userInFollowList = true;
+                            break;
+                        }
+                    }
+                } catch (JSONException e1) {
+                    e1.printStackTrace();}
 
-        if (userInFollowList) {
-            holder.bind(update);
-        }
+
+                if (userInFollowList) {
+                    hold.bind(update, project.getName().toString());
+                }
+
+            }
+        });
+
     }
 
     @Override
@@ -146,7 +161,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
         }
 
         //add in data for specific user's post
-        public void bind(final Update update) {
+        public void bind(final Update update, String name) {
 
             Log.d(TAG,Boolean.toString(userInFollowList));
             try {
@@ -160,7 +175,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
             tvNumLikes.setText(Integer.toString(update.getNumLikes()));
             tvNumComments.setText(Integer.toString(update.getNumComments()));
             //TODO make this get the actual project
-            tvProject.setText("test");
+            tvProject.setText(name);
 
             ParseFile profileImage = update.getUser().getParseFile(KEY_PROFILE_IMAGE);
             if (profileImage != null) {
