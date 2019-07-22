@@ -174,7 +174,6 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
             tvRelativeTime.setText(getRelativeTimeAgo(String.valueOf(update.getCreatedAt())));
             tvNumLikes.setText(Integer.toString(update.getNumLikes()));
             tvNumComments.setText(Integer.toString(update.getNumComments()));
-            //TODO make this get the actual project
             tvProject.setText(name);
 
             ParseFile profileImage = update.getUser().getParseFile(KEY_PROFILE_IMAGE);

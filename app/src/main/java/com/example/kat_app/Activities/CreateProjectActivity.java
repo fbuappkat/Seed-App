@@ -106,13 +106,17 @@ public class CreateProjectActivity extends AppCompatActivity {
                 String name = etName.getText().toString();
                 String description = etDescription.getText().toString();
                 String category = spinnerCategories.getSelectedItem().toString();
-                Project proj = createProject(name, description, ParseUser.getCurrentUser(), category, photoFile);
-                for(int i = 0; i < requests.size(); i++){
-                    createRequest(requests.get(i), prices.get(i), proj);
+                if (category != "Select a Category") {
+                    Project proj = createProject(name, description, ParseUser.getCurrentUser(), category, photoFile);
+                    for (int i = 0; i < requests.size(); i++) {
+                        createRequest(requests.get(i), prices.get(i), proj);
+                    }
+                    Intent create2main = new Intent(CreateProjectActivity.this, MainActivity.class);
+                    startActivity(create2main);
+                    finish();
+                } else {
+                    Toast.makeText(CreateProjectActivity.this, "Please select a category!", Toast.LENGTH_SHORT).show();
                 }
-                Intent create2main = new Intent(CreateProjectActivity.this, MainActivity.class);
-                startActivity(create2main);
-                finish();
             }
         });
     }
@@ -185,6 +189,7 @@ public class CreateProjectActivity extends AppCompatActivity {
         newRequest.setPrice(price);
         newRequest.setRequest(request);
         newRequest.setProject(project);
+        newRequest.put("received", 0);
         newRequest.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {

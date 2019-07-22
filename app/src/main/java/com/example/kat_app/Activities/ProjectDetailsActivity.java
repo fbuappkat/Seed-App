@@ -176,7 +176,9 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                 }
                 requests = new ArrayList<>();
                 requests.addAll(posts);
-                tvFunds.setText("Funds: " + getTotalFunds(requests) + "/" + getTotal(requests));
+                if (requests != null) {
+                    tvFunds.setText("Funds: " + getTotalFunds(requests) + "/" + getTotal(requests));
+                }
                 makePieChart();
             }
         });

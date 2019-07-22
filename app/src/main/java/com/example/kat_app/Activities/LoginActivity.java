@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.kat_app.R;
 import com.parse.LogInCallback;
+import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
@@ -73,6 +74,9 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Login credentials incorrect", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
+                ParseACL parseACL = new ParseACL(ParseUser.getCurrentUser());
+                parseACL.setPublicReadAccess(true);
+                ParseUser.getCurrentUser().setACL(parseACL);
             }
         });
     }

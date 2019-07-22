@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,10 +16,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.kat_app.Activities.AddUpdateActivity;
+import com.example.kat_app.Adapters.UpdatesAdapter;
 import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
-import com.example.kat_app.Adapters.UpdatesAdapter;
-import android.support.v7.widget.DividerItemDecoration;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -54,6 +54,8 @@ public class FeedFragment extends Fragment {
 
         rvFeed = view.findViewById(R.id.rvFeed);
         setAddButton(view);
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        queryUpdates();
 
         // create the data source
         updates = new ArrayList<>();
@@ -68,6 +70,7 @@ public class FeedFragment extends Fragment {
         rvFeed.setLayoutManager(new LinearLayoutManager(getContext()));
         // Lookup the swipe container view
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -83,7 +86,6 @@ public class FeedFragment extends Fragment {
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(android.R.color.holo_orange_dark,
                 android.R.color.holo_orange_light);
-        queryUpdates();
     }
 
     //get posts via network request

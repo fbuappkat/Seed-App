@@ -5,9 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,10 +19,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Adapters.SpinAdapter;
-import com.example.kat_app.Models.Update;
 import com.example.kat_app.Models.Project;
+import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -103,14 +102,7 @@ public class AddUpdateActivity extends AppCompatActivity {
         btnAddUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                String caption = etUpdate.getText().toString();
-//                ParseUser currUser = ParseUser.getCurrentUser();
-//                /*if (photoFile == null || ivUpdateImage.getDrawable() == null) {
-//                    Log.e(TAG, "no photo to submit");
-//                    Toast.makeText(context,"No photo to display!", Toast.LENGTH_SHORT).show();
-//                } else {*/
-//
-//                postUpdate(caption, currUser, chosenProject.getName());
+
                 String caption = etUpdate.getText().toString();
                 ParseUser currUser = ParseUser.getCurrentUser();
                 /*if (photoFile == null || ivUpdateImage.getDrawable() == null) {
@@ -246,6 +238,7 @@ public class AddUpdateActivity extends AppCompatActivity {
                 ParseUser currUser = ParseUser.getCurrentUser();
                 Project selected = projs.get(0);
                 postUpdate(caption, currUser, selected, null);
+                finish();
 
             }
         });
