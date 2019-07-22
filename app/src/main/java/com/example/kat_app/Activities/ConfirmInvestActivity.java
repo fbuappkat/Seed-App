@@ -224,10 +224,13 @@ public class ConfirmInvestActivity extends AppCompatActivity {
                     return;
                 }
                 investorBalance = posts.get(0);
-                tvBalance.setText("Your current balance: $" + investorBalance.getNumber("amount"));
+                tvBalance.setText("Your current balance: $" + (investorBalance.getNumber("amount")));
             }
 
         });
     }
 
+    private float round(float value) {
+        return (float) Math.round(value * 100) / 100;
+    }
 }

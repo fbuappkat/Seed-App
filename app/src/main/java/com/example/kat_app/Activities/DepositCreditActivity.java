@@ -238,7 +238,7 @@ public class DepositCreditActivity extends AppCompatActivity {
 
                 Balance balance = accounts.get(0);
                 currBalance = balance.getAmount();
-                tvNewBalanceCount.setText("$" + currBalance);
+                tvNewBalanceCount.setText("$" + round(currBalance));
                 etCredits.addTextChangedListener(balanceWatcher);
             }
         });
@@ -293,7 +293,7 @@ public class DepositCreditActivity extends AppCompatActivity {
 
                 Float parsed = Float.parseFloat(cleanString);
                 if (parsed == 0F) {
-                    tvNewBalanceCount.setText("$" + currBalance);
+                    tvNewBalanceCount.setText("$" + round(currBalance));
                     tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_black));
                 } else {
                     tvNewBalanceCount.setText("$" + round(currBalance + (parsed/100)));

@@ -100,7 +100,7 @@ public class ManageCreditActivity extends AppCompatActivity {
 
                 balance = accounts.get(0);
 
-                tvCurrBalanceCount.setText("$" + balance.getAmount());
+                tvCurrBalanceCount.setText("$" + round(balance.getAmount()));
             }
         });
     }
@@ -131,4 +131,9 @@ public class ManageCreditActivity extends AppCompatActivity {
         super.finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
+
+    private float round(float value) {
+        return (float) Math.round(value * 100) / 100;
+    }
+
 }

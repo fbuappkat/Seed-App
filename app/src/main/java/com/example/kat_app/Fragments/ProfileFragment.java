@@ -125,7 +125,7 @@ public class ProfileFragment extends Fragment {
 
                 balance = accounts.get(0);
 
-                tvBalanceCount.setText("$" + balance.getAmount());
+                tvBalanceCount.setText("$" + round(balance.getAmount()));
             }
         });
     }
@@ -181,6 +181,10 @@ public class ProfileFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();
+    }
+
+    private float round(float value) {
+        return (float) Math.round(value * 100) / 100;
     }
 }
 
