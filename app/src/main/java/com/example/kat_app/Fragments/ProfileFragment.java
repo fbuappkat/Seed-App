@@ -1,14 +1,17 @@
 package com.example.kat_app.Fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,15 +44,16 @@ public class ProfileFragment extends Fragment {
     private TextView tvProjectsCount;
     private TextView tvInvestmentsCount;
     private TextView tvBio;
-    private ImageView ivSettings;
-    private ImageView ivEdit;
+    private ImageButton ivSettings;
+    private ImageButton ivEdit;
     private Balance balance;
 
     private static final String KEY_NAME = "name";
     private static final String KEY_PROFILE_IMAGE = "profile_image";
     private static final String KEY_BIO = "bio";
     private static final String KEY_LOCATION = "location";
-    private static final String KEY_BALANCE = "balance";
+    private static final int EDIT_PROFILE_CODE = 10001;
+    private static final int MANAGE_ACCOUNT_CODE = 10002;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -97,8 +101,7 @@ public class ProfileFragment extends Fragment {
                     .load(profileImage.getUrl())
                     .apply(RequestOptions.circleCropTransform())
                     .into(ivProfileImage);
-        }
-        else {
+        } else {
             Glide.with(getContext())
                     .load(R.drawable.default_profile_image)
                     .apply(RequestOptions.circleCropTransform())
@@ -115,14 +118,14 @@ public class ProfileFragment extends Fragment {
             @Override
             public void done(List<Balance> accounts, ParseException e) {
                 if (e != null) {
-                    Log.e("Query requests","Error with query");
+                    Log.e("Query requests", "Error with query");
                     e.printStackTrace();
                     return;
                 }
 
                 balance = accounts.get(0);
 
-                tvBalanceCount.setText("$" + balance.getAmount());
+                tvBalanceCount.setText("$" + round(balance.getAmount()));
             }
         });
     }
@@ -136,7 +139,8 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), EditProfileActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, EDIT_PROFILE_CODE);
+                getActivity().overridePendingTransition(R.anim.slide_up, R.anim.do_nothing);
             }
         });
     }
@@ -150,7 +154,8 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ManageAccountActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, MANAGE_ACCOUNT_CODE);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
     }
@@ -169,6 +174,17 @@ public class ProfileFragment extends Fragment {
         String country = addresses.get(0).getCountryName();
 
         return state + ", " + country;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
+    }
+
+    private float round(float value) {
+        return (float) Math.round(value * 100) / 100;
     }
 }
 

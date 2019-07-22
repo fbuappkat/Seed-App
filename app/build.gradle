@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     buildToolsVersion "29.0.0"
     defaultConfig {
-        applicationId "com.example.kat_app"
+        applicationId "com.example.katapp"
         minSdkVersion 28
         targetSdkVersion 28
         versionCode 1
@@ -44,10 +44,13 @@ dependencies {
     implementation 'org.parceler:parceler-api:1.1.12'
     annotationProcessor 'org.parceler:parceler:1.1.12'
     implementation "com.google.android.gms:play-services-maps:16.1.0"
-    implementation ("com.google.android.libraries.places:places-compat:1.1.0")
-    implementation ("com.schibstedspain.android:leku:5.0.0") {
+    implementation("com.google.android.libraries.places:places-compat:1.1.0")
+    implementation("com.schibstedspain.android:leku:5.0.0") {
         exclude group: 'com.google.android.gms'
         exclude module: "play-services-places"
     }
+    implementation 'com.braintreepayments.api:drop-in:3.7.1'
+    implementation 'com.android.volley:volley:1.1.1'
+    implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 }

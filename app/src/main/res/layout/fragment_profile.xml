@@ -29,13 +29,15 @@
                 android:layout_height="wrap_content"
                 android:background="@color/kat_white">
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/ivSettings"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="right"
                     android:layout_marginRight="16dp"
-                    android:background="@drawable/ic_settings" />
+                    android:background="@android:color/transparent"
+                    android:paddingLeft="26dp"
+                    android:src="@drawable/ic_settings" />
 
                 <TextView
                     android:id="@+id/tvProfile"
@@ -47,19 +49,22 @@
                     android:textColor="#000000"
                     android:textSize="20sp" />
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/ivEdit"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="left"
-                    android:background="@drawable/ic_edit"
-                    android:clickable="true" />
+                    android:background="@android:color/transparent"
+                    android:clickable="true"
+                    android:paddingRight="26dp"
+                    android:src="@drawable/ic_edit" />
 
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.AppBarLayout>
 
     </android.support.constraint.ConstraintLayout>
+
 
     <ImageView
         android:id="@+id/ivProfileImage"
@@ -124,7 +129,7 @@
         android:id="@+id/tvLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="4dp"
         android:fontFamily="@font/montserrat_light"
         android:text="Menlo Park, CA"
         android:textColor="@color/kat_grey_2"

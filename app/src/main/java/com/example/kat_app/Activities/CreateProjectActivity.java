@@ -1,7 +1,10 @@
 package com.example.kat_app.Activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,19 +12,27 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
 import com.example.kat_app.Models.Request;
 import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class CreateProjectActivity extends AppCompatActivity {
@@ -30,6 +41,8 @@ public class CreateProjectActivity extends AppCompatActivity {
     private Button btnPublish;
     private EditText etName;
     private EditText etDescription;
+    private ImageView ivThumbnailImage;
+    private TextView tvUpload2;
     private Spinner spinnerCategories;
     public ConstraintLayout constraintLayout;
 
@@ -39,13 +52,20 @@ public class CreateProjectActivity extends AppCompatActivity {
     ArrayAdapter<String> requestsAdapter;
     ListView lvRequest;
 
+    ParseFile photoFile;
+
+    private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    private static final String KEY_THUMBNAIL_IMAGE = "thumbnail";
+    private final static int PICK_PHOTO_CODE = 1034;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_project);
 
         //Todo fix bug where requests arent if user hasnt just logged in / created new session
-
+        setUploadProfileImage();
+        
         //link fileprovider
         btnAdd = findViewById(R.id.btnAdd);
         btnPublish = findViewById(R.id.btnPublish);
@@ -87,7 +107,7 @@ public class CreateProjectActivity extends AppCompatActivity {
                 String name = etName.getText().toString();
                 String description = etDescription.getText().toString();
                 String category = spinnerCategories.getSelectedItem().toString();
-                Project proj = createProject(name, description, ParseUser.getCurrentUser(), category);
+                Project proj = createProject(name, description, ParseUser.getCurrentUser(), category, photoFile);
                 for(int i = 0; i < requests.size(); i++){
                     createRequest(requests.get(i), prices.get(i), proj);
                 }
@@ -96,6 +116,67 @@ public class CreateProjectActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void setUploadProfileImage() {
+        // Find references for the views
+        ivThumbnailImage = findViewById(R.id.ivThumbnailImage);
+        tvUpload2 = findViewById(R.id.tvUpload2);
+
+        Glide.with(this)
+                    .load(R.drawable.default_thumbnail_image)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(ivThumbnailImage);
+
+        tvUpload2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadThumbnailPic();
+            }
+        });
+    }
+
+    public void uploadThumbnailPic() {
+        // Create intent for picking a photo from the gallery
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        if (intent.resolveActivity(this.getPackageManager()) != null) {
+            // Bring up gallery to select a photo
+            startActivityForResult(intent, PICK_PHOTO_CODE);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)  {
+        if (requestCode == PICK_PHOTO_CODE) {
+            if (data != null) {
+                Uri photoUri = data.getData();
+
+                ivThumbnailImage = findViewById(R.id.ivThumbnailImage);
+
+                // by this point we have the camera photo on disk
+                Bitmap chosenImage = null;
+                try {
+                    chosenImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                // Load the taken image into a preview
+                Glide.with(this)
+                        .asBitmap()
+                        .load(chosenImage)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(ivThumbnailImage);
+
+                // Load the parseFile
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                chosenImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                byte[] image = stream.toByteArray();
+                photoFile = new ParseFile(ParseUser.getCurrentUser().getUsername() + randomAlphaNumeric(6) + "thumbnail_pic.jpg", image);
+            }
+        }
     }
 
 
@@ -135,7 +216,7 @@ public class CreateProjectActivity extends AppCompatActivity {
     }
 
     //create project and upload to Parse, return project to be used in createRequest
-    private Project createProject(String name, String description, ParseUser user, String category){
+    private Project createProject(String name, String description, ParseUser user, String category, ParseFile thumbnail){
         final Project newProject = new Project();
         newProject.setDescription(description);
         newProject.setName(name);
@@ -147,6 +228,10 @@ public class CreateProjectActivity extends AppCompatActivity {
         newProject.put("followers", emptyFollowers);
         newProject.put("investors", emptyInvestors);
         newProject.put("media", emptyMedia);
+        // Check if user uploaded a thumbnail photo
+        if (thumbnail != null) {
+            newProject.put(KEY_THUMBNAIL_IMAGE, thumbnail);
+        }
         newProject.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -164,7 +249,13 @@ public class CreateProjectActivity extends AppCompatActivity {
         return newProject;
     }
 
-
-
+    public static String randomAlphaNumeric(int count) {
+        StringBuilder builder = new StringBuilder();
+        while (count-- != 0) {
+            int character = (int)(Math.random()*ALPHA_NUMERIC_STRING.length());
+            builder.append(ALPHA_NUMERIC_STRING.charAt(character));
+        }
+        return builder.toString();
+    }
 
 }

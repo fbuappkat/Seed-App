@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 
+import com.parse.FindCallback;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.schibstedspain.leku.LocationPickerActivity;
 
 import android.location.Address;
@@ -12,6 +15,7 @@ import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
@@ -25,6 +29,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,7 +67,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private Button bEditEmail;
     private Button bEditBio;
     private Button bEditLocation;
-    private Button bSave;
+    private Button Save;
+    private ConstraintLayout bSave;
     private Button bCancel;
     private Double latitude;
     private Double longitude;
@@ -82,7 +88,7 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_account);
 
-        setStatusBarColor(R.color.kat_white);
+        MainActivity.setStatusBar(getWindow());
         setUploadProfileImage();
         setCancelButton();
         try {
@@ -121,24 +127,9 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 changeProfilePic();
+                toggleSave(true);
             }
         });
-    }
-
-    private void setStatusBarColor(int statusBarColor) {
-        Window window = this.getWindow();
-
-        // Make sure that status bar text is still visible
-        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-
-        // clear FLAG_TRANSLUCENT_STATUS flag:
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
-        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-
-        // finally change the color
-        window.setStatusBarColor(this.getResources().getColor(statusBarColor));
     }
 
     private void setCancelButton() {
@@ -244,6 +235,9 @@ public class EditProfileActivity extends AppCompatActivity {
     private void setSaveButton() {
         // Find reference for the view
         bSave = findViewById(R.id.bSave);
+        Save = findViewById(R.id.Save);
+
+        toggleSave(false);
 
         bSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -251,6 +245,16 @@ public class EditProfileActivity extends AppCompatActivity {
                 saveProfile();
             }
         });
+    }
+
+    private void toggleSave(boolean save) {
+        if (save == false) {
+            bSave.setEnabled(false);
+            Save.setAlpha(0.3F);
+        } else {
+            bSave.setEnabled(true);
+            Save.setAlpha(1F);
+        }
     }
 
     private void setEditButtons() {
@@ -269,6 +273,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 etCurrName.getText().clear();
                 etCurrName.requestFocus();
                 showKeyboard();
+                toggleSave(true);
             }
         });
 
@@ -280,6 +285,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 etCurrUsername.getText().clear();
                 etCurrUsername.requestFocus();
                 showKeyboard();
+                toggleSave(true);
             }
         });
 
@@ -291,6 +297,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 etCurrEmail.getText().clear();
                 etCurrEmail.requestFocus();
                 showKeyboard();
+                toggleSave(true);
             }
         });
 
@@ -302,6 +309,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 etCurrBio.getText().clear();
                 etCurrBio.requestFocus();
                 showKeyboard();
+                toggleSave(true);
             }
         });
 
@@ -314,6 +322,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         .build(EditProfileActivity.this);
 
                 startActivityForResult(locationPickerIntent, PLACE_PICKER_REQUEST);
+                toggleSave(true);
             }
         });
     }
@@ -359,6 +368,7 @@ public class EditProfileActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     Log.d(TAG, "Details saved successfully!");
+                    setResult(RESULT_OK);
                     onBackPressed();
                 } else {
                     Log.e(TAG, "Error while saving.");
@@ -387,5 +397,11 @@ public class EditProfileActivity extends AppCompatActivity {
     private void showKeyboard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.do_nothing, R.anim.slide_down);
     }
 }

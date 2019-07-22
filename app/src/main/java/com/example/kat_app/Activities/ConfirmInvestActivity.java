@@ -214,7 +214,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
     protected void queryUserBalance(ParseUser user) {
         ParseQuery<Balance> projectQuery = new ParseQuery<>(Balance.class);
 
-        projectQuery.whereEqualTo("objectId", user.getParseObject("money").getObjectId());
+        projectQuery.whereEqualTo("user", user);
         projectQuery.findInBackground(new FindCallback<Balance>() {
             @Override
             public void done(List<Balance> posts, ParseException e) {
@@ -224,10 +224,13 @@ public class ConfirmInvestActivity extends AppCompatActivity {
                     return;
                 }
                 investorBalance = posts.get(0);
-                tvBalance.setText("Your current balance: $" + investorBalance.getNumber("amount"));
+                tvBalance.setText("Your current balance: $" + (investorBalance.getNumber("amount")));
             }
 
         });
     }
 
+    private float round(float value) {
+        return (float) Math.round(value * 100) / 100;
+    }
 }

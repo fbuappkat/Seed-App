@@ -2,10 +2,12 @@ package com.example.kat_app.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,39 +22,55 @@ import java.util.List;
 
 public class ManageCreditActivity extends AppCompatActivity {
 
+    private  ConstraintLayout withdrawHolder;
     private ConstraintLayout depositHolder;
-    private ImageView ivBack;
+    private ImageButton ivBack;
     private TextView tvName;
     private TextView tvCurrBalanceCount;
     private Balance balance;
 
     private static final String KEY_NAME = "name";
-    private static final String KEY_BALANCE = "balance";
+
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_credit);
 
-        setDepositCreditOption();
+        MainActivity.setStatusBar(getWindow());
+        setCreditOptions();
         setBackButton();
         setProfileInfo();
     }
 
-    private void setDepositCreditOption() {
+    private void setCreditOptions() {
         // Find reference for the view
         depositHolder = findViewById(R.id.depositHolder);
+        withdrawHolder = findViewById(R.id.withdrawHolder);
 
         // Open deposit credit options on click
         depositHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ManageCreditActivity.this, PayPalCheckoutActivity.class);
-                startActivity(intent);
-                finish();
+                Intent intent = new Intent(ManageCreditActivity.this, DepositCreditActivity.class);
+                startActivityForResult(intent, 3);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
+        // Open deposit credit options on click
+        withdrawHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ManageCreditActivity.this, WithdrawCreditActivity.class);
+                startActivityForResult(intent, 3);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
     }
+
+
 
     private void setProfileInfo() {
         // Find references for the views
@@ -82,7 +100,7 @@ public class ManageCreditActivity extends AppCompatActivity {
 
                 balance = accounts.get(0);
 
-                tvCurrBalanceCount.setText("$" + balance.getAmount());
+                tvCurrBalanceCount.setText("$" + round(balance.getAmount()));
             }
         });
     }
@@ -99,4 +117,23 @@ public class ManageCreditActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 3 && resultCode == RESULT_OK) {
+            queryBalance(ParseUser.getCurrentUser());
+        }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
+    private float round(float value) {
+        return (float) Math.round(value * 100) / 100;
+    }
+
 }

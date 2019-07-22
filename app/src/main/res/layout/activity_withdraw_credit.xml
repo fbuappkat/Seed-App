@@ -31,12 +31,12 @@
                 android:background="@color/kat_white">
 
                 <TextView
-                    android:id="@+id/tvDepositCredit"
+                    android:id="@+id/tvWithdrawCredit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/montserrat_semibold"
-                    android:text="Deposit Credit"
+                    android:text="Withdraw Credit"
                     android:textColor="#000000"
                     android:textSize="20sp" />
 
@@ -45,11 +45,11 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="left"
-                    android:layout_marginRight="8dp"
                     android:background="@android:color/transparent"
                     android:clickable="true"
+                    android:cropToPadding="true"
                     android:paddingRight="35dp"
-                    android:src="@drawable/ic_back" />
+                    app:srcCompat="@drawable/ic_back" />
 
             </android.support.v7.widget.Toolbar>
 
@@ -58,21 +58,19 @@
     </android.support.constraint.ConstraintLayout>
 
     <Button
-        android:id="@+id/bDepositCredit"
+        android:id="@+id/bWithdrawCredit"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="52dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="108dp"
         android:background="@drawable/button"
         android:fontFamily="@font/montserrat_semibold"
-        android:text="Deposit Credit"
+        android:text="Withdraw Credit"
         android:textAllCaps="false"
         android:textColor="@color/kat_white"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvNewBalanceCount" />
 
@@ -80,15 +78,16 @@
         android:id="@+id/etCredits"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="208dp"
+        android:layout_marginTop="32dp"
         android:ems="10"
         android:fontFamily="@font/montserrat_regular"
+        android:hint="$0.00"
         android:inputType="numberDecimal"
         android:maxLength="9"
         android:textColor="@color/kat_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCaption" />
 
     <TextView
         android:id="@+id/tvNewBalance"
@@ -117,6 +116,73 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tvNewBalance"
+        app:layout_constraintTop_toBottomOf="@+id/etConfirmEmail" />
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:fontFamily="@font/montserrat_regular"
+        android:hint="paypal account"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/kat_black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etCredits" />
+
+    <EditText
+        android:id="@+id/etConfirmEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:fontFamily="@font/montserrat_regular"
+        android:hint="confirm paypal account"
+        android:inputType="textEmailAddress"
+        android:singleLine="true"
+        android:textColor="@color/kat_black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etCredits" />
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="Withdrawls from your account balance will be deposited into you PayPal account within 2 weeks from request."
+        android:textAlignment="center"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bWithdrawCredits"
+        app:layout_constraintVertical_bias="0.068" />
+
+    <TextView
+        android:id="@+id/tvCaption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="Enter the amount that you would like withdrawn into you PayPal account."
+        android:textColor="@color/kat_black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
 </android.support.constraint.ConstraintLayout>
