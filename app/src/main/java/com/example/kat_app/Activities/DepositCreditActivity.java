@@ -32,6 +32,7 @@ import com.braintreepayments.api.interfaces.HttpResponseCallback;
 import com.braintreepayments.api.internal.HttpClient;
 import com.braintreepayments.api.models.PaymentMethodNonce;
 import com.example.kat_app.Models.Balance;
+import com.example.kat_app.Models.Transaction;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -63,6 +64,8 @@ public class DepositCreditActivity extends AppCompatActivity {
     private String API_CHECKOUT="https://kat-app-247218.appspot.com/";
 
     private static final int REQUEST_CODE = 1234;
+
+    private Transaction depositTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -266,9 +269,25 @@ public class DepositCreditActivity extends AppCompatActivity {
                         if (e == null) {
                             Log.d(TAG, "Balance updated!");
                             setResult(RESULT_OK);
-                            onBackPressed();
                         } else {
                             Log.e(TAG, "Error while updating balance.");
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+                depositTransaction = new Transaction();
+                depositTransaction.put("sender", ParseUser.getCurrentUser());
+                depositTransaction.put("amount", addedCredits);
+                depositTransaction.setType("deposit");
+                depositTransaction.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            Log.d(TAG, "transaction saved!");
+                            onBackPressed();
+                        } else {
+                            Log.e(TAG, "Error while saving transaction.");
                             e.printStackTrace();
                         }
                     }
