@@ -16,6 +16,7 @@ import android.view.WindowManager;
 
 import com.example.kat_app.Fragments.FeedFragment;
 import com.example.kat_app.Fragments.HomeFragment;
+import com.example.kat_app.Fragments.MessagesFragment;
 import com.example.kat_app.Fragments.ProfileFragment;
 import com.example.kat_app.R;
 
@@ -58,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             case R.id.navUser:
                                 fragment = new ProfileFragment();
+                                hideToolbar();
+                                break;
+                            case R.id.navMessages:
+                                fragment = new MessagesFragment();
                                 hideToolbar();
                                 break;
                             default:
