@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -40,6 +41,7 @@ public class AddUpdateActivity extends AppCompatActivity {
 
     private Button btnAddUpdate;
     private EditText etUpdate;
+    private TextView tvUpload3;
     private final String TAG = "Add Update Activity";
     private Spinner spinner;
     protected ArrayList<Project> projects = new ArrayList<>();
@@ -65,9 +67,35 @@ public class AddUpdateActivity extends AppCompatActivity {
 
         setBackButton();
         setAddUpdateButton();
+        setUploadUpdateImage();
+        setSpinner();
         setETUpdate();
         getProjects();
         //setUploadUpdateImage();
+    }
+
+    private void setUploadUpdateImage() {
+        // Find references for the views
+        ivUpdateImage = findViewById(R.id.ivUpdateImage);
+        tvUpload3 = findViewById(R.id.tvUpload3);
+
+        tvUpload3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadUpdatePic();
+            }
+        });
+    }
+
+    public void uploadUpdatePic() {
+        // Create intent for picking a photo from the gallery
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        if (intent.resolveActivity(this.getPackageManager()) != null) {
+            // Bring up gallery to select a photo
+            startActivityForResult(intent, PICK_PHOTO_CODE);
+        }
     }
 
     private void setAddUpdateButton() {
@@ -83,6 +111,12 @@ public class AddUpdateActivity extends AppCompatActivity {
 //                } else {*/
 //
 //                postUpdate(caption, currUser, chosenProject.getName());
+                String caption = etUpdate.getText().toString();
+                ParseUser currUser = ParseUser.getCurrentUser();
+                /*if (photoFile == null || ivUpdateImage.getDrawable() == null) {
+                    Log.e(TAG, "no photo to submit");
+                    Toast.makeText(context,"No photo to display!", Toast.LENGTH_SHORT).show();
+                } else {*/
                 //}
                 queryProject();
             }
@@ -126,31 +160,10 @@ public class AddUpdateActivity extends AppCompatActivity {
         });
     }
 
-    private void setUploadUpdateImage() {
-        // Find references for the views
-        ivUpdateImage = findViewById(R.id.ivProfileImage);
-
-        btnAddUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create intent for picking a photo from the gallery
-                Intent intent = new Intent(Intent.ACTION_PICK,
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    // Bring up gallery to select a photo
-                    startActivityForResult(intent, PICK_PHOTO_CODE);
-                }
-            }
-        });
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)  {
         if (data != null) {
             Uri photoUri = data.getData();
-
-            ivUpdateImage = findViewById(R.id.ivProfileImage);
 
             // by this point we have the camera photo on disk
             Bitmap chosenImage = null;
@@ -164,7 +177,6 @@ public class AddUpdateActivity extends AppCompatActivity {
             Glide.with(this)
                     .asBitmap()
                     .load(chosenImage)
-                    .apply(RequestOptions.circleCropTransform())
                     .into(ivUpdateImage);
 
             // Load the parseFile
@@ -175,13 +187,13 @@ public class AddUpdateActivity extends AppCompatActivity {
         }
     }
 
-    private void postUpdate(String update, ParseUser currentUser, Project project) {
-        showLoadingBar();
+
+    private void postUpdate(String update, ParseUser currentUser, Project project, ParseFile photoFile) {
+
         Update newUpdate = new Update();
         newUpdate.setCaption(update);
         newUpdate.setUser(currentUser);
         newUpdate.put("project", project);
-        //TODO be able to set project pointers
         newUpdate.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -233,7 +245,7 @@ public class AddUpdateActivity extends AppCompatActivity {
                 String caption = etUpdate.getText().toString();
                 ParseUser currUser = ParseUser.getCurrentUser();
                 Project selected = projs.get(0);
-                postUpdate(caption, currUser, selected);
+                postUpdate(caption, currUser, selected, null);
 
             }
         });
