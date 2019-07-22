@@ -23,6 +23,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.Models.Request;
 import com.example.kat_app.R;
+import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -186,6 +187,9 @@ public class CreateProjectActivity extends AppCompatActivity {
     //create requests that will be pointing to project it is a part of and upload to Parse
     public void createRequest(String request, Float price, Project project){
         final Request newRequest = new Request();
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        currentUser.setACL(new ParseACL(currentUser));
+        currentUser.saveInBackground();
         newRequest.setPrice(price);
         newRequest.setRequest(request);
         newRequest.setProject(project);
