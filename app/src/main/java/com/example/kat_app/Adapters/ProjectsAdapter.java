@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.support.v7.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.kat_app.Models.Project;
@@ -21,7 +22,8 @@ import java.util.List;
 
 public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHolder> {
     private Context context;
-    private List<Project> projects;
+    private static List<Project> projects;
+    private static List<Project> matchingProjects;
     private final String TAG = "UpdatesAdapter";
     private OnClickListener monClickListener;
 
@@ -29,6 +31,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
     public ProjectsAdapter(Context context, List<Project> projects, OnClickListener onClickListener) {
         this.context = context;
         this.projects = projects;
+        matchingProjects = projects;
         this.monClickListener = onClickListener;
     }
 
@@ -41,7 +44,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ProjectsAdapter.ViewHolder holder, int position) {
-        Project project = projects.get(position);
+        Project project = matchingProjects.get(position);
         if (position%2 == 0) {
             holder.view.setBackgroundColor(Color.parseColor("#FFFFFF"));
         }
@@ -73,6 +76,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
             tvAuthor = itemView.findViewById(R.id.tvAuthor);
             tvFollowers = itemView.findViewById(R.id.tvFollowers);
             tvInvestors = itemView.findViewById(R.id.tvInvestors);
+
         }
 
         protected void queryUser(final Project project) {
@@ -87,8 +91,10 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
                         e.printStackTrace();
                         return;
                     }
-                    ParseUser user = posts.get(0);
-                    tvAuthor.setText("@" + user.getUsername());
+                    if (posts.size() != 0) {
+                        ParseUser user = posts.get(0);
+                        tvAuthor.setText("@" + user.getUsername());
+                    }
                 }
 
             });
@@ -115,7 +121,8 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
 
 
     }
-    public interface OnClickListener{
+
+        public interface OnClickListener{
         void onClick(int position);
     }
 

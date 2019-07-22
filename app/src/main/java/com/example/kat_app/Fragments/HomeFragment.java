@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
     private ImageView ivAdd;
     protected List<Project> projects;
     protected ProjectsAdapter adapter;
+    SearchView editsearch;
 
 
     public static final String TAG = "HomeFragment";
@@ -46,6 +48,19 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         super.onViewCreated(view, savedInstanceState);
 
         ivAdd = view.findViewById(R.id.ivAdd);
+        // Locate the EditText in listview_main.xml
+        editsearch = (SearchView) view.findViewById(R.id.search);
+        editsearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
 
         ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override

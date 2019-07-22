@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.Spinner;
 
 import com.bumptech.glide.Glide;
@@ -80,7 +81,8 @@ public class AddUpdateActivity extends AppCompatActivity {
                     Log.e(TAG, "no photo to submit");
                     Toast.makeText(context,"No photo to display!", Toast.LENGTH_SHORT).show();
                 } else {*/
-                postUpdate(caption, currUser, chosenProject.getName());
+                String chosenProject = spinner.getSelectedItem().toString();
+                postUpdate(caption, currUser, chosenProject);
                 //}
             }
         });
@@ -186,8 +188,7 @@ public class AddUpdateActivity extends AppCompatActivity {
         Update newUpdate = new Update();
         newUpdate.setCaption(update);
         newUpdate.setUser(currentUser);
-        //TODO be able to set project pointers
-        //newUpdate.setProjectPointer("IGXprIUSYd");
+        newUpdate.setProject(project);
         newUpdate.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
