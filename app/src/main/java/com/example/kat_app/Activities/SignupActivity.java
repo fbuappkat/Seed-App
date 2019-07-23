@@ -16,29 +16,25 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class SignupActivity extends AppCompatActivity {
 
-    private Button btnSignup;
-    private EditText etName;
-    private EditText etUsername;
-    private EditText etEmail;
-    private EditText etPassword;
-    private EditText etConfirmpassword;
+    @BindView(R.id.btnSignup) Button btnSignup;
+    @BindView(R.id.etName) EditText etName;
+    @BindView(R.id.etUsername) EditText etUsername;
+    @BindView(R.id.etEmail) EditText etEmail;
+    @BindView(R.id.etPassword) EditText etPassword;
+    @BindView(R.id.etConfirmpassword) EditText etConfirmpassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        //link button and edittexts to fileprovider
-        btnSignup = findViewById(R.id.btnSignup);
-        etName = findViewById(R.id.etName);
-        etUsername = findViewById(R.id.etUsername);
-        etEmail = findViewById(R.id.etEmail);
-        etPassword = findViewById(R.id.etPassword);
-        etConfirmpassword = findViewById(R.id.etConfirmpassword);
-
+        ButterKnife.bind(this);
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,9 +105,5 @@ public class SignupActivity extends AppCompatActivity {
                 });
             }
         });
-
-
-
-
     }
 }

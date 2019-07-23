@@ -30,18 +30,21 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ProjectDetailsActivity extends AppCompatActivity {
 
-    private PieChart pcBreakdown;
-    private TextView tvName;
-    private TextView tvAuthor;
-    private TextView tvDescription;
-    private TextView tvInvestors;
-    private TextView tvFollowers;
-    private TextView tvFunds;
-    private Button btnFollow;
-    private Button btnInvest;
-    private Button btnMore;
+    @BindView(R.id.pcBreakdown) PieChart pcBreakdown;
+    @BindView(R.id.tvName) TextView tvName;
+    @BindView(R.id.tvAuthor) TextView tvAuthor;
+    @BindView(R.id.tvDescription) TextView tvDescription;
+    @BindView(R.id.tvInvestors) TextView tvInvestors;
+    @BindView(R.id.tvFollowers) TextView tvFollowers;
+    @BindView(R.id.tvFunds) TextView tvFunds;
+    @BindView(R.id.btnFollow) Button btnFollow;
+    @BindView(R.id.btnInvest) Button btnInvest;
+    @BindView(R.id.btnMoreDetails) Button btnMore;
     private ArrayList<Request> requests;
     private Project proj;
 
@@ -53,16 +56,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
 
         proj = Parcels.unwrap(getIntent().getParcelableExtra("project"));
 
-        //init text views
-        tvName = findViewById(R.id.tvName);
-        tvAuthor = findViewById(R.id.tvAuthor);
-        tvDescription = findViewById(R.id.tvDescription);
-        tvInvestors = findViewById(R.id.tvInvestors);
-        tvFollowers = findViewById(R.id.tvFollowers);
-        tvFunds = findViewById(R.id.tvFunds);
-        btnFollow = findViewById(R.id.btnFollow);
-        btnInvest = findViewById(R.id.btnInvest);
-        btnMore = findViewById(R.id.btnMoreDetails);
+        ButterKnife.bind(this);
         queryRequests();
 
 
@@ -141,7 +135,6 @@ public class ProjectDetailsActivity extends AppCompatActivity {
 
     //create piechart for request breakdown
     public void makePieChart(){
-        pcBreakdown = findViewById(R.id.pcBreakdown);
         pcBreakdown.setUsePercentValues(false);
         Description pcDesc = new Description();
         pcDesc.setText("Requested funds breakdown");
