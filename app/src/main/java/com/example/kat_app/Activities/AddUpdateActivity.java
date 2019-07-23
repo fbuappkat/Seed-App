@@ -35,24 +35,36 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /* AddUpdateActivity allows the user to add an update about a specific project. */
 public class AddUpdateActivity extends AppCompatActivity {
 
-    private Button btnAddUpdate;
-    private EditText etUpdate;
-    private TextView tvUpload3;
     private final String TAG = "Add Update Activity";
-    private Spinner spinner;
+
+    @BindView(R.id.ivAddUpdate)
+    Button btnAddUpdate;
+    @BindView(R.id.etUpdateCaption)
+    EditText etUpdate;
+    @BindView(R.id.tvUpload3)
+    TextView tvUpload3;
+    @BindView(R.id.sProjectChoice)
+    Spinner spinner;
+    @BindView(R.id.ivBack)
+    ImageView ivBack;
+    @BindView(R.id.ivUpdateImage)
+    ImageView ivUpdateImage;
+
     protected ArrayList<Project> projects = new ArrayList<>();
     protected SpinAdapter spinAdapter;
     private Project chosenProject;
     private String chosenProjectName;
-    private ImageView ivBack;
     private ProgressDialog LoadingBar;
-    private ImageView ivUpdateImage;
+
     public final String photoFileName = "photo.jpg";
     private ParseFile photoFile;
-    Context context = AddUpdateActivity.this;
+
     private final static int PICK_PHOTO_CODE = 1034;
 
     @Override
@@ -74,10 +86,6 @@ public class AddUpdateActivity extends AppCompatActivity {
     }
 
     private void setUploadUpdateImage() {
-        // Find references for the views
-        ivUpdateImage = findViewById(R.id.ivUpdateImage);
-        tvUpload3 = findViewById(R.id.tvUpload3);
-
         tvUpload3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +106,6 @@ public class AddUpdateActivity extends AppCompatActivity {
     }
 
     private void setAddUpdateButton() {
-        btnAddUpdate = findViewById(R.id.ivAddUpdate);
         btnAddUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +123,6 @@ public class AddUpdateActivity extends AppCompatActivity {
     }
 
     private void setETUpdate() {
-        etUpdate = findViewById(R.id.etUpdateCaption);
         etUpdate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus)
@@ -128,8 +134,6 @@ public class AddUpdateActivity extends AppCompatActivity {
     }
 
     private void setSpinner() {
-        spinner = findViewById(R.id.sProjectChoice);
-
         ArrayList<String> names = getProjectNames(projects);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
@@ -153,7 +157,7 @@ public class AddUpdateActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)  {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data != null) {
             Uri photoUri = data.getData();
 
@@ -211,7 +215,7 @@ public class AddUpdateActivity extends AppCompatActivity {
             @Override
             public void done(List<Project> projs, ParseException e) {
                 if (e != null) {
-                    Log.e(TAG,"Error with query");
+                    Log.e(TAG, "Error with query");
                     e.printStackTrace();
                     return;
                 }
@@ -230,7 +234,7 @@ public class AddUpdateActivity extends AppCompatActivity {
             @Override
             public void done(List<Project> projs, ParseException e) {
                 if (e != null) {
-                    Log.e(TAG,"Error with query");
+                    Log.e(TAG, "Error with query");
                     e.printStackTrace();
                     return;
                 }
@@ -245,9 +249,6 @@ public class AddUpdateActivity extends AppCompatActivity {
     }
 
     private void setBackButton() {
-        // Find reference for the view
-        ivBack = findViewById(R.id.ivUpdateToFeed);
-
         // Set on-click listener for for image view to launch edit account activity
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -264,9 +265,9 @@ public class AddUpdateActivity extends AppCompatActivity {
         LoadingBar.show();
     }
 
-    private ArrayList<String> getProjectNames(ArrayList<Project> projs){
+    private ArrayList<String> getProjectNames(ArrayList<Project> projs) {
         ArrayList<String> names = new ArrayList<>();
-        for (int i = 0; i < projs.size(); i++){
+        for (int i = 0; i < projs.size(); i++) {
             names.add(projs.get(i).getName());
         }
         return names;
