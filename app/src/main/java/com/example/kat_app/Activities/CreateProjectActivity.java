@@ -78,9 +78,7 @@ public class CreateProjectActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        //Todo fix bug where requests arent if user hasnt just logged in / created new session
         setUploadProfileImage();
-
 
         //setup spinner
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(CreateProjectActivity.this,
@@ -272,5 +270,6 @@ public class CreateProjectActivity extends AppCompatActivity {
         }
         return builder.toString();
     }
+
 
 }

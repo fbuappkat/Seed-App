@@ -8,16 +8,19 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.ProgressBar;
-import android.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.SearchView;
+import android.widget.Spinner;
 
-import com.example.kat_app.Activities.ProjectDetailsActivity;
 import com.example.kat_app.Activities.CreateProjectActivity;
+import com.example.kat_app.Activities.ProjectDetailsActivity;
 import com.example.kat_app.Adapters.ProjectsAdapter;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
@@ -38,8 +41,10 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
     protected ProjectsAdapter adapter;
     private ProgressBar pbLoad;
     private FloatingActionButton fabCreate;
+    private Spinner spinnerFilter;
     SearchView editsearch;
     protected SwipeRefreshLayout swipeContainer;
+
 
     public static final String TAG = "HomeFragment";
 
@@ -55,6 +60,35 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
 
         pbLoad = view.findViewById(R.id.pbLoad);
         fabCreate = view.findViewById(R.id.fabCreate);
+        spinnerFilter = view.findViewById(R.id.spinnerFilter);
+
+        //setup spinner
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.filter));
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinnerFilter.setAdapter(spinnerAdapter);
+
+        spinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String[] strarr = getResources().getStringArray(R.array.filter);
+                switch(position){
+                    case 0:
+                        queryProjects();
+                        break;
+                    case 1:
+                        queryProjects();
+                    default:
+                        queryProjectsByCategory(strarr[position]);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         fabCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,6 +162,32 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
                     e.printStackTrace();
                     return;
                 }
+                projects.clear();
+                adapter.clear();
+                projects.addAll(posts);
+                adapter.notifyDataSetChanged();
+                swipeContainer.setRefreshing(false);
+                pbLoad.setVisibility(View.INVISIBLE);
+                rvProjects.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    protected void queryProjectsByCategory(String category) {
+        ParseQuery<Project> projectQuery = new ParseQuery<Project>(Project.class);
+        //updateQuery.include(Update.KEY_USER);
+        projectQuery.whereEqualTo("category", category);
+
+        projectQuery.findInBackground(new FindCallback<Project>() {
+            @Override
+            public void done(List<Project> posts, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG,"Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+                projects.clear();
+                adapter.clear();
                 projects.addAll(posts);
                 adapter.notifyDataSetChanged();
                 swipeContainer.setRefreshing(false);
