@@ -35,22 +35,35 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class CreateProjectActivity extends AppCompatActivity {
 
-    private Button btnAdd;
-    private Button btnPublish;
-    private EditText etName;
-    private EditText etDescription;
-    private ImageView ivThumbnailImage;
-    private TextView tvUpload2;
-    private Spinner spinnerCategories;
-    public ConstraintLayout constraintLayout;
+    @BindView(R.id.btnAdd)
+    Button btnAdd;
+    @BindView(R.id.btnPublish)
+    Button btnPublish;
+    @BindView(R.id.etName)
+    EditText etName;
+    @BindView(R.id.etDescription)
+    EditText etDescription;
+    @BindView(R.id.ivThumbnailImage)
+    ImageView ivThumbnailImage;
+    @BindView(R.id.tvUpload2)
+    TextView tvUpload2;
+    @BindView(R.id.spinnerCategory)
+    Spinner spinnerCategories;
+    @BindView(R.id.lvRequests)
+    ListView lvRequest;
+    @BindView(R.id.root)
+    ConstraintLayout constraintLayout;
 
     ArrayList<String> requests;
     ArrayList<Float> prices;
     ArrayList<String> requestWithPrice;
     ArrayAdapter<String> requestsAdapter;
-    ListView lvRequest;
+
 
     ParseFile photoFile;
 
@@ -63,17 +76,11 @@ public class CreateProjectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_project);
 
+        ButterKnife.bind(this);
+
         //Todo fix bug where requests arent if user hasnt just logged in / created new session
         setUploadProfileImage();
 
-        //link fileprovider
-        btnAdd = findViewById(R.id.btnAdd);
-        btnPublish = findViewById(R.id.btnPublish);
-        constraintLayout = (ConstraintLayout) findViewById(R.id.root);
-        lvRequest = findViewById(R.id.lvRequests);
-        etDescription = findViewById(R.id.etDescription);
-        etName = findViewById(R.id.etName);
-        spinnerCategories = findViewById(R.id.spinnerCategory);
 
         //setup spinner
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(CreateProjectActivity.this,

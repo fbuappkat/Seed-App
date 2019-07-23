@@ -45,23 +45,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class DepositCreditActivity extends AppCompatActivity {
 
     private static final String TAG = "DepositCredit";
 
-    private Button bDepositCredit;
-    private ImageButton ivBack;
-    private EditText etCredits;
-    private TextView tvNewBalanceCount;
+    @BindView(R.id.bDepositCredit)
+    Button bDepositCredit;
+    @BindView(R.id.ivBack)
+    ImageButton ivBack;
+    @BindView(R.id.etCredits)
+    EditText etCredits;
+    @BindView(R.id.tvNewBalanceCount)
+    TextView tvNewBalanceCount;
 
-    private HashMap<String,String> paramsHash;
+    private HashMap<String, String> paramsHash;
     private String token;
     private String amount;
     private float currBalance;
     private float addedCredits;
 
-    private String API_GET_TOKEN= "https://kat-app-247218.appspot.com/";
-    private String API_CHECKOUT="https://kat-app-247218.appspot.com/";
+    private String API_GET_TOKEN = "https://kat-app-247218.appspot.com/";
+    private String API_CHECKOUT = "https://kat-app-247218.appspot.com/";
 
     private static final int REQUEST_CODE = 1234;
 
@@ -72,11 +79,8 @@ public class DepositCreditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deposit_credit);
 
+        ButterKnife.bind(this);
         MainActivity.setStatusBar(getWindow());
-
-        // Find references for the views
-        etCredits = findViewById(R.id.etCredits);
-        tvNewBalanceCount = findViewById(R.id.tvNewBalanceCount);
 
         new DepositCreditActivity.getToken().execute();
 
@@ -86,60 +90,56 @@ public class DepositCreditActivity extends AppCompatActivity {
 
     }
 
-    private void submitPayment(){
-        String payValue= etCredits.getText().toString().replaceAll("[$,]", "");
+    private void submitPayment() {
+        String payValue = etCredits.getText().toString().replaceAll("[$,]", "");
 
         addedCredits = Float.parseFloat(payValue);
 
-        if(!payValue.isEmpty())
-        {
-            DropInRequest dropInRequest=new DropInRequest().clientToken(token);
-            startActivityForResult(dropInRequest.getIntent(this),REQUEST_CODE);
-        }
-        else
+        if (!payValue.isEmpty()) {
+            DropInRequest dropInRequest = new DropInRequest().clientToken(token);
+            startActivityForResult(dropInRequest.getIntent(this), REQUEST_CODE);
+        } else
             Toast.makeText(this, "Enter a valid amount for payment", Toast.LENGTH_SHORT).show();
     }
 
-    private void sendPayments(){
-        RequestQueue queue= Volley.newRequestQueue(DepositCreditActivity.this);
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, API_CHECKOUT,
+    private void sendPayments() {
+        RequestQueue queue = Volley.newRequestQueue(DepositCreditActivity.this);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, API_CHECKOUT,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if(response.toString().contains("Successful")){
+                        if (response.toString().contains("Successful")) {
                             Toast.makeText(DepositCreditActivity.this, "Payment Success", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
+                        } else {
                             Toast.makeText(DepositCreditActivity.this, "Payment Failed", Toast.LENGTH_SHORT).show();
                         }
-                        Log.d("Response",response);
+                        Log.d("Response", response);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Err",error.toString());
+                Log.d("Err", error.toString());
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                if(paramsHash==null)
+                if (paramsHash == null)
                     return null;
-                Map<String,String> params=new HashMap<>();
-                for(String key:paramsHash.keySet())
-                {
-                    params.put(key,paramsHash.get(key));
+                Map<String, String> params = new HashMap<>();
+                for (String key : paramsHash.keySet()) {
+                    params.put(key, paramsHash.get(key));
                 }
                 return params;
             }
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> params=new HashMap<>();
-                params.put("Content-type","application/x-www-form-urlencoded");
+                Map<String, String> params = new HashMap<>();
+                params.put("Content-type", "application/x-www-form-urlencoded");
                 return params;
             }
         };
-        RetryPolicy mRetryPolicy=new DefaultRetryPolicy(0,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        RetryPolicy mRetryPolicy = new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         stringRequest.setRetryPolicy(mRetryPolicy);
         queue.add(stringRequest);
     }
@@ -150,7 +150,7 @@ public class DepositCreditActivity extends AppCompatActivity {
 
         @Override
         protected Object doInBackground(Object[] objects) {
-            HttpClient client=new HttpClient();
+            HttpClient client = new HttpClient();
             client.get(API_GET_TOKEN, new HttpResponseCallback() {
                 @Override
                 public void success(final String responseBody) {
@@ -158,7 +158,7 @@ public class DepositCreditActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            token=responseBody.substring(0, responseBody.indexOf("=") + 1);
+                            token = responseBody.substring(0, responseBody.indexOf("=") + 1);
                         }
                     });
                 }
@@ -166,7 +166,7 @@ public class DepositCreditActivity extends AppCompatActivity {
                 @Override
                 public void failure(Exception exception) {
                     mDailog.dismiss();
-                    Log.d("Err",exception.toString());
+                    Log.d("Err", exception.toString());
                 }
             });
             return null;
@@ -175,51 +175,45 @@ public class DepositCreditActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mDailog=new ProgressDialog(DepositCreditActivity.this,android.R.style.Theme_DeviceDefault_Light_Dialog);
+            mDailog = new ProgressDialog(DepositCreditActivity.this, android.R.style.Theme_DeviceDefault_Light_Dialog);
             mDailog.setCancelable(false);
             mDailog.setMessage("Loading Wallet, Please Wait");
             mDailog.show();
         }
 
         @Override
-        protected void onPostExecute(Object o){
+        protected void onPostExecute(Object o) {
             super.onPostExecute(o);
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode== REQUEST_CODE){
-            if(resultCode==RESULT_OK)
-            {
-                DropInResult result=data.getParcelableExtra(DropInResult.EXTRA_DROP_IN_RESULT);
-                PaymentMethodNonce nonce= result.getPaymentMethodNonce();
-                String strNounce=nonce.getNonce();
-                if(!etCredits.getText().toString().isEmpty())
-                {
-                    amount= etCredits.getText().toString().replaceAll("[$,]", "");;
-                    paramsHash=new HashMap<>();
-                    paramsHash.put("amount",amount);
-                    paramsHash.put("nonce",strNounce);
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                DropInResult result = data.getParcelableExtra(DropInResult.EXTRA_DROP_IN_RESULT);
+                PaymentMethodNonce nonce = result.getPaymentMethodNonce();
+                String strNounce = nonce.getNonce();
+                if (!etCredits.getText().toString().isEmpty()) {
+                    amount = etCredits.getText().toString().replaceAll("[$,]", "");
+                    ;
+                    paramsHash = new HashMap<>();
+                    paramsHash.put("amount", amount);
+                    paramsHash.put("nonce", strNounce);
 
                     Float newBalance = round(currBalance + addedCredits);
                     ParseUser currUser = ParseUser.getCurrentUser();
                     queryBalance(currUser, newBalance);
 
                     sendPayments();
-                }
-                else {
+                } else {
                     Toast.makeText(this, "Please enter a valid amount", Toast.LENGTH_SHORT).show();
                 }
-            }
-            else if(resultCode==RESULT_CANCELED)
-            {
+            } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(this, "User canceled", Toast.LENGTH_SHORT).show();
-            }
-            else
-            {
-                Exception error=(Exception)data.getSerializableExtra(DropInActivity.EXTRA_ERROR);
-                Log.d("Err",error.toString());
+            } else {
+                Exception error = (Exception) data.getSerializableExtra(DropInActivity.EXTRA_ERROR);
+                Log.d("Err", error.toString());
             }
         }
     }
@@ -234,7 +228,7 @@ public class DepositCreditActivity extends AppCompatActivity {
             @Override
             public void done(List<Balance> accounts, ParseException e) {
                 if (e != null) {
-                    Log.e("Query requests","Error with query");
+                    Log.e("Query requests", "Error with query");
                     e.printStackTrace();
                     return;
                 }
@@ -256,7 +250,7 @@ public class DepositCreditActivity extends AppCompatActivity {
             @Override
             public void done(List<Balance> accounts, ParseException e) {
                 if (e != null) {
-                    Log.e("Query requests","Error with query");
+                    Log.e("Query requests", "Error with query");
                     e.printStackTrace();
                     return;
                 }
@@ -303,9 +297,10 @@ public class DepositCreditActivity extends AppCompatActivity {
         }
 
         String current = "";
+
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if(!s.toString().equals(current)){
+            if (!s.toString().equals(current)) {
                 etCredits.removeTextChangedListener(this);
 
                 String cleanString = s.toString().replaceAll("[$,.]", "");
@@ -315,10 +310,10 @@ public class DepositCreditActivity extends AppCompatActivity {
                     tvNewBalanceCount.setText("$" + round(currBalance));
                     tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_black));
                 } else {
-                    tvNewBalanceCount.setText("$" + round(currBalance + (parsed/100)));
+                    tvNewBalanceCount.setText("$" + round(currBalance + (parsed / 100)));
                     tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_green));
                 }
-                String formatted = NumberFormat.getCurrencyInstance().format((parsed/100));
+                String formatted = NumberFormat.getCurrencyInstance().format((parsed / 100));
 
                 current = formatted;
                 etCredits.setText(formatted);
@@ -335,9 +330,6 @@ public class DepositCreditActivity extends AppCompatActivity {
     };
 
     public void setDepositButton() {
-        // Find reference for the view
-        bDepositCredit = findViewById(R.id.bDepositCredit);
-
         // submit payment on click
         bDepositCredit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -348,9 +340,6 @@ public class DepositCreditActivity extends AppCompatActivity {
     }
 
     private void setBackButton() {
-        // Find reference for the view
-        ivBack = findViewById(R.id.ivBack);
-
         // Set on-click listener for for image view to launch edit account activity
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override

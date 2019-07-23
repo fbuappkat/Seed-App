@@ -16,18 +16,26 @@ import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ChatActivity extends AppCompatActivity {
     static final String TAG = ChatActivity.class.getSimpleName();
     static final String USER_ID_KEY = "userId";
     static final String BODY_KEY = "body";
 
+    @BindView(R.id.etMessage)
     EditText etMessage;
+    @BindView(R.id.btSend)
     Button btSend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        ButterKnife.bind(this);
+
         // User login
         if (ParseUser.getCurrentUser() != null) { // start with existing user
             startWithCurrentUser();
@@ -57,9 +65,6 @@ public class ChatActivity extends AppCompatActivity {
 
     // Setup button event handler which posts the entered message to Parse
     void setupMessagePosting() {
-        // Find the text field and button
-        etMessage = (EditText) findViewById(R.id.etMessage);
-        btSend = (Button) findViewById(R.id.btSend);
         // When send button is clicked, create message object on Parse
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +76,7 @@ public class ChatActivity extends AppCompatActivity {
                 message.saveInBackground(new SaveCallback() {
 
                     public void done(ParseException e) {
-                        if(e == null) {
+                        if (e == null) {
                             Toast.makeText(ChatActivity.this, "Successfully created message on Parse",
                                     Toast.LENGTH_SHORT).show();
                         } else {
