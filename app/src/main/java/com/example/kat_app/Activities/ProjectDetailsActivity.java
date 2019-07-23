@@ -35,16 +35,27 @@ import butterknife.ButterKnife;
 
 public class ProjectDetailsActivity extends AppCompatActivity {
 
-    @BindView(R.id.pcBreakdown) PieChart pcBreakdown;
-    @BindView(R.id.tvName) TextView tvName;
-    @BindView(R.id.tvAuthor) TextView tvAuthor;
-    @BindView(R.id.tvDescription) TextView tvDescription;
-    @BindView(R.id.tvInvestors) TextView tvInvestors;
-    @BindView(R.id.tvFollowers) TextView tvFollowers;
-    @BindView(R.id.tvFunds) TextView tvFunds;
-    @BindView(R.id.btnFollow) Button btnFollow;
-    @BindView(R.id.btnInvest) Button btnInvest;
-    @BindView(R.id.btnMoreDetails) Button btnMore;
+    @BindView(R.id.pcBreakdown)
+    PieChart pcBreakdown;
+    @BindView(R.id.tvName)
+    TextView tvName;
+    @BindView(R.id.tvAuthor)
+    TextView tvAuthor;
+    @BindView(R.id.tvDescription)
+    TextView tvDescription;
+    @BindView(R.id.tvInvestors)
+    TextView tvInvestors;
+    @BindView(R.id.tvFollowers)
+    TextView tvFollowers;
+    @BindView(R.id.tvFunds)
+    TextView tvFunds;
+    @BindView(R.id.btnFollow)
+    Button btnFollow;
+    @BindView(R.id.btnInvest)
+    Button btnInvest;
+    @BindView(R.id.btnMoreDetails)
+    Button btnMore;
+
     private ArrayList<Request> requests;
     private Project proj;
 
@@ -71,7 +82,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
 
         //Follow button
 
-        if (!proj.getFollowers().toString().contains(ParseUser.getCurrentUser().getObjectId())){
+        if (!proj.getFollowers().toString().contains(ParseUser.getCurrentUser().getObjectId())) {
             btnFollow.setText("Follow");
         } else {
             btnFollow.setText("Unfollow");
@@ -80,13 +91,13 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         btnFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!proj.getFollowers().toString().contains(ParseUser.getCurrentUser().getObjectId())){
+                if (!proj.getFollowers().toString().contains(ParseUser.getCurrentUser().getObjectId())) {
                     proj.add("followers", ParseUser.getCurrentUser());
                     tvFollowers.setText("Followers: " + (proj.getFollowers().length()));
                     proj.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-                            if (e != null){
+                            if (e != null) {
                                 e.printStackTrace();
                             }
                         }
@@ -103,7 +114,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                     proj.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-                            if (e != null){
+                            if (e != null) {
                                 e.printStackTrace();
                             }
                         }
@@ -134,7 +145,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     }
 
     //create piechart for request breakdown
-    public void makePieChart(){
+    public void makePieChart() {
         pcBreakdown.setUsePercentValues(false);
         Description pcDesc = new Description();
         pcDesc.setText("Requested funds breakdown");
@@ -142,7 +153,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         pcBreakdown.setHoleRadius(25);
         pcBreakdown.setTransparentCircleRadius(25);
         List<PieEntry> values = new ArrayList<>();
-        for(int i = 0; i < requests.size(); i++){
+        for (int i = 0; i < requests.size(); i++) {
             values.add(new PieEntry(requests.get(i).getPrice(), requests.get(i).getRequest()));
         }
         PieDataSet pieDataSet = new PieDataSet(values, "<- Requests");
@@ -157,13 +168,13 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     protected void queryRequests() {
         ParseQuery<Request> projectQuery = new ParseQuery<Request>(Request.class);
 
-        projectQuery.whereEqualTo("project", ParseObject.createWithoutData("Project",proj.getObjectId()));
+        projectQuery.whereEqualTo("project", ParseObject.createWithoutData("Project", proj.getObjectId()));
         projectQuery.addDescendingOrder("createdAt");
         projectQuery.findInBackground(new FindCallback<Request>() {
             @Override
             public void done(List<Request> posts, ParseException e) {
                 if (e != null) {
-                    Log.e("Query requests","Error with query");
+                    Log.e("Query requests", "Error with query");
                     e.printStackTrace();
                     return;
                 }
@@ -186,7 +197,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
             @Override
             public void done(List<ParseUser> posts, ParseException e) {
                 if (e != null) {
-                    Log.e("Query requests","Error with query");
+                    Log.e("Query requests", "Error with query");
                     e.printStackTrace();
                     return;
                 }
@@ -200,18 +211,18 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     }
 
     //get total funds requested from project
-    private float getTotal(ArrayList<Request> reqs){
+    private float getTotal(ArrayList<Request> reqs) {
         float tot = 0;
-        for (int i = 0; i < reqs.size(); i++){
+        for (int i = 0; i < reqs.size(); i++) {
             tot += reqs.get(i).getPrice();
         }
         return tot;
     }
 
     //get funds received
-    private float getTotalFunds(ArrayList<Request> reqs){
+    private float getTotalFunds(ArrayList<Request> reqs) {
         float tot = 0;
-        for (int i = 0; i < reqs.size(); i++){
+        for (int i = 0; i < reqs.size(); i++) {
             tot += reqs.get(i).getReceived();
         }
         return tot;

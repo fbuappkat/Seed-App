@@ -33,12 +33,18 @@ public class WithdrawCreditActivity extends AppCompatActivity {
 
     private static final String TAG = "WithdrawCredit";
 
-    @BindView(R.id.bWithdrawCredit) Button bWithdrawCredit;
-    @BindView(R.id.ivBack) ImageButton ivBack;
-    @BindView(R.id.etCredits) EditText etCredits;
-    @BindView(R.id.etEmail) EditText etEmail;
-    @BindView(R.id.etConfirmEmail) EditText etConfirmEmail;
-    @BindView(R.id.tvNewBalanceCount) TextView tvNewBalanceCount;
+    @BindView(R.id.bWithdrawCredit)
+    Button bWithdrawCredit;
+    @BindView(R.id.ivBack)
+    ImageButton ivBack;
+    @BindView(R.id.etCredits)
+    EditText etCredits;
+    @BindView(R.id.etEmail)
+    EditText etEmail;
+    @BindView(R.id.etConfirmEmail)
+    EditText etConfirmEmail;
+    @BindView(R.id.tvNewBalanceCount)
+    TextView tvNewBalanceCount;
 
     private float currBalance;
     private float removedCredits;
@@ -97,7 +103,7 @@ public class WithdrawCreditActivity extends AppCompatActivity {
             @Override
             public void done(List<Balance> accounts, ParseException e) {
                 if (e != null) {
-                    Log.e("Query requests","Error with query");
+                    Log.e("Query requests", "Error with query");
                     e.printStackTrace();
                     return;
                 }
@@ -119,7 +125,7 @@ public class WithdrawCreditActivity extends AppCompatActivity {
             @Override
             public void done(List<Balance> accounts, ParseException e) {
                 if (e != null) {
-                    Log.e("Query requests","Error with query");
+                    Log.e("Query requests", "Error with query");
                     e.printStackTrace();
                     return;
                 }
@@ -165,9 +171,10 @@ public class WithdrawCreditActivity extends AppCompatActivity {
         }
 
         String current = "";
+
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if(!s.toString().equals(current)){
+            if (!s.toString().equals(current)) {
                 etCredits.removeTextChangedListener(this);
 
                 String cleanString = s.toString().replaceAll("[$,.]", "");
@@ -177,10 +184,10 @@ public class WithdrawCreditActivity extends AppCompatActivity {
                     tvNewBalanceCount.setText("$" + round(currBalance));
                     tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_black));
                 } else {
-                    tvNewBalanceCount.setText("$" + round(currBalance - (parsed/100)));
+                    tvNewBalanceCount.setText("$" + round(currBalance - (parsed / 100)));
                     tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_green));
                 }
-                String formatted = NumberFormat.getCurrencyInstance().format((parsed/100));
+                String formatted = NumberFormat.getCurrencyInstance().format((parsed / 100));
 
                 current = formatted;
                 etCredits.setText(formatted);
@@ -207,7 +214,7 @@ public class WithdrawCreditActivity extends AppCompatActivity {
     }
 
     private void setBackButton() {
-    // Set on-click listener for for image view to launch edit account activity
+        // Set on-click listener for for image view to launch edit account activity
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
