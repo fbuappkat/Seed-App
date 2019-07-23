@@ -29,20 +29,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /* UpdateDetailsActivity displays all the comments associated with an update. */
 public class UpdateDetailsActivity extends AppCompatActivity {
 
-    private TextView tvUser;
-    private TextView tvTime;
-    private TextView tvCaption;
+    @BindView(R.id.tvUser)
+    TextView tvUser;
+    @BindView(R.id.tvRelativeTime)
+    TextView tvTime;
+    @BindView(R.id.tvCaption)
+    TextView tvCaption;
+    @BindView(R.id.rvComments)
+    RecyclerView rvComments;
+    @BindView(R.id.swipeContainer)
+    SwipeRefreshLayout swipeContainer;
+    @BindView(R.id.btnAddComment)
+    Button btnComment;
+    @BindView(R.id.etComment)
+    EditText etComment;
+    @BindView(R.id.ivDetailsToFeed)
+    ImageView ivBack;
     private Update update;
-    protected RecyclerView rvComments;
     protected CommentsAdapter adapter;
-    protected SwipeRefreshLayout swipeContainer;
     protected List<String> comments;
-    private Button btnComment;
-    private EditText etComment;
-    private ImageView ivBack;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +64,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         //unwrap the update passed in via intent, using its simple name as a key
         update = (Update) Parcels.unwrap(getIntent().getParcelableExtra(Update.class.getSimpleName()));
 
-        tvUser = findViewById(R.id.tvUser);
-        tvTime = findViewById(R.id.tvRelativeTime);
-        tvCaption = findViewById(R.id.tvCaption);
-        rvComments = findViewById(R.id.rvComments);
-        etComment = findViewById(R.id.etComment);
+        ButterKnife.bind(this);
 
         try {
             String username = update.getUser().fetchIfNeeded().getString("username");
@@ -103,7 +111,6 @@ public class UpdateDetailsActivity extends AppCompatActivity {
     }
 
     private void setCommentButton() {
-        btnComment = findViewById(R.id.btnAddComment);
         btnComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,9 +162,6 @@ public class UpdateDetailsActivity extends AppCompatActivity {
     }
 
     private void setBackButton() {
-        // Find reference for the view
-        ivBack = findViewById(R.id.ivDetailsToFeed);
-
         // Set on-click listener for for image view to launch edit account activity
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override

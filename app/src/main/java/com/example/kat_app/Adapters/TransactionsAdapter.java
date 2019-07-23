@@ -59,7 +59,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
             holder.investTransaction.setVisibility(View.VISIBLE);
 
             holder.tvInvestCount.setText(formatter.format(transaction.getAmount()));
-            holder.tvTimeAgo.setText(transaction.getRelativeTimeAgo());
+            holder.tvTimeAgo3.setText(transaction.getRelativeTimeAgo());
         } else if (transaction.getType().compareTo("withdrawl") == 0) {
             holder.depositTransaction.setVisibility(View.GONE);
             holder.investTransaction.setVisibility(View.GONE);

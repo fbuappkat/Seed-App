@@ -101,9 +101,9 @@ public class Transaction extends ParseObject implements Parcelable {
             return this;
         }
 
-        // Include user in the Query
-        public Query withSender() {
-            include("sender");
+        // Include current User in the Query
+        public Query withCurrUser(ParseUser currUser) {
+            whereEqualTo("sender", currUser);
             return this;
         }
 

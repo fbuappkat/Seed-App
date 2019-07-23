@@ -16,29 +16,31 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class SignupActivity extends AppCompatActivity {
 
-    private Button btnSignup;
-    private EditText etName;
-    private EditText etUsername;
-    private EditText etEmail;
-    private EditText etPassword;
-    private EditText etConfirmpassword;
+    @BindView(R.id.btnSignup)
+    Button btnSignup;
+    @BindView(R.id.etName)
+    EditText etName;
+    @BindView(R.id.etUsername)
+    EditText etUsername;
+    @BindView(R.id.etEmail)
+    EditText etEmail;
+    @BindView(R.id.etPassword)
+    EditText etPassword;
+    @BindView(R.id.etConfirmpassword)
+    EditText etConfirmpassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        //link button and edittexts to fileprovider
-        btnSignup = findViewById(R.id.btnSignup);
-        etName = findViewById(R.id.etName);
-        etUsername = findViewById(R.id.etUsername);
-        etEmail = findViewById(R.id.etEmail);
-        etPassword = findViewById(R.id.etPassword);
-        etConfirmpassword = findViewById(R.id.etConfirmpassword);
-
+        ButterKnife.bind(this);
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +66,6 @@ public class SignupActivity extends AppCompatActivity {
     }
 
 
-
     //create new user object on parse database
     private void signup(String username, String password, String email, String name) {
         final ParseUser user = new ParseUser();
@@ -72,8 +73,8 @@ public class SignupActivity extends AppCompatActivity {
         user.setUsername(username);
         user.setPassword(password);
         user.setEmail(email);
-        user.put("name",name);
-        user.put("balance",0);
+        user.put("name", name);
+        user.put("balance", 0);
 
         //signup in background, check if successful, return to home
         user.signUpInBackground(new SignUpCallback() {
@@ -94,12 +95,10 @@ public class SignupActivity extends AppCompatActivity {
                 balance.setAmount(0);
 
 
-
-
                 balance.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        if (e != null){
+                        if (e != null) {
                             e.printStackTrace();
                         }
                         user.put("money", balance);
@@ -109,9 +108,5 @@ public class SignupActivity extends AppCompatActivity {
                 });
             }
         });
-
-
-
-
     }
 }

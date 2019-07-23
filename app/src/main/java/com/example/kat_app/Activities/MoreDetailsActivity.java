@@ -34,18 +34,18 @@ public class MoreDetailsActivity extends AppCompatActivity {
     private Project project;
     protected ProgressAdapter progressAdapter;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more_details);
 
+
+
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-        int width =  (int) Math.round(dm.widthPixels*0.9);
-        int height = (int) Math.round(dm.heightPixels*0.7);
+        int width = (int) Math.round(dm.widthPixels * 0.9);
+        int height = (int) Math.round(dm.heightPixels * 0.7);
 
         getWindow().setLayout(width, height);
 
@@ -60,10 +60,9 @@ public class MoreDetailsActivity extends AppCompatActivity {
         queryRequests();
 
 
-
     }
 
-    public void setupAdapter(){
+    public void setupAdapter() {
         // create the adapter
         progressAdapter = new ProgressAdapter(MoreDetailsActivity.this, requests);
         // add line between items
@@ -76,17 +75,16 @@ public class MoreDetailsActivity extends AppCompatActivity {
     }
 
 
-
     protected void queryRequests() {
         ParseQuery<Request> projectQuery = new ParseQuery<Request>(Request.class);
 
-        projectQuery.whereEqualTo("project", ParseObject.createWithoutData("Project",project.getObjectId()));
+        projectQuery.whereEqualTo("project", ParseObject.createWithoutData("Project", project.getObjectId()));
         projectQuery.addDescendingOrder("createdAt");
         projectQuery.findInBackground(new FindCallback<Request>() {
             @Override
             public void done(List<Request> posts, ParseException e) {
                 if (e != null) {
-                    Log.e("Query requests","Error with query");
+                    Log.e("Query requests", "Error with query");
                     e.printStackTrace();
                     return;
                 }
@@ -98,23 +96,24 @@ public class MoreDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private float getTotal(ArrayList<Request> reqs){
+    private float getTotal(ArrayList<Request> reqs) {
         float tot = 0;
-        for (int i = 0; i < reqs.size(); i++){
+        for (int i = 0; i < reqs.size(); i++) {
             tot += reqs.get(i).getPrice();
         }
         return tot;
     }
 
-    private float getTotalFunds(ArrayList<Request> reqs){
+    private float getTotalFunds(ArrayList<Request> reqs) {
         float tot = 0;
-        for (int i = 0; i < reqs.size(); i++){
+        for (int i = 0; i < reqs.size(); i++) {
             tot += reqs.get(i).getReceived();
         }
         return tot;
     }
-    public void setTotal(float total, float funds){
-        int percent = Math.round(funds/total * 100);
+
+    public void setTotal(float total, float funds) {
+        int percent = Math.round(funds / total * 100);
         tvTotal.setText("Total: " + funds + "/" + total + " (" + percent + "%)");
         pbTotal.setProgress(percent);
     }

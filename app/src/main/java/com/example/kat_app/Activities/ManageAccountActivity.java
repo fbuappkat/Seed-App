@@ -22,19 +22,27 @@ import com.example.kat_app.Fragments.ProfileFragment;
 import com.example.kat_app.R;
 import com.parse.ParseUser;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ManageAccountActivity extends AppCompatActivity {
 
-    private ImageButton ivBack;
-    private ConstraintLayout creditsHolder;
-    private Button bLogout;
-    Context context;
+    @BindView(R.id.ivBack)
+    ImageButton ivBack;
+    @BindView(R.id.creditHolder)
+    ConstraintLayout creditsHolder;
+    @BindView(R.id.bLogout)
+    Button bLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_account);
 
-        creditsHolder = findViewById(R.id.creditHolder);
+        ButterKnife.bind(this);
+        MainActivity.setStatusBar(getWindow());
+        setBackButton();
+        setLogoutButton();
 
         creditsHolder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,16 +52,9 @@ public class ManageAccountActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
-
-        MainActivity.setStatusBar(getWindow());
-        setBackButton();
-        setLogoutButton();
     }
 
     private void setLogoutButton() {
-        // Find reference for the view
-        bLogout = findViewById(R.id.bLogout);
-
         // Make the logout image clickable and open up dialog on click
         bLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,9 +94,6 @@ public class ManageAccountActivity extends AppCompatActivity {
     }
 
     private void setBackButton() {
-        // Find reference for the view
-        ivBack = findViewById(R.id.ivBack);
-
         // Set on-click listener for for image view to launch edit account activity
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -26,16 +26,25 @@ import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class WithdrawCreditActivity extends AppCompatActivity {
 
     private static final String TAG = "WithdrawCredit";
 
-    private Button bWithdrawCredit;
-    private ImageButton ivBack;
-    private EditText etCredits;
-    private EditText etEmail;
-    private EditText etConfirmEmail;
-    private TextView tvNewBalanceCount;
+    @BindView(R.id.bWithdrawCredit)
+    Button bWithdrawCredit;
+    @BindView(R.id.ivBack)
+    ImageButton ivBack;
+    @BindView(R.id.etCredits)
+    EditText etCredits;
+    @BindView(R.id.etEmail)
+    EditText etEmail;
+    @BindView(R.id.etConfirmEmail)
+    EditText etConfirmEmail;
+    @BindView(R.id.tvNewBalanceCount)
+    TextView tvNewBalanceCount;
 
     private float currBalance;
     private float removedCredits;
@@ -47,14 +56,11 @@ public class WithdrawCreditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_withdraw_credit);
 
+        ButterKnife.bind(this);
+
         MainActivity.setStatusBar(getWindow());
-
-        //Find reference for the view
-        tvNewBalanceCount = findViewById(R.id.tvNewBalanceCount);
-
         setBackButton();
         setWithdrawButton();
-        setTextInputs();
         queryBalance(ParseUser.getCurrentUser());
     }
 
@@ -97,7 +103,7 @@ public class WithdrawCreditActivity extends AppCompatActivity {
             @Override
             public void done(List<Balance> accounts, ParseException e) {
                 if (e != null) {
-                    Log.e("Query requests","Error with query");
+                    Log.e("Query requests", "Error with query");
                     e.printStackTrace();
                     return;
                 }
@@ -119,7 +125,7 @@ public class WithdrawCreditActivity extends AppCompatActivity {
             @Override
             public void done(List<Balance> accounts, ParseException e) {
                 if (e != null) {
-                    Log.e("Query requests","Error with query");
+                    Log.e("Query requests", "Error with query");
                     e.printStackTrace();
                     return;
                 }
@@ -165,9 +171,10 @@ public class WithdrawCreditActivity extends AppCompatActivity {
         }
 
         String current = "";
+
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if(!s.toString().equals(current)){
+            if (!s.toString().equals(current)) {
                 etCredits.removeTextChangedListener(this);
 
                 String cleanString = s.toString().replaceAll("[$,.]", "");
@@ -177,10 +184,10 @@ public class WithdrawCreditActivity extends AppCompatActivity {
                     tvNewBalanceCount.setText("$" + round(currBalance));
                     tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_black));
                 } else {
-                    tvNewBalanceCount.setText("$" + round(currBalance - (parsed/100)));
+                    tvNewBalanceCount.setText("$" + round(currBalance - (parsed / 100)));
                     tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_green));
                 }
-                String formatted = NumberFormat.getCurrencyInstance().format((parsed/100));
+                String formatted = NumberFormat.getCurrencyInstance().format((parsed / 100));
 
                 current = formatted;
                 etCredits.setText(formatted);
@@ -196,17 +203,7 @@ public class WithdrawCreditActivity extends AppCompatActivity {
         }
     };
 
-    private void setTextInputs() {
-        // Find references for the views
-        etCredits = findViewById(R.id.etCredits);
-        etEmail = findViewById(R.id.etEmail);
-        etConfirmEmail = findViewById(R.id.etConfirmEmail);
-    }
-
     public void setWithdrawButton() {
-        // Find reference for the view
-        bWithdrawCredit = findViewById(R.id.bWithdrawCredit);
-
         // submit payment on click
         bWithdrawCredit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,9 +214,6 @@ public class WithdrawCreditActivity extends AppCompatActivity {
     }
 
     private void setBackButton() {
-        // Find reference for the view
-        ivBack = findViewById(R.id.ivBack);
-
         // Set on-click listener for for image view to launch edit account activity
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override

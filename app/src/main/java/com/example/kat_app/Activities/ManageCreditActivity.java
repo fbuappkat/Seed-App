@@ -21,14 +21,24 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ManageCreditActivity extends AppCompatActivity {
 
-    private  ConstraintLayout withdrawHolder;
-    private ConstraintLayout depositHolder;
-    private ConstraintLayout transactionHolder;
-    private ImageButton ivBack;
-    private TextView tvName;
-    private TextView tvCurrBalanceCount;
+    @BindView(R.id.withdrawHolder)
+    ConstraintLayout withdrawHolder;
+    @BindView(R.id.depositHolder)
+    ConstraintLayout depositHolder;
+    @BindView(R.id.transactionHolder)
+    ConstraintLayout transactionHolder;
+    @BindView(R.id.ivBack)
+    ImageButton ivBack;
+    @BindView(R.id.tvName)
+    TextView tvName;
+    @BindView(R.id.tvCurrBalanceCount)
+    TextView tvCurrBalanceCount;
+
     private Balance balance;
 
     private static final int MANAGE_CREDIT_OPTION = 3;
@@ -41,6 +51,7 @@ public class ManageCreditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_credit);
 
+        ButterKnife.bind(this);
         MainActivity.setStatusBar(getWindow());
         setCreditOptions();
         setBackButton();
@@ -48,11 +59,6 @@ public class ManageCreditActivity extends AppCompatActivity {
     }
 
     private void setCreditOptions() {
-        // Find reference for the view
-        depositHolder = findViewById(R.id.depositHolder);
-        withdrawHolder = findViewById(R.id.withdrawHolder);
-        transactionHolder = findViewById(R.id.transactionHolder);
-
         // Open deposit credit option on click
         depositHolder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,12 +91,7 @@ public class ManageCreditActivity extends AppCompatActivity {
     }
 
 
-
     private void setProfileInfo() {
-        // Find references for the views
-        tvName = findViewById(R.id.tvName);
-        tvCurrBalanceCount = findViewById(R.id.tvCurrBalanceCount);
-
         // Get the current user
         ParseUser currUser = ParseUser.getCurrentUser();
 
@@ -107,7 +108,7 @@ public class ManageCreditActivity extends AppCompatActivity {
             @Override
             public void done(List<Balance> accounts, ParseException e) {
                 if (e != null) {
-                    Log.e("Query requests","Error with query");
+                    Log.e("Query requests", "Error with query");
                     e.printStackTrace();
                     return;
                 }
@@ -120,9 +121,6 @@ public class ManageCreditActivity extends AppCompatActivity {
     }
 
     private void setBackButton() {
-        // Find reference for the view
-        ivBack = findViewById(R.id.ivBack);
-
         // Set on-click listener for for image view to launch edit account activity
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
