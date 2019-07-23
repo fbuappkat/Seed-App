@@ -16,18 +16,25 @@ import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.parceler.Parcels;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ChatActivity extends AppCompatActivity {
+
     static final String TAG = ChatActivity.class.getSimpleName();
     static final String USER_ID_KEY = "userId";
     static final String BODY_KEY = "body";
+    static final String MESSAGE_SENDER_KEY = "sender";
+    public static final String MESSAGE_RECIEVER_KEY = "reciever";
 
     @BindView(R.id.etMessage)
     EditText etMessage;
     @BindView(R.id.btSend)
     Button btSend;
+
+    ParseUser otherUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +42,8 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
 
         ButterKnife.bind(this);
+
+        otherUser = Parcels.unwrap(getIntent().getParcelableExtra(OtherUserProfileActivity.class.getSimpleName()));
 
         // User login
         if (ParseUser.getCurrentUser() != null) { // start with existing user

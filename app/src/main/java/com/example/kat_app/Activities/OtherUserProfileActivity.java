@@ -31,7 +31,7 @@ public class OtherUserProfileActivity extends AppCompatActivity {
     ImageView ivProfileImage;
     @BindView(R.id.tvName)
     TextView tvName;
-    @BindView(R.id.tvUser)
+    @BindView(R.id.tvUsername)
     TextView tvUsername;
     @BindView(R.id.tvBalanceCount)
     TextView tvBalanceCount;
@@ -105,12 +105,9 @@ public class OtherUserProfileActivity extends AppCompatActivity {
         ivChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // create intent for the new activity
-                /*Intent otherProfileToChat = new Intent(context, UpdateDetailsActivity.class);
-                //serialize the update using parceler, use its short name as a key
-                //otherProfileToChat.putExtra(Update.class.getSimpleName(), Parcels.wrap(user));
-                // show the activity
-                startActivity(otherProfileToChat);*/
+                Intent message = new Intent(OtherUserProfileActivity.this, ChatActivity.class);
+                message.putExtra(OtherUserProfileActivity.class.getSimpleName(), Parcels.wrap(user));
+                startActivity(message);
             }
         });
     }
