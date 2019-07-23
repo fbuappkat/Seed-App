@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.example.kat_app.Activities.AddUpdateActivity;
 import com.example.kat_app.Adapters.UpdatesAdapter;
@@ -41,6 +42,7 @@ public class FeedFragment extends Fragment {
     // Store a member variable for the listener
     private com.codepath.instagram.EndlessRecyclerViewScrollListener scrollListener;
     private ImageView btnGoToAddUpdate;
+    private ProgressBar pbLoad;
 
     // onCreateView to inflate the view
     @Nullable
@@ -55,7 +57,9 @@ public class FeedFragment extends Fragment {
         rvFeed = view.findViewById(R.id.rvFeed);
         setAddButton(view);
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
-        queryUpdates();
+
+        pbLoad = view.findViewById(R.id.pbLoad);
+        rvFeed.setVisibility(View.INVISIBLE);
 
         // create the data source
         updates = new ArrayList<>();
@@ -86,6 +90,9 @@ public class FeedFragment extends Fragment {
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(android.R.color.holo_orange_dark,
                 android.R.color.holo_orange_light);
+        //Todo - figure out how to make loading bar keep going until data is actually binded
+        queryUpdates();
+
     }
 
     //get posts via network request
@@ -105,6 +112,8 @@ public class FeedFragment extends Fragment {
                 updates.addAll(posts);
                 adapter.notifyDataSetChanged();
                 swipeContainer.setRefreshing(false);
+                pbLoad.setVisibility(View.INVISIBLE);
+                rvFeed.setVisibility(View.VISIBLE);
             }
         });
     }
