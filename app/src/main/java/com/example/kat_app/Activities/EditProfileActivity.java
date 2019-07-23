@@ -53,23 +53,42 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class EditProfileActivity extends AppCompatActivity {
 
-    private TextView tvUpload;
-    private TextView tvCurrLocation;
-    private ImageView ivProfileImage;
-    private EditText etCurrName;
-    private EditText etCurrUsername;
-    private EditText etCurrEmail;
-    private EditText etCurrBio;
-    private Button bEditName;
-    private Button bEditUsername;
-    private Button bEditEmail;
-    private Button bEditBio;
-    private Button bEditLocation;
-    private Button Save;
-    private ConstraintLayout bSave;
-    private Button bCancel;
+    @BindView(R.id.tvUpload)
+    TextView tvUpload;
+    @BindView(R.id.tvCurrLocation)
+    TextView tvCurrLocation;
+    @BindView(R.id.ivProfileImage)
+    ImageView ivProfileImage;
+    @BindView(R.id.etCurrName)
+    EditText etCurrName;
+    @BindView(R.id.etCurrUsername)
+    EditText etCurrUsername;
+    @BindView(R.id.etCurrEmail)
+    EditText etCurrEmail;
+    @BindView(R.id.etCurrBio)
+    EditText etCurrBio;
+    @BindView(R.id.bEditName)
+    Button bEditName;
+    @BindView(R.id.bEditUsername)
+    Button bEditUsername;
+    @BindView(R.id.bEditEmail)
+    Button bEditEmail;
+    @BindView(R.id.bEditBio)
+    Button bEditBio;
+    @BindView(R.id.bEditLocation)
+    Button bEditLocation;
+    @BindView(R.id.Save)
+    Button Save;
+    @BindView(R.id.bSave)
+    ConstraintLayout bSave;
+    @BindView(R.id.bCancel)
+    Button bCancel;
+
     private Double latitude;
     private Double longitude;
 
@@ -88,6 +107,7 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_account);
 
+        ButterKnife.bind(this);
         MainActivity.setStatusBar(getWindow());
         setUploadProfileImage();
         setCancelButton();
@@ -101,12 +121,8 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void setUploadProfileImage() {
-        // Find references for the views
-        ivProfileImage = findViewById(R.id.ivProfileImage);
-        tvUpload = findViewById(R.id.tvUpload);
-
         // Get the current user
-        ParseUser currUser  = ParseUser.getCurrentUser();
+        ParseUser currUser = ParseUser.getCurrentUser();
 
         // Populate the profile picture holder
         ParseFile profileImage = currUser.getParseFile(KEY_PROFILE_IMAGE);
@@ -115,8 +131,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     .load(profileImage.getUrl())
                     .apply(RequestOptions.circleCropTransform())
                     .into(ivProfileImage);
-        }
-        else {
+        } else {
             Glide.with(this)
                     .load(R.drawable.default_profile_image)
                     .apply(RequestOptions.circleCropTransform())
@@ -133,9 +148,6 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void setCancelButton() {
-        // Find reference for the view
-        bCancel = findViewById(R.id.bCancel);
-
         // Set on-click listener for for image view to launch edit account activity
         bCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,7 +169,7 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)  {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 if (data != null) {
@@ -175,8 +187,6 @@ public class EditProfileActivity extends AppCompatActivity {
         if (requestCode == PICK_PHOTO_CODE) {
             if (data != null) {
                 Uri photoUri = data.getData();
-
-                ivProfileImage = findViewById(R.id.ivProfileImage);
 
                 // by this point we have the camera photo on disk
                 Bitmap chosenImage = null;
@@ -203,14 +213,6 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void setTextInputs() throws IOException {
-        // Find references for the views
-        etCurrName = findViewById(R.id.etCurrName);
-        etCurrUsername = findViewById(R.id.etCurrUsername);
-        etCurrEmail = findViewById(R.id.etCurrEmail);
-        etCurrBio = findViewById(R.id.etCurrBio);
-        tvCurrLocation = findViewById(R.id.tvCurrLocation);
-        TextView tvLocation = findViewById(R.id.tvLocation);
-
         // Set initial text to current user's info
         ParseUser currUser = ParseUser.getCurrentUser();
         etCurrName.setText(currUser.getString(KEY_NAME));
@@ -233,10 +235,6 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void setSaveButton() {
-        // Find reference for the view
-        bSave = findViewById(R.id.bSave);
-        Save = findViewById(R.id.Save);
-
         toggleSave(false);
 
         bSave.setOnClickListener(new View.OnClickListener() {
@@ -258,13 +256,6 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void setEditButtons() {
-        // Find references for the views
-        bEditName = findViewById(R.id.bEditName);
-        bEditUsername = findViewById(R.id.bEditUsername);
-        bEditEmail = findViewById(R.id.bEditEmail);
-        bEditBio = findViewById(R.id.bEditBio);
-        bEditLocation = findViewById(R.id.bEditLocation);
-
         // Set on click listener for edit buttons to enable respective text inputs
         bEditName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -345,7 +336,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void saveProfile() {
         // Get the current user
-        ParseUser currUser  = ParseUser.getCurrentUser();
+        ParseUser currUser = ParseUser.getCurrentUser();
 
         // Update the user's details with text from inputs
         currUser.put(KEY_NAME, etCurrName.getText().toString());

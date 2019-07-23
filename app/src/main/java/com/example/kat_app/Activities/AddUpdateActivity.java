@@ -60,9 +60,9 @@ public class AddUpdateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_update);
 
+        ButterKnife.bind(this);
 
         LoadingBar = new ProgressDialog(this);
-        ivUpdateImage = findViewById(R.id.ivUpdateImage);
 
         setBackButton();
         setAddUpdateButton();

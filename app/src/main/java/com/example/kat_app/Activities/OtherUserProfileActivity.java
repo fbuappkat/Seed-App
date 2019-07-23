@@ -41,7 +41,7 @@ public class OtherUserProfileActivity extends AppCompatActivity {
     TextView tvInvestmentsCount;
     @BindView(R.id.tvBio)
     TextView tvBio;
-    @BindView(R.id.ivBack)
+    @BindView(R.id.ivProfileToFeed)
     ImageView ivBack;
     @BindView(R.id.ivChat)
     ImageView ivChat;

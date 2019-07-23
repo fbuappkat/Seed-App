@@ -23,10 +23,16 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class InvestActivity extends AppCompatActivity {
 
-    private Button btnCancel;
-    private RecyclerView rvRequests;
+    @BindView(R.id.btnCancel)
+    Button btnCancel;
+    @BindView(R.id.rvRequests)
+    RecyclerView rvRequests;
+
     private ArrayList<Request> requests;
     protected InvestAdapter investAdapter;
     private Project project;
@@ -38,9 +44,7 @@ public class InvestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_invest);
 
 
-        //link xml
-        btnCancel = findViewById(R.id.btnCancel);
-        rvRequests = findViewById(R.id.rvRequests);
+        ButterKnife.bind(this);
 
         //set values
         project = Parcels.unwrap(getIntent().getParcelableExtra("project"));
@@ -57,7 +61,7 @@ public class InvestActivity extends AppCompatActivity {
         });
     }
 
-    public void setupAdapter(){
+    public void setupAdapter() {
         // create the adapter
         investAdapter = new InvestAdapter(InvestActivity.this, requests);
         // add line between items
@@ -70,17 +74,16 @@ public class InvestActivity extends AppCompatActivity {
     }
 
 
-
     protected void queryRequests() {
         ParseQuery<Request> projectQuery = new ParseQuery<Request>(Request.class);
 
-        projectQuery.whereEqualTo("project", ParseObject.createWithoutData("Project",project.getObjectId()));
+        projectQuery.whereEqualTo("project", ParseObject.createWithoutData("Project", project.getObjectId()));
         projectQuery.addDescendingOrder("createdAt");
         projectQuery.findInBackground(new FindCallback<Request>() {
             @Override
             public void done(List<Request> posts, ParseException e) {
                 if (e != null) {
-                    Log.e("Query requests","Error with query");
+                    Log.e("Query requests", "Error with query");
                     e.printStackTrace();
                     return;
                 }

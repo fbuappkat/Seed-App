@@ -25,21 +25,35 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ConfirmInvestActivity extends AppCompatActivity {
 
-    private TextView tvConfirm;
-    private TextView tvPrice;
-    private TextView tvBalance;
-    private TextView tvProject;
-    private TextView tvRequest;
-    private Button btnCancel;
-    private Button btnConfirm;
+    @BindView(R.id.tvConfirm)
+    TextView tvConfirm;
+    @BindView(R.id.tvPrice)
+    TextView tvPrice;
+    @BindView(R.id.tvBalance)
+    TextView tvBalance;
+    @BindView(R.id.tvProject)
+    TextView tvProject;
+    @BindView(R.id.tvRequest)
+    TextView tvRequest;
+    @BindView(R.id.btnCancel)
+    Button btnCancel;
+    @BindView(R.id.btnConfirm)
+    Button btnConfirm;
+
     private Request request;
     private Project project;
+
     private ParseUser investUser = ParseUser.getCurrentUser();
     private ParseUser receiveUser;
+
     private Balance receiverBalance;
     private Balance investorBalance;
+
     private float toInvest;
 
     @Override
@@ -47,14 +61,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_invest);
 
-        //link xml
-        tvConfirm = findViewById(R.id.tvConfirm);
-        tvPrice = findViewById(R.id.tvPrice);
-        tvBalance = findViewById(R.id.tvBalance);
-        tvProject = findViewById(R.id.tvProject);
-        tvRequest = findViewById(R.id.tvRequest);
-        btnCancel = findViewById(R.id.btnCancel);
-        btnConfirm = findViewById(R.id.btnConfirm);
+        ButterKnife.bind(this);
 
         //get values
         request = Parcels.unwrap(getIntent().getParcelableExtra("request"));
@@ -91,13 +98,13 @@ public class ConfirmInvestActivity extends AppCompatActivity {
     }
 
     //invest funds
-    public void invest(){
+    public void invest() {
         //get current balance and request funds received so far
         float curBalanceInvestor = Float.parseFloat(investorBalance.getAmount().toString());
         float curBalanceReceiver = Float.parseFloat(receiverBalance.getAmount().toString());
         float curRequestFunds = request.getReceived();
         //check if investor has enough funds
-        if (curBalanceInvestor < toInvest){
+        if (curBalanceInvestor < toInvest) {
             Toast.makeText(this, "You do not have enough in your balance to invest this amount!", Toast.LENGTH_LONG).show();
         } else {
             //change balance and put into request
@@ -112,13 +119,13 @@ public class ConfirmInvestActivity extends AppCompatActivity {
             createTransaction(toInvest, investUser, project, request);
             Toast.makeText(ConfirmInvestActivity.this, "Investment succesful!", Toast.LENGTH_LONG).show();
             //add to investor array
-            if (!project.getInvestors().toString().contains(ParseUser.getCurrentUser().getObjectId())){
+            if (!project.getInvestors().toString().contains(ParseUser.getCurrentUser().getObjectId())) {
                 project.add("investors", ParseUser.getCurrentUser());
             }
             project.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
-                    if (e != null){
+                    if (e != null) {
                         e.printStackTrace();
                     }
                 }
@@ -131,7 +138,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
     }
 
     //create transaction object and save to parse
-    public void createTransaction(float amount, ParseUser sender, Project project, Request request){
+    public void createTransaction(float amount, ParseUser sender, Project project, Request request) {
         final Transaction transaction = new Transaction();
         transaction.setAmount(amount);
         transaction.setSender(sender);
@@ -140,9 +147,9 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         transaction.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                if (e==null){
+                if (e == null) {
                     Log.d("TransactionCreate", "create Transaction Success!");
-                }else{
+                } else {
                     e.printStackTrace();
                     Log.e("TransactionCreate", "Failed creating Transaction");
                 }
@@ -160,7 +167,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
             @Override
             public void done(List<Project> posts, ParseException e) {
                 if (e != null) {
-                    Log.e("Query requests","Error with query");
+                    Log.e("Query requests", "Error with query");
                     e.printStackTrace();
                     return;
                 }
@@ -182,7 +189,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
             @Override
             public void done(List<ParseUser> posts, ParseException e) {
                 if (e != null) {
-                    Log.e("Query requests","Error with query");
+                    Log.e("Query requests", "Error with query");
                     e.printStackTrace();
                     return;
                 }
@@ -201,7 +208,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
             @Override
             public void done(List<Balance> posts, ParseException e) {
                 if (e != null) {
-                    Log.e("Query receiver balance","Error with query");
+                    Log.e("Query receiver balance", "Error with query");
                     e.printStackTrace();
                     return;
                 }
@@ -219,7 +226,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
             @Override
             public void done(List<Balance> posts, ParseException e) {
                 if (e != null) {
-                    Log.e("Query user balance","Error with query");
+                    Log.e("Query user balance", "Error with query");
                     e.printStackTrace();
                     return;
                 }
