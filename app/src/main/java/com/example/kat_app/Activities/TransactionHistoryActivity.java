@@ -19,13 +19,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class TransactionHistoryActivity extends AppCompatActivity {
 
     public static final String TAG = "TransactionHistoryActivity";
 
 
-    private ImageButton ivBack;
-    private RecyclerView rvTransactions;
+    @BindView(R.id.ivBack) ImageButton ivBack;
+    @BindView(R.id.rvTransactions) RecyclerView rvTransactions;
     private TransactionsAdapter adapter;
     private List<Transaction> mTransactions;
     private LinearLayoutManager layoutManager;
@@ -35,10 +38,9 @@ public class TransactionHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_history);
 
+        ButterKnife.bind(this);
+
         MainActivity.setStatusBar(getWindow());
-
-        rvTransactions = findViewById(R.id.rvTransactions);
-
 
         mTransactions = new ArrayList<>();
 
@@ -56,9 +58,6 @@ public class TransactionHistoryActivity extends AppCompatActivity {
     }
 
     private void setBackButton() {
-        // Find reference for the view
-        ivBack = findViewById(R.id.ivBack);
-
         // Set on-click listener for for image view to launch edit account activity
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,15 +78,15 @@ public class TransactionHistoryActivity extends AppCompatActivity {
         ParseUser currUser = ParseUser.getCurrentUser();
 
         final Transaction.Query transactionsQuery = new Transaction.Query();
-        transactionsQuery.getTop().whereEqualTo("sender", currUser);
+        transactionsQuery.getTop().withCurrUser(currUser);
 
         // If app is just opened, get newest 20 posts
         // Else query for older posts
         if (maxDate.equals(new Date(0))) {
             adapter.clear();
-            transactionsQuery.getTop().whereEqualTo("sender", currUser);
+            transactionsQuery.getTop().withCurrUser(currUser);
         } else {
-            transactionsQuery.getNext(maxDate).getTop().whereEqualTo("sender", currUser);
+            transactionsQuery.getNext(maxDate).getTop().withCurrUser(currUser);
         }
 
         transactionsQuery.findInBackground(new FindCallback<Transaction>() {
