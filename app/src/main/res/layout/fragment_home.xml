@@ -39,14 +39,6 @@
                     <requestFocus />
                 </SearchView>
 
-                <ImageView
-                    android:id="@+id/ivAdd"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="16dp"
-                    android:background="@drawable/ic_add" />
-
 
             </android.support.v7.widget.Toolbar>
 
@@ -80,4 +72,15 @@
         app:layout_constraintVertical_bias="0.0" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabCreate"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="36dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_add" />
 </android.support.constraint.ConstraintLayout>

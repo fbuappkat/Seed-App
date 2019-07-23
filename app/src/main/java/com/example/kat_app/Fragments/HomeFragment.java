@@ -2,6 +2,7 @@ package com.example.kat_app.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
@@ -34,6 +35,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
     private ImageView ivAdd;
     protected List<Project> projects;
     protected ProjectsAdapter adapter;
+    private FloatingActionButton fabCreate;
     SearchView editsearch;
     protected SwipeRefreshLayout swipeContainer;
 
@@ -48,7 +50,14 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ivAdd = view.findViewById(R.id.ivAdd);
+        fabCreate = view.findViewById(R.id.fabCreate);
+        fabCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CreateProjectActivity.class);
+                startActivity(intent);
+            }
+        });
         // Locate the EditText in listview_main.xml
         editsearch = (SearchView) view.findViewById(R.id.search);
         editsearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -65,13 +74,6 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
             }
         });
 
-        ivAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CreateProjectActivity.class);
-                startActivity(intent);
-            }
-        });
 
         rvProjects = view.findViewById(R.id.rvProjects);
 
