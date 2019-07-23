@@ -128,9 +128,9 @@ public class CreateProjectActivity extends AppCompatActivity {
         tvUpload2 = findViewById(R.id.tvUpload2);
 
         Glide.with(this)
-                    .load(R.drawable.default_thumbnail_image)
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(ivThumbnailImage);
+                .load(R.drawable.default_thumbnail_image)
+                .apply(RequestOptions.circleCropTransform())
+                .into(ivThumbnailImage);
 
         tvUpload2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,7 +152,7 @@ public class CreateProjectActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)  {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_PHOTO_CODE) {
             if (data != null) {
                 Uri photoUri = data.getData();
@@ -185,7 +185,7 @@ public class CreateProjectActivity extends AppCompatActivity {
 
 
     //create requests that will be pointing to project it is a part of and upload to Parse
-    public void createRequest(String request, Float price, Project project){
+    public void createRequest(String request, Float price, Project project) {
         final Request newRequest = new Request();
         ParseUser currentUser = ParseUser.getCurrentUser();
         currentUser.setACL(new ParseACL(currentUser));
@@ -197,9 +197,9 @@ public class CreateProjectActivity extends AppCompatActivity {
         newRequest.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                if (e==null){
+                if (e == null) {
                     Log.d("RequestCreate", "create Request Success!");
-                }else{
+                } else {
                     e.printStackTrace();
                     Log.e("RequestCreate", "Failed creating request");
                 }
@@ -208,7 +208,7 @@ public class CreateProjectActivity extends AppCompatActivity {
     }
 
     //add request for project to listview and corresponding arraylists, add info to adapter
-    public void onAddRequest(View v){
+    public void onAddRequest(View v) {
         EditText etRequest = findViewById(R.id.etRequest);
         EditText etPrice = findViewById(R.id.etPrice);
         String request = etRequest.getText().toString();
@@ -220,11 +220,11 @@ public class CreateProjectActivity extends AppCompatActivity {
         requestsAdapter.add(request + " - $" + price);
         etRequest.setText("");
         etPrice.setText("");
-        Toast.makeText(getApplicationContext(),"Request added to list!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Request added to list!", Toast.LENGTH_SHORT).show();
     }
 
     //create project and upload to Parse, return project to be used in createRequest
-    private Project createProject(String name, String description, ParseUser user, String category, ParseFile thumbnail){
+    private Project createProject(String name, String description, ParseUser user, String category, ParseFile thumbnail) {
         final Project newProject = new Project();
         newProject.setDescription(description);
         newProject.setName(name);
@@ -243,10 +243,10 @@ public class CreateProjectActivity extends AppCompatActivity {
         newProject.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                if (e==null){
+                if (e == null) {
                     Log.d("ProjectCreate", "create Project Success!");
                     Toast.makeText(CreateProjectActivity.this, "Project created!", Toast.LENGTH_LONG).show();
-                }else{
+                } else {
                     e.printStackTrace();
                     Log.e("ProjectCreate", "Failed creating project");
                     Toast.makeText(CreateProjectActivity.this, "Post creation Failed :(", Toast.LENGTH_LONG).show();
@@ -260,7 +260,7 @@ public class CreateProjectActivity extends AppCompatActivity {
     public static String randomAlphaNumeric(int count) {
         StringBuilder builder = new StringBuilder();
         while (count-- != 0) {
-            int character = (int)(Math.random()*ALPHA_NUMERIC_STRING.length());
+            int character = (int) (Math.random() * ALPHA_NUMERIC_STRING.length());
             builder.append(ALPHA_NUMERIC_STRING.charAt(character));
         }
         return builder.toString();
