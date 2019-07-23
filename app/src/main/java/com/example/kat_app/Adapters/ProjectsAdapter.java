@@ -8,11 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v7.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.kat_app.Models.Project;
-import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -79,6 +77,8 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
             tvFollowers = itemView.findViewById(R.id.tvFollowers);
             tvInvestors = itemView.findViewById(R.id.tvInvestors);
 
+
+
         }
 
         protected void queryUser(final Project project) {
@@ -112,6 +112,8 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
             queryUser(project);
             this.onClickListener  = onClickListener;
             itemView.setOnClickListener(this);
+
+
 
 
         }

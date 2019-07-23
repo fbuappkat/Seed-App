@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
     private ImageView ivAdd;
     protected List<Project> projects;
     protected ProjectsAdapter adapter;
+    private ProgressBar pbLoad;
     private FloatingActionButton fabCreate;
     SearchView editsearch;
     protected SwipeRefreshLayout swipeContainer;
@@ -50,6 +52,8 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+        pbLoad = view.findViewById(R.id.pbLoad);
         fabCreate = view.findViewById(R.id.fabCreate);
         fabCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +80,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
 
 
         rvProjects = view.findViewById(R.id.rvProjects);
+        rvProjects.setVisibility(View.INVISIBLE);
 
         // create the data source
         projects = new ArrayList<>();
@@ -99,6 +104,8 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
                 // once the network request has completed successfully.
                 projects.clear();
                 adapter.clear();
+                pbLoad.setVisibility(View.VISIBLE);
+                rvProjects.setVisibility(View.INVISIBLE);
                 queryProjects();
             }
         });
@@ -124,6 +131,8 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
                 projects.addAll(posts);
                 adapter.notifyDataSetChanged();
                 swipeContainer.setRefreshing(false);
+                pbLoad.setVisibility(View.INVISIBLE);
+                rvProjects.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -135,5 +144,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         project2description.putExtra("project", Parcels.wrap(projects.get(i)));
         startActivity(project2description);
     }
+
+
 
 }
