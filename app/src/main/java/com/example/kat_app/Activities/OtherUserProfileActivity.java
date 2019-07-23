@@ -20,25 +20,36 @@ import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class OtherUserProfileActivity extends AppCompatActivity {
 
     public static final String TAG = "OtherUserProfileActivity";
-    private ImageView ivProfileImage;
-    private TextView tvName;
-    private TextView tvUsername;
-    private TextView tvBalanceCount;
-    private TextView tvProjectsCount;
-    private TextView tvInvestmentsCount;
-    private TextView tvBio;
-    private ImageView ivSettings;
-    private ImageView ivEdit;
+
+    @BindView(R.id.ivProfileImage)
+    ImageView ivProfileImage;
+    @BindView(R.id.tvName)
+    TextView tvName;
+    @BindView(R.id.tvUser)
+    TextView tvUsername;
+    @BindView(R.id.tvBalanceCount)
+    TextView tvBalanceCount;
+    @BindView(R.id.tvProjectsCount)
+    TextView tvProjectsCount;
+    @BindView(R.id.tvInvestmentsCount)
+    TextView tvInvestmentsCount;
+    @BindView(R.id.tvBio)
+    TextView tvBio;
+    @BindView(R.id.ivBack)
+    ImageView ivBack;
+    @BindView(R.id.ivChat)
+    ImageView ivChat;
+
     private static final String KEY_NAME = "name";
     private static final String KEY_PROFILE_IMAGE = "profile_image";
     private static final String KEY_BIO = "bio";
     private static final String KEY_BALANCE = "balance";
-    private ImageView ivBack;
-    private ImageView ivChat;
-    Context context;
     ParseUser user;
 
     @Override
@@ -46,6 +57,7 @@ public class OtherUserProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_user_profile);
 
+        ButterKnife.bind(this);
         Update update = (Update) Parcels.unwrap(getIntent().getParcelableExtra(Update.class.getSimpleName()));
         user = update.getUser();
 
@@ -55,16 +67,6 @@ public class OtherUserProfileActivity extends AppCompatActivity {
     }
 
     private void setProfileInfo(ParseUser user) {
-        // Find references for the views
-        tvName = findViewById(R.id.tvName);
-        tvUsername = findViewById(R.id.tvUsername);
-        tvProjectsCount = findViewById(R.id.tvProjectsCount);
-        tvInvestmentsCount = findViewById(R.id.tvInvestmentsCount);
-        ivProfileImage = findViewById(R.id.ivProfileImageUpdate);
-        tvBalanceCount = findViewById(R.id.tvBalanceCount);
-        tvBio = findViewById(R.id.tvBio);
-        ivProfileImage = findViewById(R.id.ivProfileImage);
-
         try {
             tvName.setText(user.fetchIfNeeded().getString(KEY_NAME));
         } catch (ParseException e) {
@@ -80,8 +82,7 @@ public class OtherUserProfileActivity extends AppCompatActivity {
                     .load(profileImage.getUrl())
                     .apply(RequestOptions.circleCropTransform())
                     .into(ivProfileImage);
-        }
-        else {
+        } else {
             Glide.with(this)
                     .load(R.drawable.default_profile_image)
                     .apply(RequestOptions.circleCropTransform())
@@ -90,9 +91,6 @@ public class OtherUserProfileActivity extends AppCompatActivity {
     }
 
     private void setBackButton() {
-        // Find reference for the view
-        ivBack = findViewById(R.id.ivProfileToFeed);
-
         // Set on-click listener for for image view to launch edit account activity
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,9 +101,6 @@ public class OtherUserProfileActivity extends AppCompatActivity {
     }
 
     private void setChatButton() {
-        // Find reference for the view
-        ivChat = findViewById(R.id.ivChat);
-
         // Set on-click listener for for image view to launch edit account activity
         ivChat.setOnClickListener(new View.OnClickListener() {
             @Override

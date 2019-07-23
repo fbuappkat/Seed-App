@@ -35,14 +35,22 @@ import butterknife.ButterKnife;
 /* UpdateDetailsActivity displays all the comments associated with an update. */
 public class UpdateDetailsActivity extends AppCompatActivity {
 
-    @BindView(R.id.tvUser) TextView tvUser;
-    @BindView(R.id.tvRelativeTime) TextView tvTime;
-    @BindView(R.id.tvCaption) TextView tvCaption;
-    @BindView(R.id.rvComments) RecyclerView rvComments;
-    @BindView(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
-    @BindView(R.id.btnAddComment) Button btnComment;
-    @BindView(R.id.etComment) EditText etComment;
-    @BindView(R.id.ivDetailsToFeed) ImageView ivBack;
+    @BindView(R.id.tvUser)
+    TextView tvUser;
+    @BindView(R.id.tvRelativeTime)
+    TextView tvTime;
+    @BindView(R.id.tvCaption)
+    TextView tvCaption;
+    @BindView(R.id.rvComments)
+    RecyclerView rvComments;
+    @BindView(R.id.swipeContainer)
+    SwipeRefreshLayout swipeContainer;
+    @BindView(R.id.btnAddComment)
+    Button btnComment;
+    @BindView(R.id.etComment)
+    EditText etComment;
+    @BindView(R.id.ivDetailsToFeed)
+    ImageView ivBack;
     private Update update;
     protected CommentsAdapter adapter;
     protected List<String> comments;

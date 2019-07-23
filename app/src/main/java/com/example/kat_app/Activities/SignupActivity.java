@@ -22,12 +22,18 @@ import butterknife.ButterKnife;
 
 public class SignupActivity extends AppCompatActivity {
 
-    @BindView(R.id.btnSignup) Button btnSignup;
-    @BindView(R.id.etName) EditText etName;
-    @BindView(R.id.etUsername) EditText etUsername;
-    @BindView(R.id.etEmail) EditText etEmail;
-    @BindView(R.id.etPassword) EditText etPassword;
-    @BindView(R.id.etConfirmpassword) EditText etConfirmpassword;
+    @BindView(R.id.btnSignup)
+    Button btnSignup;
+    @BindView(R.id.etName)
+    EditText etName;
+    @BindView(R.id.etUsername)
+    EditText etUsername;
+    @BindView(R.id.etEmail)
+    EditText etEmail;
+    @BindView(R.id.etPassword)
+    EditText etPassword;
+    @BindView(R.id.etConfirmpassword)
+    EditText etConfirmpassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +66,6 @@ public class SignupActivity extends AppCompatActivity {
     }
 
 
-
     //create new user object on parse database
     private void signup(String username, String password, String email, String name) {
         final ParseUser user = new ParseUser();
@@ -68,8 +73,8 @@ public class SignupActivity extends AppCompatActivity {
         user.setUsername(username);
         user.setPassword(password);
         user.setEmail(email);
-        user.put("name",name);
-        user.put("balance",0);
+        user.put("name", name);
+        user.put("balance", 0);
 
         //signup in background, check if successful, return to home
         user.signUpInBackground(new SignUpCallback() {
@@ -90,12 +95,10 @@ public class SignupActivity extends AppCompatActivity {
                 balance.setAmount(0);
 
 
-
-
                 balance.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        if (e != null){
+                        if (e != null) {
                             e.printStackTrace();
                         }
                         user.put("money", balance);

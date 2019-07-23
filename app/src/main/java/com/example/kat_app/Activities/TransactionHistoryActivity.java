@@ -27,8 +27,11 @@ public class TransactionHistoryActivity extends AppCompatActivity {
     public static final String TAG = "TransactionHistoryActivity";
 
 
-    @BindView(R.id.ivBack) ImageButton ivBack;
-    @BindView(R.id.rvTransactions) RecyclerView rvTransactions;
+    @BindView(R.id.ivBack)
+    ImageButton ivBack;
+    @BindView(R.id.rvTransactions)
+    RecyclerView rvTransactions;
+
     private TransactionsAdapter adapter;
     private List<Transaction> mTransactions;
     private LinearLayoutManager layoutManager;
@@ -95,7 +98,7 @@ public class TransactionHistoryActivity extends AppCompatActivity {
                 if (e == null) {
 
                     // if opening app, clear out old items
-                    if(maxDate.equals(new Date(0))) {
+                    if (maxDate.equals(new Date(0))) {
                         adapter.clear();
                     }
 
