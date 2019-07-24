@@ -19,6 +19,7 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.text.NumberFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -114,8 +115,8 @@ public class ManageCreditActivity extends AppCompatActivity {
                 }
 
                 balance = accounts.get(0);
-
-                tvCurrBalanceCount.setText("$" + round(balance.getAmount()));
+                NumberFormat formatter = NumberFormat.getCurrencyInstance();
+                tvCurrBalanceCount.setText(formatter.format(round(balance.getAmount())));
             }
         });
     }

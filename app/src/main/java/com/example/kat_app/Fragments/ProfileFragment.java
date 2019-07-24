@@ -29,6 +29,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
@@ -127,7 +128,8 @@ public class ProfileFragment extends Fragment {
 
                 balance = accounts.get(0);
 
-                tvBalanceCount.setText("$" + round(balance.getAmount()));
+                NumberFormat formatter = NumberFormat.getCurrencyInstance();
+                tvBalanceCount.setText(formatter.format(round(balance.getAmount())));
             }
         });
     }

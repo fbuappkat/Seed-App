@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.example.kat_app.R;
 import com.parse.LogInCallback;
-import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
@@ -57,7 +56,6 @@ public class LoginActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     final Intent loginToSignup = new Intent(LoginActivity.this, SignupActivity.class);
                     startActivity(loginToSignup);
-                    finish();
                 }
             });
         }

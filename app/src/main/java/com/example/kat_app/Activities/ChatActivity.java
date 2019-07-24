@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kat_app.Adapters.ChatAdapter;
@@ -28,9 +30,11 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ChatActivity extends AppCompatActivity {
 
-    RecyclerView rvChat;
     ArrayList<Message> mMessages;
     ChatAdapter mAdapter;
     // Keep track of initial load to scroll to the bottom of the ListView
@@ -42,8 +46,18 @@ public class ChatActivity extends AppCompatActivity {
 
     static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
 
+    @BindView(R.id.rvChat)
+    RecyclerView rvChat;
+    @BindView(R.id.tvChat)
+    TextView tvChat;
+    @BindView(R.id.etMessage)
     EditText etMessage;
+    @BindView(R.id.btSend)
     Button btSend;
+    @BindView(R.id.ivBack)
+    ImageButton ivBack;
+    @BindView(R.id.ivMore)
+    ImageButton ivMore;
 
     ParseUser otherUser;
 
@@ -53,7 +67,14 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+        MainActivity.setStatusBar(getWindow());
+        ButterKnife.bind(this);
+
+        setBackButton();
+
         otherUser = Parcels.unwrap(getIntent().getParcelableExtra(OtherUserProfileActivity.class.getSimpleName()));
+
+        tvChat.setText(otherUser.getUsername());
         // User login
         if (ParseUser.getCurrentUser() != null) {
             startWithCurrentUser();
@@ -95,14 +116,10 @@ public class ChatActivity extends AppCompatActivity {
 
     // Setup button event handler which posts the entered message to Parse
     void setupMessagePosting() {
-        // Find the text field and button
-        etMessage = (EditText) findViewById(R.id.etMessage);
-        btSend = (Button) findViewById(R.id.btSend);
-        rvChat = (RecyclerView) findViewById(R.id.rvChat);
         mMessages = new ArrayList<>();
         mFirstLoad = true;
         final String userId = ParseUser.getCurrentUser().getObjectId();
-        mAdapter = new ChatAdapter(ChatActivity.this, userId, mMessages, ParseUser.getCurrentUser(), otherUser);
+        mAdapter = new ChatAdapter(ChatActivity.this, mMessages, userId, otherUser);
         rvChat.setAdapter(mAdapter);
 
         // associate the LayoutManager with the RecylcerView
@@ -178,6 +195,22 @@ public class ChatActivity extends AppCompatActivity {
             }
 
         });
+    }
+
+    private void setBackButton() {
+        // Set on-click listener for for image view to launch edit account activity
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
 }

@@ -235,7 +235,8 @@ public class DepositCreditActivity extends AppCompatActivity {
 
                 Balance balance = accounts.get(0);
                 currBalance = balance.getAmount();
-                tvNewBalanceCount.setText("$" + round(currBalance));
+                NumberFormat formatter = NumberFormat.getCurrencyInstance();
+                tvNewBalanceCount.setText(formatter.format(round(currBalance)));
                 etCredits.addTextChangedListener(balanceWatcher);
             }
         });
@@ -303,14 +304,16 @@ public class DepositCreditActivity extends AppCompatActivity {
             if (!s.toString().equals(current)) {
                 etCredits.removeTextChangedListener(this);
 
+                NumberFormat formatter = NumberFormat.getCurrencyInstance();
+
                 String cleanString = s.toString().replaceAll("[$,.]", "");
 
                 Float parsed = Float.parseFloat(cleanString);
                 if (parsed == 0F) {
-                    tvNewBalanceCount.setText("$" + round(currBalance));
+                    tvNewBalanceCount.setText(formatter.format(round(currBalance)));
                     tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_black));
                 } else {
-                    tvNewBalanceCount.setText("$" + round(currBalance + (parsed / 100)));
+                    tvNewBalanceCount.setText(formatter.format(round(currBalance + (parsed / 100))));
                     tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_green));
                 }
                 String formatted = NumberFormat.getCurrencyInstance().format((parsed / 100));
