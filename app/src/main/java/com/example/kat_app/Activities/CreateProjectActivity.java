@@ -58,6 +58,8 @@ public class CreateProjectActivity extends AppCompatActivity {
     ListView lvRequest;
     @BindView(R.id.root)
     ConstraintLayout constraintLayout;
+    @BindView(R.id.ivCreateToHome)
+    ImageView ivBack;
 
     ArrayList<String> requests;
     ArrayList<Float> prices;
@@ -112,7 +114,7 @@ public class CreateProjectActivity extends AppCompatActivity {
                 String name = etName.getText().toString();
                 String description = etDescription.getText().toString();
                 String category = spinnerCategories.getSelectedItem().toString();
-                if (category != "Select a Category") {
+                if (category != "Select a Project Category") {
                     Project proj = createProject(name, description, ParseUser.getCurrentUser(), category, photoFile);
                     for (int i = 0; i < requests.size(); i++) {
                         createRequest(requests.get(i), prices.get(i), proj);
@@ -125,6 +127,8 @@ public class CreateProjectActivity extends AppCompatActivity {
                 }
             }
         });
+
+        setBackButton();
     }
 
     private void setUploadProfileImage() {
@@ -269,6 +273,16 @@ public class CreateProjectActivity extends AppCompatActivity {
             builder.append(ALPHA_NUMERIC_STRING.charAt(character));
         }
         return builder.toString();
+    }
+
+    private void setBackButton() {
+        // Set on-click listener for for image view to launch edit account activity
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
 
