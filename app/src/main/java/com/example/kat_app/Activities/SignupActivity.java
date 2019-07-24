@@ -36,7 +36,7 @@ public class SignupActivity extends AppCompatActivity {
     EditText etPassword;
     @BindView(R.id.etConfirmpassword)
     EditText etConfirmpassword;
-    @BindView(R.id.ConstraintLayout)
+    @BindView(R.id.constraint)
     ConstraintLayout constraintLayout;
 
     @Override
