@@ -15,6 +15,9 @@ import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /* FBU 2019
  * Login allows users to sign in, or sign up for a new account.
    Accounts are hosted on via Heroku. If a user is already logged in,
@@ -22,23 +25,22 @@ import com.parse.ParseUser;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText usernameInput;
-    private EditText passwordInput;
-    private Button loginBtn;
-    private Button loginToSignup;
+    @BindView(R.id.etLoginUsername) EditText usernameInput;
+    @BindView(R.id.etLoginPassword) EditText passwordInput;
+    @BindView(R.id.btnLogin) Button loginBtn;
+    @BindView(R.id.btnLoginToSignup) Button loginToSignup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
             loginToHome();
         } else {
             setContentView(R.layout.activity_login);
-            usernameInput = (EditText) findViewById(R.id.etLoginUsername);
-            passwordInput = (EditText) findViewById(R.id.etLoginPassword);
-            loginBtn = findViewById(R.id.btnLogin);
-            loginToSignup = findViewById(R.id.btnLoginToSignup);
+            ButterKnife.bind(this);
 
             loginBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -74,9 +76,9 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Login credentials incorrect", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
-                ParseACL parseACL = new ParseACL(ParseUser.getCurrentUser());
-                parseACL.setPublicReadAccess(true);
-                ParseUser.getCurrentUser().setACL(parseACL);
+//                ParseACL parseACL = new ParseACL(ParseUser.getCurrentUser());
+ //               parseACL.setPublicReadAccess(true);
+  //              ParseUser.getCurrentUser().setACL(parseACL);
             }
         });
     }

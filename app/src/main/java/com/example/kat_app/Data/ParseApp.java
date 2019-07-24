@@ -3,6 +3,7 @@ package com.example.kat_app.Data;
 import android.app.Application;
 
 import com.example.kat_app.Models.Balance;
+import com.example.kat_app.Models.Message;
 import com.example.kat_app.Models.Update;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.Models.Request;
@@ -24,6 +25,7 @@ public class ParseApp extends Application {
         ParseObject.registerSubclass(Request.class);
         ParseObject.registerSubclass(Transaction.class);
         ParseObject.registerSubclass(Balance.class);
+        ParseObject.registerSubclass(Message.class);
 
         // Use for monitoring Parse network traffic
         OkHttpClient.Builder builder = new OkHttpClient.Builder();

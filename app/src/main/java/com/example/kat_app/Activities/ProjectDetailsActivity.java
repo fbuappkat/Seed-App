@@ -156,7 +156,10 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         for (int i = 0; i < requests.size(); i++) {
             values.add(new PieEntry(requests.get(i).getPrice(), requests.get(i).getRequest()));
         }
+
+
         PieDataSet pieDataSet = new PieDataSet(values, "<- Requests");
+        pieDataSet.setSliceSpace(0f);
         PieData pieData = new PieData(pieDataSet);
         pieData.setValueTextSize(20);
         pcBreakdown.setData(pieData);
@@ -181,7 +184,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                 requests = new ArrayList<>();
                 requests.addAll(posts);
                 if (requests != null) {
-                    tvFunds.setText("Funds: " + getTotalFunds(requests) + "/" + getTotal(requests));
+                    tvFunds.setText("Funds: " + getTotalFunds(requests) + "0/" + getTotal(requests) + "0");
                 }
                 makePieChart();
             }

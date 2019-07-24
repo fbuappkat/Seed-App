@@ -1,6 +1,5 @@
 package com.example.kat_app.Fragments;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -20,6 +19,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Activities.EditProfileActivity;
 import com.example.kat_app.Activities.ManageAccountActivity;
 import com.example.kat_app.Models.Balance;
+import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -92,6 +92,8 @@ public class ProfileFragment extends Fragment {
         tvUsername.setText("@" + currUser.getUsername());
         //tvBalanceCount.setText("$" + currUser.getInt(KEY_BALANCE));
         queryBalance(currUser);
+        queryProjects();
+        queryInvested();
         tvBio.setText(currUser.getString(KEY_BIO));
         tvLocation.setText(setLocation(currUser.getParseGeoPoint(KEY_LOCATION)));
 
@@ -185,6 +187,44 @@ public class ProfileFragment extends Fragment {
 
     private float round(float value) {
         return (float) Math.round(value * 100) / 100;
+    }
+
+    protected void queryProjects() {
+        ParseQuery<Project> projectQuery = new ParseQuery<Project>(Project.class);
+        projectQuery.whereEqualTo("author", ParseUser.getCurrentUser());
+
+        projectQuery.findInBackground(new FindCallback<Project>() {
+            @Override
+            public void done(List<Project> posts, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG,"Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+               tvProjectsCount.setText(Integer.toString(posts.size()));
+            }
+        });
+    }
+
+    protected void queryInvested() {
+        ParseQuery<Project> projectQuery = new ParseQuery<Project>(Project.class);
+        projectQuery.findInBackground(new FindCallback<Project>() {
+            @Override
+            public void done(List<Project> posts, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG,"Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+                int count = 0;
+                for (Project project : posts){
+                    if(project.getInvestors().toString().contains(ParseUser.getCurrentUser().getObjectId())){
+                        count++;
+                    }
+                }
+                tvInvestmentsCount.setText(Integer.toString(count));
+            }
+        });
     }
 }
 

@@ -1,40 +1,78 @@
 package com.example.kat_app.Activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.kat_app.Adapters.ChatAdapter;
+import com.example.kat_app.Models.Message;
 import com.example.kat_app.R;
+import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.parceler.Parcels;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class ChatActivity extends AppCompatActivity {
+
+    RecyclerView rvChat;
+    ArrayList<Message> mMessages;
+    ChatAdapter mAdapter;
+    // Keep track of initial load to scroll to the bottom of the ListView
+    boolean mFirstLoad;
+
     static final String TAG = ChatActivity.class.getSimpleName();
     static final String USER_ID_KEY = "userId";
     static final String BODY_KEY = "body";
 
+    static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
+
     EditText etMessage;
     Button btSend;
+
+    ParseUser otherUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        otherUser = Parcels.unwrap(getIntent().getParcelableExtra(OtherUserProfileActivity.class.getSimpleName()));
         // User login
-        if (ParseUser.getCurrentUser() != null) { // start with existing user
+        if (ParseUser.getCurrentUser() != null) {
             startWithCurrentUser();
-        } else { // If not logged in, login as a new anonymous user
+        } else {
             login();
         }
+        myHandler.postDelayed(mRefreshMessagesRunnable, POLL_INTERVAL);
     }
+
+    static final int POLL_INTERVAL = 1000; // milliseconds
+    Handler myHandler = new Handler();  // android.os.Handler
+    Runnable mRefreshMessagesRunnable = new Runnable() {
+        @Override
+        public void run() {
+            refreshMessages();
+            myHandler.postDelayed(this, POLL_INTERVAL);
+        }
+    };
+
 
     // Get the userId from the cached currentUser object
     void startWithCurrentUser() {
@@ -60,27 +98,87 @@ public class ChatActivity extends AppCompatActivity {
         // Find the text field and button
         etMessage = (EditText) findViewById(R.id.etMessage);
         btSend = (Button) findViewById(R.id.btSend);
+        rvChat = (RecyclerView) findViewById(R.id.rvChat);
+        mMessages = new ArrayList<>();
+        mFirstLoad = true;
+        final String userId = ParseUser.getCurrentUser().getObjectId();
+        mAdapter = new ChatAdapter(ChatActivity.this, userId, mMessages);
+        rvChat.setAdapter(mAdapter);
+
+        // associate the LayoutManager with the RecylcerView
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChatActivity.this);
+        linearLayoutManager.setReverseLayout(true);
+        rvChat.setLayoutManager(linearLayoutManager);
+
         // When send button is clicked, create message object on Parse
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String data = etMessage.getText().toString();
-                ParseObject message = ParseObject.create("Message");
-                message.put(USER_ID_KEY, ParseUser.getCurrentUser().getObjectId());
-                message.put(BODY_KEY, data);
+                //ParseObject message = ParseObject.create("Message");
+                //message.put(Message.USER_ID_KEY, userId);
+                //message.put(Message.BODY_KEY, data);
+                // Using new `Message` Parse-backed model now
+                Message message = new Message();
+                message.setBody(data);
+                message.setUserId(ParseUser.getCurrentUser().getObjectId());
+                message.setMessageSender(ParseUser.getCurrentUser());
+                message.setMessageReceiver(otherUser);
                 message.saveInBackground(new SaveCallback() {
-
+                    @Override
                     public void done(ParseException e) {
-                        if(e == null) {
-                            Toast.makeText(ChatActivity.this, "Successfully created message on Parse",
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            Log.e(TAG, "Failed to save message", e);
-                        }
+                        Toast.makeText(ChatActivity.this, "Successfully created message on Parse",
+                                Toast.LENGTH_SHORT).show();
+                        refreshMessages();
                     }
                 });
                 etMessage.setText(null);
             }
         });
     }
+
+
+    void refreshMessages() {
+        // build first AND condition
+        ParseQuery<Message> queryPart1 = ParseQuery.getQuery(Message.class);
+        queryPart1.whereEqualTo("sender", ParseUser.getCurrentUser());
+        queryPart1.whereEqualTo("receiver", otherUser);
+
+        // build second AND condition
+        ParseQuery<Message> queryPart2 = ParseQuery.getQuery(Message.class);
+        queryPart2.whereEqualTo("sender", otherUser);
+        queryPart2.whereEqualTo("receiver", ParseUser.getCurrentUser());
+
+        // list all queries condition for next step
+        List<ParseQuery<Message>> queries = new ArrayList<ParseQuery<Message>>();
+        queries.add(queryPart1);
+        queries.add(queryPart2);
+
+        // Compose the OR clause
+        ParseQuery<Message> innerQuery = ParseQuery.or(queries);
+        innerQuery.orderByDescending("createdAt");
+
+        innerQuery.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
+
+        // Run selection asynchronously
+        innerQuery.findInBackground(new FindCallback<Message>() {
+            public void done(List<Message> messages, ParseException e) {
+                if (e == null) {
+                    mMessages.clear();
+                    mMessages.addAll(messages);
+                    mAdapter.notifyDataSetChanged(); // update adapter
+                    // Scroll to the bottom of the list on initial load
+                    if (mFirstLoad) {
+                        rvChat.scrollToPosition(0);
+                        mFirstLoad = false;
+                    }
+                } else {
+                    Log.e("message", "Error Loading Messages" + e);
+                }
+            }
+
+        });
+    }
+
 }
+

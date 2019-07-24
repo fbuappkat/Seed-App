@@ -2,20 +2,25 @@ package com.example.kat_app.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.SearchView;
+import android.widget.Spinner;
 
-import com.example.kat_app.Activities.ProjectDetailsActivity;
 import com.example.kat_app.Activities.CreateProjectActivity;
+import com.example.kat_app.Activities.ProjectDetailsActivity;
 import com.example.kat_app.Adapters.ProjectsAdapter;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
@@ -34,8 +39,12 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
     private ImageView ivAdd;
     protected List<Project> projects;
     protected ProjectsAdapter adapter;
+    private ProgressBar pbLoad;
+    private FloatingActionButton fabCreate;
+    private Spinner spinnerFilter;
     SearchView editsearch;
     protected SwipeRefreshLayout swipeContainer;
+
 
     public static final String TAG = "HomeFragment";
 
@@ -48,7 +57,45 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ivAdd = view.findViewById(R.id.ivAdd);
+
+        pbLoad = view.findViewById(R.id.pbLoad);
+        fabCreate = view.findViewById(R.id.fabCreate);
+        spinnerFilter = view.findViewById(R.id.spinnerFilter);
+
+        //setup spinner
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.filter));
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinnerFilter.setAdapter(spinnerAdapter);
+
+        spinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String[] strarr = getResources().getStringArray(R.array.filter);
+                switch(position){
+                    case 0:
+                        queryProjects();
+                        break;
+                    case 1:
+                        queryProjects();
+                    default:
+                        queryProjectsByCategory(strarr[position]);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        fabCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CreateProjectActivity.class);
+                startActivity(intent);
+            }
+        });
         // Locate the EditText in listview_main.xml
         editsearch = (SearchView) view.findViewById(R.id.search);
         editsearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -65,15 +112,9 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
             }
         });
 
-        ivAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CreateProjectActivity.class);
-                startActivity(intent);
-            }
-        });
 
         rvProjects = view.findViewById(R.id.rvProjects);
+        rvProjects.setVisibility(View.INVISIBLE);
 
         // create the data source
         projects = new ArrayList<>();
@@ -97,6 +138,8 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
                 // once the network request has completed successfully.
                 projects.clear();
                 adapter.clear();
+                pbLoad.setVisibility(View.VISIBLE);
+                rvProjects.setVisibility(View.INVISIBLE);
                 queryProjects();
             }
         });
@@ -119,9 +162,37 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
                     e.printStackTrace();
                     return;
                 }
+                projects.clear();
+                adapter.clear();
                 projects.addAll(posts);
                 adapter.notifyDataSetChanged();
                 swipeContainer.setRefreshing(false);
+                pbLoad.setVisibility(View.INVISIBLE);
+                rvProjects.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    protected void queryProjectsByCategory(String category) {
+        ParseQuery<Project> projectQuery = new ParseQuery<Project>(Project.class);
+        //updateQuery.include(Update.KEY_USER);
+        projectQuery.whereEqualTo("category", category);
+
+        projectQuery.findInBackground(new FindCallback<Project>() {
+            @Override
+            public void done(List<Project> posts, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG,"Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+                projects.clear();
+                adapter.clear();
+                projects.addAll(posts);
+                adapter.notifyDataSetChanged();
+                swipeContainer.setRefreshing(false);
+                pbLoad.setVisibility(View.INVISIBLE);
+                rvProjects.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -133,5 +204,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         project2description.putExtra("project", Parcels.wrap(projects.get(i)));
         startActivity(project2description);
     }
+
+
 
 }

@@ -15,5 +15,19 @@
         <item>Other</item>
     </string-array>
 
+    <string-array name="filter">
+        <item>All</item>
+        <item>Popular</item>
+        <item>Technology</item>
+        <item>Social Good</item>
+        <item>Food/Drink</item>
+        <item>Finance</item>
+        <item>Other</item>
+    </string-array>
+
+
     <string name="google_maps_api">AIzaSyAhbFxJMu7hjZ646Pl1e414synTc9l70xk</string>
+
+    <string name="profile_me">My Profile Pic</string>
+    <string name="profile_other">Other profile pic</string>
 </resources>

@@ -17,11 +17,17 @@ import com.example.kat_app.Fragments.HomeFragment;
 import com.example.kat_app.Fragments.ProfileFragment;
 import com.example.kat_app.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    private ConstraintLayout toolbar;
-    private BottomNavigationView bottomNav;
+    @BindView(R.id.toolbar)
+    ConstraintLayout toolbar;
+    @BindView(R.id.bottomNav)
+    BottomNavigationView bottomNav;
+
     FragmentManager fragmentManager;
 
     @Override
@@ -30,10 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setStatusBar(getWindow());
-
-        // Find references for the views
-        toolbar =   findViewById(R.id.toolbar);
-        bottomNav = findViewById(R.id.bottomNav);
+        ButterKnife.bind(this);
 
         // Get the fragment manager
         fragmentManager = getSupportFragmentManager();
@@ -59,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                                 hideToolbar();
                                 break;
 
-                                default:
+                            default:
                                 fragment = new FeedFragment();
                                 showToolbar();
                                 break;
