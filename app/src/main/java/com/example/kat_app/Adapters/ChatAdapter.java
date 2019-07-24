@@ -10,8 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Models.Message;
 import com.example.kat_app.R;
+import com.parse.ParseUser;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -22,10 +24,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     private List<Message> mMessages;
     private Context mContext;
     private String mUserId;
+    private ParseUser currUser;
+    private ParseUser otherUser;
 
-    public ChatAdapter(Context context, String userId, List<Message> messages) {
+    public ChatAdapter(Context context, String userId, List<Message> messages, ParseUser currUser, ParseUser otherUser) {
         mMessages = messages;
         this.mUserId = userId;
+        this.currUser = currUser;
+        this.otherUser = otherUser;
         mContext = context;
     }
 
@@ -47,15 +53,23 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         if (isMe) {
             holder.imageMe.setVisibility(View.VISIBLE);
             holder.imageOther.setVisibility(View.GONE);
-            holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+            holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
         } else {
             holder.imageOther.setVisibility(View.VISIBLE);
             holder.imageMe.setVisibility(View.GONE);
-            holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+            holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
         }
 
         final ImageView profileView = isMe ? holder.imageMe : holder.imageOther;
-        Glide.with(mContext).load(getProfileUrl(message.getUserId())).into(profileView);
+        if (isMe) {
+            Glide.with(mContext).load(currUser.getParseFile("profile_image").getUrl())
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(profileView);
+        } else {
+            Glide.with(mContext).load(otherUser.getParseFile("profile_image").getUrl())
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(profileView);
+        }
         holder.body.setText(message.getBody());
     }
 

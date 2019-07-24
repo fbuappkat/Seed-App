@@ -102,7 +102,7 @@ public class ChatActivity extends AppCompatActivity {
         mMessages = new ArrayList<>();
         mFirstLoad = true;
         final String userId = ParseUser.getCurrentUser().getObjectId();
-        mAdapter = new ChatAdapter(ChatActivity.this, userId, mMessages);
+        mAdapter = new ChatAdapter(ChatActivity.this, userId, mMessages, ParseUser.getCurrentUser(), otherUser);
         rvChat.setAdapter(mAdapter);
 
         // associate the LayoutManager with the RecylcerView
