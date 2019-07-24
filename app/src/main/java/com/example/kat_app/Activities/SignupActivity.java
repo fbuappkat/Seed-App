@@ -1,7 +1,9 @@
 package com.example.kat_app.Activities;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -34,6 +36,8 @@ public class SignupActivity extends AppCompatActivity {
     EditText etPassword;
     @BindView(R.id.etConfirmpassword)
     EditText etConfirmpassword;
+    @BindView(R.id.ConstraintLayout)
+    ConstraintLayout constraintLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,11 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         ButterKnife.bind(this);
+
+        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+        animationDrawable.setEnterFadeDuration(2000);
+        animationDrawable.setExitFadeDuration(3000);
+        animationDrawable.start();
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
