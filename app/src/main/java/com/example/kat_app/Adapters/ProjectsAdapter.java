@@ -8,12 +8,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -21,7 +25,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHolder> {
-    private Context context;
+    private static Context context;
     private static List<Project> projects;
     private static List<Project> matchingProjects;
     private final String TAG = "UpdatesAdapter";
@@ -67,6 +71,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
         private TextView tvAuthor;
         private TextView tvInvestors;
         private TextView tvFollowers;
+        private ImageView ivThumbnail;
         View view;
 
         public ViewHolder(View itemView) {
@@ -76,6 +81,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
             tvAuthor = itemView.findViewById(R.id.tvAuthor);
             tvFollowers = itemView.findViewById(R.id.tvFollowers);
             tvInvestors = itemView.findViewById(R.id.tvInvestors);
+            ivThumbnail = itemView.findViewById(R.id.ivThumbnail);
 
 
 
@@ -110,6 +116,18 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
             tvInvestors.setText("Investors: " + project.getInvestors().length());
             tvFollowers.setText("Followers: " + project.getFollowers().length());
             queryUser(project);
+            ParseFile profileImage = project.getParseFile("thumbnail");
+            if (profileImage != null) {
+                Glide.with(context)
+                        .load(profileImage.getUrl())
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(ivThumbnail);
+            } else {
+                Glide.with(context)
+                        .load(R.drawable.ic_invest)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(ivThumbnail);
+            }
             this.onClickListener  = onClickListener;
             itemView.setOnClickListener(this);
 
