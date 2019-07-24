@@ -35,15 +35,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        ButterKnife.bind(this);
-        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
-        animationDrawable.setEnterFadeDuration(2000);
-        animationDrawable.setExitFadeDuration(3000);
-        animationDrawable.start();
-
 
 
         ParseUser currentUser = ParseUser.getCurrentUser();
@@ -52,6 +45,11 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             setContentView(R.layout.activity_login);
             ButterKnife.bind(this);
+            AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+            animationDrawable.setEnterFadeDuration(2000);
+            animationDrawable.setExitFadeDuration(3000);
+            animationDrawable.start();
+
 
             loginBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
