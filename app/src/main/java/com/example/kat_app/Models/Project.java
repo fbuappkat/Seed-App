@@ -68,6 +68,10 @@ public class Project extends ParseObject implements Parcelable {
         return getJSONArray(KEY_FOLLOWERS);
     }
 
+    public JSONArray getMedia(){
+        return getJSONArray("media");
+    }
+
     public JSONArray getInvestors(){
         return getJSONArray(KEY_INVESTORS);
     }

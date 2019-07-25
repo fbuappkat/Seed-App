@@ -127,6 +127,9 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         rvProjects.setAdapter(adapter);
         // set the layout manager on the recycler view
         rvProjects.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        queryProjects();
+
         // Lookup the swipe container view
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
@@ -146,7 +149,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(android.R.color.holo_orange_dark,
                 android.R.color.holo_orange_light);
-        queryProjects();
+
     }
 
     protected void queryProjects() {

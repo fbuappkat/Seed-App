@@ -104,6 +104,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
                         ParseUser user = posts.get(0);
                         tvAuthor.setText("@" + user.getUsername());
                     }
+
                 }
 
             });
@@ -113,7 +114,6 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
         //add in data for specific user's post
         public void bind(final Project project, OnClickListener onClickListener) {
             tvName.setText(project.getName());
-            tvAuthor.setText("Username");
             tvInvestors.setText("Investors: " + project.getInvestors().length());
             tvFollowers.setText("Followers: " + project.getFollowers().length());
             queryUser(project);
