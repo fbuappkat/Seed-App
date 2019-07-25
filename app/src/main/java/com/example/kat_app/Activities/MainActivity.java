@@ -37,9 +37,14 @@ public class MainActivity extends AppCompatActivity {
 
         setStatusBar(getWindow());
         ButterKnife.bind(this);
+        hideToolbar();
 
         // Get the fragment manager
         fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.centerView, new FeedFragment());
+        transaction.commit();
 
         // Set up the navigation bar to switch between fragments
         bottomNav.setOnNavigationItemSelectedListener(
