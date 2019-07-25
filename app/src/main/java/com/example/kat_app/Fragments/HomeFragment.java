@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.kat_app.Activities.CreateProjectActivity;
 import com.example.kat_app.Activities.ProjectDetailsActivity;
@@ -42,8 +43,12 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
     private ProgressBar pbLoad;
     private FloatingActionButton fabCreate;
     private Spinner spinnerFilter;
+    private Spinner spinnerSearch;
+    private TextView tvFilter;
+    private boolean onProjects = true;
     SearchView editsearch;
     protected SwipeRefreshLayout swipeContainer;
+
 
 
     public static final String TAG = "HomeFragment";
@@ -61,12 +66,21 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         pbLoad = view.findViewById(R.id.pbLoad);
         fabCreate = view.findViewById(R.id.fabCreate);
         spinnerFilter = view.findViewById(R.id.spinnerFilter);
+        spinnerSearch = view.findViewById(R.id.spinnerSearch);
+        tvFilter = view.findViewById(R.id.tvFilter);
+        spinnerFilter.setVisibility(View.VISIBLE);
+        tvFilter.setVisibility(View.VISIBLE);
 
-        //setup spinner
+        //setup spinners
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.filter));
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinnerFilter.setAdapter(spinnerAdapter);
+
+        ArrayAdapter<String> spinnerAdapter2 = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.search));
+        spinnerAdapter2.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinnerSearch.setAdapter(spinnerAdapter2);
 
         spinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -86,6 +100,36 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        spinnerSearch.setSelection(0,false);
+        spinnerSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch(position){
+                    case 0:
+                        spinnerFilter.setVisibility(View.VISIBLE);
+                        tvFilter.setVisibility(View.VISIBLE);
+                        rvProjects.setVisibility(View.VISIBLE);
+                        onProjects = true;
+                        break;
+                    case 1:
+                        onProjects = false;
+                        spinnerFilter.setVisibility(View.INVISIBLE);
+                        tvFilter.setVisibility(View.INVISIBLE);
+                        rvProjects.setVisibility(View.INVISIBLE);
+                        break;
+                        //Todo add query users, create NEW RECYCLER VIEWWE SAJFNERWJGFWERNFKERW
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                spinnerFilter.setVisibility(View.VISIBLE);
+                tvFilter.setVisibility(View.VISIBLE);
+                onProjects = true;
             }
         });
 
@@ -139,11 +183,16 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
                 // Your code to refresh the list here.
                 // Make sure you call swipeContainer.setRefreshing(false)
                 // once the network request has completed successfully.
-                projects.clear();
-                adapter.clear();
-                pbLoad.setVisibility(View.VISIBLE);
-                rvProjects.setVisibility(View.INVISIBLE);
-                queryProjects();
+                if (onProjects) {
+                    projects.clear();
+                    adapter.clear();
+                    pbLoad.setVisibility(View.VISIBLE);
+                    rvProjects.setVisibility(View.INVISIBLE);
+                    queryProjects();
+                } else {
+                    ;
+                    //todo put query users in here when thats made
+                }
             }
         });
         // Configure the refreshing colors
