@@ -25,6 +25,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".Activities.TransactionHistoryActivity"></activity>
         <activity android:name=".Activities.WithdrawCreditActivity" />
+        <activity android:name=".Activities.CustomPhotoGalleryActivity" />
         <activity android:name=".Activities.DepositCreditActivity" />
         <activity
             android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"

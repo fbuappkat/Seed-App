@@ -4,10 +4,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,8 +18,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.kat_app.Adapters.SpinAdapter;
@@ -39,7 +45,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /* AddUpdateActivity allows the user to add an update about a specific project. */
-public class AddUpdateActivity extends AppCompatActivity {
+public class AddUpdateActivity extends AppCompatActivity implements View.OnClickListener {
 
     private final String TAG = "Add Update Activity";
 
@@ -47,25 +53,31 @@ public class AddUpdateActivity extends AppCompatActivity {
     Button btnAddUpdate;
     @BindView(R.id.etUpdateCaption)
     EditText etUpdate;
-    @BindView(R.id.tvUpload3)
-    TextView tvUpload3;
     @BindView(R.id.sProjectChoice)
     Spinner spinner;
     @BindView(R.id.ivUpdateToFeed)
     ImageView ivBack;
-    @BindView(R.id.ivUpdateImage)
-    ImageView ivUpdateImage;
+    @BindView(R.id.lnrImages)
+    LinearLayout lnrImages;
+    @BindView(R.id.btnAddPhots)
+    Button btnAddPhots;
+    @BindView(R.id.btnSaveImages)
+    Button btnSaveImages;
 
     protected ArrayList<Project> projects = new ArrayList<>();
     protected SpinAdapter spinAdapter;
     private Project chosenProject;
     private String chosenProjectName;
+    private ArrayList<String> imagesPathList;
+    private ArrayList<ParseFile> images;
+    private Bitmap yourbitmap;
+    private Bitmap resized;
     private ProgressDialog LoadingBar;
 
     public final String photoFileName = "photo.jpg";
     private ParseFile photoFile;
 
-    private final static int PICK_PHOTO_CODE = 1034;
+    private final int PICK_IMAGE_MULTIPLE =1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,34 +86,36 @@ public class AddUpdateActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        btnAddPhots.setOnClickListener(this);
+        btnSaveImages.setOnClickListener(this);
+
         LoadingBar = new ProgressDialog(this);
 
         setBackButton();
         setAddUpdateButton();
-        setUploadUpdateImage();
         setSpinner();
         setETUpdate();
         getProjects();
-        //setUploadUpdateImage();
     }
 
-    private void setUploadUpdateImage() {
-        tvUpload3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                uploadUpdatePic();
-            }
-        });
-    }
-
-    public void uploadUpdatePic() {
-        // Create intent for picking a photo from the gallery
-        Intent intent = new Intent(Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-        if (intent.resolveActivity(this.getPackageManager()) != null) {
-            // Bring up gallery to select a photo
-            startActivityForResult(intent, PICK_PHOTO_CODE);
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnAddPhots:
+                Intent intent = new Intent(AddUpdateActivity.this,CustomPhotoGalleryActivity.class);
+                startActivityForResult(intent,PICK_IMAGE_MULTIPLE);
+                break;
+            case R.id.btnSaveImages:
+                if(imagesPathList !=null){
+                    if(imagesPathList.size()>1) {
+                        Toast.makeText(AddUpdateActivity.this, imagesPathList.size() + " no of images are selected", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(AddUpdateActivity.this, imagesPathList.size() + " no of image are selected", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(AddUpdateActivity.this," no images are selected", Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
     }
 
@@ -158,33 +172,33 @@ public class AddUpdateActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data != null) {
-            Uri photoUri = data.getData();
-
-            // by this point we have the camera photo on disk
-            Bitmap chosenImage = null;
-            try {
-                chosenImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (resultCode == RESULT_OK) {
+            if(requestCode == PICK_IMAGE_MULTIPLE){
+                imagesPathList = new ArrayList<String>();
+                String[] imagesPath = data.getStringExtra("data").split("\\|");
+                try{
+                    lnrImages.removeAllViews();
+                }catch (Throwable e){
+                    e.printStackTrace();
+                }
+                for (int i=0;i<imagesPath.length;i++){
+                    images = new ArrayList<>();
+                    imagesPathList.add(imagesPath[i]);
+                    yourbitmap = BitmapFactory.decodeFile(imagesPath[i]);
+                    ParseFile convertedImage = conversionBitmapParseFile(yourbitmap);
+                    images.add(convertedImage);
+                    ImageView imageView = new ImageView(this);
+                    imageView.setImageBitmap(yourbitmap);
+                    imageView.setAdjustViewBounds(true);
+                    lnrImages.addView(imageView);
+                }
             }
-
-            // Load the taken image into a preview
-            Glide.with(this)
-                    .asBitmap()
-                    .load(chosenImage)
-                    .into(ivUpdateImage);
-
-            // Load the parseFile
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            chosenImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-            byte[] image = stream.toByteArray();
-            photoFile = new ParseFile(image);
         }
+
     }
 
 
-    private void postUpdate(String update, ParseUser currentUser, Project project, ParseFile photoFile) {
+    private void postUpdate(String update, ParseUser currentUser, Project project, ArrayList<ParseFile> images) {
 
         Update newUpdate = new Update();
         newUpdate.setCaption(update);
@@ -203,6 +217,24 @@ public class AddUpdateActivity extends AppCompatActivity {
                 LoadingBar.hide();
             }
         });
+
+        if (images != null || images.size() !=0) {
+            for(ParseFile image : images) {
+                project.setMedia(image);
+            }
+
+            project.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        Log.d(TAG, "Error while saving");
+                        e.printStackTrace();
+                        return;
+                    }
+                    Log.d(TAG, "Success adding media!");
+                }
+            });
+        }
     }
 
     private void getProjects() {
@@ -241,7 +273,7 @@ public class AddUpdateActivity extends AppCompatActivity {
                 String caption = etUpdate.getText().toString();
                 ParseUser currUser = ParseUser.getCurrentUser();
                 Project selected = projs.get(0);
-                postUpdate(caption, currUser, selected, null);
+                postUpdate(caption, currUser, selected, images);
                 finish();
 
             }
@@ -271,5 +303,13 @@ public class AddUpdateActivity extends AppCompatActivity {
             names.add(projs.get(i).getName());
         }
         return names;
+    }
+
+    public ParseFile conversionBitmapParseFile(Bitmap imageBitmap){
+        ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
+        imageBitmap.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
+        byte[] imageByte = byteArrayOutputStream.toByteArray();
+        ParseFile parseFile = new ParseFile("image_file.png",imageByte);
+        return parseFile;
     }
 }

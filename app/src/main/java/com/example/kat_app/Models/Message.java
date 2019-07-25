@@ -40,7 +40,7 @@ public class Message extends ParseObject {
     public void setMessageReceiver(ParseUser receiver) {put(MESSAGE_RECEIVER_KEY, receiver); }
 
     public String getTime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm aa");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("h:mm aa");
         String formattedDate = dateFormat.format(this.getCreatedAt());
 
         return formattedDate.toUpperCase();
