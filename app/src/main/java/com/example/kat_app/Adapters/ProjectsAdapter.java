@@ -24,7 +24,7 @@ import com.parse.ParseUser;
 import java.util.List;
 import java.util.Locale;
 
-public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHolder> {
+public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHolder>  {
     private static Context context;
     private static List<Project> projects;
     private static List<Project> matchingProjects;
@@ -43,6 +43,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
     @Override
     public ProjectsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_project, parent, false);
+
         return new ProjectsAdapter.ViewHolder(view);
     }
 
@@ -130,7 +131,6 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
             }
             this.onClickListener  = onClickListener;
             itemView.setOnClickListener(this);
-
 
 
 

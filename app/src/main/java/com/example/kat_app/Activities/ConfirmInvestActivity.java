@@ -187,13 +187,13 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         projectQuery.whereEqualTo("objectId", proj.getUser().getObjectId());
         projectQuery.findInBackground(new FindCallback<ParseUser>() {
             @Override
-            public void done(List<ParseUser> posts, ParseException e) {
+            public void done(List<ParseUser> user, ParseException e) {
                 if (e != null) {
                     Log.e("Query requests", "Error with query");
                     e.printStackTrace();
                     return;
                 }
-                receiveUser = posts.get(0);
+                receiveUser = user.get(0);
                 queryReceiverBalance(receiveUser);
             }
 

@@ -160,40 +160,50 @@
 
     <Button
         android:id="@+id/btnFollow"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
+        android:layout_width="144dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="40dp"
         android:background="@color/kat_orange_1"
         android:text="Follow"
         android:textColor="@color/kat_white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pcBreakdown" />
+        app:layout_constraintTop_toBottomOf="@+id/btnMoreDetails" />
 
     <Button
         android:id="@+id/btnInvest"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="144dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="40dp"
         android:background="@color/kat_orange_1"
         android:text="Invest"
         android:textColor="@color/kat_white"
         app:layout_constraintEnd_toStartOf="@+id/btnFollow"
-        app:layout_constraintStart_toEndOf="@+id/btnMoreDetails"
-        app:layout_constraintTop_toBottomOf="@+id/pcBreakdown" />
+        app:layout_constraintTop_toBottomOf="@+id/btnMoreDetails" />
 
     <Button
         android:id="@+id/btnMoreDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="128dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="36dp"
         android:background="@color/kat_orange_1"
         android:text="  More Details  "
         android:textColor="@color/kat_white"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pcBreakdown" />
+
+    <Button
+        android:id="@+id/btnShowMedia"
+        android:layout_width="128dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="36dp"
+        android:background="@color/kat_orange_1"
+        android:text="  Show Media  "
+        android:textColor="@color/kat_white"
+        app:layout_constraintStart_toEndOf="@+id/btnMoreDetails"
         app:layout_constraintTop_toBottomOf="@+id/pcBreakdown" />
 
     <TextView
@@ -235,4 +245,6 @@
         android:text="Handle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvAuthor" />
+
+
 </android.support.constraint.ConstraintLayout>

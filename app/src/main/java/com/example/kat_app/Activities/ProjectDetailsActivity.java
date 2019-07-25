@@ -2,6 +2,7 @@ package com.example.kat_app.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.example.kat_app.Models.Project;
 import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
 import com.example.kat_app.Models.Request;
+import com.example.kat_app.R;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
@@ -57,6 +59,8 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     Button btnInvest;
     @BindView(R.id.btnMoreDetails)
     Button btnMore;
+    @BindView(R.id.btnShowMedia)
+    Button btnShowMedia;
     @BindView(R.id.ivUpdateToFeed)
     ImageView ivBack;
     @BindView(R.id.tvHandleDetails)
@@ -64,6 +68,8 @@ public class ProjectDetailsActivity extends AppCompatActivity {
 
     private ArrayList<Request> requests;
     private Project proj;
+    FragmentManager fragmentManager;
+
 
 
     @Override
@@ -126,6 +132,16 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                         }
                     });
                 }
+            }
+        });
+
+        //moredetails button
+        btnShowMedia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent moreDetails = new Intent(ProjectDetailsActivity.this, ProjectMediaActivity.class);
+                moreDetails.putExtra("project", Parcels.wrap(proj));
+                startActivity(moreDetails);
             }
         });
 
