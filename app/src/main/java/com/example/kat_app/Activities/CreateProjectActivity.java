@@ -116,13 +116,17 @@ public class CreateProjectActivity extends AppCompatActivity {
                 String category = spinnerCategories.getSelectedItem().toString();
                 if (category != "Select a Project Category") {
                     if (requests.size() != 0) {
-                        Project proj = createProject(name, description, ParseUser.getCurrentUser(), category, photoFile);
-                        for (int i = 0; i < requests.size(); i++) {
-                            createRequest(requests.get(i), prices.get(i), proj);
+                        if (!description.equals("")) {
+                            Project proj = createProject(name, description, ParseUser.getCurrentUser(), category, photoFile);
+                            for (int i = 0; i < requests.size(); i++) {
+                                createRequest(requests.get(i), prices.get(i), proj);
+                            }
+                            Intent create2main = new Intent(CreateProjectActivity.this, MainActivity.class);
+                            startActivity(create2main);
+                            finish();
+                        } else {
+                            Toast.makeText(CreateProjectActivity.this, "Please add a project description!", Toast.LENGTH_SHORT).show();
                         }
-                        Intent create2main = new Intent(CreateProjectActivity.this, MainActivity.class);
-                        startActivity(create2main);
-                        finish();
                     } else {
                         Toast.makeText(CreateProjectActivity.this, "Please add at least one item request!", Toast.LENGTH_SHORT).show();
                     }
