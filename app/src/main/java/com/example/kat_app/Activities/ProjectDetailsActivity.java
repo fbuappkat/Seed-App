@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kat_app.Models.Project;
+import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
 import com.example.kat_app.Models.Request;
 import com.github.mikephil.charting.charts.PieChart;
@@ -145,6 +146,30 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                 Intent invest = new Intent(ProjectDetailsActivity.this, InvestActivity.class);
                 invest.putExtra("project", Parcels.wrap(proj));
                 startActivity(invest);
+            }
+        });
+
+        tvHandle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // create intent for the new activity
+                Intent detailsToProfile = new Intent(ProjectDetailsActivity.this, OtherUserProfileActivity.class);
+                //pass user as an object
+                detailsToProfile.putExtra("User", Parcels.wrap(proj.getUser()));
+                // show the activity
+                startActivity(detailsToProfile);
+            }
+        });
+
+        tvAuthor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // create intent for the new activity
+                Intent detailsToProfile = new Intent(ProjectDetailsActivity.this, OtherUserProfileActivity.class);
+                //pass user as an object
+                detailsToProfile.putExtra("User", Parcels.wrap(proj.getUser()));
+                // show the activity
+                startActivity(detailsToProfile);
             }
         });
     }

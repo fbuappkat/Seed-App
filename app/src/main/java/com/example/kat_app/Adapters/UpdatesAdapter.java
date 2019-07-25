@@ -292,8 +292,8 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                     Update update = updates.get(position);
                     // create intent for the new activity
                     Intent feedToProfile = new Intent(context, OtherUserProfileActivity.class);
-                    //serialize the update using parceler, use its short name as a key
-                    feedToProfile.putExtra(Update.class.getSimpleName(), Parcels.wrap(update));
+                    //pass user as an object
+                    feedToProfile.putExtra("User", Parcels.wrap(update.getUser()));
                     // show the activity
                     context.startActivity(feedToProfile);
                 }
