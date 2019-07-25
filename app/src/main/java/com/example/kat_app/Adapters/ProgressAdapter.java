@@ -43,7 +43,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.ViewHo
         return requests.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvReq;
         private ProgressBar pbReq;
@@ -59,21 +59,16 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.ViewHo
         }
 
 
-
         //add in data for specific user's post
         public void bind(final Request request) {
-            int percent = Math.round(request.getReceived()/request.getPrice() * 100);
+            int percent = Math.round(request.getReceived() / request.getPrice() * 100);
             tvReq.setText(request.getRequest() + ": " + request.getReceived() + "/" + request.getPrice() + " (" + percent + "%)");
             pbReq.setProgress(percent);
 
         }
 
 
-
-
     }
-
-
 
 
 }

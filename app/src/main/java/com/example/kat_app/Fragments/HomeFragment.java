@@ -23,11 +23,13 @@ import android.widget.TextView;
 import com.example.kat_app.Activities.CreateProjectActivity;
 import com.example.kat_app.Activities.ProjectDetailsActivity;
 import com.example.kat_app.Adapters.ProjectsAdapter;
+import com.example.kat_app.Adapters.UserAdapter;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
@@ -40,12 +42,15 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
     private ImageView ivAdd;
     protected List<Project> projects;
     protected ProjectsAdapter adapter;
+    protected List<ParseUser> users;
+    protected UserAdapter userAdapter;
     private ProgressBar pbLoad;
     private FloatingActionButton fabCreate;
     private Spinner spinnerFilter;
     private Spinner spinnerSearch;
     private TextView tvFilter;
     private boolean onProjects = true;
+    private RecyclerView rvUsers;
     SearchView editsearch;
     protected SwipeRefreshLayout swipeContainer;
 
@@ -67,9 +72,10 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         fabCreate = view.findViewById(R.id.fabCreate);
         spinnerFilter = view.findViewById(R.id.spinnerFilter);
         spinnerSearch = view.findViewById(R.id.spinnerSearch);
+        rvUsers = view.findViewById(R.id.rvUsers);
         tvFilter = view.findViewById(R.id.tvFilter);
-        spinnerFilter.setVisibility(View.VISIBLE);
-        tvFilter.setVisibility(View.VISIBLE);
+
+
 
         //setup spinners
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getActivity(),
@@ -112,15 +118,16 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
                         spinnerFilter.setVisibility(View.VISIBLE);
                         tvFilter.setVisibility(View.VISIBLE);
                         rvProjects.setVisibility(View.VISIBLE);
+                        rvUsers.setVisibility(View.INVISIBLE);
                         onProjects = true;
                         break;
                     case 1:
-                        onProjects = false;
                         spinnerFilter.setVisibility(View.INVISIBLE);
                         tvFilter.setVisibility(View.INVISIBLE);
                         rvProjects.setVisibility(View.INVISIBLE);
+                        rvUsers.setVisibility(View.VISIBLE);
+                        onProjects = false;
                         break;
-                        //Todo add query users, create NEW RECYCLER VIEWWE SAJFNERWJGFWERNFKERW
 
                 }
             }
@@ -159,6 +166,8 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
 
         rvProjects = view.findViewById(R.id.rvProjects);
         rvProjects.setVisibility(View.INVISIBLE);
+        rvUsers.setVisibility(View.INVISIBLE);
+
 
         // create the data source
         projects = new ArrayList<>();
@@ -172,7 +181,20 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         // set the layout manager on the recycler view
         rvProjects.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        // create the data source
+        users = new ArrayList<>();
+        // create the adapter
+        userAdapter = new UserAdapter(getContext(), users);
+        // add line between items
+        rvUsers.addItemDecoration(new DividerItemDecoration(getContext(),
+                DividerItemDecoration.VERTICAL));
+        // set the adapter on the recycler view
+        rvUsers.setAdapter(userAdapter);
+        // set the layout manager on the recycler view
+        rvUsers.setLayoutManager(new LinearLayoutManager(getContext()));
+
         queryProjects();
+        queryUsers();
 
         // Lookup the swipe container view
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
@@ -225,6 +247,27 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         });
     }
 
+    protected void queryUsers() {
+        ParseQuery<ParseUser> projectQuery = new ParseQuery<ParseUser>(ParseUser.class);
+        projectQuery.addDescendingOrder("createdAt");
+
+        projectQuery.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> user, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG,"Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+                users.clear();
+                userAdapter.clear();
+                users.addAll(user);
+                userAdapter.notifyDataSetChanged();
+                swipeContainer.setRefreshing(false);
+            }
+        });
+    }
+
     protected void queryProjectsByCategory(String category) {
         ParseQuery<Project> projectQuery = new ParseQuery<Project>(Project.class);
         //updateQuery.include(Update.KEY_USER);
@@ -248,6 +291,8 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
             }
         });
     }
+
+
 
     @Override
     public void onClick(int i) {
