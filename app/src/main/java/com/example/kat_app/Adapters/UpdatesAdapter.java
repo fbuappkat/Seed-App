@@ -175,7 +175,12 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
             tvNumComments.setText(Integer.toString(update.getNumComments()));
             tvProject.setText(name);
 
-            ParseFile profileImage = update.getUser().getParseFile(KEY_PROFILE_IMAGE);
+            ParseFile profileImage = null;
+            try {
+                profileImage = update.getUser().fetchIfNeeded().getParseFile(KEY_PROFILE_IMAGE);
+            } catch (com.parse.ParseException e) {
+                e.printStackTrace();
+            }
             if (profileImage != null) {
                 Glide.with(context)
                         .load(profileImage.getUrl())

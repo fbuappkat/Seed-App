@@ -65,6 +65,8 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     ImageView ivBack;
     @BindView(R.id.tvHandleDetails)
     TextView tvHandle;
+    @BindView(R.id.tvPercentEquity)
+    TextView tvPercentEquity;
 
     private ArrayList<Request> requests;
     private Project proj;
@@ -88,6 +90,11 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         tvDescription.setText(proj.getDescription());
         tvInvestors.setText(Integer.toString(proj.getInvestors().length()));
         tvFollowers.setText(Integer.toString(proj.getFollowers().length()));
+        String equity = "0.00";
+        if (proj.getEquity() != null) {
+            equity = Integer.toString(proj.getEquity().length());
+        }
+        tvPercentEquity.setText(equity);
 
         queryUser();
 
