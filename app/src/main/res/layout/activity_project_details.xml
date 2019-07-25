@@ -233,7 +233,6 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="2dp"
         android:text="Handle"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvAuthor" />
 </android.support.constraint.ConstraintLayout>
