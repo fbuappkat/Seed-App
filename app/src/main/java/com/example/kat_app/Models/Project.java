@@ -21,6 +21,7 @@ public class Project extends ParseObject implements Parcelable {
     private final static String KEY_FOLLOWERS = "followers";
     private final static String KEY_CATEGORY = "category";
     private final static String KEY_INVESTORS = "investors";
+    private final static String KEY_MEDIA = "media";
 
     //setters and getters for Parse project object
 
@@ -68,8 +69,12 @@ public class Project extends ParseObject implements Parcelable {
         return getJSONArray(KEY_FOLLOWERS);
     }
 
-    public JSONArray getMedia(){
+    public JSONArray getMedia() {
         return getJSONArray("media");
+    }
+
+    public void setMedia(ParseFile file) {
+        add(KEY_MEDIA, file);
     }
 
     public JSONArray getInvestors(){

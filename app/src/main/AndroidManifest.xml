@@ -27,6 +27,7 @@
             android:theme="@style/AppTheme.moreDetials"></activity>
         <activity android:name=".Activities.TransactionHistoryActivity" />
         <activity android:name=".Activities.WithdrawCreditActivity" />
+        <activity android:name=".Activities.CustomPhotoGalleryActivity" />
         <activity android:name=".Activities.DepositCreditActivity" />
         <activity
             android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"

@@ -65,26 +65,59 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <EditText
-        android:id="@+id/etUpdateCaption"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="24dp"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout5"
+        android:layout_width="242dp"
+        android:layout_height="242dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="8dp"
-        android:background="@android:color/transparent"
-        android:ems="10"
-        android:gravity="top|left"
-        android:inputType="textMultiLine|text"
-        android:text="What's new with your project?"
-        android:textColor="@color/kat_grey_2"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvUpload3" />
+        app:layout_constraintTop_toBottomOf="@+id/sProjectChoice">
+
+        <ScrollView
+            android:id="@+id/scroll1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
+
+            <LinearLayout
+                android:id="@+id/lnrImages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <Button
+                android:id="@+id/btnAddPhots"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Add Phots" />
+
+            <Button
+                android:id="@+id/btnSaveImages"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Save" />
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
 
     <Spinner
         android:id="@+id/sProjectChoice"
@@ -111,30 +144,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
-    <ImageView
-        android:id="@+id/ivUpdateImage"
+    <EditText
+        android:id="@+id/etUpdateCaption"
         android:layout_width="0dp"
-        android:layout_height="242dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:gravity="top|left"
+        android:inputType="textMultiLine|text"
+        android:text="What's new with your project?"
+        android:textColor="@color/kat_grey_2"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sProjectChoice"
-        app:srcCompat="@color/kat_orange_1" />
-
-    <TextView
-        android:id="@+id/tvUpload3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:clickable="true"
-        android:fontFamily="@font/montserrat_semibold"
-        android:text="Add A Picture To Your Update"
-        android:textColor="@color/kat_orange_1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivUpdateImage" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
 
 </android.support.constraint.ConstraintLayout>
