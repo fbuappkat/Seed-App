@@ -19,7 +19,6 @@ import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.kat_app.Activities.CreateProjectActivity;
 import com.example.kat_app.Activities.ProjectDetailsActivity;
@@ -108,7 +107,6 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         spinnerSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(), Integer.toString(position), Toast.LENGTH_SHORT).show();
                 switch(position){
                     case 0:
                         spinnerFilter.setVisibility(View.VISIBLE);
@@ -185,11 +183,16 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
                 // Your code to refresh the list here.
                 // Make sure you call swipeContainer.setRefreshing(false)
                 // once the network request has completed successfully.
-                projects.clear();
-                adapter.clear();
-                pbLoad.setVisibility(View.VISIBLE);
-                rvProjects.setVisibility(View.INVISIBLE);
-                queryProjects();
+                if (onProjects) {
+                    projects.clear();
+                    adapter.clear();
+                    pbLoad.setVisibility(View.VISIBLE);
+                    rvProjects.setVisibility(View.INVISIBLE);
+                    queryProjects();
+                } else {
+                    ;
+                    //todo put query users in here when thats made
+                }
             }
         });
         // Configure the refreshing colors
