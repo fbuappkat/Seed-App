@@ -78,7 +78,11 @@ public class Project extends ParseObject implements Parcelable {
         return getJSONArray(KEY_FOLLOWERS);
     }
 
-    public void  setMedia(ParseFile file) {
+    public JSONArray getMedia() {
+        return getJSONArray("media");
+    }
+
+    public void setMedia(ParseFile file) {
         add(KEY_MEDIA, file);
     }
 
