@@ -35,16 +35,7 @@ import butterknife.ButterKnife;
 
 public class ChatActivity extends AppCompatActivity {
 
-    ArrayList<Message> mMessages;
-    ChatAdapter mAdapter;
-    // Keep track of initial load to scroll to the bottom of the ListView
-    boolean mFirstLoad;
-
-    static final String TAG = ChatActivity.class.getSimpleName();
-    static final String USER_ID_KEY = "userId";
-    static final String BODY_KEY = "body";
-
-    static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
+    static final String TAG = ".ChatActivity";
 
     @BindView(R.id.rvChat)
     RecyclerView rvChat;
@@ -59,8 +50,13 @@ public class ChatActivity extends AppCompatActivity {
     @BindView(R.id.ivMore)
     ImageButton ivMore;
 
-    ParseUser otherUser;
+    private ArrayList<Message> mMessages;
+    private ChatAdapter mAdapter;
+    private ParseUser otherUser;
+    // Keep track of initial load to scroll to the bottom of the ListView
+    boolean mFirstLoad;
 
+    static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

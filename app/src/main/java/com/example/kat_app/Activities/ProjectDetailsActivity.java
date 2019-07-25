@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kat_app.Models.Project;
+import com.example.kat_app.Models.Update;
+import com.example.kat_app.R;
 import com.example.kat_app.Models.Request;
 import com.example.kat_app.R;
 import com.github.mikephil.charting.charts.PieChart;
@@ -57,6 +59,8 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     Button btnInvest;
     @BindView(R.id.btnMoreDetails)
     Button btnMore;
+    @BindView(R.id.btnShowMedia)
+    Button btnShowMedia;
     @BindView(R.id.ivUpdateToFeed)
     ImageView ivBack;
     @BindView(R.id.tvHandleDetails)
@@ -132,6 +136,16 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         });
 
         //moredetails button
+        btnShowMedia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent moreDetails = new Intent(ProjectDetailsActivity.this, ProjectMediaActivity.class);
+                moreDetails.putExtra("project", Parcels.wrap(proj));
+                startActivity(moreDetails);
+            }
+        });
+
+        //moredetails button
         btnMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,6 +162,30 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                 Intent invest = new Intent(ProjectDetailsActivity.this, InvestActivity.class);
                 invest.putExtra("project", Parcels.wrap(proj));
                 startActivity(invest);
+            }
+        });
+
+        tvHandle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // create intent for the new activity
+                Intent detailsToProfile = new Intent(ProjectDetailsActivity.this, OtherUserProfileActivity.class);
+                //pass user as an object
+                detailsToProfile.putExtra("User", Parcels.wrap(proj.getUser()));
+                // show the activity
+                startActivity(detailsToProfile);
+            }
+        });
+
+        tvAuthor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // create intent for the new activity
+                Intent detailsToProfile = new Intent(ProjectDetailsActivity.this, OtherUserProfileActivity.class);
+                //pass user as an object
+                detailsToProfile.putExtra("User", Parcels.wrap(proj.getUser()));
+                // show the activity
+                startActivity(detailsToProfile);
             }
         });
     }

@@ -58,8 +58,7 @@ public class OtherUserProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_other_user_profile);
 
         ButterKnife.bind(this);
-        Update update = (Update) Parcels.unwrap(getIntent().getParcelableExtra(Update.class.getSimpleName()));
-        user = update.getUser();
+        user = (ParseUser) Parcels.unwrap(getIntent().getParcelableExtra("User"));
 
         setProfileInfo(user);
         setBackButton();
