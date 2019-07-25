@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 
+import com.example.kat_app.Fragments.ChatFragment;
 import com.example.kat_app.Fragments.FeedFragment;
 import com.example.kat_app.Fragments.HomeFragment;
 import com.example.kat_app.Fragments.ProfileFragment;
@@ -66,7 +67,10 @@ public class MainActivity extends AppCompatActivity {
                                 fragment = new ProfileFragment();
                                 hideToolbar();
                                 break;
-
+                            case R.id.navChat:
+                                fragment = new ChatFragment();
+                                hideToolbar();
+                                break;
                             default:
                                 fragment = new FeedFragment();
                                 showToolbar();
