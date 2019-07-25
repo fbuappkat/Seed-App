@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,11 +44,11 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     TextView tvAuthor;
     @BindView(R.id.tvDescription)
     TextView tvDescription;
-    @BindView(R.id.tvInvestors)
+    @BindView(R.id.tvNumInvestors)
     TextView tvInvestors;
-    @BindView(R.id.tvFollowers)
+    @BindView(R.id.tvNumFollowers)
     TextView tvFollowers;
-    @BindView(R.id.tvFunds)
+    @BindView(R.id.tvNumFunds)
     TextView tvFunds;
     @BindView(R.id.btnFollow)
     Button btnFollow;
@@ -55,6 +56,10 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     Button btnInvest;
     @BindView(R.id.btnMoreDetails)
     Button btnMore;
+    @BindView(R.id.ivUpdateToFeed)
+    ImageView ivBack;
+    @BindView(R.id.tvHandleDetails)
+    TextView tvHandle;
 
     private ArrayList<Request> requests;
     private Project proj;
@@ -69,13 +74,13 @@ public class ProjectDetailsActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         queryRequests();
-
+        setBackButton();
 
         //set text views
         tvName.setText(proj.getName());
         tvDescription.setText(proj.getDescription());
-        tvInvestors.setText("Investors: " + proj.getInvestors().length());
-        tvFollowers.setText("Followers: " + proj.getFollowers().length());
+        tvInvestors.setText(Integer.toString(proj.getInvestors().length()));
+        tvFollowers.setText(Integer.toString(proj.getFollowers().length()));
 
         queryUser();
 
@@ -93,7 +98,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!proj.getFollowers().toString().contains(ParseUser.getCurrentUser().getObjectId())) {
                     proj.add("followers", ParseUser.getCurrentUser());
-                    tvFollowers.setText("Followers: " + (proj.getFollowers().length()));
+                    tvFollowers.setText(Integer.toString(proj.getFollowers().length()));
                     proj.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
@@ -110,7 +115,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                     ArrayList<ParseUser> remove = new ArrayList<>();
                     remove.add(ParseUser.getCurrentUser());
                     proj.removeAll("followers", remove);
-                    tvFollowers.setText("Followers: " + (proj.getFollowers().length()));
+                    tvFollowers.setText(Integer.toString(proj.getFollowers().length()));
                     proj.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
@@ -184,7 +189,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                 requests = new ArrayList<>();
                 requests.addAll(posts);
                 if (requests != null) {
-                    tvFunds.setText("Funds: " + getTotalFunds(requests) + "0/" + getTotal(requests) + "0");
+                    tvFunds.setText(Float.toString(getTotalFunds(requests)) + "0/" + Float.toString(getTotal(requests)) + "0");
                 }
                 makePieChart();
             }
@@ -206,7 +211,8 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                 }
                 if (posts.size() != 0) {
                     ParseUser user = posts.get(0);
-                    tvAuthor.setText("By: " + user.get("name") + " (@" + user.getUsername() + ")");
+                    tvAuthor.setText((CharSequence) user.get("name"));
+                    tvHandle.setText( "@" + user.getUsername());
                 }
             }
 
@@ -220,6 +226,16 @@ public class ProjectDetailsActivity extends AppCompatActivity {
             tot += reqs.get(i).getPrice();
         }
         return tot;
+    }
+
+    private void setBackButton() {
+        // Set on-click listener for for image view to launch edit account activity
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     //get funds received

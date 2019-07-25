@@ -46,7 +46,7 @@
                         android:background="@drawable/back" />
 
                     <TextView
-                        android:id="@+id/tvCommentsHeader"
+                        android:id="@+id/tvDetailsName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -116,7 +116,6 @@
             android:hint="Description"
             android:inputType="textPersonName"
             android:paddingLeft="20dp"
-            android:textColor="@color/kat_white"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
