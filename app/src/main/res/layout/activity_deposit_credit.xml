@@ -35,8 +35,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/montserrat_semibold"
-                    android:text="Deposit Credit"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:text="DEPOSIT CREDIT"
                     android:textColor="#000000"
                     android:textSize="20sp" />
 

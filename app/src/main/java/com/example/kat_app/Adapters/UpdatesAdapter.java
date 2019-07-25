@@ -77,7 +77,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
             @Override
             public void done(List<Project> projs, com.parse.ParseException e) {
                 if (e != null) {
-                    Log.e(TAG,"Error with query");
+                    Log.e(TAG, "Error with query");
                     e.printStackTrace();
                     return;
                 }
@@ -94,7 +94,8 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                         }
                     }
                 } catch (JSONException e1) {
-                    e1.printStackTrace();}
+                    e1.printStackTrace();
+                }
 
 
                 hold.bind(update, project.getName().toString());
@@ -162,7 +163,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
         //add in data for specific user's post
         public void bind(final Update update, String name) {
 
-            Log.d(TAG,Boolean.toString(userInFollowList));
+            Log.d(TAG, Boolean.toString(userInFollowList));
             try {
                 String username = update.getUser().fetchIfNeeded().getString("username");
                 tvUser.setText(username);
@@ -181,8 +182,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                         .load(profileImage.getUrl())
                         .apply(RequestOptions.circleCropTransform())
                         .into(ivProfileImage);
-            }
-            else {
+            } else {
                 Glide.with(context)
                         .load(R.drawable.default_profile_image)
                         .apply(RequestOptions.circleCropTransform())
@@ -214,7 +214,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
             } else {
                 tvNumLikes.setText("0");
             }
-            if(update.isLiked()) {
+            if (update.isLiked()) {
                 btnLike.setImageResource(R.drawable.ufi_heart_active);
             } else {
                 btnLike.setImageResource(R.drawable.ufi_heart);
