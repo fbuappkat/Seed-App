@@ -22,6 +22,7 @@ public class Project extends ParseObject implements Parcelable {
     private final static String KEY_CATEGORY = "category";
     private final static String KEY_INVESTORS = "investors";
     private final static String KEY_MEDIA = "media";
+    private final static String KEY_EQUITY = "equity";
 
     //setters and getters for Parse project object
 
@@ -39,6 +40,14 @@ public class Project extends ParseObject implements Parcelable {
 
     public void setDescription(String description){
         put(KEY_DESCRIPTION, description);
+    }
+
+    public String getEquity(){
+        return getString(KEY_EQUITY);
+    }
+
+    public void setEquity(String equity){
+        put(KEY_EQUITY, equity);
     }
 
     public ParseFile getImage(){
