@@ -167,8 +167,8 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
                 }catch (Throwable e){
                     e.printStackTrace();
                 }
+                images = new ArrayList<>();
                 for (int i=0;i<imagesPath.length;i++){
-                    images = new ArrayList<>();
                     imagesPathList.add(imagesPath[i]);
                     yourbitmap = BitmapFactory.decodeFile(imagesPath[i]);
                     ParseFile convertedImage = conversionBitmapParseFile(yourbitmap);
