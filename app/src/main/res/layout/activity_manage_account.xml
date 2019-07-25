@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:fontFamily="@font/montserrat_regular"
-            android:text="Mangae Credit"
+            android:text="Manage Credit"
             android:textColor="#000000"
             app:layout_constraintBottom_toBottomOf="@+id/ivNextCredit"
             app:layout_constraintStart_toEndOf="@+id/ivNextCredit"
