@@ -52,6 +52,8 @@ public class CreateProjectActivity extends AppCompatActivity {
     ImageView ivThumbnailImage;
     @BindView(R.id.tvUpload2)
     TextView tvUpload2;
+    @BindView(R.id.etEquity)
+    EditText etEquity;
     @BindView(R.id.spinnerCategory)
     Spinner spinnerCategories;
     @BindView(R.id.lvRequests)
@@ -114,24 +116,17 @@ public class CreateProjectActivity extends AppCompatActivity {
                 String name = etName.getText().toString();
                 String description = etDescription.getText().toString();
                 String category = spinnerCategories.getSelectedItem().toString();
-                if (category != "Select a Project Category") {
-                    if (requests.size() != 0) {
-                        if (!description.equals("")) {
-                            Project proj = createProject(name, description, ParseUser.getCurrentUser(), category, photoFile);
-                            for (int i = 0; i < requests.size(); i++) {
-                                createRequest(requests.get(i), prices.get(i), proj);
-                            }
-                            Intent create2main = new Intent(CreateProjectActivity.this, MainActivity.class);
-                            startActivity(create2main);
-                            finish();
-                        } else {
-                            Toast.makeText(CreateProjectActivity.this, "Please add a project description!", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(CreateProjectActivity.this, "Please add at least one item request!", Toast.LENGTH_SHORT).show();
-                    }
+                String equity = etEquity.getText().toString();
+                if (category == "Select a Project Category" || requests.size() == 0 || description.equals("") || equity.equals("")) {
+                    Toast.makeText(CreateProjectActivity.this, "Please add a project description!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(CreateProjectActivity.this, "Please select a category!", Toast.LENGTH_SHORT).show();
+                    Project proj = createProject(name, description, ParseUser.getCurrentUser(), category, photoFile, equity);
+                    for (int i = 0; i < requests.size(); i++) {
+                        createRequest(requests.get(i), prices.get(i), proj);
+                    }
+                    Intent create2main = new Intent(CreateProjectActivity.this, MainActivity.class);
+                    startActivity(create2main);
+                    finish();
                 }
             }
         });
@@ -241,10 +236,11 @@ public class CreateProjectActivity extends AppCompatActivity {
     }
 
     //create project and upload to Parse, return project to be used in createRequest
-    private Project createProject(String name, String description, ParseUser user, String category, ParseFile thumbnail) {
+    private Project createProject(String name, String description, ParseUser user, String category, ParseFile thumbnail, String equity) {
         final Project newProject = new Project();
         newProject.setDescription(description);
         newProject.setName(name);
+        newProject.setEquity(equity);
         newProject.setCategory(category);
         newProject.setUser(user);
         JSONArray emptyFollowers = new JSONArray();

@@ -152,7 +152,7 @@
         <EditText
             android:id="@+id/etRequest"
             android:layout_width="262dp"
-            android:layout_height="33dp"
+            android:layout_height="35dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:background="#ebebeb"
@@ -162,7 +162,7 @@
             android:paddingLeft="20dp"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerCategory" />
+            app:layout_constraintTop_toBottomOf="@+id/etEquity" />
 
         <EditText
             android:id="@+id/etPrice"
@@ -178,6 +178,22 @@
             android:paddingRight="20dp"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/etRequest"
+            app:layout_constraintTop_toBottomOf="@+id/etEquity" />
+
+        <EditText
+            android:id="@+id/etEquity"
+            android:layout_width="355dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="#ebebeb"
+            android:ems="10"
+            android:hint="Percent Equity to Give Total"
+            android:inputType="number"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinnerCategory" />
 
         <Button
@@ -208,6 +224,17 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivThumbnailImage" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:text="%"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/etEquity"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerCategory" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>
