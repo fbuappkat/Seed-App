@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.kat_app.Adapters.InvestAdapter;
 import com.example.kat_app.Models.Project;
@@ -27,11 +28,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class InvestActivity extends AppCompatActivity {
-
-    @BindView(R.id.btnCancel)
-    Button btnCancel;
     @BindView(R.id.rvRequests)
     RecyclerView rvRequests;
+    @BindView(R.id.ivUpdateToFeed)
+    ImageView ivBack;
 
     private ArrayList<Request> requests;
     protected InvestAdapter investAdapter;
@@ -45,20 +45,13 @@ public class InvestActivity extends AppCompatActivity {
 
 
         ButterKnife.bind(this);
+        setBackButton();
 
         //set values
         project = Parcels.unwrap(getIntent().getParcelableExtra("project"));
 
 
         queryRequests();
-
-        //cancel button
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
     public void setupAdapter() {
@@ -90,6 +83,16 @@ public class InvestActivity extends AppCompatActivity {
                 requests = new ArrayList<>();
                 requests.addAll(posts);
                 setupAdapter();
+            }
+        });
+    }
+
+    private void setBackButton() {
+        // Set on-click listener for for image view to launch edit account activity
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
     }

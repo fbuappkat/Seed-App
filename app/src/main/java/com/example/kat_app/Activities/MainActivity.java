@@ -24,8 +24,6 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.toolbar)
-    ConstraintLayout toolbar;
     @BindView(R.id.bottomNav)
     BottomNavigationView bottomNav;
 
@@ -38,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
         setStatusBar(getWindow());
         ButterKnife.bind(this);
-        hideToolbar();
 
         // Get the fragment manager
         fragmentManager = getSupportFragmentManager();
@@ -57,23 +54,18 @@ public class MainActivity extends AppCompatActivity {
                         switch (menuItem.getItemId()) {
                             case R.id.navFeed:
                                 fragment = new FeedFragment();
-                                hideToolbar();
                                 break;
                             case R.id.navHome:
                                 fragment = new HomeFragment();
-                                hideToolbar();
                                 break;
                             case R.id.navUser:
                                 fragment = new ProfileFragment();
-                                hideToolbar();
                                 break;
                             case R.id.navChat:
                                 fragment = new ChatFragment();
-                                hideToolbar();
                                 break;
                             default:
                                 fragment = new FeedFragment();
-                                showToolbar();
                                 break;
                         }
                         fragmentManager.beginTransaction().replace(R.id.centerView, fragment).commit();
@@ -85,13 +77,5 @@ public class MainActivity extends AppCompatActivity {
     public static void setStatusBar(Window window) {
         // Make sure that status bar text is still visible
         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-    }
-
-    private void hideToolbar() {
-        toolbar.setVisibility(View.GONE);
-    }
-
-    private void showToolbar() {
-        toolbar.setVisibility(View.VISIBLE);
     }
 }

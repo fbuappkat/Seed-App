@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,8 @@ public class ConfirmInvestActivity extends AppCompatActivity {
     Button btnCancel;
     @BindView(R.id.btnConfirm)
     Button btnConfirm;
+    @BindView(R.id.ivUpdateToFeed)
+    ImageView ivBack;
 
     private Request request;
     private Project project;
@@ -63,13 +66,15 @@ public class ConfirmInvestActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        setBackButton();
+
         //get values
         request = Parcels.unwrap(getIntent().getParcelableExtra("request"));
         toInvest = getIntent().getFloatExtra("toInvest", 0);
 
         //setValues
-        tvPrice.setText("Invested so far: " + request.getReceived() + "/" + request.getPrice());
-        tvRequest.setText("Request: " + request.getRequest());
+        tvPrice.setText(request.getReceived() + "/" + request.getPrice());
+        tvRequest.setText(request.getRequest());
         tvConfirm.setText("Are you sure you want to invest $" + toInvest + "0?");
         //get user and set balance
         queryUserBalance(ParseUser.getCurrentUser());
@@ -78,7 +83,6 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         queryProject(request);
 
         //confirm and invest
-        btnConfirm.setBackgroundColor(Color.parseColor("#77EE77"));
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +91,6 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         });
 
         //cancel
-        btnCancel.setBackgroundColor(Color.parseColor("#E43B3B"));
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -239,5 +242,15 @@ public class ConfirmInvestActivity extends AppCompatActivity {
 
     private float round(float value) {
         return (float) Math.round(value * 100) / 100;
+    }
+
+    private void setBackButton() {
+        // Set on-click listener for for image view to launch edit account activity
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 }
