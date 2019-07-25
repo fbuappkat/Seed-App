@@ -17,7 +17,7 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
-public class ChatAdapter extends RecyclerView.Adapter {
+public class MessageAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
 
@@ -27,7 +27,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
     private ParseUser otherUser;
     private String otherUsername;
 
-    public ChatAdapter(Context context, List<Message> messageList, String userId, ParseUser otherUser) {
+    public MessageAdapter(Context context, List<Message> messageList, String userId, ParseUser otherUser) {
         mContext = context;
         mMessageList = messageList;
         this.mUserId = userId;

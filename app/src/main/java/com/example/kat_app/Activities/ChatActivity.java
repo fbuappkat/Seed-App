@@ -13,14 +13,13 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.kat_app.Adapters.ChatAdapter;
+import com.example.kat_app.Adapters.MessageAdapter;
 import com.example.kat_app.Models.Message;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -51,7 +50,7 @@ public class ChatActivity extends AppCompatActivity {
     ImageButton ivMore;
 
     private ArrayList<Message> mMessages;
-    private ChatAdapter mAdapter;
+    private MessageAdapter mAdapter;
     private ParseUser otherUser;
     // Keep track of initial load to scroll to the bottom of the ListView
     boolean mFirstLoad;
@@ -115,7 +114,7 @@ public class ChatActivity extends AppCompatActivity {
         mMessages = new ArrayList<>();
         mFirstLoad = true;
         final String userId = ParseUser.getCurrentUser().getObjectId();
-        mAdapter = new ChatAdapter(ChatActivity.this, mMessages, userId, otherUser);
+        mAdapter = new MessageAdapter(ChatActivity.this, mMessages, userId, otherUser);
         rvChat.setAdapter(mAdapter);
 
         // associate the LayoutManager with the RecylcerView

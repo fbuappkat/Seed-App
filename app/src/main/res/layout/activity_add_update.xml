@@ -67,8 +67,8 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout5"
-        android:layout_width="242dp"
-        android:layout_height="242dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -107,14 +107,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Add Phots" />
+                android:background="@drawable/button"
+                android:fontFamily="@font/montserrat_semibold"
+                android:text="Add Photos"
+                android:textColor="@color/kat_white" />
 
-            <Button
-                android:id="@+id/btnSaveImages"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Save" />
         </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>

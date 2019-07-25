@@ -50,7 +50,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ProjectsAdapter.ViewHolder holder, int position) {
         Project project = matchingProjects.get(position);
-        if (position%2 == 0) {
+        if (position%2 == 1) {
             holder.view.setBackgroundColor(Color.parseColor("#FFFFFF"));
         }
         else{
@@ -126,7 +126,6 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
             } else {
                 Glide.with(context)
                         .load(R.drawable.ic_invest)
-                        .apply(RequestOptions.circleCropTransform())
                         .into(ivThumbnail);
             }
             this.onClickListener  = onClickListener;
