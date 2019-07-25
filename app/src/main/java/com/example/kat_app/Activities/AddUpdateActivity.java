@@ -61,8 +61,6 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
     LinearLayout lnrImages;
     @BindView(R.id.btnAddPhots)
     Button btnAddPhots;
-    @BindView(R.id.btnSaveImages)
-    Button btnSaveImages;
 
     protected ArrayList<Project> projects = new ArrayList<>();
     protected SpinAdapter spinAdapter;
@@ -87,7 +85,6 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
         ButterKnife.bind(this);
 
         btnAddPhots.setOnClickListener(this);
-        btnSaveImages.setOnClickListener(this);
 
         LoadingBar = new ProgressDialog(this);
 
@@ -104,17 +101,6 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
             case R.id.btnAddPhots:
                 Intent intent = new Intent(AddUpdateActivity.this,CustomPhotoGalleryActivity.class);
                 startActivityForResult(intent,PICK_IMAGE_MULTIPLE);
-                break;
-            case R.id.btnSaveImages:
-                if(imagesPathList !=null){
-                    if(imagesPathList.size()>1) {
-                        Toast.makeText(AddUpdateActivity.this, imagesPathList.size() + " no of images are selected", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(AddUpdateActivity.this, imagesPathList.size() + " no of image are selected", Toast.LENGTH_SHORT).show();
-                    }
-                }else{
-                    Toast.makeText(AddUpdateActivity.this," no images are selected", Toast.LENGTH_SHORT).show();
-                }
                 break;
         }
     }
