@@ -25,6 +25,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
     private List<Message> mMessageList;
     private String mUserId;
     private ParseUser otherUser;
+    private String otherUsername;
 
     public ChatAdapter(Context context, List<Message> messageList, String userId, ParseUser otherUser) {
         mContext = context;
@@ -56,6 +57,8 @@ public class ChatAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
+
+        otherUsername = otherUser.getUsername();
 
         if (viewType == VIEW_TYPE_MESSAGE_SENT) {
             view = LayoutInflater.from(parent.getContext())
@@ -120,11 +123,9 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
             // Format the stored timestamp into a readable String using method.
             timeText.setText(message.getTime());
-            try {
-                nameText.setText(message.getMessageSender().fetchIfNeeded().getUsername());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+
+            nameText.setText(otherUsername);
+
 
             // Insert the profile image from the URL into the ImageView.
             Glide.with(mContext).load(otherUser.getParseFile("profile_image").getUrl())
