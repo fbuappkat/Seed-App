@@ -1,18 +1,14 @@
 package com.example.kat_app.Activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -104,7 +100,7 @@ public class OtherUserProfileActivity extends AppCompatActivity {
         ivChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent message = new Intent(OtherUserProfileActivity.this, ChatActivity.class);
+                Intent message = new Intent(OtherUserProfileActivity.this, MessageActivity.class);
                 message.putExtra(OtherUserProfileActivity.class.getSimpleName(), Parcels.wrap(user));
                 startActivity(message);
             }

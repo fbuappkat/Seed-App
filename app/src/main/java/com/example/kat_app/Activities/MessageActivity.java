@@ -1,5 +1,6 @@
 package com.example.kat_app.Activities;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +14,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kat_app.Adapters.ChatAdapter;
 import com.example.kat_app.Adapters.MessageAdapter;
+import com.example.kat_app.Fragments.ChatFragment;
+import com.example.kat_app.Models.Chat;
 import com.example.kat_app.Models.Message;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
@@ -32,12 +36,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ChatActivity extends AppCompatActivity {
+public class MessageActivity extends AppCompatActivity {
 
-    static final String TAG = ".ChatActivity";
+    static final String TAG = ".MessageActivity";
 
-    @BindView(R.id.rvChat)
-    RecyclerView rvChat;
+    @BindView(R.id.rvMessage)
+    RecyclerView rvMessage;
     @BindView(R.id.tvChat)
     TextView tvChat;
     @BindView(R.id.etMessage)
@@ -51,6 +55,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private ArrayList<Message> mMessages;
     private MessageAdapter mAdapter;
+    private ChatAdapter chatAdapter;
     private ParseUser otherUser;
     // Keep track of initial load to scroll to the bottom of the ListView
     boolean mFirstLoad;
@@ -69,13 +74,13 @@ public class ChatActivity extends AppCompatActivity {
 
         otherUser = Parcels.unwrap(getIntent().getParcelableExtra(OtherUserProfileActivity.class.getSimpleName()));
 
-        tvChat.setText(otherUser.getUsername());
-        // User login
-        if (ParseUser.getCurrentUser() != null) {
-            startWithCurrentUser();
-        } else {
-            login();
+        if (otherUser == null) {
+            otherUser = Parcels.unwrap(getIntent().getParcelableExtra(ChatAdapter.class.getSimpleName()));
+            chatAdapter = Parcels.unwrap(getIntent().getParcelableExtra(ChatAdapter.class.getName()));
         }
+
+        tvChat.setText(otherUser.getUsername());
+        startWithCurrentUser();
         myHandler.postDelayed(mRefreshMessagesRunnable, POLL_INTERVAL);
     }
 
@@ -113,14 +118,15 @@ public class ChatActivity extends AppCompatActivity {
     void setupMessagePosting() {
         mMessages = new ArrayList<>();
         mFirstLoad = true;
+
         final String userId = ParseUser.getCurrentUser().getObjectId();
-        mAdapter = new MessageAdapter(ChatActivity.this, mMessages, userId, otherUser);
-        rvChat.setAdapter(mAdapter);
+        mAdapter = new MessageAdapter(MessageActivity.this, mMessages, userId, otherUser);
+        rvMessage.setAdapter(mAdapter);
 
         // associate the LayoutManager with the RecylcerView
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChatActivity.this);
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MessageActivity.this);
         linearLayoutManager.setReverseLayout(true);
-        rvChat.setLayoutManager(linearLayoutManager);
+        rvMessage.setLayoutManager(linearLayoutManager);
 
         // When send button is clicked, create message object on Parse
         btSend.setOnClickListener(new View.OnClickListener() {
@@ -139,12 +145,26 @@ public class ChatActivity extends AppCompatActivity {
                 message.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        Toast.makeText(ChatActivity.this, "Successfully created message on Parse",
+                        Toast.makeText(MessageActivity.this, "Successfully created message on Parse",
                                 Toast.LENGTH_SHORT).show();
                         refreshMessages();
                     }
                 });
                 etMessage.setText(null);
+
+                if (mMessages.size() == 0) {
+                    Chat newChat = new Chat();
+                    ArrayList<ParseUser> users = new ArrayList<>();
+                    users.add(otherUser);
+                    users.add(ParseUser.getCurrentUser());
+                    newChat.setUsers(users);
+
+                    newChat.saveInBackground();
+
+                    queryChats(message);
+                } else {
+                    queryChats(message);
+                }
             }
         });
     }
@@ -181,11 +201,39 @@ public class ChatActivity extends AppCompatActivity {
                     mAdapter.notifyDataSetChanged(); // update adapter
                     // Scroll to the bottom of the list on initial load
                     if (mFirstLoad) {
-                        rvChat.scrollToPosition(0);
+                        rvMessage.scrollToPosition(0);
                         mFirstLoad = false;
                     }
                 } else {
                     Log.e("message", "Error Loading Messages" + e);
+                }
+            }
+
+        });
+    }
+
+
+
+    //get chats via network request
+    protected void queryChats(final Message message) {
+        ParseQuery<Chat> chatQuery = new ParseQuery<>(Chat.class);
+
+        ArrayList<ParseUser> users = new ArrayList<>();
+        users.add(ParseUser.getCurrentUser());
+        users.add(otherUser);
+
+        chatQuery.whereContainsAll("users", users);
+
+        chatQuery.findInBackground(new FindCallback<Chat>() {
+            @Override
+            public void done(List<Chat> userChats, ParseException e) {
+                if (e == null) {
+                    Chat chat = userChats.get(0);
+                    chat.setLastMessageBody(message.getBody());
+                    chat.setLastMessageTime(message.getTime());
+                    chat.saveInBackground();
+                } else {
+                    e.printStackTrace();
                 }
             }
 

@@ -9,7 +9,7 @@
     android:paddingBottom="8dp">
 
     <ImageView
-        android:id="@+id/ivReceivedProfileImage"
+        android:id="@+id/ivProfileImage"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginLeft="8dp"
@@ -26,7 +26,7 @@
         android:text="John Doe"
         android:textColor="@color/kat_grey_2"
         android:textSize="12sp"
-        app:layout_constraintLeft_toRightOf="@+id/ivReceivedProfileImage"
+        app:layout_constraintLeft_toRightOf="@+id/ivProfileImage"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -41,11 +41,11 @@
         android:padding="8dp"
         android:text="hi man, how are you?"
         android:textColor="@color/kat_black"
-        app:layout_constraintLeft_toRightOf="@+id/ivReceivedProfileImage"
+        app:layout_constraintLeft_toRightOf="@+id/ivProfileImage"
         app:layout_constraintTop_toBottomOf="@+id/tvReceivedName" />
 
     <TextView
-        android:id="@+id/tvReceivedTime"
+        android:id="@+id/tvTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"

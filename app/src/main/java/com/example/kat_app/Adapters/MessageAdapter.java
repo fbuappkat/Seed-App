@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Models.Message;
 import com.example.kat_app.R;
-import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import java.util.List;
@@ -93,8 +92,8 @@ public class MessageAdapter extends RecyclerView.Adapter {
         SentMessageHolder(View itemView) {
             super(itemView);
 
-            messageText = (TextView) itemView.findViewById(R.id.tvSenderBody);
-            timeText = (TextView) itemView.findViewById(R.id.tvSenderTime);
+            messageText = (TextView) itemView.findViewById(R.id.tvBody);
+            timeText = (TextView) itemView.findViewById(R.id.tvTime);
         }
 
         void bind(Message message) {
@@ -113,9 +112,9 @@ public class MessageAdapter extends RecyclerView.Adapter {
             super(itemView);
 
             messageText = (TextView) itemView.findViewById(R.id.tvReceivedBody);
-            timeText = (TextView) itemView.findViewById(R.id.tvReceivedTime);
+            timeText = (TextView) itemView.findViewById(R.id.tvTime);
             nameText = (TextView) itemView.findViewById(R.id.tvReceivedName);
-            profileImage = (ImageView) itemView.findViewById(R.id.ivReceivedProfileImage);
+            profileImage = (ImageView) itemView.findViewById(R.id.ivProfileImage);
         }
 
         void bind(Message message) {

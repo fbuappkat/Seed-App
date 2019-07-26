@@ -43,7 +43,7 @@
         </activity>
         <activity android:name=".Activities.ConfirmInvestActivity" />
         <activity android:name=".Activities.InvestActivity" />
-        <activity android:name=".Activities.ChatActivity" />
+        <activity android:name=".Activities.MessageActivity" />
         <activity android:name=".Activities.OtherUserProfileActivity" />
         <activity
             android:name=".Activities.MoreDetailsActivity"
