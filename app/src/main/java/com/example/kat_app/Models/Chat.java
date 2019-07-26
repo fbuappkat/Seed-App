@@ -1,9 +1,13 @@
 package com.example.kat_app.Models;
 
+import android.util.Log;
+
+import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.text.SimpleDateFormat;
@@ -19,7 +23,10 @@ public class Chat extends ParseObject {
     public static final String KEY_LAST_MESSAGE_TIME = "last_message_time";
     public static final String KEY_TYPE = "type";
 
-    public List<ParseUser> getUsers() {
+    private ParseUser otherUser;
+    private int x;
+
+    public List<String> getUsers() {
         return getList(KEY_USERS);
     }
 
@@ -31,13 +38,13 @@ public class Chat extends ParseObject {
         return getString(KEY_TYPE);
     }
 
-    public void setUsers(List<ParseUser> users) {
+    public void setUsers(List<String> users) {
         put(KEY_USERS, users);
     }
 
-    public List<ParseUser> getOtherUsers(ParseUser currUser) {
-        List<ParseUser> otherUsers = getUsers();
-        otherUsers.remove(currUser);
+    public List<String> getOtherUsers(ParseUser currUser) {
+        List<String> otherUsers = getUsers();
+        otherUsers.remove(currUser.getObjectId());
         return otherUsers;
     }
 
@@ -56,6 +63,7 @@ public class Chat extends ParseObject {
     public String getLastMessageTime() {
         return getString(KEY_LAST_MESSAGE_TIME);
     }
+
 }
 
 

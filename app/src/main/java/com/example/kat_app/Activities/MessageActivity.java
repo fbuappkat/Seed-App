@@ -154,9 +154,9 @@ public class MessageActivity extends AppCompatActivity {
 
                 if (mMessages.size() == 0) {
                     Chat newChat = new Chat();
-                    ArrayList<ParseUser> users = new ArrayList<>();
-                    users.add(otherUser);
-                    users.add(ParseUser.getCurrentUser());
+                    ArrayList<String> users = new ArrayList<>();
+                    users.add(otherUser.getObjectId());
+                    users.add(ParseUser.getCurrentUser().getObjectId());
                     newChat.setUsers(users);
 
                     newChat.saveInBackground();
@@ -218,9 +218,9 @@ public class MessageActivity extends AppCompatActivity {
     protected void queryChats(final Message message) {
         ParseQuery<Chat> chatQuery = new ParseQuery<>(Chat.class);
 
-        ArrayList<ParseUser> users = new ArrayList<>();
-        users.add(ParseUser.getCurrentUser());
-        users.add(otherUser);
+        ArrayList<String> users = new ArrayList<>();
+        users.add(ParseUser.getCurrentUser().getObjectId());
+        users.add(otherUser.getObjectId());
 
         chatQuery.whereContainsAll("users", users);
 

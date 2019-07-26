@@ -65,8 +65,18 @@ public class ChatFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
         startWithCurrentUser();
+        myHandler.postDelayed(mRefreshChatsRunnable, POLL_INTERVAL);
     }
 
+    static final int POLL_INTERVAL = 1000; // milliseconds
+    Handler myHandler = new Handler();  // android.os.Handler
+    Runnable mRefreshChatsRunnable = new Runnable() {
+        @Override
+        public void run() {
+            queryChats();
+            myHandler.postDelayed(this, POLL_INTERVAL);
+        }
+    };
 
     // Get the userId from the cached currentUser object
     void startWithCurrentUser() {
@@ -80,7 +90,7 @@ public class ChatFragment extends Fragment {
         otherUsers = new ArrayList<>();
         queryChats();
         // create the adapter
-        adapter = new ChatAdapter(getActivity(), chats);
+        adapter = new ChatAdapter(getActivity(), chats, ParseUser.getCurrentUser());
         // add line between items
         rvMessage.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
@@ -95,8 +105,8 @@ public class ChatFragment extends Fragment {
     protected void queryChats() {
         ParseQuery<Chat> chatQuery = new ParseQuery<>(Chat.class);
 
-        ArrayList<ParseUser> currUser = new ArrayList<>();
-        currUser.add(ParseUser.getCurrentUser());
+        ArrayList<String> currUser = new ArrayList<>();
+        currUser.add(ParseUser.getCurrentUser().getObjectId());
 
         chatQuery.whereContainedIn("users", currUser);
 
@@ -106,6 +116,7 @@ public class ChatFragment extends Fragment {
             @Override
             public void done(List<Chat> userChats, ParseException e) {
                 if (e == null) {
+                    chats.clear();
                     chats.addAll(userChats);
                     adapter.notifyDataSetChanged();
                 } else {
