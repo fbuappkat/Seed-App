@@ -28,6 +28,7 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.sendbird.android.User;
 
 import org.parceler.Parcel;
 import org.parceler.Parcels;
@@ -40,16 +41,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     private final String TAG = "UpdatesAdapter";
     private Context context;
     private List<Chat> chats;
-    private ParseUser currUser = ParseUser.getCurrentUser();
+    private ParseUser currUser;
+    private ParseUser otherUser;
 
     private static final String KEY_PROFILE_IMAGE = "profile_image";
 
-    public ChatAdapter() {
-    }
-
-    public ChatAdapter(Context context, List<Chat> chats) {
+    public ChatAdapter(Context context, List<Chat> chats, ParseUser currUser) {
         this.context = context;
         this.chats = chats;
+        this.currUser = currUser;
     }
 
     @NonNull
@@ -63,18 +63,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ChatAdapter.ViewHolder viewHolder, int position) {
         Chat chat =  chats.get(position);
 
-        ParseUser otherUser = chat.getOtherUsers(currUser).get(0);
-
-        String name = null;
-        try {
-            name = otherUser.fetchIfNeeded().getString("name");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
         String body = chat.getLastMessageBody();
         String time = chat.getLastMessageTime();
-        viewHolder.bind(name, body, time, otherUser);
+
+        queryUsers(chat.getOtherUsers(currUser).get(0), body, time, viewHolder);
     }
 
     public  class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -96,21 +88,21 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
 
         //add in data for specific user's post
-        public void bind(String name, String body, String time, final ParseUser otherUser) {
+        public void bind(String name, String body, String time) {
             tvName.setText(name);
             tvBody.setText(body);
             tvTime.setText(time);
 
-            Glide.with(context)
-                        .load(otherUser.getParseFile("profile_image").getUrl())
+           Glide.with(context)
+                       .load(otherUser.getParseFile("profile_image").getUrl())
                         .apply(RequestOptions.circleCropTransform())
-                        .into(ivProfileImage);
+                       .into(ivProfileImage);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent message = new Intent(context, MessageActivity.class);
-                    message.putExtra(ChatAdapter.class.getSimpleName(), Parcels.wrap(otherUser));
+                   message.putExtra(ChatAdapter.class.getSimpleName(), Parcels.wrap(otherUser));
                     ((Activity) context).startActivityForResult(message, 1);
                 }
             });
@@ -122,6 +114,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
 
     }
+
 
     @Override
     public int getItemCount() {
@@ -138,5 +131,25 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     public void addAll(List<Chat> list) {
         chats.addAll(list);
         notifyDataSetChanged();
+    }
+
+    protected void queryUsers(String userId, final String body, final String time, final ViewHolder viewHolder) {
+        ParseQuery<ParseUser> userQuery = new ParseQuery<ParseUser>(ParseUser.class);
+
+        userQuery.whereEqualTo("objectId", userId);
+
+        userQuery.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> user, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG,"Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+                otherUser = user.get(0);
+                String name = otherUser.getString("name");
+                viewHolder.bind(name, body, time);
+            }
+        });
     }
 }
