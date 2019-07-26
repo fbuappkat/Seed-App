@@ -1,6 +1,7 @@
 package com.example.kat_app.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -42,6 +43,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull UserAdapter.ViewHolder holder, int position) {
         ParseUser user = users.get(position);
+        if (position%2 == 1) {
+            holder.view.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        else{
+            holder.view.setBackgroundColor(Color.parseColor("#EFEFEF"));
+        }
         holder.bind(user);
     }
 
