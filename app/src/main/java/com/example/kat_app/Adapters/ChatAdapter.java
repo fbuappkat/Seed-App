@@ -65,7 +65,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
         String body = chat.getLastMessageBody();
         String time = chat.getLastMessageTime();
-
         queryUsers(chat.getOtherUsers(currUser).get(0), body, time, viewHolder);
     }
 
@@ -88,22 +87,22 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
 
         //add in data for specific user's post
-        public void bind(String name, String body, String time) {
+        public void bind(String name, String body, String time, final ParseUser otherUser) {
             tvName.setText(name);
             tvBody.setText(body);
             tvTime.setText(time);
 
-           Glide.with(context)
-                       .load(otherUser.getParseFile("profile_image").getUrl())
-                        .apply(RequestOptions.circleCropTransform())
-                       .into(ivProfileImage);
+            Glide.with(context)
+                    .load(otherUser.getParseFile("profile_image").getUrl())
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(ivProfileImage);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent message = new Intent(context, MessageActivity.class);
-                   message.putExtra(ChatAdapter.class.getSimpleName(), Parcels.wrap(otherUser));
-                    ((Activity) context).startActivityForResult(message, 1);
+                    message.putExtra(ChatAdapter.class.getSimpleName(), Parcels.wrap(otherUser));
+                    context.startActivity(message);
                 }
             });
         }
@@ -148,7 +147,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                 }
                 otherUser = user.get(0);
                 String name = otherUser.getString("name");
-                viewHolder.bind(name, body, time);
+                viewHolder.bind(name, body, time, otherUser);
             }
         });
     }

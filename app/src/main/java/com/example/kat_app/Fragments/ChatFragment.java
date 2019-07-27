@@ -64,7 +64,9 @@ public class ChatFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
+        rvMessage.setVisibility(View.GONE);
         startWithCurrentUser();
+        rvMessage.setVisibility(View.VISIBLE);
         myHandler.postDelayed(mRefreshChatsRunnable, POLL_INTERVAL);
     }
 

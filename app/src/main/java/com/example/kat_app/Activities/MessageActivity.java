@@ -57,6 +57,7 @@ public class MessageActivity extends AppCompatActivity {
     private MessageAdapter mAdapter;
     private ChatAdapter chatAdapter;
     private ParseUser otherUser;
+    private String name;
     // Keep track of initial load to scroll to the bottom of the ListView
     boolean mFirstLoad;
 
@@ -76,7 +77,7 @@ public class MessageActivity extends AppCompatActivity {
 
         if (otherUser == null) {
             otherUser = Parcels.unwrap(getIntent().getParcelableExtra(ChatAdapter.class.getSimpleName()));
-            chatAdapter = Parcels.unwrap(getIntent().getParcelableExtra(ChatAdapter.class.getName()));
+             name = otherUser.getUsername();
         }
 
         tvChat.setText(otherUser.getUsername());
