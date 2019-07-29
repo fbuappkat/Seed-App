@@ -1,7 +1,10 @@
 package com.example.kat_app.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +15,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.MultiTransformation;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
@@ -24,7 +31,12 @@ import com.parse.ParseUser;
 import java.util.List;
 import java.util.Locale;
 
-public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHolder> {
+import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
+
+import jp.wasabeef.glide.transformations.BlurTransformation;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
+public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHolder>  {
     private static Context context;
     private static List<Project> projects;
     private static List<Project> matchingProjects;
@@ -114,14 +126,16 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
             tvFollowers.setText("Followers: " + project.getFollowers().length());
             queryUser(project);
             ParseFile profileImage = project.getParseFile("thumbnail");
+            MultiTransformation<Bitmap> multiTransformation = new MultiTransformation<Bitmap>(new CenterCrop(), new RoundedCornersTransformation(25, 0), new BlurTransformation(7));
             if (profileImage != null) {
                 Glide.with(context)
-                        .load(profileImage.getUrl())
-                        .apply(RequestOptions.circleCropTransform())
-                        .into(ivThumbnail);
+                       .load(profileImage.getUrl())
+                        .apply(bitmapTransform(multiTransformation))
+                       .into(ivThumbnail);
             } else {
                 Glide.with(context)
-                        .load(R.drawable.ic_invest)
+                        .load(R.drawable.default_project_image)
+                        .apply(bitmapTransform(multiTransformation))
                         .into(ivThumbnail);
             }
             this.onClickListener = onClickListener;
