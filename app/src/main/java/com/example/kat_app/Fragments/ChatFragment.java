@@ -6,34 +6,22 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.ImageButton;
 
-import com.example.kat_app.Activities.AddUpdateActivity;
-import com.example.kat_app.Activities.MainActivity;
-import com.example.kat_app.Activities.MessageActivity;
+import com.example.kat_app.Activities.NewMessageActivity;
 import com.example.kat_app.Adapters.ChatAdapter;
-import com.example.kat_app.Adapters.MessageAdapter;
-import com.example.kat_app.Adapters.UpdatesAdapter;
 import com.example.kat_app.Models.Chat;
-import com.example.kat_app.Models.Message;
-import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +37,8 @@ public class ChatFragment extends Fragment {
 
     @BindView(R.id.rvMessage)
     RecyclerView rvMessage;
+    @BindView(R.id.ivNewMessage)
+    ImageButton ivNewMessage;
 
     private ArrayList<Chat> chats;
     private ArrayList<ParseUser> otherUsers;
@@ -64,10 +54,16 @@ public class ChatFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
-        rvMessage.setVisibility(View.GONE);
         startWithCurrentUser();
-        rvMessage.setVisibility(View.VISIBLE);
         myHandler.postDelayed(mRefreshChatsRunnable, POLL_INTERVAL);
+
+        ivNewMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), NewMessageActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     static final int POLL_INTERVAL = 1000; // milliseconds
@@ -127,13 +123,6 @@ public class ChatFragment extends Fragment {
             }
 
         });
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.detach(this).attach(this).commit();
     }
 }
 

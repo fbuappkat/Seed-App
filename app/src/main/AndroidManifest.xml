@@ -23,8 +23,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.ProjectMediaActivity"
-            android:theme="@style/AppTheme.moreDetials"></activity>
+        <activity android:name=".Activities.NewMessageActivity"></activity>
+        <activity
+            android:name=".Activities.ProjectMediaActivity"
+            android:theme="@style/AppTheme.moreDetials" />
         <activity android:name=".Activities.TransactionHistoryActivity" />
         <activity android:name=".Activities.WithdrawCreditActivity" />
         <activity android:name=".Activities.CustomPhotoGalleryActivity" />

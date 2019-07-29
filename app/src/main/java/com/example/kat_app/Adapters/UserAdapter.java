@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.kat_app.Activities.MessageActivity;
+import com.example.kat_app.Activities.NewMessageActivity;
 import com.example.kat_app.Activities.OtherUserProfileActivity;
 import com.example.kat_app.R;
 import com.parse.ParseFile;
@@ -26,6 +29,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     private static Context context;
     private List<ParseUser> users;
     private ProjectsAdapter.OnClickListener monClickListener;
+    private int request;
 
 
     public UserAdapter(Context context, List<ParseUser> users, ProjectsAdapter.OnClickListener onClickListener) {
@@ -33,6 +37,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         this.users = users;
         this.monClickListener = onClickListener;
     }
+
+    public UserAdapter(Context context, List<ParseUser> users, int request) {
+        this.context = context;
+        this.users = users;
+        this.request = request;
+    }
+
 
     public void clear() {
         users.clear();
@@ -64,7 +75,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         return users.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         OnClickListener onClickListener;
         private TextView tvName;
@@ -73,6 +84,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         private TextView tvProjects;
         private ImageView ivImage;
         private ImageView ivProfile;
+        private ConstraintLayout userHolder;
 
         View view;
 
@@ -85,7 +97,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             tvProjects = itemView.findViewById(R.id.tvProjects);
             ivImage = itemView.findViewById(R.id.ivImage);
             ivProfile = itemView.findViewById(R.id.ivProfile);
-
+            userHolder = itemView.findViewById(R.id.userHolder);
         }
 
 
@@ -110,14 +122,25 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                         .into(ivImage);
             }
 
-            ivProfile.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent otherProfile = new Intent(context, OtherUserProfileActivity.class);
-                    otherProfile.putExtra("User", Parcels.wrap(userList.get(position)));
-                    context.startActivity(otherProfile);
-                }
-            });
+            if (request == 1) {
+                userHolder.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent message = new Intent(context, MessageActivity.class);
+                        message.putExtra(UserAdapter.class.getSimpleName(), Parcels.wrap(user));
+                        context.startActivity(message);
+                    }
+                });
+            } else {
+                ivProfile.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent otherProfile = new Intent(context, OtherUserProfileActivity.class);
+                        otherProfile.putExtra("User", Parcels.wrap(userList.get(position)));
+                        context.startActivity(otherProfile);
+                    }
+                });
+            }
 
 
 

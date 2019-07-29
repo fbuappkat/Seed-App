@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.kat_app.Adapters.ChatAdapter;
 import com.example.kat_app.Adapters.MessageAdapter;
+import com.example.kat_app.Adapters.UserAdapter;
 import com.example.kat_app.Fragments.ChatFragment;
 import com.example.kat_app.Models.Chat;
 import com.example.kat_app.Models.Message;
@@ -57,7 +58,6 @@ public class MessageActivity extends AppCompatActivity {
     private MessageAdapter mAdapter;
     private ChatAdapter chatAdapter;
     private ParseUser otherUser;
-    private String name;
     // Keep track of initial load to scroll to the bottom of the ListView
     boolean mFirstLoad;
 
@@ -77,7 +77,10 @@ public class MessageActivity extends AppCompatActivity {
 
         if (otherUser == null) {
             otherUser = Parcels.unwrap(getIntent().getParcelableExtra(ChatAdapter.class.getSimpleName()));
-             name = otherUser.getUsername();
+        }
+
+        if (otherUser == null) {
+            otherUser = Parcels.unwrap(getIntent().getParcelableExtra(UserAdapter.class.getSimpleName()));
         }
 
         tvChat.setText(otherUser.getUsername());

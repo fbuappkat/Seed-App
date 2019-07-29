@@ -56,9 +56,9 @@
         android:text="11:40"
         android:textColor="@color/kat_grey_2"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/ivProfile"
-        app:layout_constraintEnd_toStartOf="@+id/ivProfile"
-        app:layout_constraintTop_toTopOf="@+id/ivProfile" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+        app:layout_constraintEnd_toStartOf="@+id/imageView5"
+        app:layout_constraintTop_toTopOf="@+id/imageView5" />
 
     <ImageView
         android:id="@+id/imageView5"

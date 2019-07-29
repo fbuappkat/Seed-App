@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/profileView"
+    android:id="@+id/newMessage"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -29,25 +29,28 @@
                 android:layout_height="wrap_content"
                 android:background="@color/kat_white">
 
-                <ImageButton
-                    android:id="@+id/ivNewMessage"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="16dp"
-                    android:background="@android:color/transparent"
-                    android:paddingLeft="26dp"
-                    android:src="@drawable/ic_new_message" />
-
                 <TextView
-                    android:id="@+id/tvChat"
+                    android:id="@+id/tvNewMessage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/montserrat_regular"
-                    android:text="MESSAGES"
+                    android:text="NEW MESSAGE"
                     android:textColor="#000000"
                     android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/bCancel"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="left"
+                    android:background="@android:color/transparent"
+                    android:contextClickable="false"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:text="@android:string/cancel"
+                    android:textAllCaps="false"
+                    android:textColor="@color/kat_orange_1"
+                    android:textSize="14sp" />
 
             </android.support.v7.widget.Toolbar>
 
@@ -85,7 +88,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvMessage"
+        android:id="@+id/rvUsers"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@id/view6"
