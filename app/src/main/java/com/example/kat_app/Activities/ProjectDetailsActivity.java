@@ -55,8 +55,6 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     Button btnFollow;
     @BindView(R.id.btnInvest)
     Button btnInvest;
-    @BindView(R.id.btnMoreDetails)
-    Button btnMore;
     @BindView(R.id.btnShowMedia)
     Button btnShowMedia;
     @BindView(R.id.ivBack)
@@ -150,15 +148,6 @@ public class ProjectDetailsActivity extends AppCompatActivity {
             }
         });
 
-        //moredetails button
-        btnMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent moreDetails = new Intent(ProjectDetailsActivity.this, MoreDetailsActivity.class);
-                moreDetails.putExtra("project", Parcels.wrap(proj));
-                startActivity(moreDetails);
-            }
-        });
 
         //invest button
         btnInvest.setOnClickListener(new View.OnClickListener() {
