@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +16,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Activities.MessageActivity;
-import com.example.kat_app.Activities.NewMessageActivity;
 import com.example.kat_app.Activities.OtherUserProfileActivity;
+import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.parceler.Parcels;
@@ -80,7 +84,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         OnClickListener onClickListener;
         private TextView tvName;
         private TextView tvUsername;
-        private TextView tvFollowers;
+        private TextView tvInvestments;
         private TextView tvProjects;
         private ImageView ivImage;
         private ImageView ivProfile;
@@ -93,7 +97,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             view = itemView;
             tvName = itemView.findViewById(R.id.tvName);
             tvUsername = itemView.findViewById(R.id.tvUsername);
-            tvFollowers = itemView.findViewById(R.id.tvFollowers);
+            tvInvestments = itemView.findViewById(R.id.tvInvestments);
             tvProjects = itemView.findViewById(R.id.tvProjects);
             ivImage = itemView.findViewById(R.id.ivImage);
             ivProfile = itemView.findViewById(R.id.ivProfile);
@@ -102,13 +106,51 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
 
 
+        protected void queryProjects(ParseUser user) {
+            ParseQuery<Project> projectQuery = new ParseQuery<Project>(Project.class);
+            projectQuery.whereEqualTo("author", user);
+
+            projectQuery.findInBackground(new FindCallback<Project>() {
+                @Override
+                public void done(List<Project> posts, ParseException e) {
+                    if (e != null) {
+                        Log.e("users","Error with query");
+                        e.printStackTrace();
+                        return;
+                    }
+                    tvProjects.setText("Projects: " + Integer.toString(posts.size()));
+                }
+            });
+        }
+
+        protected void queryInvested(final ParseUser user) {
+            ParseQuery<Project> projectQuery = new ParseQuery<Project>(Project.class);
+            projectQuery.findInBackground(new FindCallback<Project>() {
+                @Override
+                public void done(List<Project> posts, ParseException e) {
+                    if (e != null) {
+                        Log.e("users","Error with query");
+                        e.printStackTrace();
+                        return;
+                    }
+                    int count = 0;
+                    for (Project project : posts){
+                        if(project.getInvestors().toString().contains(user.getObjectId())){
+                            count++;
+                        }
+                    }
+                    tvInvestments.setText("Investments: " + Integer.toString(count));
+
+                }
+            });
+        }
 
         //add in data for specific user's post
         public void bind(final ParseUser user, final List<ParseUser> userList, final int position) {
            tvName.setText(user.get("name").toString());
            tvUsername.setText("@" + user.getUsername());
-           tvFollowers.setText("Followers: " + "X");
-           tvProjects.setText("Projects: " + "X");
+           queryInvested(user);
+           queryProjects(user);
             ParseFile profileImage = user.getParseFile("profile_image");
             if (profileImage != null) {
                 Glide.with(context)
