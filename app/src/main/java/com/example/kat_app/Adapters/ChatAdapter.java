@@ -92,10 +92,18 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             tvBody.setText(body);
             tvTime.setText(time);
 
-            Glide.with(context)
-                    .load(otherUser.getParseFile("profile_image").getUrl())
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(ivProfileImage);
+            ParseFile profileImage = otherUser.getParseFile("profile_image");
+            if (profileImage != null) {
+                Glide.with(context)
+                        .load(profileImage.getUrl())
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(ivProfileImage);
+            } else {
+                Glide.with(context)
+                        .load(R.drawable.default_profile_image)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(ivProfileImage);
+            }
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
