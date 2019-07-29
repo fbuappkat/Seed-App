@@ -83,7 +83,7 @@ public class ProfileFragment extends Fragment {
         tvInvestmentsCount = view.findViewById(R.id.tvInvestmentsCount);
         ivProfileImage = view.findViewById(R.id.ivProfileImageUpdate);
         tvLocation = view.findViewById(R.id.tvLocation);
-        tvBalanceCount = view.findViewById(R.id.tvBalanceCount);
+        tvBalanceCount = view.findViewById(R.id.tvFollowerCount);
         tvBio = view.findViewById(R.id.tvBio);
         ivProfileImage = view.findViewById(R.id.ivProfileImage);
 

@@ -50,7 +50,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
     private Spinner spinnerSearch;
     private TextView tvFilter;
     private boolean onProjects = true;
-    private RecyclerView rvUsers;
+    RecyclerView rvUsers;
     SearchView editsearch;
     protected SwipeRefreshLayout swipeContainer;
 
@@ -184,7 +184,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         // create the data source
         users = new ArrayList<>();
         // create the adapter
-        userAdapter = new UserAdapter(getContext(), users);
+        userAdapter = new UserAdapter(getContext(), users, this);
         // add line between items
         rvUsers.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
@@ -212,8 +212,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
                     rvProjects.setVisibility(View.INVISIBLE);
                     queryProjects();
                 } else {
-                    ;
-                    //todo put query users in here when thats made
+                    queryUsers();
                 }
             }
         });

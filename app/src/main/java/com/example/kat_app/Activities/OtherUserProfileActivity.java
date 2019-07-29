@@ -1,20 +1,26 @@
 package com.example.kat_app.Activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.parceler.Parcels;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,8 +35,6 @@ public class OtherUserProfileActivity extends AppCompatActivity {
     TextView tvName;
     @BindView(R.id.tvUsername)
     TextView tvUsername;
-    @BindView(R.id.tvBalanceCount)
-    TextView tvBalanceCount;
     @BindView(R.id.tvProjectsCount)
     TextView tvProjectsCount;
     @BindView(R.id.tvInvestmentsCount)
@@ -41,6 +45,8 @@ public class OtherUserProfileActivity extends AppCompatActivity {
     ImageView ivBack;
     @BindView(R.id.ivChat)
     ImageView ivChat;
+    @BindView(R.id.tvFollowerCount)
+    TextView tvFollowerCount;
 
     private static final String KEY_NAME = "name";
     private static final String KEY_PROFILE_IMAGE = "profile_image";
@@ -68,7 +74,7 @@ public class OtherUserProfileActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         tvUsername.setText("@" + user.getUsername());
-        tvBalanceCount.setText("$" + user.getInt(KEY_BALANCE));
+        tvFollowerCount.setText(Integer.toString(user.getJSONArray("followers").length()));
         tvBio.setText(user.getString(KEY_BIO));
 
         ParseFile profileImage = user.getParseFile(KEY_PROFILE_IMAGE);
@@ -83,6 +89,9 @@ public class OtherUserProfileActivity extends AppCompatActivity {
                     .apply(RequestOptions.circleCropTransform())
                     .into(ivProfileImage);
         }
+
+        queryInvested();
+        queryProjects();
     }
 
     private void setBackButton() {
@@ -103,6 +112,44 @@ public class OtherUserProfileActivity extends AppCompatActivity {
                 Intent message = new Intent(OtherUserProfileActivity.this, MessageActivity.class);
                 message.putExtra(OtherUserProfileActivity.class.getSimpleName(), Parcels.wrap(user));
                 startActivity(message);
+            }
+        });
+    }
+
+    protected void queryProjects() {
+        ParseQuery<Project> projectQuery = new ParseQuery<Project>(Project.class);
+        projectQuery.whereEqualTo("author", ParseUser.getCurrentUser());
+
+        projectQuery.findInBackground(new FindCallback<Project>() {
+            @Override
+            public void done(List<Project> posts, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG,"Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+                tvProjectsCount.setText(Integer.toString(posts.size()));
+            }
+        });
+    }
+
+    protected void queryInvested() {
+        ParseQuery<Project> projectQuery = new ParseQuery<Project>(Project.class);
+        projectQuery.findInBackground(new FindCallback<Project>() {
+            @Override
+            public void done(List<Project> posts, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG,"Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+                int count = 0;
+                for (Project project : posts){
+                    if(project.getInvestors().toString().contains(ParseUser.getCurrentUser().getObjectId())){
+                        count++;
+                    }
+                }
+                tvInvestmentsCount.setText(Integer.toString(count));
             }
         });
     }

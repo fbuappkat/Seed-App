@@ -1,6 +1,7 @@
 package com.example.kat_app.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -12,20 +13,25 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.kat_app.Activities.OtherUserProfileActivity;
 import com.example.kat_app.R;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     private static Context context;
     private List<ParseUser> users;
+    private ProjectsAdapter.OnClickListener monClickListener;
 
 
-    public UserAdapter(Context context, List<ParseUser> users) {
+    public UserAdapter(Context context, List<ParseUser> users, ProjectsAdapter.OnClickListener onClickListener) {
         this.context = context;
         this.users = users;
+        this.monClickListener = onClickListener;
     }
 
     public void clear() {
@@ -49,7 +55,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         else{
             holder.view.setBackgroundColor(Color.parseColor("#EFEFEF"));
         }
-        holder.bind(user);
+        holder.bind(user, users, position);
     }
 
     @Override
@@ -58,13 +64,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         return users.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
+        OnClickListener onClickListener;
         private TextView tvName;
         private TextView tvUsername;
         private TextView tvFollowers;
         private TextView tvProjects;
         private ImageView ivImage;
+        private ImageView ivProfile;
 
         View view;
 
@@ -76,12 +84,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             tvFollowers = itemView.findViewById(R.id.tvFollowers);
             tvProjects = itemView.findViewById(R.id.tvProjects);
             ivImage = itemView.findViewById(R.id.ivImage);
+            ivProfile = itemView.findViewById(R.id.ivProfile);
 
         }
 
 
+
+
         //add in data for specific user's post
-        public void bind(final ParseUser user) {
+        public void bind(final ParseUser user, final List<ParseUser> userList, final int position) {
            tvName.setText(user.get("name").toString());
            tvUsername.setText("@" + user.getUsername());
            tvFollowers.setText("Followers: " + "X");
@@ -99,9 +110,28 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                         .into(ivImage);
             }
 
+            ivProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent otherProfile = new Intent(context, OtherUserProfileActivity.class);
+                    otherProfile.putExtra("User", Parcels.wrap(userList.get(position)));
+                    context.startActivity(otherProfile);
+                }
+            });
+
+
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            onClickListener.onClick(getAdapterPosition());
         }
 
 
+    }
+    public interface OnClickListener{
+        void onClick(int position);
     }
 
 

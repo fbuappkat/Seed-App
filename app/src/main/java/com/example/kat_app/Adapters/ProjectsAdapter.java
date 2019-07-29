@@ -135,6 +135,8 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
 
         }
 
+
+
         @Override
         public void onClick(View v) {
             onClickListener.onClick(getAdapterPosition());

@@ -78,7 +78,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="24dp"
         android:background="@color/kat_grey_3"
-        app:layout_constraintEnd_toStartOf="@+id/tvBalance"
+        app:layout_constraintEnd_toStartOf="@+id/tvFollowers"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tvInvestments"
         app:layout_constraintTop_toBottomOf="@+id/tvLocation" />
@@ -191,21 +191,21 @@
         app:layout_constraintTop_toTopOf="@+id/line2" />
 
     <TextView
-        android:id="@+id/tvBalance"
+        android:id="@+id/tvFollowers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/montserrat_light"
-        android:text="Balance"
+        android:text="Followers"
         android:textColor="@color/kat_grey_1"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/line"
-        app:layout_constraintTop_toBottomOf="@+id/tvBalanceCount" />
+        app:layout_constraintTop_toBottomOf="@+id/tvFollowerCount" />
 
     <TextView
-        android:id="@+id/tvBalanceCount"
+        android:id="@+id/tvFollowerCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
@@ -213,9 +213,9 @@
         android:text="X"
         android:textColor="#000000"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/tvBalance"
+        app:layout_constraintEnd_toEndOf="@+id/tvFollowers"
         app:layout_constraintHorizontal_bias="0.468"
-        app:layout_constraintStart_toStartOf="@+id/tvBalance"
+        app:layout_constraintStart_toStartOf="@+id/tvFollowers"
         app:layout_constraintTop_toTopOf="@+id/line" />
 
     <android.support.constraint.ConstraintLayout
