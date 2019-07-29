@@ -1,5 +1,6 @@
 package com.example.kat_app.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -172,6 +173,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                         Intent message = new Intent(context, MessageActivity.class);
                         message.putExtra(UserAdapter.class.getSimpleName(), Parcels.wrap(user));
                         context.startActivity(message);
+                        ((Activity) context).finish();
                     }
                 });
             } else {
