@@ -30,7 +30,7 @@ import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
-public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHolder>  {
+public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHolder> {
     private static Context context;
     private static List<Project> projects;
     private static List<Project> matchingProjects;
@@ -83,7 +83,6 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
             tvInvestors = itemView.findViewById(R.id.tvInvestors);
             ivThumbnail = itemView.findViewById(R.id.ivThumbnail);
 
-
         }
 
         protected void queryUser(final Project project) {
@@ -118,9 +117,9 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
             MultiTransformation<Bitmap> multiTransformation = new MultiTransformation<Bitmap>(new CenterCrop(), new RoundedCornersTransformation(25, 0), new BlurTransformation(7));
             if (profileImage != null) {
                 Glide.with(context)
-                       .load(profileImage.getUrl())
+                        .load(profileImage.getUrl())
                         .apply(bitmapTransform(multiTransformation))
-                       .into(ivThumbnail);
+                        .into(ivThumbnail);
             } else {
                 Glide.with(context)
                         .load(R.drawable.default_project_image)

@@ -64,10 +64,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull UserAdapter.ViewHolder holder, int position) {
         ParseUser user = users.get(position);
-        if (position%2 == 1) {
+        if (position % 2 == 1) {
             holder.view.setBackgroundColor(Color.parseColor("#FFFFFF"));
-        }
-        else{
+        } else {
             holder.view.setBackgroundColor(Color.parseColor("#EFEFEF"));
         }
         holder.bind(user, users, position);
@@ -79,7 +78,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         return users.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         OnClickListener onClickListener;
         private TextView tvName;
@@ -105,7 +104,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         }
 
 
-
         protected void queryProjects(ParseUser user) {
             ParseQuery<Project> projectQuery = new ParseQuery<Project>(Project.class);
             projectQuery.whereEqualTo("author", user);
@@ -114,7 +112,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 @Override
                 public void done(List<Project> posts, ParseException e) {
                     if (e != null) {
-                        Log.e("users","Error with query");
+                        Log.e("users", "Error with query");
                         e.printStackTrace();
                         return;
                     }
@@ -129,17 +127,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 @Override
                 public void done(List<Project> posts, ParseException e) {
                     if (e != null) {
-                        Log.e("users","Error with query");
+                        Log.e("users", "Error with query");
                         e.printStackTrace();
                         return;
                     }
                     int count = 0;
-                    for (Project project : posts){
-                        if(project.getInvestors().toString().contains(user.getObjectId())){
+                    for (Project project : posts) {
+                        if (project.getInvestors().toString().contains(user.getObjectId())) {
                             count++;
                         }
                     }
-                    tvInvestments.setText("Investments: " + Integer.toString(count));
+                    tvInvestments.setText("Investments: " + count);
 
                 }
             });
@@ -147,10 +145,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
         //add in data for specific user's post
         public void bind(final ParseUser user, final List<ParseUser> userList, final int position) {
-           tvName.setText(user.get("name").toString());
-           tvUsername.setText("@" + user.getUsername());
-           queryInvested(user);
-           queryProjects(user);
+            tvName.setText(user.get("name").toString());
+            tvUsername.setText("@" + user.getUsername());
+            queryInvested(user);
+            queryProjects(user);
             ParseFile profileImage = user.getParseFile("profile_image");
             if (profileImage != null) {
                 Glide.with(context)
@@ -185,7 +183,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             }
 
 
-
         }
 
         @Override
@@ -195,7 +192,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
 
     }
-    public interface OnClickListener{
+
+    public interface OnClickListener {
         void onClick(int position);
     }
 

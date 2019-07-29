@@ -2,8 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kat_app">
 
-    <permission android:name="android.permission.ACCESS_FINE_LOCATION" android:protectionLevel="dangerous"/>
-    <permission android:name="android.permission.ACCESS_COARSE_LOCATION" android:protectionLevel="dangerous"/>
+    <permission
+        android:name="android.permission.ACCESS_FINE_LOCATION"
+        android:protectionLevel="dangerous" />
+    <permission
+        android:name="android.permission.ACCESS_COARSE_LOCATION"
+        android:protectionLevel="dangerous" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -33,9 +37,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <uses-library android:name="org.apache.http.legacy" android:required="false" />
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
 
-        <activity android:name=".Activities.ProjectMediaActivity"
+        <activity
+            android:name=".Activities.ProjectMediaActivity"
             android:theme="@style/AppTheme.moreDetials"></activity>
         <activity android:name=".Activities.TransactionHistoryActivity" />
         <activity android:name=".Activities.WithdrawCreditActivity" />
@@ -70,7 +77,7 @@
         <activity android:name=".Activities.EditProfileActivity" />
         <activity android:name=".Activities.AddUpdateActivity" />
         <activity android:name=".Activities.SignupActivity" />
-        <activity android:name=".Activities.NewMessageActivity"/>
+        <activity android:name=".Activities.NewMessageActivity" />
         <activity
             android:name="com.schibstedspain.leku.LocationPickerActivity"
             android:label="@string/leku_title_activity_location_picker"
@@ -100,7 +107,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDFXJgKKt91478mGyTq60sCDO04QLzxpcA" />
-
 
 
         <meta-data

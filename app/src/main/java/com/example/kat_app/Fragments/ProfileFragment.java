@@ -91,7 +91,6 @@ public class ProfileFragment extends Fragment {
 
         tvName.setText(currUser.getString(KEY_NAME));
         tvUsername.setText("@" + currUser.getUsername());
-        //tvBalanceCount.setText("$" + currUser.getInt(KEY_BALANCE));
         queryBalance(currUser);
         queryProjects();
         queryInvested();
