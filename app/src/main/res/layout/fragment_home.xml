@@ -18,6 +18,7 @@
         <android.support.design.widget.AppBarLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginStart="48dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,6 +44,16 @@
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.AppBarLayout>
+
+        <ImageView
+            android:id="@+id/ivEarth"
+            android:layout_width="42dp"
+            android:layout_height="39dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_earth" />
 
     </android.support.constraint.ConstraintLayout>
 

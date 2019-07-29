@@ -33,6 +33,11 @@
 
     <string name="google_maps_api">AIzaSyAhbFxJMu7hjZ646Pl1e414synTc9l70xk</string>
 
+
+
     <string name="profile_me">My Profile Pic</string>
     <string name="profile_other">Other profile pic</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
 </resources>

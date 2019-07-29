@@ -74,8 +74,10 @@ public class OtherUserProfileActivity extends AppCompatActivity {
 
         if (!user.getJSONArray("followers").toString().contains(ParseUser.getCurrentUser().getObjectId())) {
             btnFollow.setText("Follow");
+            //todo fix - parse does not allow changing other user info.
         } else {
             btnFollow.setText("Unfollow");
+
         }
 
         btnFollow.setOnClickListener(new View.OnClickListener() {
