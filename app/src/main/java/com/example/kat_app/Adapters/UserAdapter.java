@@ -57,19 +57,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     @NonNull
     @Override
     public UserAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_user, parent, false);
+        View view;
+        if (request == 1) {
+            view = LayoutInflater.from(context).inflate(R.layout.item_user_message, parent, false);
+        } else {
+            view = LayoutInflater.from(context).inflate(R.layout.item_user, parent, false);
+        }
         return new UserAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull UserAdapter.ViewHolder holder, int position) {
         ParseUser user = users.get(position);
-        if (position%2 == 1) {
-            holder.view.setBackgroundColor(Color.parseColor("#FFFFFF"));
-        }
-        else{
-            holder.view.setBackgroundColor(Color.parseColor("#EFEFEF"));
-        }
         holder.bind(user, users, position);
     }
 
@@ -149,8 +148,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         public void bind(final ParseUser user, final List<ParseUser> userList, final int position) {
            tvName.setText(user.get("name").toString());
            tvUsername.setText("@" + user.getUsername());
-           queryInvested(user);
-           queryProjects(user);
+           if (request != 1) {
+               queryInvested(user);
+               queryProjects(user);
+           }
             ParseFile profileImage = user.getParseFile("profile_image");
             if (profileImage != null) {
                 Glide.with(context)
