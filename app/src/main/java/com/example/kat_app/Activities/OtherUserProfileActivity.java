@@ -90,8 +90,8 @@ public class OtherUserProfileActivity extends AppCompatActivity {
                     .into(ivProfileImage);
         }
 
-        queryInvested();
-        queryProjects();
+        queryInvested(user);
+        queryProjects(user);
     }
 
     private void setBackButton() {
@@ -116,9 +116,9 @@ public class OtherUserProfileActivity extends AppCompatActivity {
         });
     }
 
-    protected void queryProjects() {
+    protected void queryProjects(ParseUser user) {
         ParseQuery<Project> projectQuery = new ParseQuery<Project>(Project.class);
-        projectQuery.whereEqualTo("author", ParseUser.getCurrentUser());
+        projectQuery.whereEqualTo("author", user);
 
         projectQuery.findInBackground(new FindCallback<Project>() {
             @Override
@@ -133,7 +133,8 @@ public class OtherUserProfileActivity extends AppCompatActivity {
         });
     }
 
-    protected void queryInvested() {
+    protected void queryInvested(ParseUser user) {
+        final ParseUser otherUser = user;
         ParseQuery<Project> projectQuery = new ParseQuery<Project>(Project.class);
         projectQuery.findInBackground(new FindCallback<Project>() {
             @Override
@@ -145,7 +146,7 @@ public class OtherUserProfileActivity extends AppCompatActivity {
                 }
                 int count = 0;
                 for (Project project : posts){
-                    if(project.getInvestors().toString().contains(ParseUser.getCurrentUser().getObjectId())){
+                    if(project.getInvestors().toString().contains(otherUser.getObjectId())){
                         count++;
                     }
                 }
