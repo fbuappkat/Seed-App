@@ -15,37 +15,54 @@
         android:id="@+id/tvInvestors"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:fontFamily="@font/montserrat_regular"
         android:text="Investors"
         android:textColor="@color/kat_black"
-        app:layout_constraintStart_toEndOf="@+id/ivThumbnail"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvFollowers"
+        app:layout_constraintTop_toBottomOf="@+id/ivThumbnail" />
 
     <TextView
         android:id="@+id/tvFollowers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:fontFamily="@font/montserrat_regular"
         android:text="Followers"
         android:textColor="@color/kat_black"
-        app:layout_constraintStart_toEndOf="@+id/ivThumbnail"
-        app:layout_constraintTop_toBottomOf="@+id/tvInvestors" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvInvestors"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivThumbnail" />
 
     <ImageView
         android:id="@+id/ivThumbnail"
-        android:layout_width="293dp"
-        android:layout_height="125dp"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
         android:alpha="1"
         android:foreground="@drawable/layout_bg"
         android:foregroundTint="#80000000"
         android:foregroundTintMode="src_in"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_invest" />
+
+    <View
+        android:id="@+id/view9"
+        android:layout_width="0dp"
+        android:layout_height="8dp"
+        android:background="@color/kat_white"
+        app:layout_constraintBottom_toBottomOf="@+id/ivThumbnail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tvName"
@@ -69,6 +86,7 @@
         android:fontFamily="@font/montserrat_semibold"
         android:text="Author"
         android:textColor="@color/kat_white"
+        android:textSize="18sp"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="@+id/ivThumbnail"
         app:layout_constraintEnd_toEndOf="@+id/tvName"
