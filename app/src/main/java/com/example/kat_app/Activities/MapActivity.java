@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
@@ -150,7 +152,9 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                         double lat = loc.getLatitude();
                         double lng = loc.getLongitude();
                         LatLng projLoc = new LatLng(lat,lng);
-                        map.addMarker(new MarkerOptions().position(projLoc).title(posts.get(i).getName()));
+                        map.addMarker(new MarkerOptions().position(projLoc)
+                                .snippet(posts.get(i).getDescription())
+                                .title(posts.get(i).getName()));
                     }
                 }
             }
