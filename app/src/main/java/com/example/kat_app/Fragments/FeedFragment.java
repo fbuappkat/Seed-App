@@ -64,7 +64,7 @@ public class FeedFragment extends Fragment {
         // create the data source
         updates = new ArrayList<>();
         // create the adapter
-        adapter = new UpdatesAdapter(getContext(), updates);
+        adapter = new UpdatesAdapter(getActivity(), updates);
         // add line between items
         rvFeed.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));

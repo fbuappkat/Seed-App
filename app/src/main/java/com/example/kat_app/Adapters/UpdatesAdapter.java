@@ -1,8 +1,13 @@
 package com.example.kat_app.Adapters;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -19,6 +24,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Activities.OtherUserProfileActivity;
 import com.example.kat_app.Activities.UpdateDetailsActivity;
+import com.example.kat_app.Fragments.FeedFragment;
+import com.example.kat_app.Fragments.ProfileFragment;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
@@ -288,21 +295,32 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                 }
             });
 
-            tvUser.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // get item position
-                    int position = getAdapterPosition();
-                    // get the update at the position, this won't work if the class is static
-                    Update update = updates.get(position);
-                    // create intent for the new activity
-                    Intent feedToProfile = new Intent(context, OtherUserProfileActivity.class);
-                    //pass user as an object
-                    feedToProfile.putExtra("User", Parcels.wrap(update.getUser()));
-                    // show the activity
-                    context.startActivity(feedToProfile);
-                }
-            });
+            if (tvUser.getText().toString().equals(currUser.getUsername())) {
+                tvUser.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                        Fragment myFragment = new ProfileFragment();
+                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.centerView, myFragment).addToBackStack(null).commit();
+                    }
+                });
+            } else {
+                tvUser.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // get item position
+                        int position = getAdapterPosition();
+                        // get the update at the position, this won't work if the class is static
+                        Update update = updates.get(position);
+                        // create intent for the new activity
+                        Intent feedToProfile = new Intent(context, OtherUserProfileActivity.class);
+                        //pass user as an object
+                        feedToProfile.putExtra("User", Parcels.wrap(update.getUser()));
+                        // show the activity
+                        context.startActivity(feedToProfile);
+                    }
+                });
+            }
         }
     }
 
