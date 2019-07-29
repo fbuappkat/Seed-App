@@ -174,8 +174,6 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         // create the adapter
         adapter = new ProjectsAdapter(getContext(), projects, this);
         // add line between items
-        rvProjects.addItemDecoration(new DividerItemDecoration(getContext(),
-                DividerItemDecoration.VERTICAL));
         // set the adapter on the recycler view
         rvProjects.setAdapter(adapter);
         // set the layout manager on the recycler view
