@@ -62,11 +62,6 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ProjectsAdapter.ViewHolder holder, int position) {
         Project project = matchingProjects.get(position);
-        if (position % 2 == 1) {
-            holder.view.setBackgroundColor(Color.parseColor("#FFFFFF"));
-        } else {
-            holder.view.setBackgroundColor(Color.parseColor("#EFEFEF"));
-        }
         holder.bind(project, monClickListener);
     }
 
