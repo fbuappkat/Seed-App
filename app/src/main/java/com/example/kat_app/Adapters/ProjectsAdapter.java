@@ -2,9 +2,6 @@ package com.example.kat_app.Adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,9 +14,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
@@ -85,7 +79,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
             view = itemView;
             tvName = itemView.findViewById(R.id.tvName);
             tvAuthor = itemView.findViewById(R.id.tvAuthor);
-            tvFollowers = itemView.findViewById(R.id.tvFollowers);
+            tvFollowers = itemView.findViewById(R.id.tvInvestments);
             tvInvestors = itemView.findViewById(R.id.tvInvestors);
             ivThumbnail = itemView.findViewById(R.id.ivThumbnail);
 
