@@ -2,12 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kat_app">
 
+    <permission android:name="android.permission.ACCESS_FINE_LOCATION" android:protectionLevel="dangerous"/>
+    <permission android:name="android.permission.ACCESS_COARSE_LOCATION" android:protectionLevel="dangerous"/>
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="com.example.mapdemo.permission.MAPS_RECEIVE" />
 
     <uses-feature
         android:name="android.hardware.location.network"
@@ -16,6 +21,11 @@
         android:name="android.hardware.location.gps"
         android:required="false" />
 
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+
     <application
         android:name=".Data.ParseApp"
         android:allowBackup="true"
@@ -23,11 +33,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
+
         <activity android:name=".Activities.ProjectMediaActivity"
             android:theme="@style/AppTheme.moreDetials"></activity>
         <activity android:name=".Activities.TransactionHistoryActivity" />
         <activity android:name=".Activities.WithdrawCreditActivity" />
         <activity android:name=".Activities.CustomPhotoGalleryActivity" />
+        <activity android:name=".Activities.MapActivity" />
+
         <activity android:name=".Activities.DepositCreditActivity" />
         <activity
             android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
@@ -84,7 +98,13 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_api" />
+            android:value="AIzaSyDFXJgKKt91478mGyTq60sCDO04QLzxpcA" />
+
+
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

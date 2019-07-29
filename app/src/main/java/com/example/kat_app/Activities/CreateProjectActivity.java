@@ -240,9 +240,10 @@ public class CreateProjectActivity extends AppCompatActivity {
         final Project newProject = new Project();
         newProject.setDescription(description);
         newProject.setName(name);
-        newProject.setEquity(equity);
+        newProject.setEquity(Integer.parseInt(equity));
         newProject.setCategory(category);
         newProject.setUser(user);
+        newProject.put("location", user.getParseGeoPoint("location"));
         JSONArray emptyFollowers = new JSONArray();
         JSONArray emptyInvestors = new JSONArray();
         JSONArray emptyMedia = new JSONArray();

@@ -24,7 +24,7 @@ import com.parse.ParseUser;
 import java.util.List;
 import java.util.Locale;
 
-public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHolder>  {
+public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHolder> {
     private static Context context;
     private static List<Project> projects;
     private static List<Project> matchingProjects;
@@ -50,10 +50,9 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ProjectsAdapter.ViewHolder holder, int position) {
         Project project = matchingProjects.get(position);
-        if (position%2 == 1) {
+        if (position % 2 == 1) {
             holder.view.setBackgroundColor(Color.parseColor("#FFFFFF"));
-        }
-        else{
+        } else {
             holder.view.setBackgroundColor(Color.parseColor("#EFEFEF"));
         }
         holder.bind(project, monClickListener);
@@ -61,7 +60,6 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        //Log.d(TAG,"item count: " + updates.size());
         return projects.size();
     }
 
@@ -85,7 +83,6 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
             ivThumbnail = itemView.findViewById(R.id.ivThumbnail);
 
 
-
         }
 
         protected void queryUser(final Project project) {
@@ -96,7 +93,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
                 @Override
                 public void done(List<ParseUser> posts, ParseException e) {
                     if (e != null) {
-                        Log.e("Query requests","Error with query");
+                        Log.e("Query requests", "Error with query");
                         e.printStackTrace();
                         return;
                     }
@@ -104,7 +101,6 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
                         ParseUser user = posts.get(0);
                         tvAuthor.setText("@" + user.getUsername());
                     }
-
                 }
 
             });
@@ -128,13 +124,10 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
                         .load(R.drawable.ic_invest)
                         .into(ivThumbnail);
             }
-            this.onClickListener  = onClickListener;
+            this.onClickListener = onClickListener;
             itemView.setOnClickListener(this);
 
-
-
         }
-
 
 
         @Override
@@ -145,7 +138,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
 
     }
 
-        public interface OnClickListener{
+    public interface OnClickListener {
         void onClick(int position);
     }
 
@@ -158,7 +151,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
         } else {
             for (Project project : projects) {
                 if (project.getName().toLowerCase(Locale.getDefault()).contains(charText)) {
-                    matchingProjects.add(project);
+                    projects.add(project);
                 }
             }
         }

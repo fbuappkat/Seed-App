@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.kat_app.Activities.CreateProjectActivity;
+import com.example.kat_app.Activities.MapActivity;
 import com.example.kat_app.Activities.ProjectDetailsActivity;
 import com.example.kat_app.Adapters.ProjectsAdapter;
 import com.example.kat_app.Adapters.UserAdapter;
@@ -49,11 +50,11 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
     private Spinner spinnerFilter;
     private Spinner spinnerSearch;
     private TextView tvFilter;
+    private ImageView ivMap;
     private boolean onProjects = true;
     RecyclerView rvUsers;
     SearchView editsearch;
     protected SwipeRefreshLayout swipeContainer;
-
 
 
     public static final String TAG = "HomeFragment";
@@ -74,7 +75,15 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         spinnerSearch = view.findViewById(R.id.spinnerSearch);
         rvUsers = view.findViewById(R.id.rvUsers);
         tvFilter = view.findViewById(R.id.tvFilter);
+        ivMap = view.findViewById(R.id.ivEarth);
 
+        ivMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent map = new Intent(getActivity(), MapActivity.class);
+                startActivity(map);
+            }
+        });
 
 
         //setup spinners
@@ -91,15 +100,15 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         spinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String[] strarr = getResources().getStringArray(R.array.filter);
-                switch(position){
+                String[] strArr = getResources().getStringArray(R.array.filter);
+                switch (position) {
                     case 0:
                         queryProjects();
                         break;
                     case 1:
                         queryProjects();
                     default:
-                        queryProjectsByCategory(strarr[position]);
+                        queryProjectsByCategory(strArr[position]);
                 }
             }
 
@@ -109,11 +118,11 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
             }
         });
 
-        spinnerSearch.setSelection(0,false);
+        spinnerSearch.setSelection(0, false);
         spinnerSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch(position){
+                switch (position) {
                     case 0:
                         spinnerFilter.setVisibility(View.VISIBLE);
                         tvFilter.setVisibility(View.VISIBLE);
@@ -231,7 +240,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
             @Override
             public void done(List<Project> posts, ParseException e) {
                 if (e != null) {
-                    Log.e(TAG,"Error with query");
+                    Log.e(TAG, "Error with query");
                     e.printStackTrace();
                     return;
                 }
@@ -254,7 +263,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
             @Override
             public void done(List<ParseUser> user, ParseException e) {
                 if (e != null) {
-                    Log.e(TAG,"Error with query");
+                    Log.e(TAG, "Error with query");
                     e.printStackTrace();
                     return;
                 }
@@ -276,7 +285,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
             @Override
             public void done(List<Project> posts, ParseException e) {
                 if (e != null) {
-                    Log.e(TAG,"Error with query");
+                    Log.e(TAG, "Error with query");
                     e.printStackTrace();
                     return;
                 }
@@ -292,7 +301,6 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
     }
 
 
-
     @Override
     public void onClick(int i) {
         //Toast.makeText(getContext(), "Clicked", Toast.LENGTH_SHORT).show();
@@ -300,7 +308,6 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         project2description.putExtra("project", Parcels.wrap(projects.get(i)));
         startActivity(project2description);
     }
-
 
 
 }
