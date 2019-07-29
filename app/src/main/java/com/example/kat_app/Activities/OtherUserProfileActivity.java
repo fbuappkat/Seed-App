@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -17,6 +19,7 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
 
@@ -47,6 +50,8 @@ public class OtherUserProfileActivity extends AppCompatActivity {
     ImageView ivChat;
     @BindView(R.id.tvFollowerCount)
     TextView tvFollowerCount;
+    @BindView(R.id.btnFollow)
+    Button btnFollow;
 
     private static final String KEY_NAME = "name";
     private static final String KEY_PROFILE_IMAGE = "profile_image";
@@ -65,6 +70,36 @@ public class OtherUserProfileActivity extends AppCompatActivity {
         setProfileInfo(user);
         setBackButton();
         setChatButton();
+
+
+        if (!user.getJSONArray("followers").toString().contains(ParseUser.getCurrentUser().getObjectId())) {
+            btnFollow.setText("Follow");
+        } else {
+            btnFollow.setText("Unfollow");
+        }
+
+        btnFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!user.getJSONArray("followers").toString().contains(ParseUser.getCurrentUser().getObjectId())) {
+                    user.add("followers", ParseUser.getCurrentUser());
+                    tvFollowerCount.setText(Integer.toString(user.getJSONArray("followers").length()));
+                    user.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e != null) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    Toast.makeText(OtherUserProfileActivity.this, "User followed!", Toast.LENGTH_SHORT).show();
+                    btnFollow.setText("Unfollow");
+                } else {
+                    btnFollow.setText("Follow");
+
+                }
+            }
+        });
     }
 
     private void setProfileInfo(ParseUser user) {
