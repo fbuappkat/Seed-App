@@ -33,7 +33,7 @@
                 android:background="@color/kat_white">
 
                 <ImageView
-                    android:id="@+id/ivUpdateToFeed"
+                    android:id="@+id/ivBack"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="left"

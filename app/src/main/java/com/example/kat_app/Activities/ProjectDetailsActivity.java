@@ -12,8 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kat_app.Models.Project;
-import com.example.kat_app.Models.Update;
-import com.example.kat_app.R;
 import com.example.kat_app.Models.Request;
 import com.example.kat_app.R;
 import com.github.mikephil.charting.charts.PieChart;
@@ -57,11 +55,9 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     Button btnFollow;
     @BindView(R.id.btnInvest)
     Button btnInvest;
-    @BindView(R.id.btnMoreDetails)
-    Button btnMore;
     @BindView(R.id.btnShowMedia)
     Button btnShowMedia;
-    @BindView(R.id.ivUpdateToFeed)
+    @BindView(R.id.ivBack)
     ImageView ivBack;
     @BindView(R.id.tvHandleDetails)
     TextView tvHandle;
@@ -152,15 +148,6 @@ public class ProjectDetailsActivity extends AppCompatActivity {
             }
         });
 
-        //moredetails button
-        btnMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent moreDetails = new Intent(ProjectDetailsActivity.this, MoreDetailsActivity.class);
-                moreDetails.putExtra("project", Parcels.wrap(proj));
-                startActivity(moreDetails);
-            }
-        });
 
         //invest button
         btnInvest.setOnClickListener(new View.OnClickListener() {
@@ -281,7 +268,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                finish();
             }
         });
     }
