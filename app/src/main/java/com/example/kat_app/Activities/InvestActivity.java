@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.kat_app.Adapters.InvestAdapter;
@@ -30,7 +29,7 @@ import butterknife.ButterKnife;
 public class InvestActivity extends AppCompatActivity {
     @BindView(R.id.rvRequests)
     RecyclerView rvRequests;
-    @BindView(R.id.ivUpdateToFeed)
+    @BindView(R.id.ivBack)
     ImageView ivBack;
 
     private ArrayList<Request> requests;

@@ -1,7 +1,6 @@
 package com.example.kat_app.Activities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -45,7 +44,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
     Button btnCancel;
     @BindView(R.id.btnConfirm)
     Button btnConfirm;
-    @BindView(R.id.ivUpdateToFeed)
+    @BindView(R.id.ivBack)
     ImageView ivBack;
 
     private Request request;

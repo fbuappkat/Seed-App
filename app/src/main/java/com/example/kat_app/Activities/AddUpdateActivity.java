@@ -1,16 +1,11 @@
 package com.example.kat_app.Activities;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,12 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.kat_app.Adapters.SpinAdapter;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.Models.Update;
@@ -37,7 +28,6 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +45,7 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
     EditText etUpdate;
     @BindView(R.id.sProjectChoice)
     Spinner spinner;
-    @BindView(R.id.ivUpdateToFeed)
+    @BindView(R.id.ivBack)
     ImageView ivBack;
     @BindView(R.id.lnrImages)
     LinearLayout lnrImages;
