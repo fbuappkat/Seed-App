@@ -68,29 +68,31 @@
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="32dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="Title"
         android:textColor="@color/kat_white"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/ivThumbnail"
-        app:layout_constraintStart_toStartOf="@+id/ivThumbnail"
+        app:layout_constraintEnd_toStartOf="@+id/ivThumbnail"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ivThumbnail"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvAuthor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:fontFamily="@font/montserrat_semibold"
+        android:layout_marginBottom="32dp"
+        android:fontFamily="@font/montserrat_semibolditalic"
         android:text="Author"
         android:textColor="@color/kat_white"
         android:textSize="18sp"
-        android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="@+id/ivThumbnail"
-        app:layout_constraintEnd_toEndOf="@+id/tvName"
-        app:layout_constraintStart_toStartOf="@+id/tvName"
-        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+        app:layout_constraintEnd_toStartOf="@+id/ivThumbnail"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ivThumbnail"
+        app:layout_constraintTop_toBottomOf="@+id/tvName"
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>
