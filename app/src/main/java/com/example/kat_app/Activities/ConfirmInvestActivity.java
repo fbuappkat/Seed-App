@@ -34,7 +34,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
     TextView tvConfirm;
     @BindView(R.id.tvPrice)
     TextView tvPrice;
-    @BindView(R.id.tvBalance)
+    @BindView(R.id.tvFollowers)
     TextView tvBalance;
     @BindView(R.id.tvProject)
     TextView tvProject;

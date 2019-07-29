@@ -21,6 +21,8 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
+import org.json.JSONArray;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -88,6 +90,8 @@ public class SignupActivity extends AppCompatActivity {
         final ParseUser user = new ParseUser();
         // Set core properties
         user.setUsername(username);
+        JSONArray empty = new JSONArray();
+        user.put("followers", empty);
         user.setPassword(password);
         user.setEmail(email);
         user.put("name", name);
