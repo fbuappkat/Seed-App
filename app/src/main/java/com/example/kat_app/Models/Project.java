@@ -23,6 +23,7 @@ public class Project extends ParseObject implements Parcelable {
     private final static String KEY_INVESTORS = "investors";
     private final static String KEY_MEDIA = "media";
     private final static String KEY_EQUITY = "equity";
+    private final static String KEY_CONTAINS_MEDIA = "containsMedia";
 
     //setters and getters for Parse project object
 
@@ -89,6 +90,8 @@ public class Project extends ParseObject implements Parcelable {
     public JSONArray getInvestors(){
         return getJSONArray(KEY_INVESTORS);
     }
+
+    public Boolean containsMedia() { return getBoolean(KEY_CONTAINS_MEDIA); }
 
 
     public static class Query extends ParseQuery<Project> {

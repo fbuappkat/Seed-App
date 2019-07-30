@@ -86,6 +86,14 @@ public class InvestActivity extends AppCompatActivity {
         });
     }
 
+
+    //calculate total funds needed to complete project
+    /*private void calculateTotalFunds() {
+        for (int i = 0; i < requests.size(); i++) {
+            totalFundsNeeded += (requests.get(i).getPrice() - requests.get(i).getReceived());
+        }
+    }*/
+
     private void setBackButton() {
         // Set on-click listener for for image view to launch edit account activity
         ivBack.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +102,24 @@ public class InvestActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+    }
+
+    //get total funds requested from project
+    private float getTotal(ArrayList<Request> reqs) {
+        float tot = 0;
+        for (int i = 0; i < reqs.size(); i++) {
+            tot += reqs.get(i).getPrice();
+        }
+        return tot;
+    }
+
+    //get funds received
+    private float getTotalFunds(ArrayList<Request> reqs) {
+        float tot = 0;
+        for (int i = 0; i < reqs.size(); i++) {
+            tot += reqs.get(i).getReceived();
+        }
+        return tot;
     }
 
 }

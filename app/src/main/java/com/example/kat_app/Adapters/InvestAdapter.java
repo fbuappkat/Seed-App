@@ -96,12 +96,5 @@ public class InvestAdapter extends RecyclerView.Adapter<InvestAdapter.ViewHolder
             });
         }
 
-
-
-
     }
-
-
-
-
 }

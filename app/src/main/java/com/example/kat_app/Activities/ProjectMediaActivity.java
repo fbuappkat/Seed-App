@@ -50,7 +50,6 @@ public class ProjectMediaActivity extends AppCompatActivity {
         media = project.getMedia();
 
         setupAdapter();
-
     }
 
 
@@ -65,7 +64,4 @@ public class ProjectMediaActivity extends AppCompatActivity {
         // set the layout manager on the recycler view
         rvMedia.setLayoutManager(new LinearLayoutManager(ProjectMediaActivity.this));
     }
-
-
-
 }

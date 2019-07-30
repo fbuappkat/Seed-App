@@ -1,9 +1,14 @@
 package com.example.kat_app.Activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kat_app.Adapters.LegendAdapter;
+import com.example.kat_app.Adapters.MediaAdapter;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.Models.Request;
 import com.example.kat_app.R;
@@ -27,6 +34,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.json.JSONArray;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -49,20 +57,24 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     TextView tvInvestors;
     @BindView(R.id.tvNumFollowers)
     TextView tvFollowers;
+    @BindView(R.id.btnMedia)
+    Button btnMedia;
     @BindView(R.id.tvNumFunds)
     TextView tvFunds;
     @BindView(R.id.btnFollow)
     Button btnFollow;
     @BindView(R.id.btnInvest)
     Button btnInvest;
-    @BindView(R.id.btnShowMedia)
-    Button btnShowMedia;
     @BindView(R.id.ivBack)
     ImageView ivBack;
     @BindView(R.id.tvHandleDetails)
     TextView tvHandle;
     @BindView(R.id.tvPercentEquity)
     TextView tvPercentEquity;
+    protected LegendAdapter legendAdapter;
+    private RecyclerView rvLegend;
+    private JSONArray media;
+    private Project project;
 
     private ArrayList<Request> requests;
     private Project proj;
@@ -92,8 +104,21 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         }
         tvPercentEquity.setText(equity);
 
+        if (proj.getFollowers().toString().contains(ParseUser.getCurrentUser().getObjectId())) {
+            btnFollow.setBackgroundColor(Color.GRAY);
+        }
+
         queryUser();
 
+        //rvMedia = findViewById(R.id.rvMedia);
+
+        //Log.d(TAG,"project is:" + Boolean.toString(project.containsMedia()));
+
+        /*if (project.containsMedia()) {
+            media = project.getMedia();
+
+            setupAdapter();
+        }*/
 
         //Follow button
 
@@ -107,6 +132,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!proj.getFollowers().toString().contains(ParseUser.getCurrentUser().getObjectId())) {
+                    btnFollow.setBackgroundColor(Color.GRAY);
                     proj.add("followers", ParseUser.getCurrentUser());
                     tvFollowers.setText(Integer.toString(proj.getFollowers().length()));
                     proj.saveInBackground(new SaveCallback() {
@@ -120,6 +146,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                     Toast.makeText(ProjectDetailsActivity.this, "Project followed!", Toast.LENGTH_SHORT).show();
                     btnFollow.setText("Unfollow");
                 } else {
+                    btnFollow.setBackgroundColor(Color.rgb(249, 138, 97));
                     btnFollow.setText("Follow");
 
                     ArrayList<ParseUser> remove = new ArrayList<>();
@@ -138,17 +165,6 @@ public class ProjectDetailsActivity extends AppCompatActivity {
             }
         });
 
-        //moredetails button
-        btnShowMedia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent moreDetails = new Intent(ProjectDetailsActivity.this, ProjectMediaActivity.class);
-                moreDetails.putExtra("project", Parcels.wrap(proj));
-                startActivity(moreDetails);
-            }
-        });
-
-
         //invest button
         btnInvest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,6 +172,16 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                 Intent invest = new Intent(ProjectDetailsActivity.this, InvestActivity.class);
                 invest.putExtra("project", Parcels.wrap(proj));
                 startActivity(invest);
+            }
+        });
+
+        //invest button
+        btnMedia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent media = new Intent(ProjectDetailsActivity.this, ProjectMediaActivity.class);
+                media.putExtra("project", Parcels.wrap(proj));
+                startActivity(media);
             }
         });
 
@@ -281,5 +307,18 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         }
         return tot;
     }
+
+   /* public void setupAdapter() {
+        // create the adapter
+        legendAdapter = new LegendAdapter(ProjectDetailsActivity.this, requests);
+        // add line between items
+        rvLegend.addItemDecoration(new DividerItemDecoration(ProjectDetailsActivity.this,
+                DividerItemDecoration.VERTICAL));
+        // set the adapter on the recycler view
+        rvLegend.setAdapter(legendAdapter);
+        // set the layout manager on the recycler view
+        rvLegend.setLayoutManager(new LinearLayoutManager(ProjectDetailsActivity.this));
+    }*/
+
 
 }

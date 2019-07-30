@@ -101,9 +101,9 @@
                 android:id="@+id/view"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="8dp"
                 android:background="#c0c0c0"
-                app:layout_constraintTop_toBottomOf="@id/tvHandleDetails"
+                app:layout_constraintTop_toBottomOf="@+id/btnFollow"
                 tools:layout_editor_absoluteX="0dp" />
 
 
@@ -173,43 +173,31 @@
 
             <Button
                 android:id="@+id/btnFollow"
-                android:layout_width="144dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="36dp"
-                android:background="@color/kat_orange_1"
-                android:text="Follow"
-                android:textColor="@color/kat_white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnShowMedia" />
-
-            <Button
-                android:id="@+id/btnInvest"
-                android:layout_width="144dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="40dp"
-                android:background="@color/kat_orange_1"
-                android:text="Invest"
-                android:textColor="@color/kat_white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnFollow"
-                app:layout_constraintTop_toBottomOf="@+id/btnShowMedia"
-                app:layout_constraintVertical_bias="1.0" />
-
-            <Button
-                android:id="@+id/btnShowMedia"
-                android:layout_width="289dp"
-                android:layout_height="29dp"
+                android:layout_width="0dp"
+                android:layout_height="23dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:background="@color/kat_orange_1"
-                android:text="  Show Media  "
+                android:text="Follow"
                 android:textColor="@color/kat_white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pcBreakdown" />
+                app:layout_constraintTop_toBottomOf="@+id/btnInvest" />
+
+            <Button
+                android:id="@+id/btnInvest"
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/kat_orange_1"
+                android:text="Invest"
+                android:textColor="@color/kat_white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvFunds" />
 
             <TextView
                 android:id="@+id/tvNumInvestors"
@@ -271,6 +259,30 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/tvNumFunds"
                 app:layout_constraintTop_toTopOf="@+id/tvNumFunds" />
+
+            <Button
+                android:id="@+id/btnMedia"
+                android:layout_width="89dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="8dp"
+                android:background="@android:color/transparent"
+                android:text="Show Media"
+                android:textColor="@color/kat_orange_1"
+                app:layout_constraintStart_toEndOf="@+id/tvHandleDetails"
+                app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvLegend"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pcBreakdown" />
+
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
+
 </android.support.constraint.ConstraintLayout>

@@ -12,8 +12,7 @@ public class Request extends ParseObject implements Parcelable {
     private final static String KEY_REQUEST = "request";
     private final static String KEY_PRICE = "price";
     private final static String KEY_PROJECT = "project";
-    private final static String KEY_RECEIVED = "received"
-    ;
+    private final static String KEY_RECEIVED = "received";
 
 
     //setters and getters for Parse project object
