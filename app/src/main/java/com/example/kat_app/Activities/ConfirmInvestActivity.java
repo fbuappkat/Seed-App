@@ -14,8 +14,10 @@ import com.example.kat_app.Models.Balance;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.Models.Request;
 import com.example.kat_app.Models.Transaction;
+import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
+import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -57,6 +59,8 @@ public class ConfirmInvestActivity extends AppCompatActivity {
     private Balance investorBalance;
 
     private float toInvest;
+
+    String TAG = "Confirm Invest";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,6 +158,31 @@ public class ConfirmInvestActivity extends AppCompatActivity {
                     e.printStackTrace();
                     Log.e("TransactionCreate", "Failed creating Transaction");
                 }
+            }
+        });
+        String update = sender.getString("name") + " invested $" + amount + "0 for '" + request.getRequest() + "'";
+        postUpdate(update, sender, project);
+    }
+
+    private void postUpdate(String update, ParseUser currentUser, Project project) {
+
+        Update newUpdate = new Update();
+        ParseUser curUser = ParseUser.getCurrentUser();
+        currentUser.setACL(new ParseACL(curUser));
+        currentUser.saveInBackground();
+        newUpdate.setCaption(update);
+        newUpdate.setUser(currentUser);
+        newUpdate.put("type", "Investment");
+        newUpdate.put("project", project);
+        newUpdate.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.d(TAG, "Error while saving");
+                    e.printStackTrace();
+                    return;
+                }
+                Log.d(TAG, "Success!");
             }
         });
     }

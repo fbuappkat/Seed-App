@@ -25,10 +25,10 @@ import com.parse.ParseUser;
 import java.util.List;
 import java.util.Locale;
 
-import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
-
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
+import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
 public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHolder> {
     private static Context context;
@@ -159,6 +159,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
         }
         notifyDataSetChanged();
     }
+
 
     // Clean all elements of the recycler
     public void clear() {

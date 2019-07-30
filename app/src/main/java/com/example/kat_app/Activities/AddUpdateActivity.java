@@ -1,10 +1,16 @@
 package com.example.kat_app.Activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +34,7 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,6 +85,8 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
 
         LoadingBar = new ProgressDialog(this);
 
+        images = new ArrayList<>();
+
         setBackButton();
         setAddUpdateButton();
         setSpinner();
@@ -89,10 +98,35 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnAddPhots:
-                Intent intent = new Intent(AddUpdateActivity.this,CustomPhotoGalleryActivity.class);
-                startActivityForResult(intent,PICK_IMAGE_MULTIPLE);
-                break;
+                selectImage(this);
         }
+    }
+
+    private void selectImage(Context context) {
+        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Choose your images");
+
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+
+                if (options[item].equals("Take Photo")) {
+                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(takePicture, 0);
+
+                } else if (options[item].equals("Choose from Gallery")) {
+                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(pickPhoto , 1);
+
+                } else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
     }
 
     private void setAddUpdateButton() {
@@ -148,29 +182,41 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            if(requestCode == PICK_IMAGE_MULTIPLE){
-                imagesPathList = new ArrayList<String>();
-                String[] imagesPath = data.getStringExtra("data").split("\\|");
-                try{
-                    lnrImages.removeAllViews();
-                }catch (Throwable e){
-                    e.printStackTrace();
-                }
-                images = new ArrayList<>();
-                for (int i=0;i<imagesPath.length;i++){
-                    imagesPathList.add(imagesPath[i]);
-                    yourbitmap = BitmapFactory.decodeFile(imagesPath[i]);
-                    ParseFile convertedImage = conversionBitmapParseFile(yourbitmap);
-                    images.add(convertedImage);
-                    ImageView imageView = new ImageView(this);
-                    imageView.setImageBitmap(yourbitmap);
-                    imageView.setAdjustViewBounds(true);
-                    lnrImages.addView(imageView);
-                }
+        if(resultCode != RESULT_CANCELED) {
+            switch (requestCode) {
+                case 0:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
+                        ParseFile convertedImage = conversionBitmapParseFile(selectedImage);
+                        images.add(convertedImage);
+                        ImageView imageView = new ImageView(this);
+                        imageView.setImageBitmap(selectedImage);
+                        imageView.setAdjustViewBounds(true);
+                        lnrImages.addView(imageView);
+                    }
+
+                    break;
+                case 1:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Uri selectedImage = data.getData();
+                        Bitmap bitmap = null;
+                        try {
+                            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        if (bitmap != null) {
+                            ParseFile convertedImage = conversionBitmapParseFile(bitmap);
+                            images.add(convertedImage);
+                            ImageView imageView = new ImageView(this);
+                            imageView.setImageBitmap(bitmap);
+                            imageView.setAdjustViewBounds(true);
+                            lnrImages.addView(imageView);
+                        }
+                    }
+                    break;
             }
         }
-
     }
 
 
@@ -179,6 +225,7 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
         Update newUpdate = new Update();
         newUpdate.setCaption(update);
         newUpdate.setUser(currentUser);
+        newUpdate.put("type", "Update");
         newUpdate.put("project", project);
         newUpdate.saveInBackground(new SaveCallback() {
             @Override
@@ -197,7 +244,20 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
         if (images != null || images.size() !=0) {
             for(ParseFile image : images) {
                 project.setMedia(image);
+                newUpdate.setMedia(image);
             }
+
+            newUpdate.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        Log.d(TAG, "Error while saving");
+                        e.printStackTrace();
+                        return;
+                    }
+                    Log.d(TAG, "Success adding media!");
+                }
+            });
 
             project.saveInBackground(new SaveCallback() {
                 @Override
