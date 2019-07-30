@@ -354,7 +354,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
         } else {
-            Toast.makeText(this, "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT);
         }
         com.example.kat_app.Models.MapDemoActivityPermissionsDispatcher.startLocationUpdatesWithPermissionCheck(this);
     }
@@ -394,7 +394,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
         String msg = "Updated Location: " +
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude());
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     public void onSaveInstanceState(Bundle savedInstanceState) {
