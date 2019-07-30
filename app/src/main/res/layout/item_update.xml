@@ -36,6 +36,7 @@
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/montserrat_regular"
         android:text="Caption"
+        android:textColor="@color/kat_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,49 +62,52 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_semibold"
         android:text="NumLikes"
+        android:textColor="@color/kat_black"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/btnLike"
         app:layout_constraintStart_toEndOf="@+id/btnLike"
-        app:layout_constraintTop_toBottomOf="@+id/tvCaption" />
+        app:layout_constraintTop_toTopOf="@+id/btnLike" />
 
     <ImageButton
         android:id="@+id/btnLike"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="8dp"
         android:background="@android:color/transparent"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvCaption"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ufi_heart" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
         android:id="@+id/btnGoToComments"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="19dp"
+        android:layout_height="19dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         android:background="@android:color/transparent"
+        android:scaleType="fitXY"
         app:layout_constraintStart_toEndOf="@+id/tvNumLikes"
         app:layout_constraintTop_toBottomOf="@+id/tvCaption"
-        app:srcCompat="@drawable/ufi_comment" />
+        app:srcCompat="@drawable/ic_comment" />
 
     <TextView
         android:id="@+id/tvNumComments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_semibold"
         android:text="NumComments"
+        android:textColor="@color/kat_black"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/btnGoToComments"
         app:layout_constraintStart_toEndOf="@+id/btnGoToComments"
-        app:layout_constraintTop_toBottomOf="@+id/tvCaption" />
+        app:layout_constraintTop_toTopOf="@+id/btnGoToComments" />
 
     <TextView
         android:id="@+id/tvProject"
@@ -134,15 +138,17 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="10dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:fontFamily="@font/montserrat_light"
         android:gravity="start|top"
         android:hint="Add comment here..."
         android:inputType="textMultiLine"
+        android:textColor="@color/kat_black"
+        android:textColorHint="@color/kat_grey_2"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnPostComment"
@@ -154,21 +160,21 @@
         android:layout_width="51dp"
         android:layout_height="33dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="8dp"
         android:background="@android:color/transparent"
         android:fontFamily="@font/montserrat_semibold"
         android:text="Post"
         android:textColor="@color/kat_orange_1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/etAddComment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etAddComment" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvPhotos"
         android:layout_width="0dp"
         android:layout_height="200dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="16dp"
+        android:background="@drawable/gradient"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvProject" />
