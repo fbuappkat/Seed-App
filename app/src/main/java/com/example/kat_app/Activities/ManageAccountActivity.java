@@ -70,7 +70,7 @@ public class ManageAccountActivity extends AppCompatActivity {
                         ParseUser.logOut();
                         final Intent intent = new Intent(ManageAccountActivity.this, LoginActivity.class);
                         startActivity(intent);
-                        finish();
+                        //finish();
                         dialog.dismiss();
 
                     }

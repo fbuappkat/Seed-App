@@ -22,6 +22,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.azoft.carousellayoutmanager.CarouselLayoutManager;
+import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
+import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Activities.OtherUserProfileActivity;
@@ -244,9 +247,9 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                 tvNumLikes.setText("0");
             }
             if (update.isLiked()) {
-                btnLike.setImageResource(R.drawable.ufi_heart_active);
+                btnLike.setImageResource(R.drawable.ic_heart_filled);
             } else {
-                btnLike.setImageResource(R.drawable.ufi_heart);
+                btnLike.setImageResource(R.drawable.ic_heart_stroke);
             }
 
             btnGoToComments.setOnClickListener(new View.OnClickListener() {
@@ -272,7 +275,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                 @Override
                 public void onClick(View view) {
                     if (!update.isLiked()) {
-                        btnLike.setImageResource(R.drawable.ufi_heart_active);
+                        btnLike.setImageResource(R.drawable.ic_heart_filled);
                         int position = getAdapterPosition();
                         Update update = updates.get(position);
                         int curLikes = update.getNumLikes();
@@ -290,7 +293,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                         });
                         notifyDataSetChanged();
                     } else {
-                        btnLike.setImageResource(R.drawable.ufi_heart);
+                        btnLike.setImageResource(R.drawable.ic_heart_stroke);
                         int position = getAdapterPosition();
                         Update update = updates.get(position);
                         int curLikes = update.getNumLikes();
@@ -376,8 +379,11 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
         // set the adapter on the recycler view
         rvPhotos.setAdapter(mediaAdapter);
         // set the layout manager on the recycler view
-        LinearLayoutManager layoutManager
-                = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        final CarouselLayoutManager layoutManager = new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL);
+        layoutManager.setPostLayoutListener(new CarouselZoomPostLayoutListener());
         rvPhotos.setLayoutManager(layoutManager);
+        rvPhotos.setHasFixedSize(true);
+        rvPhotos.addOnScrollListener(new CenterScrollListener());
+
     }
 }
