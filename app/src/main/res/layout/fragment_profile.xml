@@ -160,7 +160,6 @@
         android:textColor="#000000"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/tvInvestments"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/tvInvestments"
         app:layout_constraintTop_toTopOf="@+id/line" />
 

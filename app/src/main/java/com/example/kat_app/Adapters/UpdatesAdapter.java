@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -23,6 +25,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Activities.OtherUserProfileActivity;
+import com.example.kat_app.Activities.ProjectMediaActivity;
 import com.example.kat_app.Activities.UpdateDetailsActivity;
 import com.example.kat_app.Fragments.FeedFragment;
 import com.example.kat_app.Fragments.ProfileFragment;
@@ -59,6 +62,9 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
     private static final String KEY_PROFILE_IMAGE = "profile_image";
     private boolean userInFollowList;
     private final static String KEY_FOLLOWERS = "followers";
+
+    protected MediaAdapter mediaAdapter;
+    private JSONArray media;
 
     public UpdatesAdapter(Context context, List<Update> updates) {
         this.context = context;
@@ -120,6 +126,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        protected MediaAdapter mediaAdapter;
         private TextView tvUser;
         private TextView tvUser2;
         private TextView tvCaption;
@@ -132,6 +139,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
         private EditText etComment;
         private Button btnAddComment;
         private ImageButton btnGoToComments;
+        private RecyclerView rvPhotos;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -146,6 +154,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
             etComment = itemView.findViewById(R.id.etAddComment);
             btnAddComment = itemView.findViewById(R.id.btnPostComment);
             btnGoToComments = itemView.findViewById(R.id.btnGoToComments);
+            rvPhotos = itemView.findViewById(R.id.rvPhotos);
             //add itemView's OnClickListener
             itemView.setOnClickListener(this);
         }
@@ -182,6 +191,14 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
             tvNumLikes.setText(Integer.toString(update.getNumLikes()));
             tvNumComments.setText(Integer.toString(update.getNumComments()));
             tvProject.setText(name);
+
+            if (update.getMedia() == null || update.getMedia().length() == 0) {
+                rvPhotos.setVisibility(View.GONE);
+            } else {
+                rvPhotos.setVisibility(View.VISIBLE);
+                media = update.getMedia();
+                setupAdapter(rvPhotos, media);
+            }
 
             ParseFile profileImage = null;
             try {
@@ -350,6 +367,20 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return relativeDate;
+        return relativeDate.toUpperCase();
+    }
+
+    public void setupAdapter(RecyclerView rvPhotos, JSONArray media) {
+        // create the adapter
+        mediaAdapter = new MediaAdapter(context, media);
+        // add line between items
+        rvPhotos.addItemDecoration(new DividerItemDecoration(context,
+                DividerItemDecoration.VERTICAL));
+        // set the adapter on the recycler view
+        rvPhotos.setAdapter(mediaAdapter);
+        // set the layout manager on the recycler view
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        rvPhotos.setLayoutManager(layoutManager);
     }
 }

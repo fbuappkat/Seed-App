@@ -3,6 +3,7 @@ package com.example.kat_app.Models;
 import android.util.Log;
 
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -23,6 +24,7 @@ public class Update extends ParseObject {
     public static final String KEY_COMMENTS = "comments";
     public static final String KEY_PROJECT = "project";
     public static final String KEY_PROJECT_POINTER = "projectPointer";
+    private final static String KEY_MEDIA = "media";
 
     public JSONArray userLikes() {
         return getJSONArray(KEY_NUM_LIKED_BY);
@@ -45,6 +47,14 @@ public class Update extends ParseObject {
     public ParseObject getProjectPointer() { return getParseObject(KEY_PROJECT_POINTER); }
 
     public void setProjectPointer(String pointer) { put(KEY_PROJECT_POINTER, pointer); }
+
+    public JSONArray getMedia() {
+        return getJSONArray("media");
+    }
+
+    public void setMedia(ParseFile file) {
+        add(KEY_MEDIA, file);
+    }
 
     public void unlikePost(ParseUser currentUser) {
         ArrayList<ParseUser> users = new ArrayList<>();

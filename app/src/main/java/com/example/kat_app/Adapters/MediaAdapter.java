@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.R;
 
 import org.json.JSONArray;
@@ -68,8 +70,8 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
         public void bind(final String url) {
             Glide.with(context)
                     .load(url)
+                    .apply(RequestOptions.bitmapTransform(new CenterCrop()))
                     .into(ivMedia);
-
         }
 
     }
