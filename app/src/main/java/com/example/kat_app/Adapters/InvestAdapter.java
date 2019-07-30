@@ -14,21 +14,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kat_app.Activities.ConfirmInvestActivity;
+import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
 import com.example.kat_app.Models.Request;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InvestAdapter extends RecyclerView.Adapter<InvestAdapter.ViewHolder> {
     private static Context context;
     private List<Request> requests;
+    private static Project project;
+    private static float projTotal;
 
 
-    public InvestAdapter(Context context, List<Request> requests) {
+    public InvestAdapter(Context context, List<Request> requests, Project project) {
         this.context = context;
         this.requests = requests;
+        this.project = project;
+        projTotal = getTotal(requests);
     }
 
     @NonNull
@@ -87,7 +93,10 @@ public class InvestAdapter extends RecyclerView.Adapter<InvestAdapter.ViewHolder
                     if (!toInvest.isEmpty()) {
                         Intent confirm = new Intent(context, ConfirmInvestActivity.class);
                         confirm.putExtra("request", Parcels.wrap(request));
-                        confirm.putExtra("toInvest", Float.parseFloat(etInvest.getText().toString()));
+                        float investment = Float.parseFloat(etInvest.getText().toString());
+                        confirm.putExtra("toInvest", investment);
+                        confirm.putExtra("project", project);
+                        confirm.putExtra("total", projTotal);
                         context.startActivity(confirm);
                     } else {
                         Toast.makeText(context, "Please enter an amount to invest", Toast.LENGTH_SHORT).show();
@@ -96,5 +105,14 @@ public class InvestAdapter extends RecyclerView.Adapter<InvestAdapter.ViewHolder
             });
         }
 
+    }
+
+    //get total funds requested from project
+    private float getTotal(List<Request> reqs) {
+        float tot = 0;
+        for (int i = 0; i < reqs.size(); i++) {
+            tot += reqs.get(i).getPrice();
+        }
+        return tot;
     }
 }

@@ -49,7 +49,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-185dp">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -154,7 +156,7 @@
                 android:layout_width="293dp"
                 android:layout_height="269dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -196,8 +198,9 @@
                 android:text="Invest"
                 android:textColor="@color/kat_white"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvFunds" />
+                app:layout_constraintTop_toBottomOf="@+id/ivDetailsComment" />
 
             <TextView
                 android:id="@+id/tvNumInvestors"
@@ -281,6 +284,45 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/pcBreakdown" />
+
+            <ImageButton
+                android:id="@+id/ivDetailsComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvInvestors"
+                app:srcCompat="@drawable/ufi_comment" />
+
+            <TextView
+                android:id="@+id/tvDetailsComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="TextView"
+                app:layout_constraintStart_toEndOf="@+id/ivDetailsComment"
+                app:layout_constraintTop_toBottomOf="@+id/tvInvestors" />
+
+            <ImageButton
+                android:id="@+id/ivDetailsLikes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@+id/tvDetailsComment"
+                app:layout_constraintTop_toTopOf="@+id/tvDetailsComment"
+                app:srcCompat="@drawable/ufi_heart" />
+
+            <TextView
+                android:id="@+id/tvDetailsLikes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="TextView"
+                app:layout_constraintStart_toEndOf="@+id/ivDetailsLikes"
+                app:layout_constraintTop_toTopOf="@+id/ivDetailsLikes" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

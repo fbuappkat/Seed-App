@@ -96,7 +96,6 @@ public class ConfirmInvestActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     //invest funds
@@ -252,4 +251,11 @@ public class ConfirmInvestActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    /*private float calculateEquity(float investment) {
+        float totalEquity = project.getEquity();
+        float totalMoney = getTotal(requests);
+        return totalEquity / totalMoney * investment;
+    }*/
 }
