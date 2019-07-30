@@ -145,11 +145,11 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             }
         });
 
-        queryProjects();
+        queryProjectsMarkers();
 
     }
 
-    protected void queryProjects() {
+    protected void queryProjectsMarkers() {
         ParseQuery<Project> projectQuery = new ParseQuery<Project>(Project.class);
         projectQuery.addDescendingOrder("createdAt");
         projectQuery.findInBackground(new FindCallback<Project>() {

@@ -225,6 +225,7 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
         Update newUpdate = new Update();
         newUpdate.setCaption(update);
         newUpdate.setUser(currentUser);
+        newUpdate.put("type", "Update");
         newUpdate.put("project", project);
         newUpdate.saveInBackground(new SaveCallback() {
             @Override

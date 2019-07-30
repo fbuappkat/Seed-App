@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.Models.Request;
+import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
 import com.parse.ParseACL;
 import com.parse.ParseException;
@@ -67,7 +68,8 @@ public class CreateProjectActivity extends AppCompatActivity {
     ArrayList<Float> prices;
     ArrayList<String> requestWithPrice;
     ArrayAdapter<String> requestsAdapter;
-
+    String TAG = "Creation update";
+    ArrayList<ParseFile> images = new ArrayList<>();
 
     ParseFile photoFile;
 
@@ -253,6 +255,8 @@ public class CreateProjectActivity extends AppCompatActivity {
         // Check if user uploaded a thumbnail photo
         if (thumbnail != null) {
             newProject.put(KEY_THUMBNAIL_IMAGE, thumbnail);
+            images = new ArrayList<>();
+            images.add(thumbnail);
         }
         newProject.saveInBackground(new SaveCallback() {
             @Override
@@ -268,7 +272,64 @@ public class CreateProjectActivity extends AppCompatActivity {
             }
         });
 
+        String update = user.getString("name") + " created a new project!";
+        postUpdate(update, user, newProject, images);
+
         return newProject;
+    }
+
+    private void postUpdate(String update, ParseUser currentUser, Project project, ArrayList<ParseFile> images) {
+
+        Update newUpdate = new Update();
+        ParseUser curUser = ParseUser.getCurrentUser();
+        currentUser.setACL(new ParseACL(curUser));
+        currentUser.saveInBackground();
+        newUpdate.setCaption(update);
+        newUpdate.setUser(currentUser);
+        newUpdate.put("type", "New Project");
+        newUpdate.put("project", project);
+        newUpdate.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.d(TAG, "Error while saving");
+                    e.printStackTrace();
+                    return;
+                }
+                Log.d(TAG, "Success!");
+            }
+        });
+
+        if (images != null || images.size() !=0) {
+            for(ParseFile image : images) {
+                project.setMedia(image);
+                newUpdate.setMedia(image);
+            }
+
+            newUpdate.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        Log.d(TAG, "Error while saving");
+                        e.printStackTrace();
+                        return;
+                    }
+                    Log.d(TAG, "Success adding media!");
+                }
+            });
+
+            project.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        Log.d(TAG, "Error while saving");
+                        e.printStackTrace();
+                        return;
+                    }
+                    Log.d(TAG, "Success adding media!");
+                }
+            });
+        }
     }
 
     public static String randomAlphaNumeric(int count) {
