@@ -59,11 +59,11 @@
 
     <TextView
         android:id="@+id/tvNumLikes"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:fontFamily="@font/montserrat_semibold"
-        android:text="NumLikes"
+        android:text="500"
         android:textColor="@color/kat_black"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/btnLike"
@@ -72,8 +72,8 @@
 
     <ImageButton
         android:id="@+id/btnLike"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="8dp"
@@ -86,8 +86,8 @@
 
     <ImageButton
         android:id="@+id/btnGoToComments"
-        android:layout_width="19dp"
-        android:layout_height="19dp"
+        android:layout_width="23dp"
+        android:layout_height="23dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="10dp"
         android:background="@android:color/transparent"
@@ -98,11 +98,11 @@
 
     <TextView
         android:id="@+id/tvNumComments"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:fontFamily="@font/montserrat_semibold"
-        android:text="NumComments"
+        android:text="300"
         android:textColor="@color/kat_black"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/btnGoToComments"
@@ -172,7 +172,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvPhotos"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/gradient"
         app:layout_constraintEnd_toEndOf="parent"
