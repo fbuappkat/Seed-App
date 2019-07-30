@@ -42,8 +42,8 @@ public class Project extends ParseObject implements Parcelable {
         put(KEY_DESCRIPTION, description);
     }
 
-    public String getEquity(){
-        return getString(KEY_EQUITY);
+    public Integer getEquity(){
+        return getInt(KEY_EQUITY);
     }
 
     public void setEquity(Integer equity){

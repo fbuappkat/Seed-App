@@ -67,7 +67,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     private ArrayList<Request> requests;
     private Project proj;
     FragmentManager fragmentManager;
-
+    public static final String TAG = "ProjectDetailsActivity";
 
 
     @Override
@@ -88,7 +88,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         tvFollowers.setText(Integer.toString(proj.getFollowers().length()));
         String equity = "0.00";
         if (proj.getEquity() != null) {
-            equity = Integer.toString(proj.getEquity().length());
+            equity = Integer.toString(proj.getEquity()) + ".00%";
         }
         tvPercentEquity.setText(equity);
 
