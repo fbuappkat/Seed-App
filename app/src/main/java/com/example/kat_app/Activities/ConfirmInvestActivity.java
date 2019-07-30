@@ -161,7 +161,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
                 }
             }
         });
-        String update = sender.getString("name") + " invested $" + amount + " for '" + request.getRequest() + "'";
+        String update = sender.getString("name") + " invested $" + amount + "0 for '" + request.getRequest() + "'";
         postUpdate(update, sender, project);
     }
 
