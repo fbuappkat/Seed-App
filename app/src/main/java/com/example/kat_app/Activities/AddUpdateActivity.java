@@ -197,7 +197,20 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
         if (images != null || images.size() !=0) {
             for(ParseFile image : images) {
                 project.setMedia(image);
+                newUpdate.setMedia(image);
             }
+
+            newUpdate.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        Log.d(TAG, "Error while saving");
+                        e.printStackTrace();
+                        return;
+                    }
+                    Log.d(TAG, "Success adding media!");
+                }
+            });
 
             project.saveInBackground(new SaveCallback() {
                 @Override

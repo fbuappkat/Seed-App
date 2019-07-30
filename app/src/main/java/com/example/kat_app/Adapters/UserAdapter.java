@@ -151,14 +151,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         public void bind(final ParseUser user, final List<ParseUser> userList, final int position) {
             tvName.setText(user.get("name").toString());
             tvUsername.setText("@" + user.getUsername());
-            queryInvested(user);
-            queryProjects(user);
-           tvName.setText(user.get("name").toString());
-           tvUsername.setText("@" + user.getUsername());
-           if (request != 1) {
-               queryInvested(user);
-               queryProjects(user);
-           }
+            if (request != 1) {
+                queryInvested(user);
+                queryProjects(user);
+            }
             ParseFile profileImage = user.getParseFile("profile_image");
             if (profileImage != null) {
                 Glide.with(context)
