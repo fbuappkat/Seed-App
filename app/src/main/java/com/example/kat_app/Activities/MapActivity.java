@@ -139,17 +139,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             }
         });
 
-//        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-//            @Override
-//            public boolean onMarkerClick(Marker marker) {
-//                int position = (int)(marker.getTag());
-//                Intent projectDetails = new Intent(MapActivity.this, ProjectDetailsActivity.class);
-//                projectDetails.putExtra("project", Parcels.wrap(projects.get(position)));
-//                startActivity(projectDetails);
-//                return false;
-//            }
-//        });
-
         queryProjects();
 
     }
@@ -167,11 +156,14 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                 }
                 for(int i = 0; i < posts.size(); i++){
                     if (posts.get(i).getParseGeoPoint("location") != null){
+
+                        //get location from parse and turn into LatLng type
                         ParseGeoPoint loc = posts.get(i).getParseGeoPoint("location");
                         double lat = loc.getLatitude();
                         double lng = loc.getLongitude();
                         LatLng projLoc = new LatLng(lat,lng);
 
+                        //create marker and set position to access specific project
                         Marker marker = map.addMarker(new MarkerOptions().position(projLoc)
                                 .snippet(posts.get(i).getDescription())
                                 .title(posts.get(i).getName()));
