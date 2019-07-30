@@ -19,7 +19,6 @@ import com.example.kat_app.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> {
@@ -65,7 +64,7 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
         public ViewHolder(View itemView) {
             super(itemView);
             view = itemView;
-            ivMedia = itemView.findViewById(R.id.rvMedia);
+            ivMedia = itemView.findViewById(R.id.ivMedia);
 
 
         }
