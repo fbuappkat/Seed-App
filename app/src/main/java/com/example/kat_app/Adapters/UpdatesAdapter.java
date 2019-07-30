@@ -1,14 +1,10 @@
 package com.example.kat_app.Adapters;
 
-import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
@@ -25,9 +21,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Activities.OtherUserProfileActivity;
-import com.example.kat_app.Activities.ProjectMediaActivity;
 import com.example.kat_app.Activities.UpdateDetailsActivity;
-import com.example.kat_app.Fragments.FeedFragment;
 import com.example.kat_app.Fragments.ProfileFragment;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.Models.Update;
@@ -140,6 +134,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
         private Button btnAddComment;
         private ImageButton btnGoToComments;
         private RecyclerView rvPhotos;
+        private TextView tvType;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -155,6 +150,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
             btnAddComment = itemView.findViewById(R.id.btnPostComment);
             btnGoToComments = itemView.findViewById(R.id.btnGoToComments);
             rvPhotos = itemView.findViewById(R.id.rvPhotos);
+            tvType = itemView.findViewById(R.id.tvType);
             //add itemView's OnClickListener
             itemView.setOnClickListener(this);
         }
@@ -190,7 +186,9 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
             tvRelativeTime.setText(getRelativeTimeAgo(String.valueOf(update.getCreatedAt())));
             tvNumLikes.setText(Integer.toString(update.getNumLikes()));
             tvNumComments.setText(Integer.toString(update.getNumComments()));
+            tvType.setText(update.getString("type"));
             tvProject.setText(name);
+
 
             if (update.getMedia() == null || update.getMedia().length() == 0) {
                 rvPhotos.setVisibility(View.GONE);
