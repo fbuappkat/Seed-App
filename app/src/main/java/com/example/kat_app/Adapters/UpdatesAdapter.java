@@ -373,9 +373,6 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
     public void setupAdapter(RecyclerView rvPhotos, JSONArray media) {
         // create the adapter
         mediaAdapter = new MediaAdapter(context, media);
-        // add line between items
-        rvPhotos.addItemDecoration(new DividerItemDecoration(context,
-                DividerItemDecoration.VERTICAL));
         // set the adapter on the recycler view
         rvPhotos.setAdapter(mediaAdapter);
         // set the layout manager on the recycler view
