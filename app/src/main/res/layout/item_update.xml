@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="10dp">
 
     <ImageView
         android:id="@+id/ivProfileImageUpdate"
@@ -76,13 +77,10 @@
         android:layout_height="24dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="8dp"
         android:background="@android:color/transparent"
         android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCaption"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCaption" />
 
     <ImageButton
         android:id="@+id/btnGoToComments"
@@ -125,7 +123,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/montserrat_semibold"
         android:text="Project:"
         android:textColor="@color/kat_black"
@@ -150,6 +148,7 @@
         android:textColor="@color/kat_black"
         android:textColorHint="@color/kat_grey_2"
         android:textSize="14sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnPostComment"
         app:layout_constraintStart_toStartOf="parent"
@@ -165,6 +164,7 @@
         android:fontFamily="@font/montserrat_semibold"
         android:text="Post"
         android:textColor="@color/kat_orange_1"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/etAddComment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/etAddComment" />
@@ -177,19 +177,18 @@
         android:background="@drawable/gradient"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvProject" />
+        app:layout_constraintTop_toBottomOf="@+id/tvType" />
 
     <TextView
         android:id="@+id/tvType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
+        android:fontFamily="@font/montserrat_semibolditalic"
         android:text="Type"
-        android:textColor="@color/kat_orange_3"
-        android:textSize="18sp"
+        android:textColor="@color/kat_orange_1"
+        android:textSize="14sp"
         android:textStyle="bold|italic"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivProfileImageUpdate" />
+        app:layout_constraintStart_toStartOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
 </android.support.constraint.ConstraintLayout>

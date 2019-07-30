@@ -24,7 +24,9 @@ public class Update extends ParseObject {
     public static final String KEY_COMMENTS = "comments";
     public static final String KEY_PROJECT = "project";
     public static final String KEY_PROJECT_POINTER = "projectPointer";
-    private final static String KEY_MEDIA = "media";
+    public final static String KEY_MEDIA = "media";
+    public final static String KEY_TYPE = "type";
+
 
     public JSONArray userLikes() {
         return getJSONArray(KEY_NUM_LIKED_BY);
@@ -54,6 +56,10 @@ public class Update extends ParseObject {
 
     public void setMedia(ParseFile file) {
         add(KEY_MEDIA, file);
+    }
+
+    public String getType() {
+        return getString(KEY_TYPE);
     }
 
     public void unlikePost(ParseUser currentUser) {
