@@ -198,11 +198,11 @@ public class ProfileFragment extends Fragment {
             @Override
             public void done(List<Project> posts, ParseException e) {
                 if (e != null) {
-                    Log.e(TAG,"Error with query");
+                    Log.e(TAG, "Error with query");
                     e.printStackTrace();
                     return;
                 }
-               tvProjectsCount.setText(Integer.toString(posts.size()));
+                tvProjectsCount.setText(Integer.toString(posts.size()));
             }
         });
     }
@@ -213,13 +213,13 @@ public class ProfileFragment extends Fragment {
             @Override
             public void done(List<Project> posts, ParseException e) {
                 if (e != null) {
-                    Log.e(TAG,"Error with query");
+                    Log.e(TAG, "Error with query");
                     e.printStackTrace();
                     return;
                 }
                 int count = 0;
-                for (Project project : posts){
-                    if(project.getInvestors().toString().contains(ParseUser.getCurrentUser().getObjectId())){
+                for (Project project : posts) {
+                    if (project.getInvestors().toString().contains(ParseUser.getCurrentUser().getObjectId())) {
                         count++;
                     }
                 }

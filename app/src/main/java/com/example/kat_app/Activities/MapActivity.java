@@ -4,8 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
@@ -49,6 +48,9 @@ import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 
+import org.parceler.Parcels;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import permissions.dispatcher.NeedsPermission;
@@ -66,6 +68,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     Location mCurrentLocation;
     private long UPDATE_INTERVAL = 60000;  /* 60 secs */
     private long FASTEST_INTERVAL = 5000; /* 5 secs */
+    private ArrayList<Project> projects = new ArrayList<>();
 
     private final static String KEY_LOCATION = "location";
 
@@ -114,7 +117,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     @Override
     public void onMapLongClick(LatLng point) {
         Toast.makeText(getApplicationContext(), "Long Press", Toast.LENGTH_LONG).show();
-        // Custom code here...
         // Display the alert dialog
         showAlertDialogForPoint(point);
     }
@@ -126,12 +128,29 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             map.setOnMapLongClickListener(this);
             // ...
         }
+
+        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                int position = (int)(marker.getTag());
+                Intent projectDetails = new Intent(MapActivity.this, ProjectDetailsActivity.class);
+                projectDetails.putExtra("project", Parcels.wrap(projects.get(position)));
+                startActivity(projectDetails);
+            }
+        });
+
+//        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+//            @Override
+//            public boolean onMarkerClick(Marker marker) {
+//                int position = (int)(marker.getTag());
+//                Intent projectDetails = new Intent(MapActivity.this, ProjectDetailsActivity.class);
+//                projectDetails.putExtra("project", Parcels.wrap(projects.get(position)));
+//                startActivity(projectDetails);
+//                return false;
+//            }
+//        });
+
         queryProjects();
-
-
-//        LatLng sydney = new LatLng(-34, 151);
-//        map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//        map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
     }
 
@@ -152,9 +171,14 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                         double lat = loc.getLatitude();
                         double lng = loc.getLongitude();
                         LatLng projLoc = new LatLng(lat,lng);
-                        map.addMarker(new MarkerOptions().position(projLoc)
+
+                        Marker marker = map.addMarker(new MarkerOptions().position(projLoc)
                                 .snippet(posts.get(i).getDescription())
                                 .title(posts.get(i).getName()));
+                        marker.setTag(i);
+
+                        projects.add(posts.get(i));
+
                     }
                 }
             }
@@ -329,7 +353,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             Toast.makeText(this, "GPS location was found!", Toast.LENGTH_SHORT).show();
             LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
-            map.animateCamera(cameraUpdate);
         } else {
             Toast.makeText(this, "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT).show();
         }

@@ -80,7 +80,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        //Log.d(TAG,"item count: " + updates.size());
         return users.size();
     }
 
@@ -94,7 +93,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         private ImageView ivImage;
         private ImageView ivProfile;
         private ConstraintLayout userHolder;
-
         View view;
 
         public ViewHolder(View itemView) {
