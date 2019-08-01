@@ -79,9 +79,6 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         //setValues
         tvPrice.setText(request.getReceived() + "/" + request.getPrice());
         tvRequest.setText(request.getRequest());
-        Log.d(TAG,Integer.toString(project.getEquity()));
-        Log.d(TAG,Float.toString(totalProjectFunds));
-        Log.d(TAG,Float.toString(toInvest));
         float equity = project.getEquity() / totalProjectFunds * toInvest;
         equity = round(equity);
         tvConfirm.setText("Are you sure you want to invest $" + toInvest + "0? This investment would give you " + equity + "% equity stake in this project.");
