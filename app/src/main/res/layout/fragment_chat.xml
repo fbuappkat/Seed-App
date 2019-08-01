@@ -37,7 +37,8 @@
                     android:layout_marginRight="16dp"
                     android:background="@android:color/transparent"
                     android:paddingLeft="26dp"
-                    android:src="@drawable/ic_new_message" />
+                    android:src="@drawable/ic_new_message"
+                    android:tint="@color/kat_orange_1" />
 
                 <TextView
                     android:id="@+id/tvChat"

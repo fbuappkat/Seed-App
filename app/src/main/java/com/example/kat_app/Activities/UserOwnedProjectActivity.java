@@ -1,7 +1,6 @@
 package com.example.kat_app.Activities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.kat_app.Adapters.LegendAdapter;
 import com.example.kat_app.Models.Project;
@@ -28,7 +26,6 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.parceler.Parcels;
@@ -39,7 +36,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ProjectDetailsActivity extends AppCompatActivity {
+public class UserOwnedProjectActivity extends AppCompatActivity {
+
 
     @BindView(R.id.pcBreakdown)
     PieChart pcBreakdown;
@@ -57,16 +55,16 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     Button btnMedia;
     @BindView(R.id.tvNumFunds)
     TextView tvFunds;
-    @BindView(R.id.btnFollow)
-    Button btnFollow;
-    @BindView(R.id.btnInvest)
-    Button btnInvest;
     @BindView(R.id.ivBack)
     ImageView ivBack;
     @BindView(R.id.tvHandleDetails)
     TextView tvHandle;
     @BindView(R.id.tvPercentEquity)
     TextView tvPercentEquity;
+    @BindView(R.id.btnPostFunds)
+    Button btnPostFunds;
+    @BindView(R.id.ivEdit)
+    ImageView ivEdit;
     protected LegendAdapter legendAdapter;
     private RecyclerView rvLegend;
     private JSONArray media;
@@ -83,7 +81,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_project_details);
+        setContentView(R.layout.activity_user_owned_project);
 
         proj = Parcels.unwrap(getIntent().getParcelableExtra("project"));
 
@@ -98,19 +96,6 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         tvFollowers.setText(Integer.toString(proj.getFollowers().length()));
         totalFunds = -1;
         totalNeeded = -1;
-        /*totalFunds = 0;
-        if (requests != null) {
-            totalFunds = getTotalFunds(requests);
-        }
-        totalNeeded = getTotal(requests);
-        if (totalFunds >= totalNeeded) {
-            btnInvest.setBackgroundColor(Color.GRAY);
-        }*/
-
-        if (proj.getFollowers().toString().contains(ParseUser.getCurrentUser().getObjectId())) {
-            btnFollow.setBackgroundColor(Color.GRAY);
-        }
-
         queryUser();
 
         //rvMedia = findViewById(R.id.rvMedia);
@@ -123,70 +108,11 @@ public class ProjectDetailsActivity extends AppCompatActivity {
             setupAdapter();
         }*/
 
-        //Follow button
-
-        if (!proj.getFollowers().toString().contains(ParseUser.getCurrentUser().getObjectId())) {
-            btnFollow.setText("Follow");
-        } else {
-            btnFollow.setText("Unfollow");
-        }
-
-        btnFollow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!proj.getFollowers().toString().contains(ParseUser.getCurrentUser().getObjectId())) {
-                    btnFollow.setBackgroundColor(Color.GRAY);
-                    proj.add("followers", ParseUser.getCurrentUser());
-                    tvFollowers.setText(Integer.toString(proj.getFollowers().length()));
-                    proj.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            if (e != null) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                    Toast.makeText(ProjectDetailsActivity.this, "Project followed!", Toast.LENGTH_SHORT).show();
-                    btnFollow.setText("Unfollow");
-                } else {
-                    btnFollow.setBackgroundColor(Color.rgb(249, 138, 97));
-                    btnFollow.setText("Follow");
-
-                    ArrayList<ParseUser> remove = new ArrayList<>();
-                    remove.add(ParseUser.getCurrentUser());
-                    proj.removeAll("followers", remove);
-                    tvFollowers.setText(Integer.toString(proj.getFollowers().length()));
-                    proj.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            if (e != null) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                }
-            }
-        });
-
-        //invest button
-        btnInvest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (totalFunds != -1 && totalNeeded != -1 && totalFunds > totalNeeded) {
-                    Toast.makeText(ProjectDetailsActivity.this, "Project is already fully funded!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Intent invest = new Intent(ProjectDetailsActivity.this, InvestActivity.class);
-                    invest.putExtra("project", Parcels.wrap(proj));
-                    startActivity(invest);
-                }
-            }
-        });
-
         //invest button
         btnMedia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent media = new Intent(ProjectDetailsActivity.this, ProjectMediaActivity.class);
+                Intent media = new Intent(UserOwnedProjectActivity.this, ProjectMediaActivity.class);
                 media.putExtra("project", Parcels.wrap(proj));
                 startActivity(media);
             }
@@ -196,7 +122,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // create intent for the new activity
-                Intent detailsToProfile = new Intent(ProjectDetailsActivity.this, OtherUserProfileActivity.class);
+                Intent detailsToProfile = new Intent(UserOwnedProjectActivity.this, OtherUserProfileActivity.class);
                 //pass user as an object
                 detailsToProfile.putExtra("User", Parcels.wrap(proj.getUser()));
                 // show the activity
@@ -208,11 +134,36 @@ public class ProjectDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // create intent for the new activity
-                Intent detailsToProfile = new Intent(ProjectDetailsActivity.this, OtherUserProfileActivity.class);
+                Intent detailsToProfile = new Intent(UserOwnedProjectActivity.this, OtherUserProfileActivity.class);
                 //pass user as an object
                 detailsToProfile.putExtra("User", Parcels.wrap(proj.getUser()));
                 // show the activity
                 startActivity(detailsToProfile);
+            }
+        });
+
+        btnPostFunds.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // create intent for the new activity
+                Intent detailsToFunds = new Intent(UserOwnedProjectActivity.this, AddFundsActivity.class);
+                //pass user as an object
+                detailsToFunds.putExtra("User", Parcels.wrap(proj.getUser()));
+                detailsToFunds.putExtra("project",Parcels.wrap(proj));
+                // show the activity
+                startActivity(detailsToFunds);
+            }
+        });
+
+        ivEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // create intent for the new activity
+                Intent detailsToEdit = new Intent(UserOwnedProjectActivity.this, EditProjectActivity.class);
+                //pass user as an object
+                detailsToEdit.putExtra("User", Parcels.wrap(proj.getUser()));
+                // show the activity
+                startActivity(detailsToEdit);
             }
         });
     }
@@ -259,9 +210,6 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                 if (requests != null) {
                     totalFunds = getTotalFunds(requests);
                     totalNeeded = getTotal(requests);
-                    if (totalFunds >= totalNeeded) {
-                        btnInvest.setBackgroundColor(Color.GRAY);
-                    }
                     tvFunds.setText(Float.toString(getTotalFunds(requests)) + "0/" + Float.toString(getTotal(requests)) + "0");
                     String equity = "0.00%";
                     if (proj.getEquity() != null) {
@@ -343,6 +291,5 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         // set the layout manager on the recycler view
         rvLegend.setLayoutManager(new LinearLayoutManager(ProjectDetailsActivity.this));
     }*/
-
 
 }

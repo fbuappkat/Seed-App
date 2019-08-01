@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.example.kat_app.Activities.CreateProjectActivity;
 import com.example.kat_app.Activities.MapActivity;
 import com.example.kat_app.Activities.ProjectDetailsActivity;
+import com.example.kat_app.Activities.UserOwnedProjectActivity;
 import com.example.kat_app.Adapters.ProjectsAdapter;
 import com.example.kat_app.Adapters.UserAdapter;
 import com.example.kat_app.Models.Project;
@@ -302,9 +303,17 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
     @Override
     public void onClick(int i) {
         //Toast.makeText(getContext(), "Clicked", Toast.LENGTH_SHORT).show();
-        Intent project2description = new Intent(getActivity(), ProjectDetailsActivity.class);
-        project2description.putExtra("project", Parcels.wrap(projects.get(i)));
-        startActivity(project2description);
+        if (projects.get(i).getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+            Log.d(TAG,"user owned");
+            Intent project2description = new Intent(getActivity(), UserOwnedProjectActivity.class);
+            project2description.putExtra("project", Parcels.wrap(projects.get(i)));
+            startActivity(project2description);
+        } else {
+            Log.d(TAG,"not user owned");
+            Intent project2description = new Intent(getActivity(), ProjectDetailsActivity.class);
+            project2description.putExtra("project", Parcels.wrap(projects.get(i)));
+            startActivity(project2description);
+        }
     }
 
 

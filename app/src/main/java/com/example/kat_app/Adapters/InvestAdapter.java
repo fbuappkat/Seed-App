@@ -15,12 +15,11 @@ import android.widget.Toast;
 
 import com.example.kat_app.Activities.ConfirmInvestActivity;
 import com.example.kat_app.Models.Project;
-import com.example.kat_app.R;
 import com.example.kat_app.Models.Request;
+import com.example.kat_app.R;
 
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class InvestAdapter extends RecyclerView.Adapter<InvestAdapter.ViewHolder> {
@@ -91,13 +90,19 @@ public class InvestAdapter extends RecyclerView.Adapter<InvestAdapter.ViewHolder
                 public void onClick(View v) {
                     String toInvest = etInvest.getText().toString();
                     if (!toInvest.isEmpty()) {
-                        Intent confirm = new Intent(context, ConfirmInvestActivity.class);
-                        confirm.putExtra("request", Parcels.wrap(request));
-                        float investment = Float.parseFloat(etInvest.getText().toString());
-                        confirm.putExtra("toInvest", investment);
-                        confirm.putExtra("project", Parcels.wrap(project));
-                        confirm.putExtra("total", projTotal);
-                        context.startActivity(confirm);
+                        float equity = project.getEquity() / projTotal * Float.parseFloat(toInvest);
+                        if (equity < 0.009) {
+                            double necessaryInvestment = 0.01 * projTotal / project.getEquity();
+                            Toast.makeText(context, "Please invest a minimum of $" + necessaryInvestment + " to get at least a 0.01% stake in this project!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Intent confirm = new Intent(context, ConfirmInvestActivity.class);
+                            confirm.putExtra("request", Parcels.wrap(request));
+                            float investment = Float.parseFloat(etInvest.getText().toString());
+                            confirm.putExtra("toInvest", investment);
+                            confirm.putExtra("project", Parcels.wrap(project));
+                            confirm.putExtra("total", projTotal);
+                            context.startActivity(confirm);
+                        }
                     } else {
                         Toast.makeText(context, "Please enter an amount to invest", Toast.LENGTH_SHORT).show();
                     }

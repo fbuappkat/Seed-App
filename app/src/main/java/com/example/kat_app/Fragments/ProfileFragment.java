@@ -3,16 +3,17 @@ package com.example.kat_app.Fragments;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,7 +22,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Activities.EditProfileActivity;
 import com.example.kat_app.Activities.ManageAccountActivity;
+import com.example.kat_app.Adapters.InvestedProjectsAdapter;
+import com.example.kat_app.Adapters.UserProjectAdapter;
 import com.example.kat_app.Models.Balance;
+import com.example.kat_app.Models.Equity;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
@@ -33,6 +37,7 @@ import com.parse.ParseUser;
 
 import java.io.IOException;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -41,6 +46,7 @@ public class ProfileFragment extends Fragment {
     public static final String TAG = "ProfileFragment";
 
     private ImageView ivProfileImage;
+    private TabLayout tabLayout;
     private TextView tvName;
     private TextView tvUsername;
     private TextView tvBalanceCount;
@@ -51,6 +57,12 @@ public class ProfileFragment extends Fragment {
     private ImageButton ivSettings;
     private ImageButton ivEdit;
     private Balance balance;
+    private UserProjectAdapter userProjectAdapter;
+    private InvestedProjectsAdapter investedProjectsAdapter;
+    private List<Project> userProjects;
+    private List<Equity> investedProjects;
+    private RecyclerView rvProjects;
+    private RecyclerView rvInvested;
 
     private static final String KEY_NAME = "name";
     private static final String KEY_PROFILE_IMAGE = "profile_image";
@@ -69,6 +81,8 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        userProjects = new ArrayList<>();
+        investedProjects = new ArrayList<>();
 
         try {
             setProfileInfo(view);
@@ -90,6 +104,39 @@ public class ProfileFragment extends Fragment {
         tvBalanceCount = view.findViewById(R.id.tvBalanceCount);
         tvBio = view.findViewById(R.id.tvBio);
         ivProfileImage = view.findViewById(R.id.ivProfileImage);
+        rvProjects = view.findViewById(R.id.rvProjects);
+        rvInvested = view.findViewById(R.id.rvInvested);
+        tabLayout = view.findViewById(R.id.portfolioTabLayout);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0) {
+                    tab.getIcon().setTint(getResources().getColor(R.color.kat_orange_1));
+                    tabLayout.getTabAt(1).getIcon().setTint(getResources().getColor(R.color.kat_black));
+                    rvProjects.setVisibility(View.VISIBLE);
+                    rvInvested.setVisibility(View.GONE);
+                }
+
+                if (tab.getPosition() == 1) {
+                    tab.getIcon().setTint(getResources().getColor(R.color.kat_orange_1));
+                    tabLayout.getTabAt(0).getIcon().setTint(getResources().getColor(R.color.kat_black));
+                    rvInvested.setVisibility(View.VISIBLE);
+                    rvProjects.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
 
         ParseUser currUser = ParseUser.getCurrentUser();
 
@@ -98,6 +145,7 @@ public class ProfileFragment extends Fragment {
         queryBalance(currUser);
         queryProjects();
         queryInvested();
+        queryInvestments();
         tvBio.setText(currUser.getString(KEY_BIO));
         tvLocation.setText(setLocation(currUser.getParseGeoPoint(KEY_LOCATION)));
 
@@ -206,7 +254,15 @@ public class ProfileFragment extends Fragment {
                     e.printStackTrace();
                     return;
                 }
+                userProjects.addAll(posts);
                 tvProjectsCount.setText(Integer.toString(posts.size()));
+
+                // create the adapter
+                userProjectAdapter = new UserProjectAdapter(getActivity(), userProjects);
+                // set the adapter on the recycler view
+                rvProjects.setAdapter(userProjectAdapter);
+                // set the layout manager on the recycler view
+                rvProjects.setLayoutManager(new LinearLayoutManager(getContext()));
             }
         });
     }
@@ -228,6 +284,33 @@ public class ProfileFragment extends Fragment {
                     }
                 }
                 tvInvestmentsCount.setText(Integer.toString(count));
+            }
+        });
+    }
+
+    protected void queryInvestments() {
+        ParseQuery<Equity> equityQuery = new ParseQuery<>(Equity.class);
+
+        equityQuery.whereEqualTo("investor", ParseUser.getCurrentUser());
+        equityQuery.findInBackground(new FindCallback<Equity>() {
+            @Override
+            public void done(List<Equity> investments, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+                investedProjects.addAll(investments);
+
+                // create the adapter
+                investedProjectsAdapter = new InvestedProjectsAdapter(getActivity(), investedProjects);
+                // set the adapter on the recycler view
+                rvInvested.setAdapter(investedProjectsAdapter);
+                // set the layout manager on the recycler view
+                // add line between items
+                rvInvested.addItemDecoration(new DividerItemDecoration(getContext(),
+                        DividerItemDecoration.VERTICAL));
+                rvInvested.setLayoutManager(new LinearLayoutManager(getContext()));
             }
         });
     }

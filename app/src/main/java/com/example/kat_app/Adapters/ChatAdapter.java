@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Activities.MessageActivity;
 import com.example.kat_app.Models.Chat;
+import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;

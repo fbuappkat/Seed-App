@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kat_app.Models.Balance;
+import com.example.kat_app.Models.Equity;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.Models.Request;
 import com.example.kat_app.Models.Transaction;
@@ -58,6 +59,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
 
     private float toInvest;
     private float totalProjectFunds;
+    private float equity;
 
     String TAG = "Confirm Invest";
 
@@ -79,10 +81,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         //setValues
         tvPrice.setText(request.getReceived() + "/" + request.getPrice());
         tvRequest.setText(request.getRequest());
-        Log.d(TAG, Integer.toString(project.getEquity()));
-        Log.d(TAG, Float.toString(totalProjectFunds));
-        Log.d(TAG, Float.toString(toInvest));
-        float equity = project.getEquity() / totalProjectFunds * toInvest;
+        equity = project.getEquity() / totalProjectFunds * toInvest;
         equity = round(equity);
         tvConfirm.setText("Are you sure you want to invest $" + toInvest + "0? This investment would give you " + equity + "% equity stake in this project.");
         //get user and set balance
@@ -133,6 +132,18 @@ public class ConfirmInvestActivity extends AppCompatActivity {
                     }
                 }
             });
+            Equity newStake = new Equity();
+            newStake.setEquity(equity);
+            newStake.setInvestor(ParseUser.getCurrentUser());
+            newStake.setProject(project);
+            newStake.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        e.printStackTrace();
+                    }
+                }
+            });
             //go back to feed
             Intent finished = new Intent(ConfirmInvestActivity.this, MainActivity.class);
             startActivity(finished);
@@ -162,7 +173,6 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         postUpdate(update, sender, project);
     }
 
-    //post update on home feed with information of the transaction
     private void postUpdate(String update, ParseUser currentUser, Project project) {
 
         Update newUpdate = new Update();
@@ -229,7 +239,6 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         });
     }
 
-    //get balance of project creator
     protected void queryReceiverBalance(ParseUser user) {
         ParseQuery<Balance> projectQuery = new ParseQuery<>(Balance.class);
 
@@ -248,7 +257,6 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         });
     }
 
-    //get balance of user investing and set text
     protected void queryUserBalance(ParseUser user) {
         ParseQuery<Balance> projectQuery = new ParseQuery<>(Balance.class);
 
