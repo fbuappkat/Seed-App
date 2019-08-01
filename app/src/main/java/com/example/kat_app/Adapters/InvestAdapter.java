@@ -95,7 +95,7 @@ public class InvestAdapter extends RecyclerView.Adapter<InvestAdapter.ViewHolder
                         confirm.putExtra("request", Parcels.wrap(request));
                         float investment = Float.parseFloat(etInvest.getText().toString());
                         confirm.putExtra("toInvest", investment);
-                        confirm.putExtra("project", project);
+                        confirm.putExtra("project", Parcels.wrap(project));
                         confirm.putExtra("total", projTotal);
                         context.startActivity(confirm);
                     } else {

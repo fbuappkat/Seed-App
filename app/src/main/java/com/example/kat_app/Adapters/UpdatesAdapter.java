@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -83,36 +82,38 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
         //Todo make less janky and slow
         ParseQuery<Project> projectQuery = new ParseQuery<Project>("Project");
         projectQuery.whereEqualTo("objectId", update.getProject().getObjectId());
-        projectQuery.findInBackground(new FindCallback<Project>() {
-            @Override
-            public void done(List<Project> projs, com.parse.ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error with query");
-                    e.printStackTrace();
-                    return;
-                }
-                Project project = projs.get(0);
-                try {
-                    JSONArray followers = project.getFollowers();
-                    for (int i = 0; i < followers.length(); i++) {
-                        JSONObject jsonobject = followers.getJSONObject(i);
-                        String userID = jsonobject.getString("objectId");
-                        String currUserID = currUser.getObjectId();
-                        if (Boolean.toString(userID.equals(currUserID)).equals("true")) {
-                            userInFollowList = true;
-                            break;
-                        }
+        if (projectQuery != null) {
+            projectQuery.findInBackground(new FindCallback<Project>() {
+                @Override
+                public void done(List<Project> projs, com.parse.ParseException e) {
+                    if (e != null) {
+                        Log.e(TAG, "Error with query");
+                        e.printStackTrace();
+                        return;
                     }
-                } catch (JSONException e1) {
-                    e1.printStackTrace();
+                    if (projs.size() != 0) {
+                        Project project = projs.get(0);
+                        try {
+                            JSONArray followers = project.getFollowers();
+                            for (int i = 0; i < followers.length(); i++) {
+                                JSONObject jsonobject = followers.getJSONObject(i);
+                                String userID = jsonobject.getString("objectId");
+                                String currUserID = currUser.getObjectId();
+                                if (Boolean.toString(userID.equals(currUserID)).equals("true")) {
+                                    userInFollowList = true;
+                                    break;
+                                }
+                            }
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
+                        }
+
+
+                        hold.bind(update, project.getName().toString());
+                    }
                 }
-
-
-                hold.bind(update, project.getName().toString());
-
-
-            }
-        });
+            });
+        }
 
     }
 

@@ -98,11 +98,6 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         tvDescription.setText(proj.getDescription());
         tvInvestors.setText(Integer.toString(proj.getInvestors().length()));
         tvFollowers.setText(Integer.toString(proj.getFollowers().length()));
-        String equity = "0.00";
-        if (proj.getEquity() != null) {
-            equity = Integer.toString(proj.getEquity()) + ".00%";
-        }
-        tvPercentEquity.setText(equity);
 
         if (proj.getFollowers().toString().contains(ParseUser.getCurrentUser().getObjectId())) {
             btnFollow.setBackgroundColor(Color.GRAY);
@@ -251,6 +246,11 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                 requests.addAll(posts);
                 if (requests != null) {
                     tvFunds.setText(Float.toString(getTotalFunds(requests)) + "0/" + Float.toString(getTotal(requests)) + "0");
+                    String equity = "0.00";
+                    if (proj.getEquity() != null) {
+                        equity = Float.toString(proj.getEquity() - getTotalFunds(requests) / getTotal(requests) * proj.getEquity()) + "%";
+                    }
+                    tvPercentEquity.setText(equity);
                 }
                 makePieChart();
             }
