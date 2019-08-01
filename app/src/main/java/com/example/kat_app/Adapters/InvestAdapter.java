@@ -91,7 +91,7 @@ public class InvestAdapter extends RecyclerView.Adapter<InvestAdapter.ViewHolder
                     String toInvest = etInvest.getText().toString();
                     if (!toInvest.isEmpty()) {
                         float equity = project.getEquity() / projTotal * Float.parseFloat(toInvest);
-                        if (equity < 0.01) {
+                        if (equity < 0.009) {
                             double necessaryInvestment = 0.01 * projTotal / project.getEquity();
                             Toast.makeText(context, "Please invest a minimum of $" + necessaryInvestment + " to get at least a 0.01% stake in this project!", Toast.LENGTH_SHORT).show();
                         } else {

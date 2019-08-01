@@ -65,7 +65,8 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     implementation 'com.azoft.carousellayoutmanager:carousel:1.2.4'
     implementation "com.android.support:appcompat-v7:$supportLibVersion"
-    implementation "com.android.support:support-v13:$supportLibVersion" // to remove lint error, found in .idea/libraries
+    implementation "com.android.support:support-v13:$supportLibVersion"
+    // to remove lint error, found in .idea/libraries
     implementation "com.google.android.gms:play-services-maps:$googlePlayVersion"
     implementation "com.google.android.gms:play-services-location:$googlePlayVersion"
     implementation "com.github.hotchemi:permissionsdispatcher:$permissionDispatcherVersion"
