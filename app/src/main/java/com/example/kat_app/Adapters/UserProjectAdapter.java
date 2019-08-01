@@ -1,6 +1,7 @@
 package com.example.kat_app.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -13,10 +14,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.example.kat_app.Activities.UserOwnedProjectActivity;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -73,7 +77,7 @@ public class UserProjectAdapter extends RecyclerView.Adapter<UserProjectAdapter.
 
 
         //add in data for specific user's post
-        public void bind(Project project) {
+        public void bind(final Project project) {
             tvName.setText(project.getName());
             tvInvestors.setText("Investors: " + project.getInvestors().length());
             tvFollowers.setText("Followers: " + project.getFollowers().length());
@@ -90,7 +94,14 @@ public class UserProjectAdapter extends RecyclerView.Adapter<UserProjectAdapter.
                         .apply(bitmapTransform(multiTransformation))
                         .into(ivThumbnail);
             }
-            itemView.setOnClickListener(this);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent project2description = new Intent(context, UserOwnedProjectActivity.class);
+                    project2description.putExtra("project", Parcels.wrap(project));
+                    context.startActivity(project2description);
+                }
+            });
         }
 
         @Override
