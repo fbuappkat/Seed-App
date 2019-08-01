@@ -115,7 +115,7 @@
                 android:layout_height="2dp"
                 android:layout_marginTop="8dp"
                 android:background="#c0c0c0"
-                app:layout_constraintTop_toBottomOf="@+id/ivDetailsLikes"
+                app:layout_constraintTop_toBottomOf="@+id/btnPostFunds"
                 tools:layout_editor_absoluteX="0dp" />
 
 
@@ -266,44 +266,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/pcBreakdown" />
 
-            <ImageButton
-                android:id="@+id/ivDetailsComment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+            <Button
+                android:id="@+id/btnPostFunds"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/kat_orange_1"
+                android:text="Add Money Made"
+                android:textColor="@color/kat_white"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvInvestors"
-                app:srcCompat="@drawable/ufi_comment" />
-
-            <TextView
-                android:id="@+id/tvDetailsComment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="TextView"
-                app:layout_constraintStart_toEndOf="@+id/ivDetailsComment"
-                app:layout_constraintTop_toBottomOf="@+id/tvInvestors" />
-
-            <ImageButton
-                android:id="@+id/ivDetailsLikes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                app:layout_constraintStart_toEndOf="@+id/tvDetailsComment"
-                app:layout_constraintTop_toTopOf="@+id/tvDetailsComment"
-                app:srcCompat="@drawable/ufi_heart" />
-
-            <TextView
-                android:id="@+id/tvDetailsLikes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="TextView"
-                app:layout_constraintStart_toEndOf="@+id/ivDetailsLikes"
-                app:layout_constraintTop_toTopOf="@+id/ivDetailsLikes" />
+                app:layout_constraintTop_toBottomOf="@+id/tvInvestments" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

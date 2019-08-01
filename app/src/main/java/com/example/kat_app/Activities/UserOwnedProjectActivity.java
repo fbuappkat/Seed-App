@@ -61,6 +61,10 @@ public class UserOwnedProjectActivity extends AppCompatActivity {
     TextView tvHandle;
     @BindView(R.id.tvPercentEquity)
     TextView tvPercentEquity;
+    @BindView(R.id.btnPostFunds)
+    Button btnPostFunds;
+    @BindView(R.id.ivEdit)
+    ImageView ivEdit;
     protected LegendAdapter legendAdapter;
     private RecyclerView rvLegend;
     private JSONArray media;
@@ -135,6 +139,31 @@ public class UserOwnedProjectActivity extends AppCompatActivity {
                 detailsToProfile.putExtra("User", Parcels.wrap(proj.getUser()));
                 // show the activity
                 startActivity(detailsToProfile);
+            }
+        });
+
+        btnPostFunds.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // create intent for the new activity
+                Intent detailsToFunds = new Intent(UserOwnedProjectActivity.this, AddFundsActivity.class);
+                //pass user as an object
+                detailsToFunds.putExtra("User", Parcels.wrap(proj.getUser()));
+                detailsToFunds.putExtra("project",Parcels.wrap(proj));
+                // show the activity
+                startActivity(detailsToFunds);
+            }
+        });
+
+        ivEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // create intent for the new activity
+                Intent detailsToEdit = new Intent(UserOwnedProjectActivity.this, EditProjectActivity.class);
+                //pass user as an object
+                detailsToEdit.putExtra("User", Parcels.wrap(proj.getUser()));
+                // show the activity
+                startActivity(detailsToEdit);
             }
         });
     }

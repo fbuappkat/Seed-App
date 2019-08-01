@@ -41,7 +41,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.UserOwnedProjectActivity"></activity>
+        <activity android:name=".Activities.EditProjectActivity"></activity>
+        <activity android:name=".Activities.AddFundsActivity" />
+        <activity android:name=".Activities.UserOwnedProjectActivity" />
 
         <uses-library
             android:name="org.apache.http.legacy"
