@@ -1,11 +1,8 @@
 package com.example.kat_app.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,23 +14,17 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Activities.MessageActivity;
-import com.example.kat_app.Activities.OtherUserProfileActivity;
 import com.example.kat_app.Models.Chat;
-import com.example.kat_app.Models.Message;
 import com.example.kat_app.Models.Project;
-import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.sendbird.android.User;
 
-import org.parceler.Parcel;
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
@@ -153,9 +144,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                     e.printStackTrace();
                     return;
                 }
-                otherUser = user.get(0);
-                String name = otherUser.getString("name");
-                viewHolder.bind(name, body, time, otherUser);
+                if (user.size() != 0) {
+                    otherUser = user.get(0);
+                    String name = otherUser.getString("name");
+                    viewHolder.bind(name, body, time, otherUser);
+                }
             }
         });
     }

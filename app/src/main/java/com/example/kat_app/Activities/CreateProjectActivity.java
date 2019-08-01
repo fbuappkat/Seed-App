@@ -136,6 +136,7 @@ public class CreateProjectActivity extends AppCompatActivity {
         setBackButton();
     }
 
+    //upload profile pic
     private void setUploadProfileImage() {
         // Find references for the views
         ivThumbnailImage = findViewById(R.id.ivThumbnailImage);
@@ -154,6 +155,7 @@ public class CreateProjectActivity extends AppCompatActivity {
         });
     }
 
+    //upload thumbnail for project
     public void uploadThumbnailPic() {
         // Create intent for picking a photo from the gallery
         Intent intent = new Intent(Intent.ACTION_PICK,
@@ -165,6 +167,7 @@ public class CreateProjectActivity extends AppCompatActivity {
         }
     }
 
+    //get image from storage
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_PHOTO_CODE) {
@@ -280,6 +283,7 @@ public class CreateProjectActivity extends AppCompatActivity {
         return newProject;
     }
 
+    //post update reflecting the creation of a new project on feed screen
     private void postUpdate(String update, ParseUser currentUser, Project project, ArrayList<ParseFile> images) {
 
         Update newUpdate = new Update();
@@ -302,8 +306,8 @@ public class CreateProjectActivity extends AppCompatActivity {
             }
         });
 
-        if (images != null || images.size() !=0) {
-            for(ParseFile image : images) {
+        if (images != null || images.size() != 0) {
+            for (ParseFile image : images) {
                 project.setMedia(image);
                 newUpdate.setMedia(image);
             }

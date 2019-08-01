@@ -81,7 +81,4 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
 
     }
 
-
-
-
 }

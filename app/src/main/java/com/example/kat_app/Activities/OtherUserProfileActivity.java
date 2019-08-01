@@ -161,7 +161,7 @@ public class OtherUserProfileActivity extends AppCompatActivity {
             @Override
             public void done(List<Project> posts, ParseException e) {
                 if (e != null) {
-                    Log.e(TAG,"Error with query");
+                    Log.e(TAG, "Error with query");
                     e.printStackTrace();
                     return;
                 }
@@ -177,13 +177,13 @@ public class OtherUserProfileActivity extends AppCompatActivity {
             @Override
             public void done(List<Project> posts, ParseException e) {
                 if (e != null) {
-                    Log.e(TAG,"Error with query");
+                    Log.e(TAG, "Error with query");
                     e.printStackTrace();
                     return;
                 }
                 int count = 0;
-                for (Project project : posts){
-                    if(project.getInvestors().toString().contains(otherUser.getObjectId())){
+                for (Project project : posts) {
+                    if (project.getInvestors().toString().contains(otherUser.getObjectId())) {
                         count++;
                     }
                 }

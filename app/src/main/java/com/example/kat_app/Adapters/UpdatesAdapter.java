@@ -290,7 +290,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                                 }
                             }
                         });
-                        notifyDataSetChanged();
+                        tvNumLikes.setText(Integer.toString(update.getNumLikes()));
                     } else {
                         btnLike.setImageResource(R.drawable.ic_heart_stroke);
                         int position = getAdapterPosition();
@@ -308,7 +308,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                                 }
                             }
                         });
-                        notifyDataSetChanged();
+                        tvNumLikes.setText(Integer.toString(update.getNumLikes()));
                     }
 
                 }
@@ -383,6 +383,5 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
         rvPhotos.setLayoutManager(layoutManager);
         rvPhotos.setHasFixedSize(true);
         rvPhotos.addOnScrollListener(new CenterScrollListener());
-
     }
 }
