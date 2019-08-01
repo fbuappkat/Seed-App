@@ -330,7 +330,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <android.support.design.widget.TabLayout
-                        android:id="@+id/tabLayout"
+                        android:id="@+id/portfolioTabLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -355,17 +355,36 @@
                     </android.support.design.widget.TabLayout>
 
                     <android.support.v7.widget.RecyclerView
-                        android:id="@+id/recyclerView"
+                        android:id="@+id/rvInvested"
                         android:layout_width="0dp"
-                        android:layout_height="100dp"
+                        android:layout_height="150dp"
                         android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginBottom="8dp"
+                        android:visibility="invisible"
                         app:layout_constraintBottom_toBottomOf="@+id/PortfolioHolder"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+                        app:layout_constraintTop_toBottomOf="@+id/portfolioTabLayout"
                         app:layout_constraintVertical_bias="0.100000024" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvProjects"
+                        android:layout_width="0dp"
+                        android:layout_height="150dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="@+id/PortfolioHolder"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/portfolioTabLayout"
+                        app:layout_constraintVertical_bias="0.100000024">
+
+                    </android.support.v7.widget.RecyclerView>
 
                 </android.support.constraint.ConstraintLayout>
 

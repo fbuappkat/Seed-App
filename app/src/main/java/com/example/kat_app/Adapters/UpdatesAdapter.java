@@ -383,6 +383,5 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
         rvPhotos.setLayoutManager(layoutManager);
         rvPhotos.setHasFixedSize(true);
         rvPhotos.addOnScrollListener(new CenterScrollListener());
-
     }
 }
