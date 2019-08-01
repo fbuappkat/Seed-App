@@ -111,11 +111,15 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
+                    tab.getIcon().setTint(getResources().getColor(R.color.kat_orange_1));
+                    tabLayout.getTabAt(1).getIcon().setTint(getResources().getColor(R.color.kat_black));
                     rvProjects.setVisibility(View.VISIBLE);
                     rvInvested.setVisibility(View.GONE);
                 }
 
                 if (tab.getPosition() == 1) {
+                    tab.getIcon().setTint(getResources().getColor(R.color.kat_orange_1));
+                    tabLayout.getTabAt(0).getIcon().setTint(getResources().getColor(R.color.kat_black));
                     rvInvested.setVisibility(View.VISIBLE);
                     rvProjects.setVisibility(View.GONE);
                 }
