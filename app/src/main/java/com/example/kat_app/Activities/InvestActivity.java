@@ -53,6 +53,7 @@ public class InvestActivity extends AppCompatActivity {
         queryRequests();
     }
 
+    //set adapter for investment recyclerView
     public void setupAdapter() {
         // create the adapter
         investAdapter = new InvestAdapter(InvestActivity.this, requests, project);
@@ -65,7 +66,7 @@ public class InvestActivity extends AppCompatActivity {
         rvRequests.setLayoutManager(new LinearLayoutManager(InvestActivity.this));
     }
 
-
+    //get requests that point to the project
     protected void queryRequests() {
         ParseQuery<Request> projectQuery = new ParseQuery<Request>(Request.class);
 
