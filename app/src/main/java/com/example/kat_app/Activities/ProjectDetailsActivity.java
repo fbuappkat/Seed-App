@@ -5,10 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kat_app.Adapters.LegendAdapter;
-import com.example.kat_app.Adapters.MediaAdapter;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.Models.Request;
 import com.example.kat_app.R;
@@ -104,18 +100,6 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         }
 
         queryUser();
-
-        //rvMedia = findViewById(R.id.rvMedia);
-
-        //Log.d(TAG,"project is:" + Boolean.toString(project.containsMedia()));
-
-        /*if (project.containsMedia()) {
-            media = project.getMedia();
-
-            setupAdapter();
-        }*/
-
-        //Follow button
 
         if (!proj.getFollowers().toString().contains(ParseUser.getCurrentUser().getObjectId())) {
             btnFollow.setText("Follow");
@@ -213,15 +197,16 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         pcBreakdown.setDescription(pcDesc);
         pcBreakdown.setHoleRadius(25);
         pcBreakdown.setTransparentCircleRadius(25);
+
         List<PieEntry> values = new ArrayList<>();
         for (int i = 0; i < requests.size(); i++) {
             values.add(new PieEntry(requests.get(i).getPrice(), requests.get(i).getRequest()));
         }
 
-
         PieDataSet pieDataSet = new PieDataSet(values, "<- Requests");
         pieDataSet.setSliceSpace(0f);
         PieData pieData = new PieData(pieDataSet);
+        pcBreakdown.getLegend().setEnabled(false);
         pieData.setValueTextSize(20);
         pcBreakdown.setData(pieData);
         pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
@@ -260,7 +245,6 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     //get user associated with project
     protected void queryUser() {
         ParseQuery<ParseUser> projectQuery = new ParseQuery<ParseUser>(ParseUser.class);
-
         projectQuery.whereEqualTo("objectId", proj.getUser().getObjectId());
         projectQuery.findInBackground(new FindCallback<ParseUser>() {
             @Override
@@ -273,7 +257,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                 if (posts.size() != 0) {
                     ParseUser user = posts.get(0);
                     tvAuthor.setText((CharSequence) user.get("name"));
-                    tvHandle.setText( "@" + user.getUsername());
+                    tvHandle.setText("@" + user.getUsername());
                 }
             }
 
@@ -307,18 +291,5 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         }
         return tot;
     }
-
-   /* public void setupAdapter() {
-        // create the adapter
-        legendAdapter = new LegendAdapter(ProjectDetailsActivity.this, requests);
-        // add line between items
-        rvLegend.addItemDecoration(new DividerItemDecoration(ProjectDetailsActivity.this,
-                DividerItemDecoration.VERTICAL));
-        // set the adapter on the recycler view
-        rvLegend.setAdapter(legendAdapter);
-        // set the layout manager on the recycler view
-        rvLegend.setLayoutManager(new LinearLayoutManager(ProjectDetailsActivity.this));
-    }*/
-
 
 }

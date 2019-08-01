@@ -79,9 +79,9 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         //setValues
         tvPrice.setText(request.getReceived() + "/" + request.getPrice());
         tvRequest.setText(request.getRequest());
-        Log.d(TAG,Integer.toString(project.getEquity()));
-        Log.d(TAG,Float.toString(totalProjectFunds));
-        Log.d(TAG,Float.toString(toInvest));
+        Log.d(TAG, Integer.toString(project.getEquity()));
+        Log.d(TAG, Float.toString(totalProjectFunds));
+        Log.d(TAG, Float.toString(toInvest));
         float equity = project.getEquity() / totalProjectFunds * toInvest;
         equity = round(equity);
         tvConfirm.setText("Are you sure you want to invest $" + toInvest + "0? This investment would give you " + equity + "% equity stake in this project.");
@@ -162,6 +162,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         postUpdate(update, sender, project);
     }
 
+    //post update on home feed with information of the transaction
     private void postUpdate(String update, ParseUser currentUser, Project project) {
 
         Update newUpdate = new Update();
@@ -228,6 +229,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         });
     }
 
+    //get balance of project creator
     protected void queryReceiverBalance(ParseUser user) {
         ParseQuery<Balance> projectQuery = new ParseQuery<>(Balance.class);
 
@@ -246,6 +248,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         });
     }
 
+    //get balance of user investing and set text
     protected void queryUserBalance(ParseUser user) {
         ParseQuery<Balance> projectQuery = new ParseQuery<>(Balance.class);
 
