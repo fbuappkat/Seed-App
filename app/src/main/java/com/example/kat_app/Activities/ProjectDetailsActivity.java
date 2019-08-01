@@ -5,10 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kat_app.Adapters.LegendAdapter;
-import com.example.kat_app.Adapters.MediaAdapter;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.Models.Request;
 import com.example.kat_app.R;
@@ -246,9 +242,12 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                 requests.addAll(posts);
                 if (requests != null) {
                     tvFunds.setText(Float.toString(getTotalFunds(requests)) + "0/" + Float.toString(getTotal(requests)) + "0");
-                    String equity = "0.00";
+                    String equity = "0.00%";
                     if (proj.getEquity() != null) {
-                        equity = Float.toString(proj.getEquity() - getTotalFunds(requests) / getTotal(requests) * proj.getEquity()) + "%";
+                        float newEquity = proj.getEquity() - getTotalFunds(requests) / getTotal(requests) * proj.getEquity();
+                        if (newEquity > 0) {
+                            equity = Float.toString(newEquity) + "%";
+                        }
                     }
                     tvPercentEquity.setText(equity);
                 }
