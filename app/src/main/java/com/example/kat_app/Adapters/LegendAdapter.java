@@ -1,24 +1,14 @@
 package com.example.kat_app.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.kat_app.Activities.ConfirmInvestActivity;
-import com.example.kat_app.R;
 import com.example.kat_app.Models.Request;
-
-import org.parceler.Parcels;
+import com.example.kat_app.R;
 
 import java.util.List;
 
@@ -48,7 +38,6 @@ public abstract class LegendAdapter extends RecyclerView.Adapter<InvestAdapter.V
 
     @Override
     public int getItemCount() {
-        //Log.d(TAG,"item count: " + updates.size());
         return requests.size();
     }
 

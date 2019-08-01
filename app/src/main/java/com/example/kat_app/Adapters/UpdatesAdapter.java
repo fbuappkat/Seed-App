@@ -80,7 +80,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
         final ViewHolder hold = holder;
 
         //Todo make less janky and slow
-        ParseQuery<Project> projectQuery = new ParseQuery<Project>("Project");
+        ParseQuery<Project> projectQuery = new ParseQuery<>("Project");
         projectQuery.whereEqualTo("objectId", update.getProject().getObjectId());
         if (projectQuery != null) {
             projectQuery.findInBackground(new FindCallback<Project>() {
@@ -107,7 +107,6 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                         } catch (JSONException e1) {
                             e1.printStackTrace();
                         }
-
 
                         hold.bind(update, project.getName().toString());
                     }
@@ -310,7 +309,6 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                         });
                         tvNumLikes.setText(Integer.toString(update.getNumLikes()));
                     }
-
                 }
             });
 
