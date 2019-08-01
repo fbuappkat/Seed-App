@@ -25,6 +25,7 @@ import com.example.kat_app.Activities.ManageAccountActivity;
 import com.example.kat_app.Adapters.InvestedProjectsAdapter;
 import com.example.kat_app.Adapters.UserProjectAdapter;
 import com.example.kat_app.Models.Balance;
+import com.example.kat_app.Models.Equity;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
@@ -59,7 +60,7 @@ public class ProfileFragment extends Fragment {
     private UserProjectAdapter userProjectAdapter;
     private InvestedProjectsAdapter investedProjectsAdapter;
     private List<Project> userProjects;
-    private List<Project> investedProjects;
+    private List<Equity> investedProjects;
     private RecyclerView rvProjects;
     private RecyclerView rvInvested;
 
@@ -144,6 +145,7 @@ public class ProfileFragment extends Fragment {
         queryBalance(currUser);
         queryProjects();
         queryInvested();
+        queryInvestments();
         tvBio.setText(currUser.getString(KEY_BIO));
         tvLocation.setText(setLocation(currUser.getParseGeoPoint(KEY_LOCATION)));
 
@@ -279,9 +281,26 @@ public class ProfileFragment extends Fragment {
                 for (Project project : posts) {
                     if (project.getInvestors().toString().contains(ParseUser.getCurrentUser().getObjectId())) {
                         count++;
-                        investedProjects.add(project);
                     }
                 }
+                tvInvestmentsCount.setText(Integer.toString(count));
+            }
+        });
+    }
+
+    protected void queryInvestments() {
+        ParseQuery<Equity> equityQuery = new ParseQuery<>(Equity.class);
+
+        equityQuery.whereEqualTo("investor", ParseUser.getCurrentUser());
+        equityQuery.findInBackground(new FindCallback<Equity>() {
+            @Override
+            public void done(List<Equity> investments, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+                investedProjects.addAll(investments);
 
                 // create the adapter
                 investedProjectsAdapter = new InvestedProjectsAdapter(getActivity(), investedProjects);
@@ -292,7 +311,6 @@ public class ProfileFragment extends Fragment {
                 rvInvested.addItemDecoration(new DividerItemDecoration(getContext(),
                         DividerItemDecoration.VERTICAL));
                 rvInvested.setLayoutManager(new LinearLayoutManager(getContext()));
-                tvInvestmentsCount.setText(Integer.toString(count));
             }
         });
     }

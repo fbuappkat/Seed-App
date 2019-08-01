@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kat_app.Models.Balance;
+import com.example.kat_app.Models.Equity;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.Models.Request;
 import com.example.kat_app.Models.Transaction;
@@ -58,6 +59,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
 
     private float toInvest;
     private float totalProjectFunds;
+    private float equity;
 
     String TAG = "Confirm Invest";
 
@@ -79,7 +81,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         //setValues
         tvPrice.setText(request.getReceived() + "/" + request.getPrice());
         tvRequest.setText(request.getRequest());
-        float equity = project.getEquity() / totalProjectFunds * toInvest;
+        equity = project.getEquity() / totalProjectFunds * toInvest;
         equity = round(equity);
         tvConfirm.setText("Are you sure you want to invest $" + toInvest + "0? This investment would give you " + equity + "% equity stake in this project.");
         //get user and set balance
@@ -123,6 +125,18 @@ public class ConfirmInvestActivity extends AppCompatActivity {
                 project.add("investors", ParseUser.getCurrentUser());
             }
             project.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            Equity newStake = new Equity();
+            newStake.setEquity(equity);
+            newStake.setInvestor(ParseUser.getCurrentUser());
+            newStake.setProject(project);
+            newStake.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
                     if (e != null) {

@@ -2,6 +2,7 @@ package com.example.kat_app.Adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.media.audiofx.DynamicsProcessing;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,8 +14,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.example.kat_app.Models.Equity;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
@@ -29,9 +32,9 @@ public class InvestedProjectsAdapter extends RecyclerView.Adapter<InvestedProjec
 
     private final String TAG = "UserProjectAdapter";
     private Context context;
-    private List<Project> investedProjects;
+    private List<Equity> investedProjects;
 
-    public InvestedProjectsAdapter(Context context, List<Project> investedProjects) {
+    public InvestedProjectsAdapter(Context context, List<Equity> investedProjects) {
         this.context = context;
         this.investedProjects = investedProjects;
     }
@@ -45,8 +48,8 @@ public class InvestedProjectsAdapter extends RecyclerView.Adapter<InvestedProjec
 
     @Override
     public void onBindViewHolder(@NonNull InvestedProjectsAdapter.ViewHolder holder, int position) {
-        Project project = investedProjects.get(position);
-        holder.bind(project);
+        Equity investment = investedProjects.get(position);
+        holder.bind(investment);
     }
 
     @Override
@@ -57,18 +60,25 @@ public class InvestedProjectsAdapter extends RecyclerView.Adapter<InvestedProjec
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView tvProjectName;
+        private TextView tvEquityVal;
         View view;
 
         public ViewHolder(View itemView) {
             super(itemView);
             view = itemView;
             tvProjectName = itemView.findViewById(R.id.tvProjectName);
+            tvEquityVal = itemView.findViewById(R.id.tvEquityVal);
         }
 
 
         //add in data for specific user's post
-        public void bind(Project project) {
-            tvProjectName.setText(project.getName());
+        public void bind(Equity investment) {
+            try {
+                tvProjectName.setText(investment.getProject().fetchIfNeeded().getString("name"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            tvEquityVal.setText(investment.getEquity() + "%");
             itemView.setOnClickListener(this);
         }
 

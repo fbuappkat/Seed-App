@@ -14,7 +14,7 @@ public class Equity extends ParseObject implements Parcelable {
 
     //fields
     private final static String KEY_PROJECT = "project";
-    private final static String KEY_USER = "user";
+    private final static String KEY_INVESTOR = "investor";
     private final static String KEY_EQUITY = "equity";
     private final static String KEY_NUM_INVESTMENTS = "numInvestments";
 
@@ -28,26 +28,26 @@ public class Equity extends ParseObject implements Parcelable {
         put(KEY_NUM_INVESTMENTS, numInvestments);
     }
 
-    public Double getEquity(){
-        return getDouble(KEY_EQUITY);
+    public Float getEquity(){
+        return (float) getDouble(KEY_EQUITY);
     }
 
-    public void setEquity(Double equity){
+    public void setEquity(Float equity){
         put(KEY_EQUITY, equity);
     }
 
-    public ParseObject getProject(){
-        return getParseObject(KEY_PROJECT);
+    public Project getProject(){
+        return (Project) get(KEY_PROJECT);
     }
 
-    public void setKeyProject(ParseObject project){
+    public void setProject(Project project){
         put(KEY_PROJECT, project);
     }
 
-    public ParseUser getUser(){ return getParseUser(KEY_USER); }
+    public ParseUser getInvestor(){ return getParseUser(KEY_INVESTOR); }
 
-    public void setUser(ParseUser user){
-        put(KEY_USER, user);
+    public void setInvestor(ParseUser user){
+        put(KEY_INVESTOR, user);
     }
 
 }
