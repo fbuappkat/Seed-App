@@ -4,9 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -90,7 +88,6 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
         setBackButton();
         setAddUpdateButton();
         setSpinner();
-        setETUpdate();
         getProjects();
     }
 
@@ -146,16 +143,6 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
         });
     }
 
-    private void setETUpdate() {
-        etUpdate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus)
-                    etUpdate.setText("");
-                else
-                    etUpdate.setText("What's new with your project?");
-            }
-        });
-    }
 
     private void setSpinner() {
         ArrayList<String> names = getProjectNames(projects);
@@ -327,7 +314,7 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void showLoadingBar() {
-        LoadingBar.setTitle("Posting to KAT");
+        LoadingBar.setTitle("Posting to Seed");
         LoadingBar.setMessage("Give us a moment! Your update will be live soon.");
         LoadingBar.setCanceledOnTouchOutside(true);
         LoadingBar.show();
