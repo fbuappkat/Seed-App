@@ -267,7 +267,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                     if (proj.getEquity() != null) {
                         float newEquity = proj.getEquity() - getTotalFunds(requests) / getTotal(requests) * proj.getEquity();
                         if (newEquity > 0) {
-                            equity = Float.toString(newEquity) + "%";
+                            equity = round(newEquity) + "%";
                         }
                     }
                     tvPercentEquity.setText(equity);
@@ -326,6 +326,10 @@ public class ProjectDetailsActivity extends AppCompatActivity {
             tot += reqs.get(i).getReceived();
         }
         return tot;
+    }
+
+    private float round(float value) {
+        return (float) Math.round(value * 100) / 100;
     }
 
    /* public void setupAdapter() {
