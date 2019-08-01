@@ -76,6 +76,8 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     private Project proj;
     FragmentManager fragmentManager;
     public static final String TAG = "ProjectDetailsActivity";
+    private float totalFunds;
+    private float totalNeeded;
 
 
     @Override
@@ -94,6 +96,16 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         tvDescription.setText(proj.getDescription());
         tvInvestors.setText(Integer.toString(proj.getInvestors().length()));
         tvFollowers.setText(Integer.toString(proj.getFollowers().length()));
+        totalFunds = -1;
+        totalNeeded = -1;
+        /*totalFunds = 0;
+        if (requests != null) {
+            totalFunds = getTotalFunds(requests);
+        }
+        totalNeeded = getTotal(requests);
+        if (totalFunds >= totalNeeded) {
+            btnInvest.setBackgroundColor(Color.GRAY);
+        }*/
 
         if (proj.getFollowers().toString().contains(ParseUser.getCurrentUser().getObjectId())) {
             btnFollow.setBackgroundColor(Color.GRAY);
@@ -160,9 +172,13 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         btnInvest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent invest = new Intent(ProjectDetailsActivity.this, InvestActivity.class);
-                invest.putExtra("project", Parcels.wrap(proj));
-                startActivity(invest);
+                if (totalFunds != -1 && totalNeeded != -1 && totalFunds > totalNeeded) {
+                    Toast.makeText(ProjectDetailsActivity.this, "Project is already fully funded!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent invest = new Intent(ProjectDetailsActivity.this, InvestActivity.class);
+                    invest.putExtra("project", Parcels.wrap(proj));
+                    startActivity(invest);
+                }
             }
         });
 
@@ -241,6 +257,11 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                 requests = new ArrayList<>();
                 requests.addAll(posts);
                 if (requests != null) {
+                    totalFunds = getTotalFunds(requests);
+                    totalNeeded = getTotal(requests);
+                    if (totalFunds >= totalNeeded) {
+                        btnInvest.setBackgroundColor(Color.GRAY);
+                    }
                     tvFunds.setText(Float.toString(getTotalFunds(requests)) + "0/" + Float.toString(getTotal(requests)) + "0");
                     String equity = "0.00%";
                     if (proj.getEquity() != null) {
