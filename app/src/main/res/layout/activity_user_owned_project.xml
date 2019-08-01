@@ -48,8 +48,7 @@
                     android:layout_gravity="right"
                     android:background="@android:color/transparent"
                     android:clickable="true"
-                    android:paddingRight="26dp"
-                    android:src="@drawable/ic_edit" />
+                    android:src="@drawable/ic_edit_project" />
 
             </android.support.v7.widget.Toolbar>
 

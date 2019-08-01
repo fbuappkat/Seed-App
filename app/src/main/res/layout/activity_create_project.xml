@@ -149,7 +149,7 @@
 
         <ListView
             android:id="@+id/lvRequests"
-            android:layout_width="401dp"
+            android:layout_width="0dp"
             android:layout_height="176dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
