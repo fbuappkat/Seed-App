@@ -42,8 +42,6 @@ public class ConfirmInvestActivity extends AppCompatActivity {
     TextView tvProject;
     @BindView(R.id.tvRequest)
     TextView tvRequest;
-    @BindView(R.id.btnCancel)
-    Button btnCancel;
     @BindView(R.id.btnConfirm)
     Button btnConfirm;
     @BindView(R.id.ivBack)
@@ -59,6 +57,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
     private Balance investorBalance;
 
     private float toInvest;
+    private float totalProjectFunds;
 
     String TAG = "Confirm Invest";
 
@@ -73,12 +72,19 @@ public class ConfirmInvestActivity extends AppCompatActivity {
 
         //get values
         request = Parcels.unwrap(getIntent().getParcelableExtra("request"));
+        project = Parcels.unwrap(getIntent().getParcelableExtra("project"));
         toInvest = getIntent().getFloatExtra("toInvest", 0);
+        totalProjectFunds = getIntent().getFloatExtra("total", 0);
 
         //setValues
         tvPrice.setText(request.getReceived() + "/" + request.getPrice());
         tvRequest.setText(request.getRequest());
-        tvConfirm.setText("Are you sure you want to invest $" + toInvest + "0?");
+        Log.d(TAG,Integer.toString(project.getEquity()));
+        Log.d(TAG,Float.toString(totalProjectFunds));
+        Log.d(TAG,Float.toString(toInvest));
+        float equity = project.getEquity() / totalProjectFunds * toInvest;
+        equity = round(equity);
+        tvConfirm.setText("Are you sure you want to invest $" + toInvest + "0? This investment would give you " + equity + "% equity stake in this project.");
         //get user and set balance
         queryUserBalance(ParseUser.getCurrentUser());
 
@@ -90,14 +96,6 @@ public class ConfirmInvestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 invest();
-            }
-        });
-
-        //cancel
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
             }
         });
     }
@@ -202,7 +200,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
                     return;
                 }
                 project = posts.get(0);
-                tvProject.setText("Project: " + project.getName());
+                tvProject.setText(project.getName());
                 queryProjectOwner(project);
 
             }
@@ -261,7 +259,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
                     return;
                 }
                 investorBalance = posts.get(0);
-                tvBalance.setText("Your current balance: $" + (investorBalance.getNumber("amount")));
+                tvBalance.setText("$" + (investorBalance.getNumber("amount")));
             }
 
         });
@@ -280,11 +278,4 @@ public class ConfirmInvestActivity extends AppCompatActivity {
             }
         });
     }
-
-
-    /*private float calculateEquity(float investment) {
-        float totalEquity = project.getEquity();
-        float totalMoney = getTotal(requests);
-        return totalEquity / totalMoney * investment;
-    }*/
 }
