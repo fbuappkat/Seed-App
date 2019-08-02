@@ -92,10 +92,10 @@ public class ChatFragment extends Fragment {
         // add line between items
         rvMessage.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
-        // set the adapter on the recycler view
-        rvMessage.setAdapter(adapter);
         // set the layout manager on the recycler view
         rvMessage.setLayoutManager(new LinearLayoutManager(getContext()));
+        // set the adapter on the recycler view
+        rvMessage.setAdapter(adapter);
     }
 
 
