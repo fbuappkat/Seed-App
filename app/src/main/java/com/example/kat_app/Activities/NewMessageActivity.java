@@ -54,10 +54,10 @@ public class NewMessageActivity extends AppCompatActivity {
         // add line between items
         rvUsers.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
-        // set the adapter on the recycler view
-        rvUsers.setAdapter(userAdapter);
         // set the layout manager on the recycler view
         rvUsers.setLayoutManager(new LinearLayoutManager(this));
+        // set the adapter on the recycler view
+        rvUsers.setAdapter(userAdapter);
 
         queryUsers();
     }

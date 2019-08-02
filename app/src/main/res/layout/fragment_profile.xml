@@ -49,7 +49,7 @@
                         android:fontFamily="@font/montserrat_regular"
                         android:text="PROFILE"
                         android:textColor="#000000"
-                        android:textSize="20sp" />
+                        android:textSize="18sp" />
 
                     <ImageButton
                         android:id="@+id/ivEdit"
@@ -78,10 +78,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
-    <ScrollView
+    <com.xw.repo.widget.BounceScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -356,7 +357,7 @@
 
                     </android.support.design.widget.TabLayout>
 
-                    <android.support.v7.widget.RecyclerView
+                    <com.chauthai.overscroll.RecyclerViewBouncy
                         android:id="@+id/rvInvested"
                         android:layout_width="0dp"
                         android:layout_height="150dp"
@@ -371,7 +372,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/portfolioTabLayout"
                         app:layout_constraintVertical_bias="0.100000024" />
 
-                    <android.support.v7.widget.RecyclerView
+                    <com.chauthai.overscroll.RecyclerViewBouncy
                         android:id="@+id/rvProjects"
                         android:layout_width="0dp"
                         android:layout_height="150dp"
@@ -386,7 +387,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/portfolioTabLayout"
                         app:layout_constraintVertical_bias="0.100000024">
 
-                    </android.support.v7.widget.RecyclerView>
+                    </com.chauthai.overscroll.RecyclerViewBouncy>
 
                 </android.support.constraint.ConstraintLayout>
 
@@ -394,7 +395,7 @@
 
         </android.support.constraint.ConstraintLayout>
 
-    </ScrollView>
+    </com.xw.repo.widget.BounceScrollView>
 
 
 </android.support.constraint.ConstraintLayout>
