@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -67,8 +69,11 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     TextView tvHandle;
     @BindView(R.id.tvPercentEquity)
     TextView tvPercentEquity;
+    @BindView(R.id.tvTest)
+    TextView tvTest;
     protected LegendAdapter legendAdapter;
-    private RecyclerView rvLegend;
+    @BindView(R.id.rvLegend)
+    RecyclerView rvLegend;
     private JSONArray media;
     private Project project;
 
@@ -78,6 +83,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     public static final String TAG = "ProjectDetailsActivity";
     private float totalFunds;
     private float totalNeeded;
+    private List<PieEntry> values;
 
 
     @Override
@@ -217,6 +223,18 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         });
     }
 
+    public void makeLegend() {
+        // create the adapter
+        legendAdapter = new LegendAdapter(ProjectDetailsActivity.this, values);
+        // add line between items
+        rvLegend.addItemDecoration(new DividerItemDecoration(ProjectDetailsActivity.this,
+                DividerItemDecoration.VERTICAL));
+        // set the adapter on the recycler view
+        rvLegend.setAdapter(legendAdapter);
+        // set the layout manager on the recycler view
+        rvLegend.setLayoutManager(new LinearLayoutManager(ProjectDetailsActivity.this));
+    }
+
     //create piechart for request breakdown
     public void makePieChart() {
         pcBreakdown.setUsePercentValues(false);
@@ -225,11 +243,10 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         pcBreakdown.setDescription(pcDesc);
         pcBreakdown.setHoleRadius(25);
         pcBreakdown.setTransparentCircleRadius(25);
-        List<PieEntry> values = new ArrayList<>();
+        values = new ArrayList<>();
         for (int i = 0; i < requests.size(); i++) {
             values.add(new PieEntry(requests.get(i).getPrice(), requests.get(i).getRequest()));
         }
-
 
         PieDataSet pieDataSet = new PieDataSet(values, "<- Requests");
         pieDataSet.setSliceSpace(0f);
@@ -273,6 +290,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                     tvPercentEquity.setText(equity);
                 }
                 makePieChart();
+                makeLegend();
             }
         });
     }
@@ -331,18 +349,4 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     private float round(float value) {
         return (float) Math.round(value * 100) / 100;
     }
-
-   /* public void setupAdapter() {
-        // create the adapter
-        legendAdapter = new LegendAdapter(ProjectDetailsActivity.this, requests);
-        // add line between items
-        rvLegend.addItemDecoration(new DividerItemDecoration(ProjectDetailsActivity.this,
-                DividerItemDecoration.VERTICAL));
-        // set the adapter on the recycler view
-        rvLegend.setAdapter(legendAdapter);
-        // set the layout manager on the recycler view
-        rvLegend.setLayoutManager(new LinearLayoutManager(ProjectDetailsActivity.this));
-    }*/
-
-
 }
