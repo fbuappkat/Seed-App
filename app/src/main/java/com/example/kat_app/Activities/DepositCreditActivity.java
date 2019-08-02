@@ -102,13 +102,14 @@ public class DepositCreditActivity extends AppCompatActivity {
             Toast.makeText(this, "Enter a valid amount for payment", Toast.LENGTH_SHORT).show();
     }
 
-    private void sendPayments() {
+    private void sendPayments(final float newBalance, final ParseUser currUser) {
         RequestQueue queue = Volley.newRequestQueue(DepositCreditActivity.this);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, API_CHECKOUT,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         if (response.toString().contains("Successful")) {
+                            queryBalance(currUser, newBalance);
                             Toast.makeText(DepositCreditActivity.this, "Payment Success", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(DepositCreditActivity.this, "Payment Failed", Toast.LENGTH_SHORT).show();
@@ -203,9 +204,8 @@ public class DepositCreditActivity extends AppCompatActivity {
 
                     Float newBalance = round(currBalance + addedCredits);
                     ParseUser currUser = ParseUser.getCurrentUser();
-                    queryBalance(currUser, newBalance);
 
-                    sendPayments();
+                    sendPayments(newBalance, currUser);
                 } else {
                     Toast.makeText(this, "Please enter a valid amount", Toast.LENGTH_SHORT).show();
                 }

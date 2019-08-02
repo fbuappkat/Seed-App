@@ -63,7 +63,7 @@
     </android.support.constraint.ConstraintLayout>
 
 
-    <android.support.v7.widget.RecyclerView
+    <com.chauthai.overscroll.RecyclerViewBouncy
         android:id="@+id/rvMessage"
         android:layout_width="0dp"
         android:layout_height="0dp"

@@ -2,6 +2,7 @@ package com.example.kat_app.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.media.audiofx.DynamicsProcessing;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +32,7 @@ import com.braintreepayments.api.interfaces.HttpResponseCallback;
 import com.braintreepayments.api.internal.HttpClient;
 import com.braintreepayments.api.models.PaymentMethodNonce;
 import com.example.kat_app.Models.Balance;
+import com.example.kat_app.Models.Equity;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.Models.Transaction;
 import com.example.kat_app.R;
@@ -71,6 +73,8 @@ public class AddFundsActivity extends AppCompatActivity {
     private String amount;
     private float currBalance;
     private float addedCredits;
+    private float moneyToInvestors;
+    private float remainingMoney;
 
     private String API_GET_TOKEN = "https://kat-app-247218.appspot.com/";
     private String API_CHECKOUT = "https://kat-app-247218.appspot.com/";
@@ -112,13 +116,15 @@ public class AddFundsActivity extends AppCompatActivity {
             Toast.makeText(this, "Enter a valid amount for payment", Toast.LENGTH_SHORT).show();
     }
 
-    private void sendPayments() {
+    private void sendPayments(final float newBalance, final ParseUser currUser) {
         RequestQueue queue = Volley.newRequestQueue(AddFundsActivity.this);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, API_CHECKOUT,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         if (response.toString().contains("Successful")) {
+                            queryBalance(currUser, addedCredits - moneyToInvestors);
+                            queryShareholders(project, addedCredits);
                             Toast.makeText(AddFundsActivity.this, "Payment Success", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(AddFundsActivity.this, "Payment Failed", Toast.LENGTH_SHORT).show();
@@ -215,9 +221,8 @@ public class AddFundsActivity extends AppCompatActivity {
 
                     Float newBalance = round(currBalance + addedCredits);
                     ParseUser currUser = ParseUser.getCurrentUser();
-                    queryBalance(currUser, newBalance);
 
-                    sendPayments();
+                    sendPayments(newBalance, currUser);
                 } else {
                     Toast.makeText(this, "Please enter a valid amount", Toast.LENGTH_SHORT).show();
                 }
@@ -254,6 +259,7 @@ public class AddFundsActivity extends AppCompatActivity {
         });
     }
 
+
     //update the user's balance
     protected void queryBalance(ParseUser currUser, final float amount) {
         final ParseQuery<Balance> balanceQuery = new ParseQuery<>(Balance.class);
@@ -269,7 +275,9 @@ public class AddFundsActivity extends AppCompatActivity {
                 }
 
                 Balance balance = accounts.get(0);
-                balance.put("amount", amount);
+                Float val = balance.getAmount();
+                val += amount;
+                balance.put("amount", val);
                 balance.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -303,6 +311,30 @@ public class AddFundsActivity extends AppCompatActivity {
         });
     }
 
+    //update the shareholders balances
+    protected void queryShareholders(Project project, final float amount) {
+        final ParseQuery<Equity> equityQuery = new ParseQuery<>(Equity.class);
+
+        equityQuery.whereEqualTo("project", project);
+        equityQuery.findInBackground(new FindCallback<Equity>() {
+            @Override
+            public void done(List<Equity> shareholders, ParseException e) {
+                if (e != null) {
+                    Log.e("Query requests", "Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+
+                for (Equity equity : shareholders) {
+                    Float earnings = round(amount * (equity.getEquity() / 100));
+                    ParseUser investor = equity.getInvestor();
+
+                    queryBalance(investor, earnings);
+                }
+            }
+        });
+    }
+
     // update the user's potential balance and description
     private final TextWatcher balanceWatcher = new TextWatcher() {
         @Override
@@ -321,16 +353,17 @@ public class AddFundsActivity extends AppCompatActivity {
                 String cleanString = s.toString().replaceAll("[$,.]", "");
 
                 Float parsed = Float.parseFloat(cleanString);
+                moneyToInvestors = round(parsed * (float) project.getEquity() * (float) 0.0001);
+                remainingMoney = round((parsed / 100) - moneyToInvestors);
+
                 if (parsed == 0F) {
                     tvNewBalanceCount.setText(formatter.format(round(currBalance)));
                     tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_black));
                 } else {
-                    tvNewBalanceCount.setText(formatter.format(round(currBalance + (parsed / 100))));
+                    tvNewBalanceCount.setText(formatter.format(round(currBalance + remainingMoney)));
                     tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_green));
                 }
                 String formatted = NumberFormat.getCurrencyInstance().format((parsed / 100));
-                double moneyToInvestors = parsed * project.getEquity() * 0.0001;
-                double remainingMoney = (parsed / 100) - moneyToInvestors;
                 tvDescrip.setText("$ " + moneyToInvestors + "0 of your money will go to investors based on the " + project.getEquity() + "% equity that you gave away for this project. " +
                                     "The reamining $" + remainingMoney + "0 will be added to your balance.");
                 current = formatted;
