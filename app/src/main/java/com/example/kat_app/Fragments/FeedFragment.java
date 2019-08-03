@@ -110,6 +110,7 @@ public class FeedFragment extends Fragment {
     }
 
     protected void fetchHomeAsync(int page) {
+        updates.clear();
         adapter.clear();
         queryUpdates(new Date(0));
         swipeContainer.setRefreshing(false);

@@ -90,6 +90,8 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
 
         ButterKnife.bind(this);
 
+        MainActivity.setStatusBar(getWindow());
+
         btnAddPhots.setOnClickListener(this);
 
         LoadingBar = new ProgressDialog(this);
