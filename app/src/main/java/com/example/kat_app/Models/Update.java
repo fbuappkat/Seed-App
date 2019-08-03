@@ -5,12 +5,14 @@ import android.util.Log;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /* FBU 2019
    Update defines the elements of an update about a project and getters and setters for each.
@@ -116,6 +118,27 @@ public class Update extends ParseObject {
 
     public void setUser(ParseUser parseUser) {
         put(KEY_USER, parseUser);
+    }
+
+    public static class Query extends ParseQuery<Update> {
+        public Query() {
+            super(Update.class);
+        }
+
+        // Get the first 20 posts
+        public Query getTop() {
+            setLimit(20);
+
+            // Chronological feed
+            orderByDescending(KEY_CREATED_AT);
+            return this;
+        }
+
+        // Get post that is older than the maxDate.
+        public Query getNext(Date maxDate) {
+            whereLessThan(KEY_CREATED_AT, maxDate);
+            return this;
+        }
     }
 
 }

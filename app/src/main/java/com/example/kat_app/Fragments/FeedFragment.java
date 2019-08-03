@@ -14,9 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.baoyz.widget.PullRefreshLayout;
+import com.codepath.instagram.EndlessRecyclerViewScrollListener;
 import com.example.kat_app.Activities.AddUpdateActivity;
 import com.example.kat_app.Adapters.UpdatesAdapter;
 import com.example.kat_app.Models.Update;
@@ -26,6 +28,7 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /* FBU 2019
@@ -39,7 +42,6 @@ public class FeedFragment extends Fragment {
     protected UpdatesAdapter adapter;
     protected List<Update> updates;
     protected PullRefreshLayout swipeContainer;
-    private int limit;
     // Store a member variable for the listener
     private com.codepath.instagram.EndlessRecyclerViewScrollListener scrollListener;
     private ImageView btnGoToAddUpdate;
@@ -57,10 +59,11 @@ public class FeedFragment extends Fragment {
 
         rvFeed = view.findViewById(R.id.rvFeed);
         setAddButton(view);
-        swipeContainer = view.findViewById(R.id.swipeContainer);
 
         pbLoad = view.findViewById(R.id.pbLoad);
         rvFeed.setVisibility(View.INVISIBLE);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
         // create the data source
         updates = new ArrayList<>();
@@ -69,7 +72,28 @@ public class FeedFragment extends Fragment {
         // set the adapter on the recycler view
         rvFeed.setAdapter(adapter);
         // set the layout manager on the recycler view
-        rvFeed.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvFeed.setLayoutManager(layoutManager);
+
+        setupSwipeRefreshing(view);
+        enableEndlessScrolling(layoutManager);
+
+        rvFeed.addOnScrollListener(scrollListener);
+        //Todo - figure out how to make loading bar keep going until data is actually binded
+        queryUpdates(new Date(0));
+
+    }
+
+    protected void enableEndlessScrolling(LinearLayoutManager layoutManager) {
+        scrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                queryUpdates(getMaxDate());
+            }
+        };
+    }
+
+    protected void setupSwipeRefreshing(View view) {
+        swipeContainer = view.findViewById(R.id.swipeContainer);
 
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
@@ -78,24 +102,32 @@ public class FeedFragment extends Fragment {
                 // Your code to refresh the list here.
                 // Make sure you call swipeContainer.setRefreshing(false)
                 // once the network request has completed successfully.
-                updates.clear();
-                adapter.clear();
-                queryUpdates();
+                fetchHomeAsync(0);
             }
         });
-
         swipeContainer.setRefreshStyle(PullRefreshLayout.STYLE_SMARTISAN);
         swipeContainer.setColor(getResources().getColor(R.color.kat_grey_6));
-        //Todo - figure out how to make loading bar keep going until data is actually binded
-        queryUpdates();
+    }
 
+    protected void fetchHomeAsync(int page) {
+        adapter.clear();
+        queryUpdates(new Date(0));
+        swipeContainer.setRefreshing(false);
     }
 
     //get posts via network request
-    protected void queryUpdates() {
-        ParseQuery<Update> updateQuery = new ParseQuery<Update>(Update.class);
-        //updateQuery.include(Update.KEY_USER);
-        updateQuery.addDescendingOrder(Update.KEY_CREATED_AT);
+    protected void queryUpdates(final Date maxDate) {
+        final Update.Query updateQuery = new Update.Query();
+        updateQuery.getTop();
+
+        // If app is just opened, get newest 20 posts
+        // Else query for older posts
+        if (maxDate.equals(new Date(0))) {
+            adapter.clear();
+            updateQuery.getTop();
+        } else {
+            updateQuery.getNext(maxDate).getTop();
+        }
 
         updateQuery.findInBackground(new FindCallback<Update>() {
             @Override
@@ -127,5 +159,16 @@ public class FeedFragment extends Fragment {
                 startActivity(TimelineToUpdate);
             }
         });
+    }
+
+    // Get maximum Date to find next post to load.
+    protected Date getMaxDate() {
+        int size = updates.size();
+        if (size == 0) {
+            return new Date(0);
+        } else {
+            Update oldest = updates.get(updates.size() - 1);
+            return oldest.getCreatedAt();
+        }
     }
 }
