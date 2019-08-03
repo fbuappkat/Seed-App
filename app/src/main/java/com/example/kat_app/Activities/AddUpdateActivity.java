@@ -10,16 +10,23 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+import com.azoft.carousellayoutmanager.CarouselLayoutManager;
+import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
+import com.azoft.carousellayoutmanager.CenterScrollListener;
+import com.example.kat_app.Adapters.MediaAdapter;
 import com.example.kat_app.Adapters.SpinAdapter;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.Models.Update;
@@ -30,6 +37,8 @@ import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+
+import org.json.JSONArray;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -51,18 +60,20 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
     @BindView(R.id.sProjectChoice)
     Spinner spinner;
     @BindView(R.id.ivBack)
-    ImageView ivBack;
-    @BindView(R.id.lnrImages)
-    LinearLayout lnrImages;
+    ImageButton ivBack;
+    @BindView(R.id.rvImages)
+    RecyclerView rvImages;
     @BindView(R.id.btnAddPhots)
     Button btnAddPhots;
 
     protected ArrayList<Project> projects = new ArrayList<>();
     protected SpinAdapter spinAdapter;
+    private MediaAdapter mediaAdapter;
     private Project chosenProject;
     private String chosenProjectName;
     private ArrayList<String> imagesPathList;
     private ArrayList<ParseFile> images;
+    private ArrayList<Bitmap> photos;
     private Bitmap yourbitmap;
     private Bitmap resized;
     private ProgressDialog LoadingBar;
@@ -84,6 +95,18 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
         LoadingBar = new ProgressDialog(this);
 
         images = new ArrayList<>();
+        photos = new ArrayList<>();
+
+        // create the adapter
+        mediaAdapter = new MediaAdapter(this, photos, 1);
+        // set the adapter on the recycler view
+        final CarouselLayoutManager layoutManager = new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL);
+        layoutManager.setPostLayoutListener(new CarouselZoomPostLayoutListener());
+        rvImages.setHasFixedSize(true);
+        rvImages.setLayoutManager(layoutManager);
+        rvImages.setAdapter(mediaAdapter);
+
+        rvImages.addOnScrollListener(new CenterScrollListener());
 
         setBackButton();
         setAddUpdateButton();
@@ -176,10 +199,11 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
                         Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
                         ParseFile convertedImage = conversionBitmapParseFile(selectedImage);
                         images.add(convertedImage);
-                        ImageView imageView = new ImageView(this);
-                        imageView.setImageBitmap(selectedImage);
-                        imageView.setAdjustViewBounds(true);
-                        lnrImages.addView(imageView);
+                        photos.add(selectedImage);
+                        mediaAdapter.notifyDataSetChanged();
+                        //ImageView imageView = new ImageView(this);
+                        //imageView.setImageBitmap(selectedImage);
+                       // imageView.setAdjustViewBounds(true);
                     }
 
                     break;
@@ -195,10 +219,11 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
                         if (bitmap != null) {
                             ParseFile convertedImage = conversionBitmapParseFile(bitmap);
                             images.add(convertedImage);
-                            ImageView imageView = new ImageView(this);
-                            imageView.setImageBitmap(bitmap);
-                            imageView.setAdjustViewBounds(true);
-                            lnrImages.addView(imageView);
+                            photos.add(bitmap);
+                            mediaAdapter.notifyDataSetChanged();
+                            //ImageView imageView = new ImageView(this);
+                            //imageView.setImageBitmap(bitmap);
+                            //imageView.setAdjustViewBounds(true);
                         }
                     }
                     break;

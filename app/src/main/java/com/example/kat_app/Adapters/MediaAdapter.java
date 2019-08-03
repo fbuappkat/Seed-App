@@ -15,20 +15,31 @@ import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.R;
+import com.parse.ParseFile;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+
+import java.util.ArrayList;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> {
     private static Context context;
     private JSONArray media;
+    private ArrayList<Bitmap> images;
+    private int request;
 
 
     public MediaAdapter(Context context, JSONArray media) {
         this.context = context;
         this.media = media;
+    }
+
+    public MediaAdapter(Context context, ArrayList<Bitmap> images, int request) {
+        this.context = context;
+        this.images = images;
+        this.request = request;
     }
 
     @NonNull
@@ -40,11 +51,16 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MediaAdapter.ViewHolder holder, int position) {
-        try {
-            String url = media.getJSONObject(position).getString("url");
-            holder.bind(url);
-        } catch (JSONException e){
-            e.printStackTrace();
+        if (request == 1 && images.size() != 0) {
+            Bitmap bitmap = images.get(position);
+            holder.bind(bitmap);
+        } else {
+            try {
+                String url = media.getJSONObject(position).getString("url");
+                holder.bind(url);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -52,7 +68,11 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
     @Override
     public int getItemCount() {
         //Log.d(TAG,"item count: " + updates.size());
-        return media.length();
+        if (request == 1) {
+            return images.size();
+        } else {
+            return media.length();
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -65,20 +85,27 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
             super(itemView);
             view = itemView;
             ivMedia = itemView.findViewById(R.id.ivMedia);
-
-
         }
 
 
         //add in data for specific user's post
         public void bind(final String url) {
-            MultiTransformation<Bitmap> multiTransformation = new MultiTransformation<Bitmap>(new CenterCrop(), new RoundedCornersTransformation(20, 0));
+           MultiTransformation<Bitmap> multiTransformation = new MultiTransformation<Bitmap>(new CenterCrop(), new RoundedCornersTransformation(20, 0));
             Glide.with(context)
                     .load(url)
                     .apply(RequestOptions.bitmapTransform(multiTransformation))
                     .into(ivMedia);
         }
 
+        //add in data for specific user's post
+        public void bind(final Bitmap image) {
+            MultiTransformation<Bitmap> multiTransformation = new MultiTransformation<Bitmap>(new CenterCrop(), new RoundedCornersTransformation(20, 0));
+            Glide.with(context)
+                    .asBitmap()
+                    .load(image)
+                    .apply(RequestOptions.bitmapTransform(multiTransformation))
+                    .into(ivMedia);
+        }
     }
 
 }
