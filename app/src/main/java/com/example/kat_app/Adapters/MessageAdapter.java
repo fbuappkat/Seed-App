@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Models.Message;
 import com.example.kat_app.R;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.util.List;
@@ -127,9 +128,16 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
 
             // Insert the profile image from the URL into the ImageView.
-            Glide.with(mContext).load(otherUser.getParseFile("profile_image").getUrl())
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(profileImage);
+            ParseFile image = otherUser.getParseFile("profile_image");
+            if (image != null) {
+                Glide.with(mContext).load(image.getUrl())
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(profileImage);
+            } else {
+                Glide.with(mContext).load(R.drawable.default_profile_image)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(profileImage);
+            }
         }
     }
 }

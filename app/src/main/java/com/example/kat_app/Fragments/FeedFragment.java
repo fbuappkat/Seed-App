@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.baoyz.widget.PullRefreshLayout;
 import com.example.kat_app.Activities.AddUpdateActivity;
 import com.example.kat_app.Adapters.UpdatesAdapter;
 import com.example.kat_app.Models.Update;
@@ -37,7 +38,7 @@ public class FeedFragment extends Fragment {
     public static final String TAG = "FeedFragment";
     protected UpdatesAdapter adapter;
     protected List<Update> updates;
-    protected SwipeRefreshLayout swipeContainer;
+    protected PullRefreshLayout swipeContainer;
     private int limit;
     // Store a member variable for the listener
     private com.codepath.instagram.EndlessRecyclerViewScrollListener scrollListener;
@@ -56,7 +57,7 @@ public class FeedFragment extends Fragment {
 
         rvFeed = view.findViewById(R.id.rvFeed);
         setAddButton(view);
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        swipeContainer = view.findViewById(R.id.swipeContainer);
 
         pbLoad = view.findViewById(R.id.pbLoad);
         rvFeed.setVisibility(View.INVISIBLE);
@@ -72,11 +73,9 @@ public class FeedFragment extends Fragment {
         rvFeed.setAdapter(adapter);
         // set the layout manager on the recycler view
         rvFeed.setLayoutManager(new LinearLayoutManager(getContext()));
-        // Lookup the swipe container view
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
 
         // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        swipeContainer.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 // Your code to refresh the list here.
@@ -87,9 +86,9 @@ public class FeedFragment extends Fragment {
                 queryUpdates();
             }
         });
-        // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(android.R.color.holo_orange_dark,
-                android.R.color.holo_orange_light);
+
+        swipeContainer.setRefreshStyle(PullRefreshLayout.STYLE_SMARTISAN);
+        swipeContainer.setColor(getResources().getColor(R.color.kat_orange_1));
         //Todo - figure out how to make loading bar keep going until data is actually binded
         queryUpdates();
 
