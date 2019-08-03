@@ -17,8 +17,9 @@
     <color name="kat_grey_3">#BFBFBF</color>
     <color name="kat_grey_4">#1affffff</color>
     <color name="kat_grey_5">#66ffffff</color>
+    <color name="kat_grey_6">#EFEFEF</color>
 
-    <color name="kat_black">#000000</color>
+    <color name="kat_black">#202020</color>
 
     <color name="kat_white">#FFFFFF</color>
     <color name="kat_off_white">#EFEFEF</color>

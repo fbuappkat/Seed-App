@@ -35,7 +35,7 @@ android:background="@color/kat_white">
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/montserrat_regular"
+                android:fontFamily="@font/proximanova_regular"
                 android:text="FEED"
                 android:textColor="#000000"
                 android:textSize="18sp" />
@@ -55,11 +55,11 @@ android:background="@color/kat_white">
 
 </android.support.constraint.ConstraintLayout>
 
-    <com.baoyz.widget.PullRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.baoyz.widget.PullRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swipeContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@color/kat_grey_3"
         app:layout_constraintBottom_toBottomOf="@id/view8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,6 +69,7 @@ android:background="@color/kat_white">
             android:id="@+id/rvFeed"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#EFEFEF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

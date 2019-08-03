@@ -66,9 +66,6 @@ public class FeedFragment extends Fragment {
         updates = new ArrayList<>();
         // create the adapter
         adapter = new UpdatesAdapter(getActivity(), updates);
-        // add line between items
-        rvFeed.addItemDecoration(new DividerItemDecoration(getContext(),
-                DividerItemDecoration.VERTICAL));
         // set the adapter on the recycler view
         rvFeed.setAdapter(adapter);
         // set the layout manager on the recycler view
@@ -88,7 +85,7 @@ public class FeedFragment extends Fragment {
         });
 
         swipeContainer.setRefreshStyle(PullRefreshLayout.STYLE_SMARTISAN);
-        swipeContainer.setColor(getResources().getColor(R.color.kat_orange_1));
+        swipeContainer.setColor(getResources().getColor(R.color.kat_grey_6));
         //Todo - figure out how to make loading bar keep going until data is actually binded
         queryUpdates();
 

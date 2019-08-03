@@ -46,7 +46,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/montserrat_regular"
+                        android:fontFamily="@font/proximanova_regular"
                         android:text="PROFILE"
                         android:textColor="#000000"
                         android:textSize="18sp" />
@@ -67,16 +67,6 @@
             </android.support.design.widget.AppBarLayout>
 
         </android.support.constraint.ConstraintLayout>
-
-    <View
-        android:id="@+id/view3"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/kat_grey_3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -133,7 +123,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:fontFamily="@font/montserrat_bold"
+                android:fontFamily="@font/proximanova_bold"
                 android:text="John Doe"
                 android:textColor="#000000"
                 android:textSize="20sp"
@@ -147,7 +137,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:fontFamily="@font/montserrat_semibold"
+                android:fontFamily="@font/proximanova_semibold"
                 android:text="@johndoe"
                 android:textColor="@color/kat_grey_1"
                 android:textSize="18sp"
@@ -160,7 +150,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:fontFamily="@font/montserrat_light"
+                android:fontFamily="@font/proximanova_light"
                 android:text="Menlo Park, CA"
                 android:textColor="@color/kat_grey_2"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -172,7 +162,7 @@
                 android:id="@+id/tvInvestments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_light"
+                android:fontFamily="@font/proximanova_light"
                 android:text="Investments"
                 android:textColor="@color/kat_grey_1"
                 android:textSize="14sp"
@@ -185,7 +175,7 @@
                 android:id="@+id/tvInvestmentsCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_semibold"
+                android:fontFamily="@font/proximanova_semibold"
                 android:text="X"
                 android:textColor="#000000"
                 android:textSize="14sp"
@@ -198,7 +188,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:fontFamily="@font/montserrat_light"
+                android:fontFamily="@font/proximanova_light"
                 android:text="Projects"
                 android:textColor="@color/kat_grey_1"
                 android:textSize="14sp"
@@ -212,7 +202,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:fontFamily="@font/montserrat_semibold"
+                android:fontFamily="@font/proximanova_semibold"
                 android:text="X"
                 android:textColor="#000000"
                 android:textSize="14sp"
@@ -225,7 +215,7 @@
                 android:id="@+id/tvBalance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_light"
+                android:fontFamily="@font/proximanova_light"
                 android:text="Balance"
                 android:textColor="@color/kat_grey_1"
                 android:textSize="14sp"
@@ -239,7 +229,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:fontFamily="@font/montserrat_semibold"
+                android:fontFamily="@font/proximanova_semibold"
                 android:text="X"
                 android:textColor="#000000"
                 android:textSize="14sp"
@@ -253,7 +243,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/gradient"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -280,7 +270,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
-                        android:fontFamily="@font/montserrat_light"
+                        android:fontFamily="@font/proximanova_light"
                         android:text="Biography"
                         android:textColor="@color/kat_grey_1"
                         app:layout_constraintStart_toStartOf="parent"
@@ -295,11 +285,11 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="16dp"
                         android:background="@android:color/transparent"
-                        android:fontFamily="@font/montserrat_regular"
+                        android:fontFamily="@font/proximanova_regular"
                         android:gravity="start"
                         android:text="This is placeholder text to represent a user's biography."
                         android:textColor="#000000"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -327,7 +317,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
-                        android:fontFamily="@font/montserrat_light"
+                        android:fontFamily="@font/proximanova_light"
                         android:text="Portfolio"
                         android:textColor="@color/kat_grey_1"
                         app:layout_constraintStart_toStartOf="parent"
@@ -397,6 +387,26 @@
         </android.support.constraint.ConstraintLayout>
 
     </ScrollView>
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/kat_grey_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/kat_grey_3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>
