@@ -28,6 +28,7 @@ import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.example.kat_app.Adapters.MediaAdapter;
 import com.example.kat_app.Adapters.SpinAdapter;
+import com.example.kat_app.Models.Comment;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
@@ -241,6 +242,7 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
         newUpdate.setUser(currentUser);
         newUpdate.put("type", "Update");
         newUpdate.put("project", project);
+        newUpdate.put("comments", new ArrayList<Comment>());
         newUpdate.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {

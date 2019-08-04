@@ -13,6 +13,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /* FBU 2019
    Update defines the elements of an update about a project and getters and setters for each.
@@ -34,8 +35,8 @@ public class Update extends ParseObject {
         return getJSONArray(KEY_NUM_LIKED_BY);
     }
 
-    public JSONArray getComments() {
-        return getJSONArray(KEY_COMMENTS);
+    public List<Comment> getComments() {
+        return getList(KEY_COMMENTS);
     }
 
     public JSONArray userComments() {
@@ -107,8 +108,7 @@ public class Update extends ParseObject {
     }
 
 
-    public void addComment(String comment) {
-        Log.d("comment", "comment " + comment);
+    public void addComment(Comment comment) {
         add(KEY_COMMENTS, comment);
     }
 

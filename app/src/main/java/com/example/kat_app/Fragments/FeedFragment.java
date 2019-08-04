@@ -28,6 +28,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,12 +42,14 @@ public class FeedFragment extends Fragment {
     protected  RecyclerView rvFeed;
     public static final String TAG = "FeedFragment";
     protected UpdatesAdapter adapter;
-    protected List<Update> updates;
+    protected List<Update> updates = new ArrayList<>();
     protected PullRefreshLayout swipeContainer;
     // Store a member variable for the listener
     private com.codepath.instagram.EndlessRecyclerViewScrollListener scrollListener;
     private ImageButton btnGoToAddUpdate;
     private ProgressBar pbLoad;
+
+    private Bundle savedState = null;
 
     // onCreateView to inflate the view
     @Nullable
@@ -57,7 +60,6 @@ public class FeedFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
         rvFeed = view.findViewById(R.id.rvFeed);
         setAddButton(view);
 
@@ -65,14 +67,13 @@ public class FeedFragment extends Fragment {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
-        // create the data source
-        updates = new ArrayList<>();
+        // set the layout manager on the recycler view
+        rvFeed.setLayoutManager(layoutManager);
+        rvFeed.setHasFixedSize(true);
         // create the adapter
         adapter = new UpdatesAdapter(getActivity(), updates);
         // set the adapter on the recycler view
         rvFeed.setAdapter(adapter);
-        // set the layout manager on the recycler view
-        rvFeed.setLayoutManager(layoutManager);
 
         setupSwipeRefreshing(view);
         enableEndlessScrolling(layoutManager);
@@ -80,7 +81,6 @@ public class FeedFragment extends Fragment {
         rvFeed.addOnScrollListener(scrollListener);
         //Todo - figure out how to make loading bar keep going until data is actually binded
         queryUpdates(new Date(0));
-
     }
 
     protected void enableEndlessScrolling(LinearLayoutManager layoutManager) {

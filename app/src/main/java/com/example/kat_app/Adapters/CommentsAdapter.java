@@ -2,19 +2,33 @@ package com.example.kat_app.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.kat_app.Activities.OtherUserProfileActivity;
+import com.example.kat_app.Activities.UpdateDetailsActivity;
+import com.example.kat_app.Fragments.ProfileFragment;
+import com.example.kat_app.Models.Comment;
+import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.json.JSONArray;
 import org.parceler.Parcels;
 
 import java.text.ParseException;
@@ -28,54 +42,181 @@ import java.util.Locale;
  */
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
 
-    private List<String> comments;
-    Context context;
+    private List<Comment> comments;
+    private Context context;
+
+    private final ParseUser currUser = ParseUser.getCurrentUser();
+    private static final String KEY_PROFILE_IMAGE = "profile_image";
 
     // pass in the Tweets array in the constructor
-    public CommentsAdapter(List<String> list) {
-        comments = list;
-    }
-
-    // create ViewHolder class
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvComment;
-
-        CommentsAdapter commentsAdapter;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-
-            // perform findViewById lookups
-            tvComment = (TextView) itemView.findViewById(R.id.tvCommentField);
-        }
+    public CommentsAdapter(Context context, List<Comment> comments) {
+        this.context = context;
+        this.comments = comments;
     }
 
     // for each row, inflate the layout and cache references into ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
-
-        View tweetView = inflater.inflate(R.layout.item_comment, parent, false);
-        ViewHolder viewHolder = new ViewHolder(tweetView);
-
-        //add itemView's OnClickListener
-        //itemView.setOnClickListener(this);
-        return viewHolder;
+        View view = LayoutInflater.from(context).inflate(R.layout.item_comment, parent, false);
+        return new CommentsAdapter.ViewHolder(view);
     }
 
     // bind the values based on the position of the element
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        // get the data according to position
-        final String comment = comments.get(position);
+        Comment comment = comments.get(position);
         // populate the views according to this data
-        holder.tvComment.setText(comment);
+        holder.bind(comment);
     }
 
     @Override
     public int getItemCount() {
         return comments.size();
+    }
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        private TextView tvUser;
+        private TextView tvComment;
+        private TextView tvRelativeTime;
+        private TextView tvNumLikes;
+        private ImageButton btnLike;
+        private ImageView ivProfileImage;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            tvUser = itemView.findViewById(R.id.tvUser);
+            tvComment = itemView.findViewById(R.id.tvComment);
+            tvRelativeTime = itemView.findViewById(R.id.tvRelativeTime);
+            tvNumLikes = itemView.findViewById(R.id.tvNumLikes);
+            btnLike = itemView.findViewById(R.id.btnLike);
+            ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
+        }
+
+        @Override
+        public void onClick(View v) {
+        }
+
+        //add in data for specific user's post
+        public void bind(final Comment comment) {
+
+            tvUser.setText(comment.getUser().getUsername());
+            tvComment.setText(comment.getComment());
+            tvRelativeTime.setText(getRelativeTimeAgo(String.valueOf(comment.getCreatedAt())));
+            if (comment.getNumLikes() == 0) {
+                tvNumLikes.setVisibility(View.GONE);
+            } else if (comment.getNumLikes() == 1) {
+                tvNumLikes.setVisibility(View.VISIBLE);
+                tvNumLikes.setText(comment.getNumLikes() + " like");
+            } else {
+                tvNumLikes.setVisibility(View.VISIBLE);
+                tvNumLikes.setText(comment.getNumLikes() + " likes");
+            }
+
+            ParseFile profileImage = comment.getUser().getParseFile(KEY_PROFILE_IMAGE);
+
+            if (profileImage != null) {
+                Glide.with(context)
+                        .load(profileImage.getUrl())
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(ivProfileImage);
+            } else {
+                Glide.with(context)
+                        .load(R.drawable.default_profile_image)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(ivProfileImage);
+            }
+
+            if (comment.isLiked()) {
+                btnLike.setImageResource(R.drawable.ic_heart_filled);
+            } else {
+                btnLike.setImageResource(R.drawable.ic_heart_stroke);
+            }
+
+            btnLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!comment.isLiked()) {
+                        btnLike.setImageResource(R.drawable.ic_heart_filled);
+                        int position = getAdapterPosition();
+                        Comment comment = comments.get(position);
+                        int curLikes = comment.getNumLikes();
+                        //add current user to list of users who liked this post
+                        comment.likePost(currUser);
+
+                        comment.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(com.parse.ParseException e) {
+                                if (e != null) {
+                                    e.printStackTrace();
+                                    return;
+                                }
+                            }
+                        });
+                        if (comment.getNumLikes() == 0) {
+                            tvNumLikes.setVisibility(View.GONE);
+                        } else if (comment.getNumLikes() == 1) {
+                            tvNumLikes.setVisibility(View.VISIBLE);
+                            tvNumLikes.setText(comment.getNumLikes() + " like");
+                        } else {
+                            tvNumLikes.setVisibility(View.VISIBLE);
+                            tvNumLikes.setText(comment.getNumLikes() + " likes");
+                        }
+                    } else {
+                        btnLike.setImageResource(R.drawable.ic_heart_stroke);
+                        int position = getAdapterPosition();
+                        Comment comment = comments.get(position);
+                        int curLikes = comment.getNumLikes();
+                        //add current user to list of users who liked this post
+                        comment.unlikePost(currUser);
+
+                        comment.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(com.parse.ParseException e) {
+                                if (e != null) {
+                                    e.printStackTrace();
+                                    return;
+                                }
+                            }
+                        });
+                        if (comment.getNumLikes() == 0) {
+                            tvNumLikes.setVisibility(View.GONE);
+                        } else if (comment.getNumLikes() == 1) {
+                            tvNumLikes.setVisibility(View.VISIBLE);
+                            tvNumLikes.setText(comment.getNumLikes() + " like");
+                        } else {
+                            tvNumLikes.setVisibility(View.VISIBLE);
+                            tvNumLikes.setText(comment.getNumLikes() + " likes");
+                        }
+                    }
+                }
+            });
+
+            if (tvUser.getText().toString().equals(currUser.getUsername())) {
+                tvUser.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    }
+                });
+            } else {
+                tvUser.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // get item position
+                        int position = getAdapterPosition();
+                        // get the update at the position, this won't work if the class is static
+                        Comment comment = comments.get(position);
+                        // create intent for the new activity
+                        Intent feedToProfile = new Intent(context, OtherUserProfileActivity.class);
+                        //pass user as an object
+                        feedToProfile.putExtra("User", Parcels.wrap(comment.getUser()));
+                        // show the activity
+                        context.startActivity(feedToProfile);
+                    }
+                });
+            }
+        }
     }
 
 
@@ -95,8 +236,10 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
             e.printStackTrace();
         }
 
-        return relativeDate;
+        return relativeDate.toUpperCase();
     }
+
+
 
     // Clean all elements of the recycler
     public void clear() {
@@ -107,7 +250,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
     // Add a list of items -- change to type used
     public void addAll(List<String> list) {
         for (int i = 0; i < list.size(); i++) {
-            comments.add(list.get(i));
+            comments.add(comments.get(i));
         }
         notifyDataSetChanged();
     }

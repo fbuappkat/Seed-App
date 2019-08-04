@@ -20,7 +20,7 @@
 
     <TextView
         android:id="@+id/tvEditAccount"
-        android:layout_width="190dp"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginStart="8dp"
         android:fontFamily="@font/proximanova_semibold"
@@ -50,7 +50,7 @@
         android:layout_height="21dp"
         android:layout_marginStart="16dp"
         android:capitalize="characters"
-        android:fontFamily="@font/proximanova_regular"
+        android:fontFamily="@font/proximanova_light"
         android:text="Relative Time"
         android:textColor="@color/kat_grey_2"
         android:textSize="12sp"
@@ -62,37 +62,37 @@
         android:id="@+id/tvNumLikes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="16dp"
         android:fontFamily="@font/proximanova_semibold"
-        android:text="500"
+        android:text="5000"
         android:textColor="@color/kat_black"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/tvNumComments"
-        app:layout_constraintEnd_toStartOf="@+id/btnGoToComments" />
+        app:layout_constraintBottom_toBottomOf="@+id/btnLike"
+        app:layout_constraintEnd_toStartOf="@+id/btnGoToComments"
+        app:layout_constraintTop_toTopOf="@+id/btnLike" />
 
     <ImageButton
         android:id="@+id/btnLike"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="4dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:background="@android:color/transparent"
-        android:padding="3dp"
+        android:padding="8dp"
         android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="@+id/tvNumLikes"
+        android:src="@drawable/ic_heart_stroke"
+        app:layout_constraintBottom_toBottomOf="@+id/tvRelativeTime"
         app:layout_constraintEnd_toStartOf="@+id/tvNumLikes"
-        app:layout_constraintTop_toTopOf="@+id/tvNumLikes" />
+        app:layout_constraintTop_toBottomOf="@+id/view13" />
 
     <ImageButton
         android:id="@+id/btnGoToComments"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="4dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:background="@android:color/transparent"
-        android:padding="3dp"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="@+id/tvNumComments"
+        android:padding="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/btnLike"
         app:layout_constraintEnd_toStartOf="@+id/tvNumComments"
-        app:layout_constraintTop_toTopOf="@+id/tvNumComments"
+        app:layout_constraintTop_toTopOf="@+id/btnLike"
         app:srcCompat="@drawable/ic_comment" />
 
     <View
@@ -110,14 +110,14 @@
         android:id="@+id/tvNumComments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="16dp"
         android:fontFamily="@font/proximanova_semibold"
         android:text="300"
         android:textColor="@color/kat_black"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/btnPostComment"
-        app:layout_constraintTop_toBottomOf="@+id/view13" />
+        app:layout_constraintBottom_toBottomOf="@+id/btnGoToComments"
+        app:layout_constraintEnd_toEndOf="@+id/view13"
+        app:layout_constraintTop_toTopOf="@+id/btnGoToComments" />
 
     <TextView
         android:id="@+id/tvProject"
@@ -141,43 +141,18 @@
         app:layout_constraintStart_toStartOf="@+id/tvEditAccount"
         app:layout_constraintTop_toBottomOf="@+id/tvEditAccount" />
 
-    <EditText
-        android:id="@+id/etAddComment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="10dp"
-        android:background="@android:color/transparent"
-        android:ems="10"
-        android:fontFamily="@font/montserrat_light"
-        android:gravity="start|top"
-        android:hint="Add comment here..."
-        android:inputType="textMultiLine"
-        android:textColor="@color/kat_black"
-        android:textColorHint="@color/kat_grey_2"
-        android:textSize="14sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnPostComment"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvNumLikes" />
-
     <Button
         android:id="@+id/btnPostComment"
         android:layout_width="51dp"
         android:layout_height="33dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
         android:background="@android:color/transparent"
         android:fontFamily="@font/montserrat_semibold"
         android:text="Post"
         android:textColor="@color/kat_orange_1"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/etAddComment"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/etAddComment" />
+        tools:layout_editor_absoluteY="393dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvPhotos"
