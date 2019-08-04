@@ -7,6 +7,39 @@
     android:background="@color/kat_white"
     tools:context=".Activities.DepositCreditActivity">
 
+    <TextView
+        android:id="@+id/tvDisclaimer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/proximanova_regular"
+        android:text="User deposits must be less than $10,000 (USD) at a time."
+        android:textAlignment="center"
+        android:textColor="@color/kat_grey_2"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@+id/tvUSD"
+        app:layout_constraintStart_toStartOf="@+id/etCredits"
+        app:layout_constraintTop_toBottomOf="@+id/bDepositCredit" />
+
+    <TextView
+        android:id="@+id/tvCaption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/proximanova_regular"
+        android:text="Deposit credits into your account to invest in projects all over the world."
+        android:textAlignment="center"
+        android:textColor="@color/kat_black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view14" />
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
@@ -35,10 +68,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/montserrat_regular"
+                    android:fontFamily="@font/proximanova_regular"
                     android:text="DEPOSIT CREDIT"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:textColor="@color/kat_black"
+                    android:textSize="18sp" />
 
                 <ImageButton
                     android:id="@+id/ivBack"
@@ -59,64 +92,92 @@
 
     <Button
         android:id="@+id/bDepositCredit"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
+        android:layout_width="105dp"
+        android:layout_height="35dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="108dp"
         android:background="@drawable/button"
-        android:fontFamily="@font/montserrat_semibold"
+        android:fontFamily="@font/proximanova_semibold"
         android:text="Deposit Credit"
         android:textAllCaps="false"
         android:textColor="@color/kat_white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvNewBalanceCount" />
+        app:layout_constraintEnd_toEndOf="@+id/tvUSD"
+        app:layout_constraintStart_toStartOf="@+id/etCredits"
+        app:layout_constraintTop_toBottomOf="@+id/etCredits" />
 
     <EditText
         android:id="@+id/etCredits"
-        android:layout_width="wrap_content"
+        android:layout_width="260dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="208dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/kat_black"
         android:ems="10"
-        android:fontFamily="@font/montserrat_regular"
+        android:fontFamily="@font/proximanova_regular"
+        android:hint="$0.00"
         android:inputType="numberDecimal"
         android:maxLength="9"
         android:textColor="@color/kat_black"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColorHint="@color/kat_grey_2"
+        app:layout_constraintEnd_toStartOf="@+id/tvUSD"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/tvNewBalance" />
 
     <TextView
         android:id="@+id/tvNewBalance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:fontFamily="@font/montserrat_regular"
-        android:text="Your new balance will be :"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="@+id/tvNewBalanceCount"
-        app:layout_constraintEnd_toStartOf="@+id/tvNewBalanceCount"
-        app:layout_constraintHorizontal_bias="1.0"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/proximanova_regular"
+        android:text="New Balance"
+        android:textColor="@color/kat_black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvNewBalanceCount" />
+        app:layout_constraintTop_toBottomOf="@+id/tvNewBalanceCount" />
 
     <TextView
         android:id="@+id/tvNewBalanceCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="32dp"
-        android:fontFamily="@font/montserrat_semibold"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/proximanova_semibold"
         android:text="$10,000.00"
-        android:textColor="#000000"
-        android:textSize="24sp"
+        android:textColor="@color/kat_black"
+        android:textSize="50sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCaption" />
+
+    <TextView
+        android:id="@+id/tvUSD"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/proximanova_regular"
+        android:text="(USD)"
+        android:textColor="@color/kat_black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/etCredits"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tvNewBalance"
-        app:layout_constraintTop_toBottomOf="@+id/etCredits" />
+        app:layout_constraintStart_toEndOf="@+id/etCredits"
+        app:layout_constraintTop_toTopOf="@+id/etCredits"
+        app:layout_constraintVertical_bias="0.476" />
+
+    <View
+        android:id="@+id/view14"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/kat_grey_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
 </android.support.constraint.ConstraintLayout>

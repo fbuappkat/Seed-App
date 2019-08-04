@@ -179,13 +179,20 @@ public class WithdrawCreditActivity extends AppCompatActivity {
 
                 String cleanString = s.toString().replaceAll("[$,.]", "");
 
-                Float parsed = Float.parseFloat(cleanString);
+                Float parsed = 0F;
+                if (!cleanString.isEmpty()) {
+                    parsed = Float.parseFloat(cleanString);
+
+                    if (round(parsed / 100) > currBalance) {
+                        parsed = 0F;
+                    }
+                }
                 if (parsed == 0F) {
                     tvNewBalanceCount.setText("$" + round(currBalance));
                     tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_black));
                 } else {
                     tvNewBalanceCount.setText("$" + round(currBalance - (parsed / 100)));
-                    tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_green));
+                    tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_orange_1));
                 }
                 String formatted = NumberFormat.getCurrencyInstance().format((parsed / 100));
 
