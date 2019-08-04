@@ -274,6 +274,7 @@ public class DepositCreditActivity extends AppCompatActivity {
                 depositTransaction = new Transaction();
                 depositTransaction.put("sender", ParseUser.getCurrentUser());
                 depositTransaction.put("amount", addedCredits);
+                depositTransaction.put("current_balance", amount);
                 depositTransaction.setType("deposit");
                 depositTransaction.saveInBackground(new SaveCallback() {
                     @Override

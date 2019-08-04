@@ -1,5 +1,6 @@
 package com.example.kat_app.Activities;
 
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,7 +9,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
-import com.example.kat_app.Adapters.TransactionsAdapter;
+import com.codepath.instagram.EndlessRecyclerViewScrollListener;
+import com.example.kat_app.Adapters.CreditTransactionAdapter;
+import com.example.kat_app.Adapters.UserProjectAdapter;
 import com.example.kat_app.Models.Transaction;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
@@ -29,10 +32,25 @@ public class TransactionHistoryActivity extends AppCompatActivity {
 
     @BindView(R.id.ivBack)
     ImageButton ivBack;
+    @BindView(R.id.tabLayout)
+    TabLayout tabLayout;
+    @BindView(R.id.rvDeposits)
+    RecyclerView rvDeposits;
+    @BindView(R.id.rvWithdrawals)
+    RecyclerView rvWithdrawals;
+    @BindView(R.id.rvInvestments)
+    RecyclerView rvInvestments;
+    @BindView(R.id.rvEarnings)
+    RecyclerView rvEarnings;
 
-    private TransactionsAdapter adapter;
-    private List<Transaction> mTransactions;
-    private LinearLayoutManager layoutManager;
+    private CreditTransactionAdapter depositAdapter;
+    private ArrayList<Transaction> deposits;
+
+    private CreditTransactionAdapter withdrawalAdapter;
+    private ArrayList<Transaction> withdrawals;
+
+    private com.codepath.instagram.EndlessRecyclerViewScrollListener scrollListenerDeposits;
+    private com.codepath.instagram.EndlessRecyclerViewScrollListener scrollListenerWithdrawals;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,44 +58,132 @@ public class TransactionHistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_transaction_history);
 
         ButterKnife.bind(this);
-
         MainActivity.setStatusBar(getWindow());
 
-        mTransactions = new ArrayList<>();
+        setCreditTransactionAdapters();
 
-        adapter = new TransactionsAdapter(this, mTransactions);
-
-
-        layoutManager = new LinearLayoutManager(this);
-
-
-        loadTopPosts(new Date(0));
-
+        setTabLayout();
         setBackButton();
     }
 
-    private void setBackButton() {
-        // Set on-click listener for for image view to launch edit account activity
-        ivBack.setOnClickListener(new View.OnClickListener() {
+    private void setCreditTransactionAdapters() {
+        // initialize the lists
+        deposits = new ArrayList<>();
+        withdrawals = new ArrayList<>();
+
+        // create the adapters
+        depositAdapter = new CreditTransactionAdapter(this, deposits);
+        withdrawalAdapter = new CreditTransactionAdapter(this, withdrawals);
+
+        // set the layout manager on the recycler views
+        LinearLayoutManager layoutManagerDeposits = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManagerWithdrawals = new LinearLayoutManager(this);
+        rvDeposits.setLayoutManager(layoutManagerDeposits);
+        rvWithdrawals.setLayoutManager(layoutManagerWithdrawals);
+
+        // set the adapters
+        rvDeposits.setAdapter(depositAdapter);
+        rvWithdrawals.setAdapter(withdrawalAdapter);
+
+        // enable endless scrolling
+        enableEndlessScrolling(layoutManagerDeposits, "deposit");
+        enableEndlessScrolling(layoutManagerWithdrawals, "withdrawal");
+
+        // add scroll listeners to recycler views
+        rvDeposits.addOnScrollListener(scrollListenerDeposits);
+        rvWithdrawals.addOnScrollListener(scrollListenerWithdrawals);
+
+        // load the transactions
+        loadTopTransactions(new Date(0), depositAdapter, deposits, "deposit");
+        loadTopTransactions(new Date(0), withdrawalAdapter, withdrawals, "withdrawal");
+    }
+
+    protected void enableEndlessScrolling(LinearLayoutManager layoutManager, final String type) {
+        if (type.equals("deposit")) {
+            scrollListenerDeposits = new EndlessRecyclerViewScrollListener(layoutManager) {
+                @Override
+                public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                    loadTopTransactions(getMaxDate(deposits), depositAdapter, deposits, type);
+                }
+            };
+        } else if (type.equals("withdrawal")) {
+            scrollListenerWithdrawals = new EndlessRecyclerViewScrollListener(layoutManager) {
+                @Override
+                public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                    loadTopTransactions(getMaxDate(withdrawals), withdrawalAdapter, withdrawals, type);
+                }
+            };
+        }
+    }
+
+    private void setTabLayout() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View v) {
-                onBackPressed();
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0) {
+                    tab.getIcon().setTint(getResources().getColor(R.color.kat_orange_1));
+                    tabLayout.getTabAt(1).getIcon().setTint(getResources().getColor(R.color.kat_black));
+                    tabLayout.getTabAt(2).getIcon().setTint(getResources().getColor(R.color.kat_black));
+                    tabLayout.getTabAt(3).getIcon().setTint(getResources().getColor(R.color.kat_black));
+                    rvDeposits.setVisibility(View.VISIBLE);
+                    rvWithdrawals.setVisibility(View.GONE);
+                    rvInvestments.setVisibility(View.GONE);
+                    rvEarnings.setVisibility(View.GONE);
+                }
+
+                if (tab.getPosition() == 1) {
+                    tab.getIcon().setTint(getResources().getColor(R.color.kat_orange_1));
+                    tabLayout.getTabAt(0).getIcon().setTint(getResources().getColor(R.color.kat_black));
+                    tabLayout.getTabAt(2).getIcon().setTint(getResources().getColor(R.color.kat_black));
+                    tabLayout.getTabAt(3).getIcon().setTint(getResources().getColor(R.color.kat_black));
+                    rvDeposits.setVisibility(View.GONE);
+                    rvWithdrawals.setVisibility(View.VISIBLE);
+                    rvInvestments.setVisibility(View.GONE);
+                    rvEarnings.setVisibility(View.GONE);
+                }
+
+                if (tab.getPosition() == 2) {
+                    tab.getIcon().setTint(getResources().getColor(R.color.kat_orange_1));
+                    tabLayout.getTabAt(0).getIcon().setTint(getResources().getColor(R.color.kat_black));
+                    tabLayout.getTabAt(1).getIcon().setTint(getResources().getColor(R.color.kat_black));
+                    tabLayout.getTabAt(3).getIcon().setTint(getResources().getColor(R.color.kat_black));
+                    rvDeposits.setVisibility(View.GONE);
+                    rvWithdrawals.setVisibility(View.GONE);
+                    rvInvestments.setVisibility(View.VISIBLE);
+                    rvEarnings.setVisibility(View.GONE);
+                }
+
+                if (tab.getPosition() == 3) {
+                    tab.getIcon().setTint(getResources().getColor(R.color.kat_orange_1));
+                    tabLayout.getTabAt(0).getIcon().setTint(getResources().getColor(R.color.kat_black));
+                    tabLayout.getTabAt(1).getIcon().setTint(getResources().getColor(R.color.kat_black));
+                    tabLayout.getTabAt(2).getIcon().setTint(getResources().getColor(R.color.kat_black));
+                    rvDeposits.setVisibility(View.GONE);
+                    rvWithdrawals.setVisibility(View.GONE);
+                    rvInvestments.setVisibility(View.GONE);
+                    rvEarnings.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-    }
-
-    protected void loadTopPosts(final Date maxDate) {
+    protected void loadTopTransactions(final Date maxDate, final CreditTransactionAdapter adapter,
+                                       final ArrayList<Transaction> creditTransactions, String type) {
 
         ParseUser currUser = ParseUser.getCurrentUser();
 
         final Transaction.Query transactionsQuery = new Transaction.Query();
-        transactionsQuery.getTop().withCurrUser(currUser);
+        transactionsQuery.getTop().withCurrUser(currUser).whereEqualTo("type", type);
 
         // If app is just opened, get newest 20 posts
         // Else query for older posts
@@ -98,7 +204,7 @@ public class TransactionHistoryActivity extends AppCompatActivity {
                         adapter.clear();
                     }
 
-                    mTransactions.addAll(transactions);
+                    creditTransactions.addAll(transactions);
                     adapter.notifyDataSetChanged();
 
                     // For logging purposes
@@ -115,13 +221,30 @@ public class TransactionHistoryActivity extends AppCompatActivity {
     }
 
     // Get maximum Date to find next post to load.
-    protected Date getMaxDate() {
-        int size = mTransactions.size();
+    protected Date getMaxDate(ArrayList<Transaction> transactions) {
+        int size = transactions.size();
         if (size == 0) {
             return new Date(0);
         } else {
-            Transaction oldest = mTransactions.get(mTransactions.size() - 1);
+            Transaction oldest = transactions.get(transactions.size() - 1);
             return oldest.getCreatedAt();
         }
     }
+
+    private void setBackButton() {
+        // Set on-click listener for for image view to launch edit account activity
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
 }

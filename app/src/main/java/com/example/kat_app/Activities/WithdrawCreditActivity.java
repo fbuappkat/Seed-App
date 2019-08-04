@@ -49,7 +49,7 @@ public class WithdrawCreditActivity extends AppCompatActivity {
     private float currBalance;
     private float removedCredits;
 
-    private Transaction withdrawlTransaction;
+    private Transaction withdrawalTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,11 +145,12 @@ public class WithdrawCreditActivity extends AppCompatActivity {
                     }
                 });
 
-                withdrawlTransaction = new Transaction();
-                withdrawlTransaction.put("sender", ParseUser.getCurrentUser());
-                withdrawlTransaction.put("amount", removedCredits);
-                withdrawlTransaction.setType("withdrawl");
-                withdrawlTransaction.saveInBackground(new SaveCallback() {
+                withdrawalTransaction = new Transaction();
+                withdrawalTransaction.put("sender", ParseUser.getCurrentUser());
+                withdrawalTransaction.put("amount", removedCredits);
+                withdrawalTransaction.put("current_balance", amount);
+                withdrawalTransaction.setType("withdrawal");
+                withdrawalTransaction.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
                         if (e == null) {
