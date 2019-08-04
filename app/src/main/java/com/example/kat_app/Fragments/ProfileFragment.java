@@ -122,6 +122,8 @@ public class ProfileFragment extends Fragment {
 
         scrollView.setOnTouchListener(bounceTouchListener);
 
+        tabLayout.getTabAt(0).getIcon().setTint(getResources().getColor(R.color.kat_orange_1));
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

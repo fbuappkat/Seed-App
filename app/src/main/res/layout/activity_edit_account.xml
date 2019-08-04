@@ -69,7 +69,7 @@
                     android:fontFamily="@font/proximanova_regular"
                     android:text="EDIT PROFILE"
                     android:textColor="@color/kat_black"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <Button
                     android:id="@+id/bCancel"

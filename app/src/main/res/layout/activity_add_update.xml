@@ -149,6 +149,7 @@
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/proximanova_regular"
         android:text="Chose a project to post an update for."
         android:textAlignment="center"

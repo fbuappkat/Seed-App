@@ -62,7 +62,6 @@ public class FeedFragment extends Fragment {
         setAddButton(view);
 
         pbLoad = view.findViewById(R.id.pbLoad);
-        rvFeed.setVisibility(View.INVISIBLE);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
@@ -120,7 +119,7 @@ public class FeedFragment extends Fragment {
     //get posts via network request
     protected void queryUpdates(final Date maxDate) {
         final Update.Query updateQuery = new Update.Query();
-        updateQuery.getTop();
+        updateQuery.getTop().include("user");
 
         // If app is just opened, get newest 20 posts
         // Else query for older posts
@@ -141,9 +140,7 @@ public class FeedFragment extends Fragment {
                 }
                 updates.addAll(posts);
                 adapter.notifyDataSetChanged();
-                swipeContainer.setRefreshing(false);
                 pbLoad.setVisibility(View.INVISIBLE);
-                rvFeed.setVisibility(View.VISIBLE);
             }
         });
     }
