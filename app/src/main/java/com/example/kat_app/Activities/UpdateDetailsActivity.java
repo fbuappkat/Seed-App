@@ -142,7 +142,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
             }
         });
         swipeContainer.setRefreshStyle(PullRefreshLayout.STYLE_SMARTISAN);
-        swipeContainer.setColor(getResources().getColor(R.color.kat_grey_6));
+        swipeContainer.setColor(getResources().getColor(R.color.kat_grey_7));
     }
 
     protected void fetchHomeAsync(int page) {
@@ -170,7 +170,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
                     adapter.notifyDataSetChanged(); // update adapter
                     // Scroll to the bottom of the list on initial load
                     if (mFirstLoad) {
-                        rvComments.scrollToPosition(0);
+                        rvComments.scrollToPosition(commentList.size() - 1);
                         mFirstLoad = false;
                     }
                 } else {

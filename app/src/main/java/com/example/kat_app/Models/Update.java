@@ -39,9 +39,6 @@ public class Update extends ParseObject {
         return getList(KEY_COMMENTS);
     }
 
-    public JSONArray userComments() {
-        return getJSONArray(KEY_COMMENTS);
-    }
 
     public void likePost(ParseUser u) { add(KEY_NUM_LIKED_BY, u); }
 
@@ -77,8 +74,8 @@ public class Update extends ParseObject {
     }
 
     public int getNumComments() {
-        if (userComments() == null) return 0;
-        return userComments().length();
+        if (getComments() == null) return 0;
+        return getComments().size();
     }
 
     public boolean isLiked() {
