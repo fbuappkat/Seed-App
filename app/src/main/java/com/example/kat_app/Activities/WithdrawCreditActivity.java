@@ -110,7 +110,8 @@ public class WithdrawCreditActivity extends AppCompatActivity {
 
                 Balance balance = accounts.get(0);
                 currBalance = balance.getAmount();
-                tvNewBalanceCount.setText("$" + round(currBalance));
+                NumberFormat formatter = NumberFormat.getCurrencyInstance();
+                tvNewBalanceCount.setText(formatter.format(round(currBalance)));
                 etCredits.addTextChangedListener(balanceWatcher);
             }
         });

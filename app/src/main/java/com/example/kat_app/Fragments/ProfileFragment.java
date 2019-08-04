@@ -322,9 +322,6 @@ public class ProfileFragment extends Fragment {
                 rvInvested.setLayoutManager(new LinearLayoutManager(getContext()));
                 rvInvested.setAdapter(investedProjectsAdapter);
                 // set the layout manager on the recycler view
-                // add line between items
-                rvInvested.addItemDecoration(new DividerItemDecoration(getContext(),
-                        DividerItemDecoration.VERTICAL));
             }
         });
     }

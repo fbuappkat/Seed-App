@@ -29,8 +29,6 @@ public class TransactionHistoryActivity extends AppCompatActivity {
 
     @BindView(R.id.ivBack)
     ImageButton ivBack;
-    @BindView(R.id.rvTransactions)
-    RecyclerView rvTransactions;
 
     private TransactionsAdapter adapter;
     private List<Transaction> mTransactions;
@@ -49,10 +47,8 @@ public class TransactionHistoryActivity extends AppCompatActivity {
 
         adapter = new TransactionsAdapter(this, mTransactions);
 
-        rvTransactions.setAdapter(adapter);
 
         layoutManager = new LinearLayoutManager(this);
-        rvTransactions.setLayoutManager(layoutManager);
 
 
         loadTopPosts(new Date(0));

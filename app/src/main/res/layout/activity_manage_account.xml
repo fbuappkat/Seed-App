@@ -164,6 +164,7 @@
             android:fontFamily="@font/proximanova_regular"
             android:text="Manage Credit"
             android:textColor="@color/kat_black"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/ivNextCredit"
             app:layout_constraintStart_toEndOf="@+id/ivNextCredit"
             app:layout_constraintTop_toTopOf="@+id/ivNextCredit" />

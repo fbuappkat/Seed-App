@@ -17,7 +17,14 @@
         <item name="android:fontFamily">@font/proximanova_light</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">14sp</item>
+        <item name="android:iconTint">@color/kat_black</item>
         <item name="android:textColor">@color/kat_black</item>
+    </style>
+
+    <style name="Base.Widget.Design.TabLayout" parent="android:Widget">
+        <item name="tabBackground">@drawable/menu_background</item>
+        <item name="tabIndicatorColor">@color/kat_orange_2</item>
+        <item name="tabIndicatorHeight">2dp</item>
     </style>
 
 </resources>
