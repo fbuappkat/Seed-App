@@ -93,7 +93,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                     }
                     if (projs.size() != 0) {
                         Project project = projs.get(0);
-                        try {
+                        /*try {
                             JSONArray followers = project.getFollowers();
                             for (int i = 0; i < followers.length(); i++) {
                                 JSONObject jsonobject = followers.getJSONObject(i);
@@ -106,9 +106,9 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                             }
                         } catch (JSONException e1) {
                             e1.printStackTrace();
-                        }
+                        }*/
 
-                        hold.bind(update, project.getName().toString());
+                        hold.bind(update, project.getName());
                     }
                 }
             });
@@ -179,12 +179,9 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
         public void bind(final Update update, String name) {
 
             Log.d(TAG, Boolean.toString(userInFollowList));
-            try {
-                String username = update.getUser().fetchIfNeeded().getString("username");
-                tvUser.setText(username);
-            } catch (com.parse.ParseException e) {
-                e.printStackTrace();
-            }
+
+            String username = update.getUser().getString("username");
+            tvUser.setText(username);
             tvCaption.setText(update.getCaption());
             tvRelativeTime.setText(getRelativeTimeAgo(String.valueOf(update.getCreatedAt())));
             tvNumLikes.setText(Integer.toString(update.getNumLikes()));
@@ -201,12 +198,8 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                 setupAdapter(rvPhotos, media);
             }
 
-            ParseFile profileImage = null;
-            try {
-                profileImage = update.getUser().fetchIfNeeded().getParseFile(KEY_PROFILE_IMAGE);
-            } catch (com.parse.ParseException e) {
-                e.printStackTrace();
-            }
+
+            ParseFile profileImage = update.getUser().getParseFile(KEY_PROFILE_IMAGE);
             if (profileImage != null) {
                 Glide.with(context)
                         .load(profileImage.getUrl())
