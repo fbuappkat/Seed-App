@@ -22,11 +22,11 @@
         android:id="@+id/view27"
         android:layout_width="0dp"
         android:layout_height="3dp"
-        android:layout_marginBottom="24dp"
         android:background="@drawable/gradient_1"
-        app:layout_constraintBottom_toTopOf="@+id/ivColor"
         app:layout_constraintEnd_toEndOf="@+id/tvComingSoon"
-        app:layout_constraintStart_toStartOf="@+id/tvComingSoon" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tvComingSoon"
+        app:layout_constraintTop_toBottomOf="@+id/tvComingSoon" />
 
     <TextView
         android:id="@+id/tvDisclaimer"
@@ -60,19 +60,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view14" />
-
-    <TextView
-        android:id="@+id/tvLibra"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/proximanova_regular"
-        android:text="Checkout with"
-        android:textAlignment="center"
-        android:textColor="@color/kat_black"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/ivColor"
-        app:layout_constraintEnd_toStartOf="@+id/ivColor"
-        app:layout_constraintTop_toTopOf="@+id/ivColor" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -231,11 +218,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="24dp"
         android:fontFamily="@font/proximanova_regular"
         android:text="COMING SOON"
         android:textColor="@color/kat_black"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/view27"
+        app:layout_constraintBottom_toTopOf="@+id/imageView8"
         app:layout_constraintEnd_toStartOf="@+id/view29"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/view28" />
@@ -249,5 +237,18 @@
         app:layout_constraintBottom_toBottomOf="@+id/view27"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvComingSoon" />
+
+    <TextView
+        android:id="@+id/tvLibra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/proximanova_regular"
+        android:text="Checkout with"
+        android:textAlignment="center"
+        android:textColor="@color/kat_black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView8"
+        app:layout_constraintEnd_toStartOf="@+id/imageView8"
+        app:layout_constraintTop_toTopOf="@+id/imageView8" />
 
 </android.support.constraint.ConstraintLayout>

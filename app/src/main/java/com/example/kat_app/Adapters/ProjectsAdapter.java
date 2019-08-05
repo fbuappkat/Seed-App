@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -171,6 +173,40 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
     public void addAll(List<Project> list) {
         projects.addAll(list);
         notifyDataSetChanged();
+    }
+
+    public Filter getFilter(final String text) {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = text;
+                if (charString.isEmpty()) {
+                    matchingProjects = projects;
+                } else {
+                    List<Project> filteredList = new ArrayList<>();
+                    for (Project row : projects) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (row.getName().toLowerCase().contains(charString.toLowerCase()) || row.getDescription().contains(charSequence)) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    matchingProjects = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = matchingProjects;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                matchingProjects = (ArrayList<Project>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
 }

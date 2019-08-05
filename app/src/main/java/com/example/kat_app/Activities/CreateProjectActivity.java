@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -43,6 +44,8 @@ public class CreateProjectActivity extends AppCompatActivity {
 
     @BindView(R.id.btnAdd)
     Button btnAdd;
+    @BindView(R.id.tbCollabs)
+    ToggleButton tbCollabs;
     @BindView(R.id.btnPublish)
     Button btnPublish;
     @BindView(R.id.etName)
@@ -122,7 +125,8 @@ public class CreateProjectActivity extends AppCompatActivity {
                 if (category == "Select a Project Category" || requests.size() == 0 || description.equals("") || equity.equals("")) {
                     Toast.makeText(CreateProjectActivity.this, "Please enter missing fields!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Project proj = createProject(name, description, ParseUser.getCurrentUser(), category, photoFile, equity);
+                    Boolean collab = tbCollabs.getText().equals("YES") ? Boolean.TRUE : Boolean.FALSE;
+                    Project proj = createProject(name, description, ParseUser.getCurrentUser(), category, photoFile, equity, collab);
                     for (int i = 0; i < requests.size(); i++) {
                         createRequest(requests.get(i), prices.get(i), proj);
                     }
@@ -244,10 +248,11 @@ public class CreateProjectActivity extends AppCompatActivity {
     }
 
     //create project and upload to Parse, return project to be used in createRequest
-    private Project createProject(String name, String description, ParseUser user, String category, ParseFile thumbnail, String equity) {
+    private Project createProject(String name, String description, ParseUser user, String category, ParseFile thumbnail, String equity, Boolean collab) {
         final Project newProject = new Project();
         newProject.setDescription(description);
         newProject.setName(name);
+        newProject.setCollabs(collab);
         newProject.setEquity(Integer.parseInt(equity));
         newProject.setCategory(category);
         newProject.setUser(user);

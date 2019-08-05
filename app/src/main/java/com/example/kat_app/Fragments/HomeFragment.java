@@ -169,7 +169,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
             @Override
             public boolean onQueryTextChange(String s) {
                 String text = s;
-                adapter.filter(text);
+                adapter.getFilter(text);
                 return false;
             }
         });
