@@ -123,7 +123,7 @@ public class CreateProjectActivity extends AppCompatActivity {
                 String category = spinnerCategories.getSelectedItem().toString();
                 String equity = etEquity.getText().toString();
                 if (category == "Select a Project Category" || requests.size() == 0 || description.equals("") || equity.equals("")) {
-                    Toast.makeText(CreateProjectActivity.this, "Please add a project description!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateProjectActivity.this, "Please enter missing fields!", Toast.LENGTH_SHORT).show();
                 } else {
                     Boolean collab = tbCollabs.getText().equals("YES") ? Boolean.TRUE : Boolean.FALSE;
                     Project proj = createProject(name, description, ParseUser.getCurrentUser(), category, photoFile, equity, collab);
@@ -209,7 +209,10 @@ public class CreateProjectActivity extends AppCompatActivity {
     public void createRequest(String request, Float price, Project project) {
         final Request newRequest = new Request();
         ParseUser currentUser = ParseUser.getCurrentUser();
-        currentUser.setACL(new ParseACL(currentUser));
+        ParseACL acl = new ParseACL(currentUser);
+        acl.setPublicReadAccess(true);
+        acl.setPublicWriteAccess(true);
+        currentUser.setACL(acl);
         currentUser.saveInBackground();
         newRequest.setPrice(price);
         newRequest.setRequest(request);

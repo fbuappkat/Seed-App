@@ -15,7 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kat_app.Models.Balance;
+import com.example.kat_app.Models.Followers;
 import com.example.kat_app.R;
+import com.google.gson.JsonArray;
 import com.jaeger.library.StatusBarUtil;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -130,10 +132,22 @@ public class SignupActivity extends AppCompatActivity {
                     Log.e("LoginActivity", "Sign up failure");
                     e.printStackTrace();
                 }
+
+                final Followers followers = new Followers();
+                JSONArray empty = new JSONArray();
+                followers.setFollowers(empty);
+                followers.setUser(user);
+                followers.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e!= null){
+                            e.printStackTrace();
+                        }
+                    }
+                });
                 final Balance balance = new Balance();
                 balance.setUser(user);
                 balance.setAmount(0);
-
 
                 balance.saveInBackground(new SaveCallback() {
                     @Override

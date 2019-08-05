@@ -76,8 +76,6 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     TextView tvHandle;
     @BindView(R.id.tvPercentEquity)
     TextView tvPercentEquity;
-    @BindView(R.id.tvTest)
-    TextView tvTest;
     protected LegendAdapter legendAdapter;
     @BindView(R.id.rvLegend)
     RecyclerView rvLegend;

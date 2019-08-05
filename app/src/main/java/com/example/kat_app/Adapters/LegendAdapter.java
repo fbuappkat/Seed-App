@@ -6,12 +6,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kat_app.Models.Request;
 import com.example.kat_app.R;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.List;
 
@@ -37,7 +39,9 @@ public class LegendAdapter extends RecyclerView.Adapter<LegendAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PieEntry request = requests.get(position);
         holder.tvItem.setText(request.getLabel());
-        holder.tvCost.setText(Float.toString(request.getValue()));
+        holder.tvCost.setText("$" + Float.toString(request.getValue()) + "0");
+        holder.btn.setBackgroundColor(ColorTemplate.JOYFUL_COLORS[position]);
+
     }
 
     @Override
@@ -50,6 +54,7 @@ public class LegendAdapter extends RecyclerView.Adapter<LegendAdapter.ViewHolder
         private TextView tvItem;
         private TextView tvCost;
         private ImageView ivColor;
+        private Button btn;
         View view;
 
         public ViewHolder(View itemView) {
@@ -57,12 +62,16 @@ public class LegendAdapter extends RecyclerView.Adapter<LegendAdapter.ViewHolder
             view = itemView;
             tvItem = itemView.findViewById(R.id.tvLegendItem);
             tvCost = itemView.findViewById(R.id.tvLegendCost);
+            btn = itemView.findViewById(R.id.btn);
         }
 
         //add in data for specific user's post
         public void bind(final Request request) {
             tvItem.setText(request.getRequest());
-            tvCost.setText(Float.toString(request.getPrice()));
+            tvCost.setText("$" + Float.toString(request.getPrice()) + "0");
+
+
+
         }
 
     }

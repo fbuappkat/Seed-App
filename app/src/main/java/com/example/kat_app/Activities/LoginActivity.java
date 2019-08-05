@@ -1,6 +1,9 @@
 package com.example.kat_app.Activities;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -8,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,10 +21,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kat_app.R;
+import com.facebook.FacebookSdk;
+import com.facebook.LoggingBehavior;
 import com.jaeger.library.StatusBarUtil;
 import com.parse.LogInCallback;
+import com.parse.ParseACL;
 import com.parse.ParseException;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
+
+import org.parceler.Parcels;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,6 +45,8 @@ import butterknife.ButterKnife;
  */
 public class LoginActivity extends AppCompatActivity {
 
+    private final static String TAG = "LoginActivity";
+
     @BindView(R.id.etLoginUsername) EditText usernameInput;
     @BindView(R.id.etLoginPassword) EditText passwordInput;
     @BindView(R.id.btnLogIn) Button loginBtn;
@@ -39,21 +54,28 @@ public class LoginActivity extends AppCompatActivity {
     TextView tvSignUp;
     @BindView(R.id.loginBackground)
     ConstraintLayout loginBackground;
+    @BindView(R.id.tvFacebookLogin)
+    TextView tvFacebookLogin;
 
     private Boolean passwordShown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
 
+        StatusBarUtil.setTransparent(this);
+        setupParseLogIn();
+        setupFacebookLogIn();
+    }
 
+    private void setupParseLogIn() {
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
             loginToHome();
         } else {
-            setContentView(R.layout.activity_login);
-            ButterKnife.bind(this);
+
             AnimationDrawable animationDrawable = (AnimationDrawable) loginBackground.getBackground();
             animationDrawable.setEnterFadeDuration(2000);
             animationDrawable.setExitFadeDuration(4000);
@@ -112,8 +134,44 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
 
-            StatusBarUtil.setTransparent(this);
         }
+    }
+
+    private void setupFacebookLogIn() {
+        tvFacebookLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseFacebookUtils.logInWithReadPermissionsInBackground(LoginActivity.this,
+                        null, new LogInCallback() {
+                            @Override
+                            public void done(ParseUser user, ParseException err) {
+                                if (err != null) {
+                                    Log.d(TAG, "Error occurred" + err.toString());
+                                    err.printStackTrace();
+                                    generateKeyHash();
+                                } else if (user == null) {
+                                    Log.d(TAG, "The user cancelled the Facebook login.");
+                                } else {
+                                    checkUserStatus(user);
+                                }
+                            }
+                        }
+                );
+            }
+        });
+    }
+
+    private void checkUserStatus(ParseUser user) {
+        if (user.isNew()) {
+            Intent register = new Intent(LoginActivity.this,
+                    RegisterNewUserActivity.class);
+            register.putExtra("user", Parcels.wrap(user));
+            startActivity(register);
+        } else {
+            startActivity(new Intent(LoginActivity.this,
+                    MainActivity.class));
+        }
+        finish();
     }
 
     private void login(String username, String password) {
@@ -129,9 +187,9 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Login credentials incorrect", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
-//                ParseACL parseACL = new ParseACL(ParseUser.getCurrentUser());
- //               parseACL.setPublicReadAccess(true);
-  //              ParseUser.getCurrentUser().setACL(parseACL);
+               /*ParseACL parseACL = new ParseACL(ParseUser.getCurrentUser());
+               parseACL.setPublicReadAccess(true);
+               ParseUser.getCurrentUser().setACL(parseACL);*/
             }
         });
     }
@@ -168,5 +226,28 @@ public class LoginActivity extends AppCompatActivity {
         final Intent loginToHome = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(loginToHome);
         finish();
+    }
+
+    private void generateKeyHash() {
+        // Add code to print out the key hash
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo("com.example.katapp",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e("KeyHash:", e.toString());
+        } catch (NoSuchAlgorithmException e) {
+            Log.e("KeyHash:", e.toString());
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
     }
 }

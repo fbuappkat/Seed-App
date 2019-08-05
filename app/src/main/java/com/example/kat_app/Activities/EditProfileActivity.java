@@ -76,6 +76,8 @@ public class EditProfileActivity extends AppCompatActivity {
     Button bEditName;
     @BindView(R.id.bEditUsername)
     Button bEditUsername;
+    @BindView(R.id.emailHolder)
+    ConstraintLayout emailHolder;
     @BindView(R.id.bEditEmail)
     Button bEditEmail;
     @BindView(R.id.bEditBio)
@@ -91,6 +93,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private Double latitude;
     private Double longitude;
+    private boolean facebookUser;
 
     private static final String TAG = "EditProfileActivity";
     private static final String KEY_NAME = "name";
@@ -98,6 +101,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private static final String KEY_BIO = "bio";
     private static final String KEY_LOCATION = "location";
 
+    private static final String KEY_FACEBOOK_USER = "facebookUser";
     private final static int PLACE_PICKER_REQUEST = 1;
     private final static int PICK_PHOTO_CODE = 1034;
     ParseFile photoFile;
@@ -108,6 +112,13 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_account);
 
         ButterKnife.bind(this);
+
+        facebookUser = ParseUser.getCurrentUser().getBoolean(KEY_FACEBOOK_USER);
+
+        if (facebookUser) {
+            emailHolder.setVisibility(View.GONE);
+        }
+
         MainActivity.setStatusBar(getWindow());
         setUploadProfileImage();
         setCancelButton();
