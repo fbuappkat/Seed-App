@@ -1,5 +1,6 @@
 package com.example.kat_app.Activities;
 
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.bottomNav)
     BottomNavigationView bottomNav;
 
+    public static Activity activity;
+
     FragmentManager fragmentManager;
 
     @Override
@@ -38,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
         setStatusBar(getWindow());
         ButterKnife.bind(this);
+
+        activity = this;
 
         // Get the fragment manager
         fragmentManager = getSupportFragmentManager();

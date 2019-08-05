@@ -1,5 +1,6 @@
 package com.example.kat_app.Activities;
 
+import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -70,7 +71,9 @@ public class ManageAccountActivity extends AppCompatActivity {
                         ParseUser.logOut();
                         final Intent intent = new Intent(ManageAccountActivity.this, LoginActivity.class);
                         startActivity(intent);
-                        //finish();
+                        Activity activity = MainActivity.activity;
+                        activity.finish();
+                        finish();
                         dialog.dismiss();
 
                     }

@@ -68,11 +68,10 @@ public class WithdrawCreditActivity extends AppCompatActivity {
 
         String withdrawValue = etCredits.getText().toString().replaceAll("[$,]", "");
 
-        removedCredits = Float.parseFloat(withdrawValue);
         String email = etEmail.getText().toString();
         String confirmEmail = etConfirmEmail.getText().toString();
 
-        if (withdrawValue.isEmpty() || removedCredits == 0F) {
+        if (withdrawValue.isEmpty()) {
             Toast.makeText(this, "Enter a valid amount for payment", Toast.LENGTH_SHORT).show();
             return;
         } else if (email.isEmpty()) {
@@ -85,6 +84,8 @@ public class WithdrawCreditActivity extends AppCompatActivity {
             Toast.makeText(this, "Paypal accounts don't match", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        removedCredits = Float.parseFloat(withdrawValue);
 
         Float newBalance = round(currBalance - removedCredits);
         if (newBalance < 0F) {

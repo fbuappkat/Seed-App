@@ -37,6 +37,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.BounceTouchListener;
 
+import org.parceler.Parcels;
+
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;

@@ -93,9 +93,8 @@ public class DepositCreditActivity extends AppCompatActivity {
     private void submitPayment() {
         String payValue = etCredits.getText().toString().replaceAll("[$,]", "");
 
-        addedCredits = Float.parseFloat(payValue);
-
         if (!payValue.isEmpty()) {
+            addedCredits = Float.parseFloat(payValue);
             DropInRequest dropInRequest = new DropInRequest().clientToken(token);
             startActivityForResult(dropInRequest.getIntent(this), REQUEST_CODE);
         } else
