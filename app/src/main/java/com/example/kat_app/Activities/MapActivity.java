@@ -162,9 +162,9 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                     e.printStackTrace();
                     return;
                 }
+                int idx = 0;
                 for(int i = 0; i < posts.size(); i++){
                     if (posts.get(i).getParseGeoPoint("location") != null){
-
                         //get location from parse and turn into LatLng type
                         ParseGeoPoint loc = posts.get(i).getParseGeoPoint("location");
                         double lat = loc.getLatitude();
@@ -179,9 +179,10 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                                 .title(posts.get(i).getName()));
 
 
-                        marker.setTag(i);
-
+                        marker.setTag(idx);
                         projects.add(posts.get(i));
+                        idx++;
+
 
                     }
                 }
