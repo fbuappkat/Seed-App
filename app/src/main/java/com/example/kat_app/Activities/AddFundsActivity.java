@@ -332,7 +332,7 @@ public class AddFundsActivity extends AppCompatActivity {
                 double moneyToInvestors = parsed * project.getEquity() * 0.0001;
                 double remainingMoney = (parsed / 100) - moneyToInvestors;
                 tvDescrip.setText("$ " + moneyToInvestors + "0 of your money will go to investors based on the " + project.getEquity() + "% equity that you gave away for this project. " +
-                                    "The reamining $" + remainingMoney + "0 will be added to your balance.");
+                                    "The remaining $" + remainingMoney + "0 will be added to your balance.");
                 current = formatted;
                 etCredits.setText(formatted);
                 etCredits.setSelection(formatted.length());
