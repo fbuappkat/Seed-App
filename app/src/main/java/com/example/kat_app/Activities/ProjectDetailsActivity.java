@@ -335,7 +335,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                 if (posts.size() != 0) {
                     ParseUser user = posts.get(0);
                     tvAuthor.setText((CharSequence) user.get("name"));
-                    tvHandle.setText( "@" + user.getUsername());
+                    tvHandle.setText("@" + user.getUsername());
                 }
             }
 
