@@ -30,6 +30,19 @@
         <item>Users</item>
     </string-array>
 
+    <string name="email">Email</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="login">Log In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="don_t_remember_password">Forgot you login details?</string>
+    <string name="dont_have_an_account">Don\'t have an account?</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_in_with_facebook">Sign in with Facebook</string>
+    <string name="or">or</string>
+
 
     <string name="google_maps_api">AIzaSyAhbFxJMu7hjZ646Pl1e414synTc9l70xk</string>
 

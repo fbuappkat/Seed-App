@@ -146,7 +146,7 @@ android:background="@color/kat_white">
             android:hint="Enter comment"
             android:maxLines="6"
             android:textColor="@color/kat_black"
-            android:textColorHint="@color/kat_grey_3"
+            android:textColorHint="@color/kat_grey_2"
             android:textSize="14sp" />
 
         <Button
@@ -168,7 +168,7 @@ android:background="@color/kat_white">
         android:id="@+id/swipeContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#DFDFDF"
+        android:background="@color/kat_grey_3"
         app:layout_constraintBottom_toTopOf="@+id/layout_chatbox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

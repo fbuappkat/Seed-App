@@ -106,7 +106,7 @@ public class FeedFragment extends Fragment {
             }
         });
         swipeContainer.setRefreshStyle(PullRefreshLayout.STYLE_SMARTISAN);
-        swipeContainer.setColor(getResources().getColor(R.color.kat_grey_6));
+        swipeContainer.setColor(getResources().getColor(R.color.kat_grey_7));
     }
 
     protected void fetchHomeAsync(int page) {

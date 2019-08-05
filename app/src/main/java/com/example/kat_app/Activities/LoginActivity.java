@@ -2,19 +2,22 @@ package com.example.kat_app.Activities;
 
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kat_app.R;
+import com.jaeger.library.StatusBarUtil;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -31,10 +34,13 @@ public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.etLoginUsername) EditText usernameInput;
     @BindView(R.id.etLoginPassword) EditText passwordInput;
-    @BindView(R.id.btnLogin) Button loginBtn;
-    @BindView(R.id.btnLoginToSignup) Button loginToSignup;
-    @BindView(R.id.constraint)
-    ConstraintLayout constraintLayout;
+    @BindView(R.id.btnLogIn) Button loginBtn;
+    @BindView(R.id.tvSignUp)
+    TextView tvSignUp;
+    @BindView(R.id.loginBackground)
+    ConstraintLayout loginBackground;
+
+    private Boolean passwordShown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +54,9 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             setContentView(R.layout.activity_login);
             ButterKnife.bind(this);
-            AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+            AnimationDrawable animationDrawable = (AnimationDrawable) loginBackground.getBackground();
             animationDrawable.setEnterFadeDuration(2000);
-            animationDrawable.setExitFadeDuration(3000);
+            animationDrawable.setExitFadeDuration(4000);
             animationDrawable.start();
 
 
@@ -64,19 +70,49 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
 
-            loginToSignup.setOnClickListener(new View.OnClickListener() {
+            // Set up listener for username/password input
+            usernameInput.addTextChangedListener(loginAvailable);
+            passwordInput.addTextChangedListener(loginAvailable);
+
+            // Initially disable button
+            loginBtn.setEnabled(false);
+            loginBtn.setAlpha((float) 0.5);
+
+            // Default password not shown
+            passwordShown = false;
+
+            // Set up listener for password input
+            passwordInput.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    final int DRAWABLE_RIGHT = 2;
+
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        if (event.getRawX() >= (passwordInput.getRight() - passwordInput.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                            if (passwordShown) {
+                                passwordShown = false;
+                                passwordInput.setInputType(129);
+                                passwordInput.setTypeface(passwordInput.getTypeface());
+                            } else {
+                                passwordShown = true;
+                                passwordInput.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                            }
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            });
+
+            tvSignUp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     final Intent loginToSignup = new Intent(LoginActivity.this, SignupActivity.class);
                     startActivity(loginToSignup);
                 }
             });
-        }
 
-        // Set statusBar Transparent
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window w = getWindow();
-            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+            StatusBarUtil.setTransparent(this);
         }
     }
 
@@ -99,6 +135,34 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+    // Wait till text is entered into username/password inputs to enable login button
+    private final TextWatcher loginAvailable = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (passwordInput.getText().toString().trim().length() > 0 &&
+                    passwordInput.getText().toString().trim().length() > 0) {
+                loginBtn.setEnabled(true);
+                loginBtn.setBackground(getDrawable(R.drawable.btn_bg));
+                loginBtn.setAlpha((float) 1);
+                loginBtn.setTextColor(getColor(R.color.login_form_details));
+            } else {
+                loginBtn.setEnabled(false);
+                loginBtn.setBackground(getDrawable(R.drawable.btn_bg));
+                loginBtn.setAlpha((float) 0.5);
+                loginBtn.setTextColor(getColor(R.color.login_form_details_medium));
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 
     private void loginToHome() {
         final Intent loginToHome = new Intent(LoginActivity.this, MainActivity.class);

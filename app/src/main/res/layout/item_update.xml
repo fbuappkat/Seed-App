@@ -75,6 +75,7 @@
         android:id="@+id/btnLike"
         android:layout_width="35dp"
         android:layout_height="35dp"
+        android:layout_marginTop="8dp"
         android:background="@android:color/transparent"
         android:padding="8dp"
         android:scaleType="fitXY"

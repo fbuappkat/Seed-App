@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <gradient android:angle="225"
-        android:endColor="#FCA17E"
-        android:startColor="#FC936C"/>
+    <solid android:color="@color/login_form_details_light" />
+    <corners android:radius="2dp"/>
 </shape>
