@@ -69,8 +69,6 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     TextView tvHandle;
     @BindView(R.id.tvPercentEquity)
     TextView tvPercentEquity;
-    @BindView(R.id.tvTest)
-    TextView tvTest;
     protected LegendAdapter legendAdapter;
     @BindView(R.id.rvLegend)
     RecyclerView rvLegend;
@@ -253,6 +251,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         PieData pieData = new PieData(pieDataSet);
         pieData.setValueTextSize(20);
         pcBreakdown.setData(pieData);
+        pcBreakdown.getLegend().setEnabled(false);
         pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
         pcBreakdown.animateXY(1400, 1400);
     }
