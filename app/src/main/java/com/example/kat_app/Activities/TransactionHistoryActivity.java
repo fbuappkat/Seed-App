@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 
 import com.codepath.instagram.EndlessRecyclerViewScrollListener;
 import com.example.kat_app.Adapters.CreditTransactionAdapter;
+import com.example.kat_app.Adapters.EarningsTransactionAdapter;
 import com.example.kat_app.Adapters.InvestmentTransactionAdapter;
 import com.example.kat_app.Adapters.UserProjectAdapter;
 import com.example.kat_app.Models.Transaction;
@@ -54,11 +55,14 @@ public class TransactionHistoryActivity extends AppCompatActivity {
 
     private InvestmentTransactionAdapter investmentAdapter;
     private ArrayList<Transaction> investments;
-    private float equity;
+
+    private EarningsTransactionAdapter earningsAdapter;
+    private ArrayList<Transaction> earnings;
 
     private EndlessRecyclerViewScrollListener scrollListenerDeposits;
     private EndlessRecyclerViewScrollListener scrollListenerWithdrawals;
     private EndlessRecyclerViewScrollListener scrollListenerInvestments;
+    private EndlessRecyclerViewScrollListener scrollListenerEarnings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,9 +74,32 @@ public class TransactionHistoryActivity extends AppCompatActivity {
 
         setCreditTransactionAdapters();
         setInvestmentTransactionAdapter();
+        setEarningTransactionAdapter();
 
         setTabLayout();
         setBackButton();
+    }
+
+    private void setEarningTransactionAdapter() {
+        // initialize the list
+        earnings = new ArrayList<>();
+
+        // set the layout manager on the recycler view
+        LinearLayoutManager layoutManagerEarnings = new LinearLayoutManager(this);
+        rvEarnings.setLayoutManager(layoutManagerEarnings);
+
+        // create the adapter
+        earningsAdapter = new EarningsTransactionAdapter(this, earnings);
+        rvEarnings.setAdapter(earningsAdapter);
+
+        // enable endless scrolling
+        enableEndlessScrolling(layoutManagerEarnings, "earning");
+
+        // add scroll listeners to recycler views
+        rvEarnings.addOnScrollListener(scrollListenerEarnings);
+
+        // load the transaction
+        loadTopEarningTransactions(new Date(0), "earning");
     }
 
     private void setInvestmentTransactionAdapter() {
@@ -151,6 +178,13 @@ public class TransactionHistoryActivity extends AppCompatActivity {
                     loadTopInvestmentTransactions(getMaxDate(investments), type);
                 }
             };
+        } else if (type.equals("earning")) {
+            scrollListenerEarnings = new EndlessRecyclerViewScrollListener(layoutManager) {
+                @Override
+                public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                    loadTopEarningTransactions(getMaxDate(earnings), type);
+                }
+            };
         }
     }
 
@@ -213,6 +247,45 @@ public class TransactionHistoryActivity extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
+            }
+        });
+    }
+
+    protected void loadTopEarningTransactions(final Date maxDate, String type) {
+        final Transaction.Query transactionsQuery = new Transaction.Query();
+        transactionsQuery.getTop().include("project");
+
+        // If app is just opened, get newest 20 posts
+        // Else query for older posts
+        if (maxDate.equals(new Date(0))) {
+            earningsAdapter.clear();
+            transactionsQuery.getTop().withCurrUserReceiver(currUser).whereEqualTo("type", type);
+        } else {
+            transactionsQuery.getNext(maxDate).getTop().withCurrUserReceiver(currUser).whereEqualTo("type", type);
+        }
+
+        transactionsQuery.findInBackground(new FindCallback<Transaction>() {
+            @Override
+            public void done(List<Transaction> transactions, ParseException e) {
+                if (e == null) {
+
+                    // if opening app, clear out old items
+                    if (maxDate.equals(new Date(0))) {
+                        earningsAdapter.clear();
+                    }
+
+                    earnings.addAll(transactions);
+                    earningsAdapter.notifyDataSetChanged();
+
+                    // For logging purposes
+                    for (int i = 0; i < transactions.size(); i++) {
+                        Log.d(TAG, "Transaction[" + i + "] = "
+                                + transactions.get(i).getAmount()
+                                + "\nusername = " + transactions.get(i).getSender());
+                    }
+                } else {
+                    e.printStackTrace();
+                }
             }
         });
     }

@@ -16,27 +16,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-        <TextView
-            android:id="@+id/tvType3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:fontFamily="@font/proximanova_semibold"
-            android:text="Type"
-            android:textColor="@color/kat_orange_1"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView9"
-            app:layout_constraintStart_toEndOf="@+id/imageView9"
-            app:layout_constraintTop_toTopOf="@+id/imageView9" />
-
         <ImageView
             android:id="@+id/imageView9"
             android:layout_width="7dp"
             android:layout_height="7dp"
             android:layout_marginStart="6dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tvProjectName2"
-            app:layout_constraintStart_toEndOf="@+id/tvProjectName2"
-            app:layout_constraintTop_toTopOf="@+id/tvProjectName2"
+            app:layout_constraintBottom_toBottomOf="@+id/tvProjectName"
+            app:layout_constraintStart_toEndOf="@+id/tvProjectName"
+            app:layout_constraintTop_toTopOf="@+id/tvProjectName"
             app:srcCompat="@drawable/ic_triangle" />
 
         <View
@@ -93,7 +80,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvProjectName2"
+            android:id="@+id/tvProjectName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -128,6 +115,19 @@
             app:layout_constraintStart_toEndOf="@+id/view30"
             app:layout_constraintTop_toTopOf="@+id/tvAmount"
             app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/tvType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:fontFamily="@font/proximanova_semibold"
+            android:text="Type"
+            android:textColor="@color/kat_orange_1"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView9"
+            app:layout_constraintStart_toEndOf="@+id/imageView9"
+            app:layout_constraintTop_toTopOf="@+id/imageView9" />
 
     </android.support.constraint.ConstraintLayout>
 
