@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout4"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -10,8 +11,10 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <View
             android:id="@+id/view20"
@@ -22,19 +25,48 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tvDate" />
 
+        <View
+            android:id="@+id/view30"
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="8dp"
+            android:background="@color/kat_grey_2"
+            app:layout_constraintBottom_toBottomOf="@+id/tvAmount"
+            app:layout_constraintStart_toEndOf="@+id/tvAmount"
+            app:layout_constraintTop_toTopOf="@+id/tvAmount" />
+
+        <View
+            android:id="@+id/view31"
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:background="@color/kat_grey_2"
+            app:layout_constraintBottom_toBottomOf="@+id/tvProject"
+            app:layout_constraintEnd_toEndOf="@+id/view30"
+            app:layout_constraintTop_toTopOf="@+id/tvProject" />
+
+        <View
+            android:id="@+id/view32"
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:background="@color/kat_grey_2"
+            app:layout_constraintBottom_toBottomOf="@+id/tvEquity"
+            app:layout_constraintEnd_toEndOf="@id/view30"
+            app:layout_constraintTop_toTopOf="@+id/tvEquity"
+            app:layout_constraintVertical_bias="1.0" />
+
         <TextView
             android:id="@+id/tvDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="10dp"
             android:fontFamily="@font/proximanova_light"
             android:text="JUL 19, 2019"
             android:textColor="@color/kat_grey_2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvProjectName2" />
+            app:layout_constraintTop_toBottomOf="@+id/tvEquityVal" />
 
         <TextView
             android:id="@+id/tvProject"
@@ -43,65 +75,71 @@
             android:layout_marginTop="10dp"
             android:fontFamily="@font/proximanova_regular"
             android:text="Project"
-            android:textColor="@color/kat_grey_1"
+            android:textColor="@color/kat_black"
             app:layout_constraintStart_toStartOf="@+id/tvDate"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvProjectName2"
+            android:id="@+id/tvProjectName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginStart="8dp"
             android:fontFamily="@font/proximanova_regular"
             android:text="Placeholder Project"
             android:textColor="@color/kat_black"
-            app:layout_constraintStart_toStartOf="@+id/tvProject"
-            app:layout_constraintTop_toBottomOf="@+id/tvProject" />
+            app:layout_constraintBottom_toBottomOf="@+id/tvProject"
+            app:layout_constraintStart_toEndOf="@+id/view30"
+            app:layout_constraintTop_toTopOf="@+id/tvProject"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/tvEquity2"
+            android:id="@+id/tvEquity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/proximanova_regular"
             android:text="Equity"
-            android:textColor="@color/kat_grey_1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textColor="@color/kat_black"
+            app:layout_constraintStart_toStartOf="@+id/tvAmount"
+            app:layout_constraintTop_toBottomOf="@+id/tvAmount" />
 
         <TextView
-            android:id="@+id/tvEquityVal2"
+            android:id="@+id/tvEquityVal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginStart="8dp"
             android:fontFamily="@font/proximanova_semibold"
             android:text="2.0%"
             android:textColor="@color/kat_orange_1"
-            app:layout_constraintEnd_toEndOf="@+id/tvEquity2"
-            app:layout_constraintTop_toBottomOf="@+id/tvEquity2" />
+            app:layout_constraintBottom_toBottomOf="@+id/tvEquity"
+            app:layout_constraintStart_toEndOf="@+id/view32"
+            app:layout_constraintTop_toTopOf="@+id/tvEquity"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/tvAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/proximanova_regular"
             android:text="Amount"
-            android:textColor="@color/kat_grey_1"
-            app:layout_constraintEnd_toStartOf="@+id/tvEquity2"
-            app:layout_constraintTop_toTopOf="@+id/tvEquity2" />
+            android:textColor="@color/kat_black"
+            app:layout_constraintStart_toStartOf="@+id/tvProject"
+            app:layout_constraintTop_toBottomOf="@+id/tvProject" />
 
         <TextView
             android:id="@+id/tvAmountCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginStart="8dp"
             android:fontFamily="@font/proximanova_semibold"
             android:text="$5000.00"
             android:textColor="@color/kat_orange_1"
-            app:layout_constraintEnd_toEndOf="@+id/tvAmount"
-            app:layout_constraintTop_toBottomOf="@+id/tvAmount" />
+            app:layout_constraintBottom_toBottomOf="@+id/tvAmount"
+            app:layout_constraintStart_toEndOf="@+id/view30"
+            app:layout_constraintTop_toTopOf="@+id/tvAmount"
+            app:layout_constraintVertical_bias="0.0" />
 
     </android.support.constraint.ConstraintLayout>
+
 </android.support.constraint.ConstraintLayout>

@@ -42,6 +42,7 @@
             android:fontFamily="@font/proximanova_regular"
             android:text="$3,456.98"
             android:textColor="@color/kat_black"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="@+id/tvAmount"
             app:layout_constraintTop_toBottomOf="@+id/tvAmount" />
 
@@ -50,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="10dp"
             android:fontFamily="@font/proximanova_light"
             android:text="JUL 19, 2019"

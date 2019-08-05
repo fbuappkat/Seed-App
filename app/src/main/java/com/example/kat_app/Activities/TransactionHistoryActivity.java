@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 
 import com.codepath.instagram.EndlessRecyclerViewScrollListener;
 import com.example.kat_app.Adapters.CreditTransactionAdapter;
+import com.example.kat_app.Adapters.InvestmentTransactionAdapter;
 import com.example.kat_app.Adapters.UserProjectAdapter;
 import com.example.kat_app.Models.Transaction;
 import com.example.kat_app.R;
@@ -43,14 +44,21 @@ public class TransactionHistoryActivity extends AppCompatActivity {
     @BindView(R.id.rvEarnings)
     RecyclerView rvEarnings;
 
+    private ParseUser currUser = ParseUser.getCurrentUser();
+
     private CreditTransactionAdapter depositAdapter;
     private ArrayList<Transaction> deposits;
 
     private CreditTransactionAdapter withdrawalAdapter;
     private ArrayList<Transaction> withdrawals;
 
-    private com.codepath.instagram.EndlessRecyclerViewScrollListener scrollListenerDeposits;
-    private com.codepath.instagram.EndlessRecyclerViewScrollListener scrollListenerWithdrawals;
+    private InvestmentTransactionAdapter investmentAdapter;
+    private ArrayList<Transaction> investments;
+    private float equity;
+
+    private EndlessRecyclerViewScrollListener scrollListenerDeposits;
+    private EndlessRecyclerViewScrollListener scrollListenerWithdrawals;
+    private EndlessRecyclerViewScrollListener scrollListenerInvestments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +69,32 @@ public class TransactionHistoryActivity extends AppCompatActivity {
         MainActivity.setStatusBar(getWindow());
 
         setCreditTransactionAdapters();
+        setInvestmentTransactionAdapter();
 
         setTabLayout();
         setBackButton();
+    }
+
+    private void setInvestmentTransactionAdapter() {
+        // initialize the list
+        investments = new ArrayList<>();
+
+        // set the layout manager on the recycler view
+        LinearLayoutManager layoutManagerInvestments = new LinearLayoutManager(this);
+        rvInvestments.setLayoutManager(layoutManagerInvestments);
+
+        // create the adapter
+        investmentAdapter = new InvestmentTransactionAdapter(this, investments);
+        rvInvestments.setAdapter(investmentAdapter);
+
+        // enable endless scrolling
+        enableEndlessScrolling(layoutManagerInvestments, "investment");
+
+        // add scroll listeners to recycler views
+        rvInvestments.addOnScrollListener(scrollListenerInvestments);
+
+        // load the transaction
+        loadTopInvestmentTransactions(new Date(0), "investment");
     }
 
     private void setCreditTransactionAdapters() {
@@ -94,8 +125,8 @@ public class TransactionHistoryActivity extends AppCompatActivity {
         rvWithdrawals.addOnScrollListener(scrollListenerWithdrawals);
 
         // load the transactions
-        loadTopTransactions(new Date(0), depositAdapter, deposits, "deposit");
-        loadTopTransactions(new Date(0), withdrawalAdapter, withdrawals, "withdrawal");
+        loadTopCreditTransactions(new Date(0), depositAdapter, deposits, "deposit");
+        loadTopCreditTransactions(new Date(0), withdrawalAdapter, withdrawals, "withdrawal");
     }
 
     protected void enableEndlessScrolling(LinearLayoutManager layoutManager, final String type) {
@@ -103,14 +134,21 @@ public class TransactionHistoryActivity extends AppCompatActivity {
             scrollListenerDeposits = new EndlessRecyclerViewScrollListener(layoutManager) {
                 @Override
                 public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                    loadTopTransactions(getMaxDate(deposits), depositAdapter, deposits, type);
+                    loadTopCreditTransactions(getMaxDate(deposits), depositAdapter, deposits, type);
                 }
             };
         } else if (type.equals("withdrawal")) {
             scrollListenerWithdrawals = new EndlessRecyclerViewScrollListener(layoutManager) {
                 @Override
                 public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                    loadTopTransactions(getMaxDate(withdrawals), withdrawalAdapter, withdrawals, type);
+                    loadTopCreditTransactions(getMaxDate(withdrawals), withdrawalAdapter, withdrawals, type);
+                }
+            };
+        } else if (type.equals("investment")) {
+            scrollListenerInvestments = new EndlessRecyclerViewScrollListener(layoutManager) {
+                @Override
+                public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                    loadTopInvestmentTransactions(getMaxDate(investments), type);
                 }
             };
         }
@@ -179,10 +217,49 @@ public class TransactionHistoryActivity extends AppCompatActivity {
         });
     }
 
-    protected void loadTopTransactions(final Date maxDate, final CreditTransactionAdapter adapter,
-                                       final ArrayList<Transaction> creditTransactions, String type) {
+    protected void loadTopInvestmentTransactions(final Date maxDate, String type) {
+        final Transaction.Query transactionsQuery = new Transaction.Query();
+        transactionsQuery.include("project");
+        transactionsQuery.include("equity");
+        transactionsQuery.getTop().withCurrUser(currUser).whereEqualTo("type", type);
 
-        ParseUser currUser = ParseUser.getCurrentUser();
+        // If app is just opened, get newest 20 posts
+        // Else query for older posts
+        if (maxDate.equals(new Date(0))) {
+            investmentAdapter.clear();
+            transactionsQuery.getTop().withCurrUser(currUser);
+        } else {
+            transactionsQuery.getNext(maxDate).getTop().withCurrUser(currUser);
+        }
+
+        transactionsQuery.findInBackground(new FindCallback<Transaction>() {
+            @Override
+            public void done(List<Transaction> transactions, ParseException e) {
+                if (e == null) {
+
+                    // if opening app, clear out old items
+                    if (maxDate.equals(new Date(0))) {
+                        investmentAdapter.clear();
+                    }
+
+                    investments.addAll(transactions);
+                    investmentAdapter.notifyDataSetChanged();
+
+                    // For logging purposes
+                    for (int i = 0; i < transactions.size(); i++) {
+                        Log.d(TAG, "Transaction[" + i + "] = "
+                                + transactions.get(i).getAmount()
+                                + "\nusername = " + transactions.get(i).getSender());
+                    }
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    protected void loadTopCreditTransactions(final Date maxDate, final CreditTransactionAdapter adapter,
+                                       final ArrayList<Transaction> creditTransactions, String type) {
 
         final Transaction.Query transactionsQuery = new Transaction.Query();
         transactionsQuery.getTop().withCurrUser(currUser).whereEqualTo("type", type);

@@ -1,4 +1,5 @@
 package com.example.kat_app.Models;
+import android.media.audiofx.DynamicsProcessing;
 import android.os.Parcelable;
 import android.text.format.DateUtils;
 
@@ -17,9 +18,11 @@ public class Transaction extends ParseObject implements Parcelable {
     //fields
     private final static String KEY_AMOUNT = "amount";
     private final static String KEY_SENDER = "sender";
+    private final static String KEY_RECEIVER = "receiver";
     private final static String KEY_REQUEST = "request";
     private final static String KEY_PROJECT = "project";
     private final static String KEY_TYPE = "type";
+    private final static String KEY_EQUITY = "equity";
     private static final String KEY_CREATED_AT = "createdAt";
 
 
@@ -40,6 +43,22 @@ public class Transaction extends ParseObject implements Parcelable {
 
     public void setSender(ParseUser sender){
         put(KEY_SENDER, sender);
+    }
+
+    public ParseUser getReceiver(){
+        return getParseUser(KEY_RECEIVER);
+    }
+
+    public void setReceiver(ParseUser sender){
+        put(KEY_RECEIVER, sender);
+    }
+
+    public Equity getEquity(){
+        return (Equity) get(KEY_EQUITY);
+    }
+
+    public void setEquity(Equity equity){
+        put(KEY_EQUITY, equity);
     }
 
     public Request getRequest(){

@@ -118,7 +118,6 @@ public class ConfirmInvestActivity extends AppCompatActivity {
             investorBalance.saveInBackground();
             receiverBalance.saveInBackground();
             //create transaction for history
-            createTransaction(toInvest, investUser, project, request);
             Toast.makeText(ConfirmInvestActivity.this, "Investment succesful!", Toast.LENGTH_LONG).show();
             //add to investor array
             if (!project.getInvestors().toString().contains(ParseUser.getCurrentUser().getObjectId())) {
@@ -144,6 +143,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
                     }
                 }
             });
+            createTransaction(toInvest, investUser, project, request, newStake);
             //go back to feed
             Intent finished = new Intent(ConfirmInvestActivity.this, MainActivity.class);
             startActivity(finished);
@@ -152,13 +152,32 @@ public class ConfirmInvestActivity extends AppCompatActivity {
     }
 
     //create transaction object and save to parse
-    public void createTransaction(float amount, ParseUser sender, Project project, Request request) {
-        final Transaction transaction = new Transaction();
-        transaction.setAmount(amount);
-        transaction.setSender(sender);
-        transaction.setProject(project);
-        transaction.setRequest(request);
-        transaction.saveInBackground(new SaveCallback() {
+    public void createTransaction(float amount, ParseUser sender, Project project, Request request, Equity equity) {
+        final Transaction investmentTransaction = new Transaction();
+        investmentTransaction.setAmount(amount);
+        investmentTransaction.setSender(sender);
+        investmentTransaction.setProject(project);
+        investmentTransaction.setRequest(request);
+        investmentTransaction.setType("investment");
+        investmentTransaction.setEquity(equity);
+        investmentTransaction.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Log.d("TransactionCreate", "create Transaction Success!");
+                } else {
+                    e.printStackTrace();
+                    Log.e("TransactionCreate", "Failed creating Transaction");
+                }
+            }
+        });
+        final Transaction earningTransaction = new Transaction();
+        earningTransaction.setAmount(amount);
+        earningTransaction.setReceiver(receiveUser);
+        earningTransaction.setProject(project);
+        earningTransaction.setRequest(request);
+        earningTransaction.setType("earning");
+        earningTransaction.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
