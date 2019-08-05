@@ -6,7 +6,6 @@
         <item>"Don't get FB 15"</item>
     </string-array>
 
-    <string name="facebook_app_id">443523356497036</string>
 
     <string-array name="categories">
         <item>Select a Category</item>

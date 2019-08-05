@@ -177,7 +177,10 @@ public class ConfirmInvestActivity extends AppCompatActivity {
 
         Update newUpdate = new Update();
         ParseUser curUser = ParseUser.getCurrentUser();
-        currentUser.setACL(new ParseACL(curUser));
+        ParseACL acl = new ParseACL(curUser);
+        acl.setPublicWriteAccess(true);
+        acl.setPublicReadAccess(true);
+        currentUser.setACL(acl);
         currentUser.saveInBackground();
         newUpdate.setCaption(update);
         newUpdate.setUser(currentUser);
