@@ -39,7 +39,7 @@ public class LegendAdapter extends RecyclerView.Adapter<LegendAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PieEntry request = requests.get(position);
         holder.tvItem.setText(request.getLabel());
-        holder.tvCost.setText(Float.toString(request.getValue()));
+        holder.tvCost.setText("$" + Float.toString(request.getValue()) + "0");
         holder.btn.setBackgroundColor(ColorTemplate.JOYFUL_COLORS[position]);
 
     }
@@ -68,7 +68,8 @@ public class LegendAdapter extends RecyclerView.Adapter<LegendAdapter.ViewHolder
         //add in data for specific user's post
         public void bind(final Request request) {
             tvItem.setText(request.getRequest());
-            tvCost.setText(Float.toString(request.getPrice()));
+            tvCost.setText("$" + Float.toString(request.getPrice()) + "0");
+
 
 
         }

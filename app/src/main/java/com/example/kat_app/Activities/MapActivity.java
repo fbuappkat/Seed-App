@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -145,6 +146,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             }
         });
 
+
         queryProjectsMarkers();
 
     }
@@ -169,10 +171,14 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                         double lng = loc.getLongitude();
                         LatLng projLoc = new LatLng(lat,lng);
 
+
+
                         //create marker and set position to access specific project
                         Marker marker = map.addMarker(new MarkerOptions().position(projLoc)
                                 .snippet(posts.get(i).getDescription())
                                 .title(posts.get(i).getName()));
+
+
                         marker.setTag(i);
 
                         projects.add(posts.get(i));
