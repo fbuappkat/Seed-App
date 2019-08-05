@@ -7,6 +7,27 @@
     android:background="@color/kat_white"
     tools:context=".Activities.DepositCreditActivity">
 
+    <View
+        android:id="@+id/view29"
+        android:layout_width="100dp"
+        android:layout_height="1dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/kat_black"
+        app:layout_constraintBottom_toBottomOf="@+id/view27"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvComingSoon"
+        app:layout_constraintVertical_bias="0.481" />
+
+    <View
+        android:id="@+id/view27"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/gradient_1"
+        app:layout_constraintBottom_toTopOf="@+id/imageView8"
+        app:layout_constraintEnd_toEndOf="@+id/tvComingSoon"
+        app:layout_constraintStart_toStartOf="@+id/tvComingSoon" />
+
     <TextView
         android:id="@+id/tvDisclaimer"
         android:layout_width="0dp"
@@ -39,6 +60,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view14" />
+
+    <TextView
+        android:id="@+id/tvLibra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/proximanova_regular"
+        android:text="Checkout with"
+        android:textAlignment="center"
+        android:textColor="@color/kat_black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView8"
+        app:layout_constraintEnd_toStartOf="@+id/imageView8"
+        app:layout_constraintTop_toTopOf="@+id/imageView8" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -179,5 +213,41 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="24dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_libra_logo" />
+
+    <TextView
+        android:id="@+id/tvComingSoon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/proximanova_regular"
+        android:text="COMING SOON"
+        android:textColor="@color/kat_black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/view27"
+        app:layout_constraintEnd_toStartOf="@+id/view29"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/view28" />
+
+    <View
+        android:id="@+id/view28"
+        android:layout_width="100dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="16dp"
+        android:background="@color/kat_black"
+        app:layout_constraintBottom_toBottomOf="@+id/view27"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvComingSoon" />
 
 </android.support.constraint.ConstraintLayout>

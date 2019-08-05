@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
@@ -51,7 +52,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
     private Spinner spinnerFilter;
     private Spinner spinnerSearch;
     private TextView tvFilter;
-    private ImageView ivMap;
+    private ImageButton ivMap;
     private boolean onProjects = true;
     RecyclerView rvUsers;
     SearchView editsearch;
