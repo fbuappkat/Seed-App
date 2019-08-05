@@ -57,12 +57,15 @@ public class LegendAdapter extends RecyclerView.Adapter<LegendAdapter.ViewHolder
             view = itemView;
             tvItem = itemView.findViewById(R.id.tvLegendItem);
             tvCost = itemView.findViewById(R.id.tvLegendCost);
+            ivColor = itemView.findViewById(R.id.ivColor);
         }
 
         //add in data for specific user's post
         public void bind(final Request request) {
             tvItem.setText(request.getRequest());
             tvCost.setText(Float.toString(request.getPrice()));
+
+
         }
 
     }

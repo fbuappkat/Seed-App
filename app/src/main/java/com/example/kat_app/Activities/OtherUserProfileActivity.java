@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.kat_app.Models.Followers;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
@@ -21,8 +22,10 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.json.JSONArray;
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -57,6 +60,9 @@ public class OtherUserProfileActivity extends AppCompatActivity {
     private static final String KEY_PROFILE_IMAGE = "profile_image";
     private static final String KEY_BIO = "bio";
     private static final String KEY_BALANCE = "balance";
+    private boolean following;
+    private JSONArray follows;
+    private Followers followers;
     ParseUser user;
 
     @Override
@@ -70,38 +76,12 @@ public class OtherUserProfileActivity extends AppCompatActivity {
         setProfileInfo(user);
         setBackButton();
         setChatButton();
+        queryFollowers(user);
 
 
-        if (!user.getJSONArray("followers").toString().contains(ParseUser.getCurrentUser().getObjectId())) {
-            btnFollow.setText("Follow");
-            //todo fix - parse does not allow changing other user info.
-        } else {
-            btnFollow.setText("Unfollow");
 
-        }
 
-        btnFollow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!user.getJSONArray("followers").toString().contains(ParseUser.getCurrentUser().getObjectId())) {
-                    user.add("followers", ParseUser.getCurrentUser());
-                    tvFollowerCount.setText(Integer.toString(user.getJSONArray("followers").length()));
-                    user.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            if (e != null) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                    Toast.makeText(OtherUserProfileActivity.this, "User followed!", Toast.LENGTH_SHORT).show();
-                    btnFollow.setText("Unfollow");
-                } else {
-                    btnFollow.setText("Follow");
 
-                }
-            }
-        });
     }
 
     private void setProfileInfo(ParseUser user) {
@@ -166,6 +146,76 @@ public class OtherUserProfileActivity extends AppCompatActivity {
                     return;
                 }
                 tvProjectsCount.setText(Integer.toString(posts.size()));
+
+            }
+        });
+    }
+
+    protected void queryFollowers(ParseUser user) {
+        ParseQuery<Followers> projectQuery = new ParseQuery<Followers>(Followers.class);
+        projectQuery.whereEqualTo("user", user);
+
+        projectQuery.findInBackground(new FindCallback<Followers>() {
+            @Override
+            public void done(List<Followers> posts, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+                try {
+                    final int followCount = posts.get(0).getFollowers().length();
+                    tvFollowerCount.setText(Integer.toString(followCount));
+                    follows = posts.get(0).getFollowers();
+                    followers = posts.get(0);
+                    if (!follows.toString().contains(ParseUser.getCurrentUser().getObjectId())) {
+                        btnFollow.setText("Follow");
+                    } else {
+                        btnFollow.setText("Unfollow");
+
+                    }
+
+                    following = follows.toString().contains(ParseUser.getCurrentUser().getObjectId());
+                    btnFollow.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (!following) {
+                                followers.add("followers", ParseUser.getCurrentUser());
+                                followers.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        if (e != null) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                                Toast.makeText(OtherUserProfileActivity.this, "User followed!", Toast.LENGTH_SHORT).show();
+                                tvFollowerCount.setText(Integer.toString(followers.getFollowers().length()));
+                                btnFollow.setText("Unfollow");
+                                following = true;
+                            } else {
+                                ArrayList<ParseUser> remove = new ArrayList<>();
+                                remove.add(ParseUser.getCurrentUser());
+                                followers.removeAll("followers", remove);
+                                followers.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        if(e!= null){
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                                btnFollow.setText("Follow");
+                                tvFollowerCount.setText(Integer.toString(followers.getFollowers().length()));
+
+                                following = false;
+
+                            }
+                        }
+                    });
+                } catch (IndexOutOfBoundsException e2) {
+                    e2.printStackTrace();
+                }
             }
         });
     }

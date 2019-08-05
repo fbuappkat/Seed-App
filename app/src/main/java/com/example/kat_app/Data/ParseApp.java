@@ -6,6 +6,7 @@ import com.example.kat_app.Models.Balance;
 import com.example.kat_app.Models.Chat;
 import com.example.kat_app.Models.Comment;
 import com.example.kat_app.Models.Equity;
+import com.example.kat_app.Models.Followers;
 import com.example.kat_app.Models.Message;
 import com.example.kat_app.Models.Update;
 import com.example.kat_app.Models.Project;
@@ -32,6 +33,7 @@ public class ParseApp extends Application {
         ParseObject.registerSubclass(Chat.class);
         ParseObject.registerSubclass(Equity.class);
         ParseObject.registerSubclass(Comment.class);
+        ParseObject.registerSubclass(Followers.class);
 
         // Use for monitoring Parse network traffic
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
