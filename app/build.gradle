@@ -56,10 +56,11 @@ dependencies {
         exclude group: 'com.google.android.gms'
         exclude module: "play-services-places"
     }
-    implementation 'com.sendbird.sdk:sendbird-android-sdk:3.0.96'
+    implementation 'com.sendbird.sdk:sendbird-android-sdk:3.0.97'
     implementation 'com.braintreepayments.api:drop-in:3.7.1'
     implementation 'com.android.volley:volley:1.1.1'
     implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.parse:parsefacebookutils-v4-android:1.10.7@aar'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     implementation 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
@@ -69,6 +70,7 @@ dependencies {
     implementation 'me.everything:overscroll-decor-android:1.0.4'
     implementation 'com.jcodecraeer:xrecyclerview:1.5.9'
     implementation 'com.baoyz.pullrefreshlayout:library:1.2.0'
+    implementation 'com.facebook.android:facebook-android-sdk:4.37.0'
     implementation "com.android.support:appcompat-v7:$supportLibVersion"
     implementation "com.android.support:support-v13:$supportLibVersion"
     // to remove lint error, found in .idea/libraries

@@ -12,6 +12,7 @@ import com.example.kat_app.Models.Project;
 import com.example.kat_app.Models.Request;
 import com.example.kat_app.Models.Transaction;
 import com.parse.Parse;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseObject;
 
 import okhttp3.OkHttpClient;
@@ -47,5 +48,7 @@ public class ParseApp extends Application {
                 .server("http://kat-app.herokuapp.com/parse")
                 .build();
         Parse.initialize(configuration);
+
+        ParseFacebookUtils.initialize(this);
     }
 }
