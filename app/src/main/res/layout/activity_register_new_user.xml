@@ -9,26 +9,6 @@
     android:fitsSystemWindows="true">
 
     <EditText
-        android:id="@+id/etEmail"
-        android:layout_width="0dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/et_bg"
-        android:fontFamily="@font/proximanova_semibold"
-        android:hint="@string/email"
-        android:inputType="textEmailAddress"
-        android:padding="16dp"
-        android:textColor="@color/login_form_details"
-        android:textColorHighlight="@color/login_form_details"
-        android:textColorHint="@color/login_form_details"
-        android:textCursorDrawable="@color/login_form_details"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@id/guideline_right"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/etName" />
-
-    <EditText
         android:id="@+id/etName"
         android:layout_width="0dp"
         android:layout_height="62dp"
@@ -60,24 +40,6 @@
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/etPassword"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/et_bg"
-        android:fontFamily="@font/proximanova_semibold"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        android:padding="16dp"
-        android:textColor="@color/login_form_details"
-        android:textColorHint="@color/login_form_details"
-        android:textColorLink="@color/login_form_details"
-        android:textCursorDrawable="@color/login_form_details"
-        app:layout_constraintEnd_toStartOf="@id/guideline_right"
-        app:layout_constraintStart_toStartOf="@id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/etUsername" />
-
     <TextView
         android:id="@+id/tvSeedCaption"
         android:layout_width="0dp"
@@ -86,7 +48,7 @@
         android:fontFamily="@font/proximanova_semibold"
         android:inputType="none"
         android:padding="8dp"
-        android:text="Sign up to invest in or raise funds for your projects around the world."
+        android:text="Welcome to Seed. Enter your details below to get your account set up."
         android:textAlignment="center"
         android:textColor="@color/login_form_details"
         android:textColorHighlight="@color/login_form_details"
@@ -128,75 +90,22 @@
         android:textCursorDrawable="@color/login_form_details"
         app:layout_constraintEnd_toStartOf="@id/guideline_right"
         app:layout_constraintStart_toStartOf="@id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/etEmail" />
-
-    <EditText
-        android:id="@+id/etConfirmPassword"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/et_bg"
-        android:fontFamily="@font/proximanova_semibold"
-        android:hint="@string/confirm_password"
-        android:inputType="textPassword"
-        android:padding="16dp"
-        android:textColor="@color/login_form_details"
-        android:textColorHint="@color/login_form_details"
-        android:textColorLink="@color/login_form_details"
-        android:textCursorDrawable="@color/login_form_details"
-        app:layout_constraintEnd_toStartOf="@id/guideline_right"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/etName" />
 
     <Button
         android:id="@+id/btnSignUp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/btn_bg"
         android:fontFamily="@font/proximanova_semibold"
-        android:text="@string/sign_up"
+        android:text="Register"
         android:textAllCaps="false"
         android:textColor="@color/login_form_details_medium"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@id/etConfirmPassword" />
-
-    <TextView
-        android:id="@+id/tvForgotPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="@font/proximanova_semibold"
-        android:text="@string/already_have_an_account"
-        android:textColor="@color/login_form_details"
-        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@id/btnSignUp"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/btnSignIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:clickable="true"
-        android:fontFamily="@font/proximanova_bold"
-        android:text="@string/sign_in"
-        android:textColor="@color/login_form_details"
-        android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/tvForgotPassword"
-        app:layout_constraintTop_toBottomOf="@id/btnSignUp" />
+        app:layout_constraintStart_toStartOf="@+id/guideline_left" />
 
 </android.support.constraint.ConstraintLayout>

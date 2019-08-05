@@ -69,6 +69,8 @@ public class ProfileFragment extends Fragment {
     private ScrollView scrollView;
     private RecyclerView rvInvested;
 
+    private boolean facebookUser;
+
     private static final String KEY_NAME = "name";
     private static final String KEY_PROFILE_IMAGE = "profile_image";
     private static final String KEY_BIO = "bio";

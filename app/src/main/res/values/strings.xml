@@ -43,8 +43,10 @@
     <string name="sign_in_with_facebook">Sign in with Facebook</string>
     <string name="or">or</string>
 
-
     <string name="google_maps_api">AIzaSyAhbFxJMu7hjZ646Pl1e414synTc9l70xk</string>
+
+    <string name="facebook_app_id">2923860814350517</string>
+    <string name="fb_login_protocol_scheme">fb2923860814350517</string>
 
 
     <string name="profile_me">My Profile Pic</string>
