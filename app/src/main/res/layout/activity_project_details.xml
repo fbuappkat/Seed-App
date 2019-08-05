@@ -41,6 +41,17 @@
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
+                <ImageButton
+                    android:id="@+id/ivShare"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="right"
+                    android:background="@android:color/transparent"
+                    android:clickable="true"
+                    android:cropToPadding="false"
+                    android:paddingRight="35dp"
+                    android:src="@drawable/ic_facebook" />
+
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.AppBarLayout>
@@ -200,7 +211,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivDetailsComment" />
+                app:layout_constraintTop_toBottomOf="@+id/btnCollab" />
 
             <TextView
                 android:id="@+id/tvNumInvestors"
@@ -336,6 +347,49 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/pcBreakdown" />
+
+            <Button
+                android:id="@+id/btnSocialMedia"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Social Media"
+                android:textColor="@color/kat_orange_1"
+                app:layout_constraintStart_toEndOf="@+id/btnMedia"
+                app:layout_constraintTop_toTopOf="@+id/view2" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Looking for collaborators:"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivDetailsComment" />
+
+            <TextView
+                android:id="@+id/tvCollab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="TextView"
+                app:layout_constraintStart_toEndOf="@+id/textView3"
+                app:layout_constraintTop_toBottomOf="@+id/ivDetailsComment" />
+
+            <Button
+                android:id="@+id/btnCollab"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Collab"
+                app:layout_constraintEnd_toEndOf="@+id/btnInvest"
+                app:layout_constraintStart_toEndOf="@+id/tvCollab"
+                app:layout_constraintTop_toBottomOf="@+id/tvDetailsLikes" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

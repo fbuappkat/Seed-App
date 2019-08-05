@@ -174,7 +174,7 @@
             android:paddingLeft="20dp"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etEquity" />
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         <EditText
             android:id="@+id/etPrice"
@@ -190,7 +190,7 @@
             android:paddingRight="20dp"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/etRequest"
-            app:layout_constraintTop_toBottomOf="@+id/etEquity" />
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         <EditText
             android:id="@+id/etEquity"
@@ -230,6 +230,32 @@
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/etEquity"
             app:layout_constraintTop_toBottomOf="@+id/spinnerCategory" />
+
+        <ToggleButton
+            android:id="@+id/tbCollabs"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/kat_orange_1"
+            android:text="ToggleButton"
+            android:textColor="@color/kat_white"
+            android:textOff="NO"
+            android:textOn="YES"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etEquity" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="8dp"
+            android:text="Are you looking for collaborators on this project?"
+            app:layout_constraintEnd_toStartOf="@+id/tbCollabs"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etEquity" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>

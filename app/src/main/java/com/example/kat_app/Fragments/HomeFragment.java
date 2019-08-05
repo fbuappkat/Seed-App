@@ -130,6 +130,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
                         tvFilter.setVisibility(View.VISIBLE);
                         rvProjects.setVisibility(View.VISIBLE);
                         rvUsers.setVisibility(View.INVISIBLE);
+                        fabCreate.setVisibility(View.VISIBLE);
                         onProjects = true;
                         break;
                     case 1:
@@ -137,6 +138,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
                         tvFilter.setVisibility(View.INVISIBLE);
                         rvProjects.setVisibility(View.INVISIBLE);
                         rvUsers.setVisibility(View.VISIBLE);
+                        fabCreate.setVisibility(View.INVISIBLE);
                         onProjects = false;
                         break;
 
@@ -169,7 +171,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
             @Override
             public boolean onQueryTextChange(String s) {
                 String text = s;
-                adapter.filter(text);
+                adapter.getFilter(text);
                 return false;
             }
         });
@@ -267,6 +269,16 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
                     e.printStackTrace();
                     return;
                 }
+//                for (int  i = 0; i < user.size(); i++) {
+//                    if (user.get(i).getParseObject("follower") == null) {
+//                        final Followers follows = new Followers();
+//                        JSONArray empty = new JSONArray();
+//                        follows.setFollowers(empty);
+//                        follows.setUser(user.get(i));
+//                        follows.saveInBackground();
+//                    }
+//                }
+
                 users.clear();
                 userAdapter.clear();
                 users.addAll(user);

@@ -91,7 +91,6 @@ public class OtherUserProfileActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         tvUsername.setText("@" + user.getUsername());
-        tvFollowerCount.setText(Integer.toString(user.getJSONArray("followers").length()));
         tvBio.setText(user.getString(KEY_BIO));
 
         ParseFile profileImage = user.getParseFile(KEY_PROFILE_IMAGE);

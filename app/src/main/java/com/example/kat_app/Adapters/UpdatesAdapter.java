@@ -35,8 +35,6 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.parceler.Parcels;
 
 import java.text.ParseException;
@@ -238,6 +236,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                         Intent feedToDetails = new Intent(context, UpdateDetailsActivity.class);
                         //serialize the update using parceler, use its short name as a key
                         feedToDetails.putExtra(Update.class.getSimpleName(), Parcels.wrap(update));
+                        feedToDetails.putExtra("user", Parcels.wrap(updates.get(position).getUser()));
                         // show the activity
                         context.startActivity(feedToDetails);
                     }

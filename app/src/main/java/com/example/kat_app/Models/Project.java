@@ -24,6 +24,7 @@ public class Project extends ParseObject implements Parcelable {
     private final static String KEY_MEDIA = "media";
     private final static String KEY_EQUITY = "equity";
     private final static String KEY_CONTAINS_MEDIA = "containsMedia";
+    private final static String KEY_COLLABS = "wantCollaborators";
 
     //setters and getters for Parse project object
 
@@ -93,6 +94,9 @@ public class Project extends ParseObject implements Parcelable {
 
     public Boolean containsMedia() { return getBoolean(KEY_CONTAINS_MEDIA); }
 
+    public Boolean getCollabs() { return getBoolean(KEY_COLLABS); }
+
+    public void setCollabs(Boolean collabs) { put(KEY_COLLABS, collabs); }
 
     public static class Query extends ParseQuery<Project> {
         public Query(){
