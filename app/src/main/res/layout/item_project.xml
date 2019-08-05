@@ -62,22 +62,24 @@
         android:id="@+id/tvInvestments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
         android:layout_marginBottom="16dp"
         android:text="Followers"
         android:textColor="@color/kat_white"
         app:layout_constraintBottom_toBottomOf="@+id/ivThumbnail"
-        app:layout_constraintEnd_toStartOf="@+id/tvAuthor" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tvInvestors"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="100dp"
         android:layout_marginBottom="16dp"
         android:fontFamily="@font/montserrat_regular"
         android:text="Investors"
         android:textColor="@color/kat_white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvAuthor" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     />
 

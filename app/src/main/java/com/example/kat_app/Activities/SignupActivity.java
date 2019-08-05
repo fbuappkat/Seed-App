@@ -63,7 +63,7 @@ public class SignupActivity extends AppCompatActivity {
 
         // Initially disable button
         btnSignup.setEnabled(false);
-        btnSignup.setAlpha((float ) 0.5);
+        btnSignup.setAlpha((float) 0.5);
 
         // Set up listener for username/password input
         etName.addTextChangedListener(signupAvailable);
@@ -140,7 +140,7 @@ public class SignupActivity extends AppCompatActivity {
                 followers.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        if (e!= null){
+                        if (e != null) {
                             e.printStackTrace();
                         }
                     }
@@ -179,12 +179,12 @@ public class SignupActivity extends AppCompatActivity {
                     etConfirmpassword.getText().toString().trim().length() > 0) {
                 btnSignup.setEnabled(true);
                 btnSignup.setBackground(getDrawable(R.drawable.btn_bg));
-                btnSignup.setAlpha((float ) 1);
+                btnSignup.setAlpha((float) 1);
                 btnSignup.setTextColor(getColor(R.color.login_form_details));
             } else {
                 btnSignup.setEnabled(false);
                 btnSignup.setBackground(getDrawable(R.drawable.btn_bg));
-                btnSignup.setAlpha((float ) 0.5);
+                btnSignup.setAlpha((float) 0.5);
                 btnSignup.setTextColor(getColor(R.color.login_form_details_medium));
             }
         }
