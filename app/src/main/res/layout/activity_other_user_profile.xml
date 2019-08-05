@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -29,32 +30,37 @@
                 android:layout_height="wrap_content"
                 android:background="@color/kat_white">
 
+                <ImageButton
+                    android:id="@+id/ivChat"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="16dp"
+                    android:background="@android:color/transparent"
+                    android:paddingLeft="26dp"
+                    android:src="@drawable/ic_send"
+                    android:tint="@color/kat_black" />
+
                 <TextView
                     android:id="@+id/tvProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/montserrat_semibold"
-                    android:text="Profile"
+                    android:fontFamily="@font/proximanova_regular"
+                    android:text="PROFILE"
                     android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
-                <ImageView
-                    android:id="@+id/ivProfileToFeed"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                <ImageButton
+                    android:id="@+id/ivBack"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="left"
-                    android:background="@drawable/back"
-                    android:clickable="true" />
-
-                <ImageView
-                    android:id="@+id/ivChat"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="16dp"
-                    android:background="@drawable/ic_send"
-                    android:clickable="true" />
+                    android:background="@android:color/transparent"
+                    android:clickable="true"
+                    android:paddingRight="26dp"
+                    android:src="@drawable/ic_back"
+                    android:tint="@color/kat_black" />
 
             </android.support.v7.widget.Toolbar>
 
@@ -62,235 +68,359 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/ivProfileImage"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
-        android:layout_marginTop="16dp"
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/view3">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/profile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="@id/scrollView"
+            app:layout_constraintEnd_toEndOf="@id/scrollView"
+            app:layout_constraintVertical_bias="1.0">
+
+            <ImageView
+                android:id="@+id/ivProfileImage"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/default_profile_image" />
+
+            <Button
+                android:id="@+id/btnFollow"
+                android:layout_width="75dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="64dp"
+                android:layout_marginTop="108dp"
+                android:background="@drawable/button"
+                android:fontFamily="@font/proximanova_semibold"
+                android:text="Follow"
+                android:textAllCaps="false"
+                android:textColor="@color/kat_white"
+                app:layout_constraintStart_toStartOf="@+id/ivProfileImage"
+                app:layout_constraintTop_toTopOf="@+id/ivProfileImage" />
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="1dp"
+                android:layout_height="50dp"
+                android:background="@color/kat_grey_3"
+                app:layout_constraintEnd_toStartOf="@id/tvFollowers"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tvInvestments"
+                app:layout_constraintTop_toTopOf="@+id/line2" />
+
+            <View
+                android:id="@+id/line2"
+                android:layout_width="1dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="24dp"
+                android:background="@color/kat_grey_3"
+                app:layout_constraintEnd_toStartOf="@+id/tvInvestments"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tvProjects"
+                app:layout_constraintTop_toBottomOf="@+id/tvLocation" />
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/proximanova_bold"
+                android:text="John Doe"
+                android:textColor="@color/kat_black"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnFollow" />
+
+            <TextView
+                android:id="@+id/tvUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/proximanova_semibold"
+                android:text="@johndoe"
+                android:textColor="@color/kat_grey_1"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+            <TextView
+                android:id="@+id/tvLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/proximanova_light"
+                android:text="Menlo Park, CA"
+                android:textColor="@color/kat_grey_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvUsername" />
+
+            <TextView
+                android:id="@+id/tvInvestments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/proximanova_light"
+                android:text="Investments"
+                android:textColor="@color/kat_grey_1"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/line"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/line2"
+                app:layout_constraintTop_toBottomOf="@+id/tvInvestmentsCount" />
+
+            <TextView
+                android:id="@+id/tvInvestmentsCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/proximanova_semibold"
+                android:text="X"
+                android:textColor="@color/kat_black"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/tvInvestments"
+                app:layout_constraintStart_toStartOf="@+id/tvInvestments"
+                app:layout_constraintTop_toTopOf="@+id/line" />
+
+            <TextView
+                android:id="@+id/tvProjects"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/proximanova_light"
+                android:text="Projects"
+                android:textColor="@color/kat_grey_1"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/line2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvProjectsCount" />
+
+            <TextView
+                android:id="@+id/tvProjectsCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/proximanova_semibold"
+                android:text="X"
+                android:textColor="@color/kat_black"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/tvProjects"
+                app:layout_constraintHorizontal_bias="0.458"
+                app:layout_constraintStart_toStartOf="@+id/tvProjects"
+                app:layout_constraintTop_toTopOf="@+id/line2" />
+
+            <TextView
+                android:id="@+id/tvFollowers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/proximanova_light"
+                android:text="Followers"
+                android:textColor="@color/kat_grey_1"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/line"
+                app:layout_constraintTop_toBottomOf="@+id/tvFollowerCount" />
+
+            <TextView
+                android:id="@+id/tvFollowerCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/proximanova_semibold"
+                android:text="X"
+                android:textColor="@color/kat_black"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/tvFollowers"
+                app:layout_constraintHorizontal_bias="0.468"
+                app:layout_constraintStart_toStartOf="@+id/tvFollowers"
+                app:layout_constraintTop_toTopOf="@+id/line" />
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/constraintLayout2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/gradient"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/line2"
+                app:layout_constraintVertical_bias="0.0">
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/BioHolder"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/round"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tvBioTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/proximanova_light"
+                        android:text="Biography"
+                        android:textColor="@color/kat_grey_1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvBio"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/proximanova_regular"
+                        android:gravity="start"
+                        android:text="This is placeholder text to represent a user's biography."
+                        android:textColor="@color/kat_black"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvBioTitle" />
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/PortfolioHolder"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/round"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/BioHolder">
+
+                    <TextView
+                        android:id="@+id/tvPortfolioTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/proximanova_light"
+                        android:text="Portfolio"
+                        android:textColor="@color/kat_grey_1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/portfolioTabLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvPortfolioTitle"
+                        app:tabTextAppearance="@style/tab_text">
+
+                        <android.support.design.widget.TabItem
+                            android:id="@+id/tabProjects"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:icon="@drawable/ic_project"
+                            android:text="Projects" />
+
+                        <android.support.design.widget.TabItem
+                            android:id="@+id/tabInvestments"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:icon="@drawable/ic_invest"
+                            android:text="Investments" />
+
+                    </android.support.design.widget.TabLayout>
+
+                    <com.chauthai.overscroll.RecyclerViewBouncy
+                        android:id="@+id/rvInvested"
+                        android:layout_width="0dp"
+                        android:layout_height="150dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:visibility="invisible"
+                        app:layout_constraintBottom_toBottomOf="@+id/PortfolioHolder"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/portfolioTabLayout"
+                        app:layout_constraintVertical_bias="0.100000024" />
+
+                    <com.chauthai.overscroll.RecyclerViewBouncy
+                        android:id="@+id/rvProjects"
+                        android:layout_width="0dp"
+                        android:layout_height="150dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="@+id/PortfolioHolder"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/portfolioTabLayout"
+                        app:layout_constraintVertical_bias="0.100000024">
+
+                    </com.chauthai.overscroll.RecyclerViewBouncy>
+
+                </android.support.constraint.ConstraintLayout>
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/kat_grey_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <View
-        android:id="@+id/line"
-        android:layout_width="1dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/kat_grey_3"
-        app:layout_constraintEnd_toStartOf="@+id/tvFollowers"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tvInvestments"
-        app:layout_constraintTop_toBottomOf="@+id/btnFollow" />
-
-    <View
-        android:id="@+id/line2"
-        android:layout_width="1dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/kat_grey_3"
-        app:layout_constraintEnd_toStartOf="@+id/tvInvestments"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tvProjects"
-        app:layout_constraintTop_toBottomOf="@+id/btnFollow" />
-
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="John Doe"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivProfileImage" />
-
-    <TextView
-        android:id="@+id/tvUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:fontFamily="@font/montserrat_semibold"
-        android:text="@johndoe"
-        android:textColor="@color/kat_grey_1"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvName" />
-
-    <TextView
-        android:id="@+id/tvLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:fontFamily="@font/montserrat_light"
-        android:text="Menlo Park, CA"
-        android:textColor="@color/kat_grey_2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvUsername" />
-
-    <TextView
-        android:id="@+id/tvInvestments"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_light"
-        android:text="Investments"
-        android:textColor="@color/kat_grey_1"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/line"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/line2"
-        app:layout_constraintTop_toBottomOf="@+id/tvInvestmentsCount" />
-
-    <TextView
-        android:id="@+id/tvInvestmentsCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/montserrat_semibold"
-        android:text="X"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/tvInvestments"
-        app:layout_constraintHorizontal_bias="0.551"
-        app:layout_constraintStart_toStartOf="@+id/tvInvestments"
-        app:layout_constraintTop_toTopOf="@+id/line2" />
-
-    <TextView
-        android:id="@+id/tvProjects"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_light"
-        android:text="Projects"
-        android:textColor="@color/kat_grey_1"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/line2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvProjectsCount" />
-
-    <TextView
-        android:id="@+id/tvProjectsCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/montserrat_semibold"
-        android:text="X"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/tvProjects"
-        app:layout_constraintHorizontal_bias="0.468"
-        app:layout_constraintStart_toStartOf="@+id/tvProjects"
-        app:layout_constraintTop_toTopOf="@+id/line2" />
-
-    <TextView
-        android:id="@+id/tvFollowers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_light"
-        android:text="Followers"
-        android:textColor="@color/kat_grey_1"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/line"
-        app:layout_constraintTop_toBottomOf="@+id/tvFollowerCount" />
-
-    <TextView
-        android:id="@+id/tvFollowerCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/montserrat_semibold"
-        android:text="X"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/tvFollowers"
-        app:layout_constraintHorizontal_bias="0.473"
-        app:layout_constraintStart_toStartOf="@+id/tvFollowers"
-        app:layout_constraintTop_toTopOf="@+id/line" />
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout2"
+        android:id="@+id/view4"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/gradient"
+        android:layout_height="1dp"
+        android:background="@color/kat_grey_3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvInvestments"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/BioHolder"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/round"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/tvBioTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/montserrat_light"
-                android:text="Biography"
-                android:textColor="@color/kat_grey_2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvBio"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@android:color/transparent"
-                android:fontFamily="@font/montserrat_regular"
-                android:gravity="start"
-                android:text="This is placeholder text to represent a user's biography."
-                android:textColor="#000000"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvBioTitle" />
-        </android.support.constraint.ConstraintLayout>
-
-    </android.support.constraint.ConstraintLayout>
-
-    <Button
-        android:id="@+id/btnFollow"
-        android:layout_width="178dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/button"
-        android:fontFamily="@font/montserrat_semibold"
-        android:text="Follow"
-        android:textColor="@color/kat_white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvLocation" />
 
 </android.support.constraint.ConstraintLayout>

@@ -2,16 +2,25 @@ package com.example.kat_app.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.BounceTouchListener;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.kat_app.Adapters.InvestedProjectsAdapter;
+import com.example.kat_app.Adapters.UserProjectAdapter;
+import com.example.kat_app.Models.Equity;
 import com.example.kat_app.Models.Followers;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
@@ -47,14 +56,27 @@ public class OtherUserProfileActivity extends AppCompatActivity {
     TextView tvInvestmentsCount;
     @BindView(R.id.tvBio)
     TextView tvBio;
-    @BindView(R.id.ivProfileToFeed)
-    ImageView ivBack;
+    @BindView(R.id.rvProjects)
+    RecyclerView rvProjects;
+    @BindView(R.id.rvInvested)
+    RecyclerView rvInvested;
+    @BindView(R.id.ivBack)
+    ImageButton ivBack;
     @BindView(R.id.ivChat)
-    ImageView ivChat;
+    ImageButton ivChat;
     @BindView(R.id.tvFollowerCount)
     TextView tvFollowerCount;
     @BindView(R.id.btnFollow)
     Button btnFollow;
+    @BindView(R.id.scrollView)
+    ScrollView scrollView;
+    @BindView(R.id.portfolioTabLayout)
+    TabLayout tabLayout;
+
+    private UserProjectAdapter userProjectAdapter;
+    private InvestedProjectsAdapter investedProjectsAdapter;
+    private List<Project> userProjects;
+    private List<Equity> investedProjects;
 
     private static final String KEY_NAME = "name";
     private static final String KEY_PROFILE_IMAGE = "profile_image";
@@ -74,17 +96,24 @@ public class OtherUserProfileActivity extends AppCompatActivity {
         user = (ParseUser) Parcels.unwrap(getIntent().getParcelableExtra("User"));
 
         setProfileInfo(user);
+        setTabLayout();
         setBackButton();
         setChatButton();
         queryFollowers(user);
 
-
-
-
-
+        BounceTouchListener bounceTouchListener = BounceTouchListener.create(scrollView, R.id.profile,
+                new BounceTouchListener.OnTranslateListener() {
+                    @Override
+                    public void onTranslate(float translation) {
+                    }
+                }
+        );
+        scrollView.setOnTouchListener(bounceTouchListener);
     }
 
     private void setProfileInfo(ParseUser user) {
+        userProjects = new ArrayList<>();
+        investedProjects = new ArrayList<>();
         try {
             tvName.setText(user.fetchIfNeeded().getString(KEY_NAME));
         } catch (ParseException e) {
@@ -108,8 +137,41 @@ public class OtherUserProfileActivity extends AppCompatActivity {
 
         queryInvested(user);
         queryProjects(user);
+        queryInvestments(user);
     }
 
+    private void setTabLayout() {
+        tabLayout.getTabAt(0).getIcon().setTint(getResources().getColor(R.color.kat_orange_1));
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0) {
+                    tab.getIcon().setTint(getResources().getColor(R.color.kat_orange_1));
+                    tabLayout.getTabAt(1).getIcon().setTint(getResources().getColor(R.color.kat_black));
+                    rvProjects.setVisibility(View.VISIBLE);
+                    rvInvested.setVisibility(View.GONE);
+                }
+
+                if (tab.getPosition() == 1) {
+                    tab.getIcon().setTint(getResources().getColor(R.color.kat_orange_1));
+                    tabLayout.getTabAt(0).getIcon().setTint(getResources().getColor(R.color.kat_black));
+                    rvInvested.setVisibility(View.VISIBLE);
+                    rvProjects.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
     private void setBackButton() {
         // Set on-click listener for for image view to launch edit account activity
         ivBack.setOnClickListener(new View.OnClickListener() {
@@ -144,7 +206,15 @@ public class OtherUserProfileActivity extends AppCompatActivity {
                     e.printStackTrace();
                     return;
                 }
+                userProjects.addAll(posts);
                 tvProjectsCount.setText(Integer.toString(posts.size()));
+
+                // create the adapter
+                userProjectAdapter = new UserProjectAdapter(OtherUserProfileActivity.this, userProjects);
+                // set the adapter on the recycler view
+                // set the layout manager on the recycler view
+                rvProjects.setLayoutManager(new LinearLayoutManager(OtherUserProfileActivity.this));
+                rvProjects.setAdapter(userProjectAdapter);
 
             }
         });
@@ -237,6 +307,30 @@ public class OtherUserProfileActivity extends AppCompatActivity {
                     }
                 }
                 tvInvestmentsCount.setText(Integer.toString(count));
+            }
+        });
+    }
+
+    protected void queryInvestments(ParseUser user) {
+        ParseQuery<Equity> equityQuery = new ParseQuery<>(Equity.class);
+
+        equityQuery.whereEqualTo("investor", user);
+        equityQuery.findInBackground(new FindCallback<Equity>() {
+            @Override
+            public void done(List<Equity> investments, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+                investedProjects.addAll(investments);
+
+                // create the adapter
+                investedProjectsAdapter = new InvestedProjectsAdapter(OtherUserProfileActivity.this, investedProjects);
+                // set the adapter on the recycler view
+                rvInvested.setLayoutManager(new LinearLayoutManager(OtherUserProfileActivity.this));
+                rvInvested.setAdapter(investedProjectsAdapter);
+                // set the layout manager on the recycler view
             }
         });
     }
