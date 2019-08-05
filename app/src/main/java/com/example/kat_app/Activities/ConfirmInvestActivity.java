@@ -177,6 +177,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         earningTransaction.setProject(project);
         earningTransaction.setRequest(request);
         earningTransaction.setType("earning");
+        earningTransaction.setEarningType("investment");
         earningTransaction.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {

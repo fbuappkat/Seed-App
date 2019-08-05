@@ -261,7 +261,7 @@ public class AddFundsActivity extends AppCompatActivity {
 
 
     //update the user's balance
-    protected void queryBalance(ParseUser currUser, final float amount) {
+    protected void queryBalance(final ParseUser currUser, final float amount) {
         final ParseQuery<Balance> balanceQuery = new ParseQuery<>(Balance.class);
 
         balanceQuery.whereEqualTo("user", currUser);
@@ -291,19 +291,20 @@ public class AddFundsActivity extends AppCompatActivity {
                     }
                 });
 
-                depositTransaction = new Transaction();
-                depositTransaction.put("sender", ParseUser.getCurrentUser());
-                depositTransaction.put("amount", addedCredits);
-                depositTransaction.setType("deposit");
-                depositTransaction.saveInBackground(new SaveCallback() {
+                final Transaction earningTransaction = new Transaction();
+                earningTransaction.setAmount(amount);
+                earningTransaction.setReceiver(currUser);
+                earningTransaction.setProject(project);
+                earningTransaction.setType("earning");
+                earningTransaction.setEarningType("project_earning");
+                earningTransaction.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
                         if (e == null) {
-                            Log.d(TAG, "transaction saved!");
-                            onBackPressed();
+                            Log.d("TransactionCreate", "create Transaction Success!");
                         } else {
-                            Log.e(TAG, "Error while saving transaction.");
                             e.printStackTrace();
+                            Log.e("TransactionCreate", "Failed creating Transaction");
                         }
                     }
                 });

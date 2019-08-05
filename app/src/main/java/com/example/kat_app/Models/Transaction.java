@@ -24,7 +24,7 @@ public class Transaction extends ParseObject implements Parcelable {
     private final static String KEY_TYPE = "type";
     private final static String KEY_EQUITY = "equity";
     private static final String KEY_CREATED_AT = "createdAt";
-
+    private static final String KEY_EARNING_TYPE = "earningType";
 
 
     //setters and getters for Parse project object
@@ -105,6 +105,13 @@ public class Transaction extends ParseObject implements Parcelable {
 
     public Transaction(){}
 
+    public void setEarningType(String type) {
+        put(KEY_EARNING_TYPE, type);
+    }
+
+    public String getEarningType() {
+        return getString(KEY_EARNING_TYPE);
+    }
 
     public static class Query extends ParseQuery<Transaction> {
         public Query() {
@@ -123,6 +130,12 @@ public class Transaction extends ParseObject implements Parcelable {
         // Include current User in the Query
         public Query withCurrUser(ParseUser currUser) {
             whereEqualTo("sender", currUser);
+            return this;
+        }
+
+        // Include current User in the Query
+        public Query withCurrUserReceiver(ParseUser currUser) {
+            whereEqualTo("receiver", currUser);
             return this;
         }
 

@@ -27,33 +27,37 @@ import org.parceler.Parcels;
 import java.text.NumberFormat;
 import java.util.List;
 
-public class InvestmentTransactionAdapter extends RecyclerView.Adapter<InvestmentTransactionAdapter.ViewHolder> {
+public class EarningsTransactionAdapter extends RecyclerView.Adapter<EarningsTransactionAdapter.ViewHolder> {
 
     private final String TAG = "TransactionsAdapter";
 
     private Context context;
     private List<Transaction> transactions;
 
-    public InvestmentTransactionAdapter(Context context, List<Transaction> transactions) {
+    public EarningsTransactionAdapter(Context context, List<Transaction> transactions) {
         this.context = context;
         this.transactions = transactions;
     }
 
     @NonNull
     @Override
-    public InvestmentTransactionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_investment_transaction, parent, false);
-        return new InvestmentTransactionAdapter.ViewHolder(view);
+    public EarningsTransactionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_earning_transaction, parent, false);
+        return new EarningsTransactionAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull InvestmentTransactionAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull EarningsTransactionAdapter.ViewHolder holder, int position) {
         Transaction transaction = transactions.get(position);
 
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
         holder.tvProjectName.setText(transaction.getProject().getName());
-        holder.tvEquitVal.setText(transaction.getEquity().getEquity() + "%");
+        if (transaction.getEarningType().equals("investment")) {
+            holder.tvType.setText("Investment");
+        } else if (transaction.getEarningType().equals("project_earning")) {
+            holder.tvType.setText("Project Earning");
+        }
         holder.tvAmountCount.setText(formatter.format(transaction.getAmount()));
         holder.tvDate.setText(transaction.getRelativeTimeAgo());
     }
@@ -68,14 +72,14 @@ public class InvestmentTransactionAdapter extends RecyclerView.Adapter<Investmen
 
         public TextView tvProjectName;
         public TextView tvAmountCount;
-        public TextView tvEquitVal;
+        private TextView tvType;
         public TextView tvDate;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvProjectName = itemView.findViewById(R.id.tvProjectName);
             tvAmountCount = itemView.findViewById(R.id.tvAmountCount);
-            tvEquitVal = itemView.findViewById(R.id.tvEquityVal);
+            tvType = itemView.findViewById(R.id.tvType);
             tvDate = itemView.findViewById(R.id.tvDate);
         }
 
