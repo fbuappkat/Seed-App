@@ -49,7 +49,7 @@ public class WithdrawCreditActivity extends AppCompatActivity {
     private float currBalance;
     private float removedCredits;
 
-    private Transaction withdrawlTransaction;
+    private Transaction withdrawalTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +68,10 @@ public class WithdrawCreditActivity extends AppCompatActivity {
 
         String withdrawValue = etCredits.getText().toString().replaceAll("[$,]", "");
 
-        removedCredits = Float.parseFloat(withdrawValue);
         String email = etEmail.getText().toString();
         String confirmEmail = etConfirmEmail.getText().toString();
 
-        if (withdrawValue.isEmpty() || removedCredits == 0F) {
+        if (withdrawValue.isEmpty()) {
             Toast.makeText(this, "Enter a valid amount for payment", Toast.LENGTH_SHORT).show();
             return;
         } else if (email.isEmpty()) {
@@ -85,6 +84,8 @@ public class WithdrawCreditActivity extends AppCompatActivity {
             Toast.makeText(this, "Paypal accounts don't match", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        removedCredits = Float.parseFloat(withdrawValue);
 
         Float newBalance = round(currBalance - removedCredits);
         if (newBalance < 0F) {
@@ -110,7 +111,8 @@ public class WithdrawCreditActivity extends AppCompatActivity {
 
                 Balance balance = accounts.get(0);
                 currBalance = balance.getAmount();
-                tvNewBalanceCount.setText("$" + round(currBalance));
+                NumberFormat formatter = NumberFormat.getCurrencyInstance();
+                tvNewBalanceCount.setText(formatter.format(round(currBalance)));
                 etCredits.addTextChangedListener(balanceWatcher);
             }
         });
@@ -144,11 +146,12 @@ public class WithdrawCreditActivity extends AppCompatActivity {
                     }
                 });
 
-                withdrawlTransaction = new Transaction();
-                withdrawlTransaction.put("sender", ParseUser.getCurrentUser());
-                withdrawlTransaction.put("amount", removedCredits);
-                withdrawlTransaction.setType("withdrawl");
-                withdrawlTransaction.saveInBackground(new SaveCallback() {
+                withdrawalTransaction = new Transaction();
+                withdrawalTransaction.put("sender", ParseUser.getCurrentUser());
+                withdrawalTransaction.put("amount", removedCredits);
+                withdrawalTransaction.put("current_balance", amount);
+                withdrawalTransaction.setType("withdrawal");
+                withdrawalTransaction.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
                         if (e == null) {
@@ -179,13 +182,20 @@ public class WithdrawCreditActivity extends AppCompatActivity {
 
                 String cleanString = s.toString().replaceAll("[$,.]", "");
 
-                Float parsed = Float.parseFloat(cleanString);
+                Float parsed = 0F;
+                if (!cleanString.isEmpty()) {
+                    parsed = Float.parseFloat(cleanString);
+
+                    if (round(parsed / 100) > currBalance) {
+                        parsed = 0F;
+                    }
+                }
                 if (parsed == 0F) {
                     tvNewBalanceCount.setText("$" + round(currBalance));
                     tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_black));
                 } else {
                     tvNewBalanceCount.setText("$" + round(currBalance - (parsed / 100)));
-                    tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_green));
+                    tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_orange_1));
                 }
                 String formatted = NumberFormat.getCurrencyInstance().format((parsed / 100));
 

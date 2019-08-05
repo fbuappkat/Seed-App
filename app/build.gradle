@@ -64,9 +64,15 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     implementation 'com.azoft.carousellayoutmanager:carousel:1.2.4'
+    implementation 'com.chauthai.overscroll:overscroll-bouncy:0.1.1'
+    implementation 'com.surahul:bounce:1.0.0'
+    implementation 'me.everything:overscroll-decor-android:1.0.4'
+    implementation 'com.jcodecraeer:xrecyclerview:1.5.9'
+    implementation 'com.baoyz.pullrefreshlayout:library:1.2.0'
     implementation "com.android.support:appcompat-v7:$supportLibVersion"
     implementation "com.android.support:support-v13:$supportLibVersion"
     // to remove lint error, found in .idea/libraries
+    implementation 'com.jaeger.statusbarutil:library:1.4.0'
     implementation "com.google.android.gms:play-services-maps:$googlePlayVersion"
     implementation "com.google.android.gms:play-services-location:$googlePlayVersion"
     implementation "com.github.hotchemi:permissionsdispatcher:$permissionDispatcherVersion"

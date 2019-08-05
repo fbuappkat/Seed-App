@@ -38,17 +38,17 @@
                     android:background="@android:color/transparent"
                     android:paddingLeft="26dp"
                     android:src="@drawable/ic_new_message"
-                    android:tint="@color/kat_orange_1" />
+                    android:tint="@color/kat_black" />
 
                 <TextView
                     android:id="@+id/tvChat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/montserrat_regular"
+                    android:fontFamily="@font/proximanova_regular"
                     android:text="MESSAGES"
                     android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </android.support.v7.widget.Toolbar>
 
@@ -85,7 +85,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <android.support.v7.widget.RecyclerView
+    <com.chauthai.overscroll.RecyclerViewBouncy
         android:id="@+id/rvMessage"
         android:layout_width="0dp"
         android:layout_height="0dp"

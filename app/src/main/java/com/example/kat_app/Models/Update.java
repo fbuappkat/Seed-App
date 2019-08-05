@@ -5,12 +5,15 @@ import android.util.Log;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /* FBU 2019
    Update defines the elements of an update about a project and getters and setters for each.
@@ -32,13 +35,10 @@ public class Update extends ParseObject {
         return getJSONArray(KEY_NUM_LIKED_BY);
     }
 
-    public JSONArray getComments() {
-        return getJSONArray(KEY_COMMENTS);
+    public List<Comment> getComments() {
+        return getList(KEY_COMMENTS);
     }
 
-    public JSONArray userComments() {
-        return getJSONArray(KEY_COMMENTS);
-    }
 
     public void likePost(ParseUser u) { add(KEY_NUM_LIKED_BY, u); }
 
@@ -74,8 +74,8 @@ public class Update extends ParseObject {
     }
 
     public int getNumComments() {
-        if (userComments() == null) return 0;
-        return userComments().length();
+        if (getComments() == null) return 0;
+        return getComments().size();
     }
 
     public boolean isLiked() {
@@ -105,8 +105,7 @@ public class Update extends ParseObject {
     }
 
 
-    public void addComment(String comment) {
-        Log.d("comment", "comment " + comment);
+    public void addComment(Comment comment) {
         add(KEY_COMMENTS, comment);
     }
 
@@ -116,6 +115,27 @@ public class Update extends ParseObject {
 
     public void setUser(ParseUser parseUser) {
         put(KEY_USER, parseUser);
+    }
+
+    public static class Query extends ParseQuery<Update> {
+        public Query() {
+            super(Update.class);
+        }
+
+        // Get the first 20 posts
+        public Query getTop() {
+            setLimit(20);
+
+            // Chronological feed
+            orderByDescending(KEY_CREATED_AT);
+            return this;
+        }
+
+        // Get post that is older than the maxDate.
+        public Query getNext(Date maxDate) {
+            whereLessThan(KEY_CREATED_AT, maxDate);
+            return this;
+        }
     }
 
 }

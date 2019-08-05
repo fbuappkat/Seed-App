@@ -7,7 +7,18 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:background="@color/kat_white">
 
-<android.support.constraint.ConstraintLayout
+    <View
+        android:id="@+id/view23"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#DFDFDF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRelativeTime" />
+
+    <android.support.constraint.ConstraintLayout
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="50dp"
@@ -30,22 +41,25 @@ android:background="@color/kat_white">
             android:layout_height="wrap_content"
             android:background="@color/kat_white">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/ivDetailsToFeed"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="left"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/back" />
+                android:layout_marginRight="8dp"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:paddingRight="35dp"
+                android:src="@drawable/ic_back" />
 
             <TextView
                 android:id="@+id/tvDetailsName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/montserrat_regular"
+                android:fontFamily="@font/proximanova_regular"
                 android:text="COMMENTS"
-                android:textColor="#000000"
+                android:textColor="@color/kat_black"
                 android:textSize="18sp" />
 
         </android.support.v7.widget.Toolbar>
@@ -56,69 +70,110 @@ android:background="@color/kat_white">
 
     <TextView
         android:id="@+id/tvCaption"
-        android:layout_width="397dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/proximanova_regular"
         android:text="Caption"
+        android:textColor="@color/kat_black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvRelativeTime" />
+        app:layout_constraintStart_toStartOf="@+id/tvUser"
+        app:layout_constraintTop_toBottomOf="@+id/tvUser" />
 
     <TextView
         android:id="@+id/tvRelativeTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/proximanova_light"
         android:text="Relative Time"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/tvCaption"
+        app:layout_constraintTop_toBottomOf="@+id/tvCaption" />
 
-    <EditText
-        android:id="@+id/etComment"
-        android:layout_width="313dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="Add comment here..."
-        android:inputType="textMultiLine"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btnAddComment"
+    <TextView
+        android:id="@+id/tvUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@android:color/transparent"
-        android:text="POST"
-        android:textColor="@color/kat_orange_2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/etComment" />
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="User"
+        android:textColor="@color/kat_black"
+        app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
+        app:layout_constraintTop_toTopOf="@+id/ivProfileImage" />
 
-    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/swipeContainer"
+    <View
+        android:id="@+id/view22"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/etComment"
+        android:layout_height="1dp"
+        android:background="@color/kat_grey_3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCaption">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+    <ImageView
+        android:id="@+id/ivProfileImage"
+        android:layout_width="39dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view22"
+        app:srcCompat="@drawable/default_profile_image" />
+
+    <LinearLayout
+        android:id="@+id/layout_chatbox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:minHeight="48dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <EditText
+            android:id="@+id/etComment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/proximanova_regular"
+            android:hint="Enter comment"
+            android:maxLines="6"
+            android:textColor="@color/kat_black"
+            android:textColorHint="@color/kat_grey_2"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btnAddComment"
+            android:layout_width="64dp"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:fontFamily="@font/proximanova_semibold"
+            android:gravity="center"
+            android:text="Post"
+            android:textColor="@color/kat_orange_1"
+            android:textSize="14dp" />
+
+    </LinearLayout>
+
+    <com.baoyz.widget.PullRefreshLayout
+        android:id="@+id/swipeContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/kat_grey_3"
+        app:layout_constraintBottom_toTopOf="@+id/layout_chatbox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view23">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvComments"
@@ -128,22 +183,22 @@ android:background="@color/kat_white">
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
+            android:background="@color/kat_grey_7"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/swipeContainer" />
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.baoyz.widget.PullRefreshLayout>
 
-    <TextView
-        android:id="@+id/tvUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="8dp"
-        android:text="User"
-        app:layout_constraintBottom_toTopOf="@+id/tvCaption"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+    <View
+        android:id="@+id/view24"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/kat_grey_3"
+        app:layout_constraintBottom_toBottomOf="@+id/swipeContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

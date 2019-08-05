@@ -7,6 +7,26 @@
     android:background="@color/kat_white"
     tools:context=".Activities.TransactionHistoryActivity">
 
+    <View
+        android:id="@+id/view21"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="#DFDFDF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tabLayout" />
+
+    <View
+        android:id="@+id/view19"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/kat_grey_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
@@ -35,10 +55,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/montserrat_regular"
+                    android:fontFamily="@font/proximanova_regular"
                     android:text="TRANSACTION HISTORY"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:textColor="@color/kat_black"
+                    android:textSize="18sp" />
 
                 <ImageButton
                     android:id="@+id/ivBack"
@@ -49,21 +69,94 @@
                     android:background="@android:color/transparent"
                     android:clickable="true"
                     android:paddingRight="35dp"
-                    android:src="@drawable/ic_back" />
+                    android:src="@drawable/ic_back"
+                    android:tint="@color/kat_black" />
 
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.AppBarLayout>
 
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvTransactions"
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:tabTextAppearance="@style/tab_text">
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tabDeposits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_deposit"
+            android:text="Deposits" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tabWithdrawals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_withdraw"
+            android:text="Withdrawals" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tabInvestments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_invest"
+            android:text="Investments" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tabEarnings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_profits"
+            android:text="Earnings" />
+    </android.support.design.widget.TabLayout>
+
+    <com.chauthai.overscroll.RecyclerViewBouncy
+        android:id="@+id/rvDeposits"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+        app:layout_constraintTop_toBottomOf="@id/view21" />
+
+    <com.chauthai.overscroll.RecyclerViewBouncy
+        android:id="@+id/rvWithdrawals"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view21" />
+
+    <com.chauthai.overscroll.RecyclerViewBouncy
+        android:id="@+id/rvInvestments"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view21">
+
+    </com.chauthai.overscroll.RecyclerViewBouncy>
+
+    <com.chauthai.overscroll.RecyclerViewBouncy
+        android:id="@+id/rvEarnings"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view21">
+
+    </com.chauthai.overscroll.RecyclerViewBouncy>
+
 </android.support.constraint.ConstraintLayout>

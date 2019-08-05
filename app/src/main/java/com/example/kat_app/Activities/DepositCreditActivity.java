@@ -93,22 +93,22 @@ public class DepositCreditActivity extends AppCompatActivity {
     private void submitPayment() {
         String payValue = etCredits.getText().toString().replaceAll("[$,]", "");
 
-        addedCredits = Float.parseFloat(payValue);
-
         if (!payValue.isEmpty()) {
+            addedCredits = Float.parseFloat(payValue);
             DropInRequest dropInRequest = new DropInRequest().clientToken(token);
             startActivityForResult(dropInRequest.getIntent(this), REQUEST_CODE);
         } else
             Toast.makeText(this, "Enter a valid amount for payment", Toast.LENGTH_SHORT).show();
     }
 
-    private void sendPayments() {
+    private void sendPayments(final float newBalance, final ParseUser currUser) {
         RequestQueue queue = Volley.newRequestQueue(DepositCreditActivity.this);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, API_CHECKOUT,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         if (response.toString().contains("Successful")) {
+                            queryBalance(currUser, newBalance);
                             Toast.makeText(DepositCreditActivity.this, "Payment Success", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(DepositCreditActivity.this, "Payment Failed", Toast.LENGTH_SHORT).show();
@@ -203,9 +203,8 @@ public class DepositCreditActivity extends AppCompatActivity {
 
                     Float newBalance = round(currBalance + addedCredits);
                     ParseUser currUser = ParseUser.getCurrentUser();
-                    queryBalance(currUser, newBalance);
 
-                    sendPayments();
+                    sendPayments(newBalance, currUser);
                 } else {
                     Toast.makeText(this, "Please enter a valid amount", Toast.LENGTH_SHORT).show();
                 }
@@ -274,6 +273,7 @@ public class DepositCreditActivity extends AppCompatActivity {
                 depositTransaction = new Transaction();
                 depositTransaction.put("sender", ParseUser.getCurrentUser());
                 depositTransaction.put("amount", addedCredits);
+                depositTransaction.put("current_balance", amount);
                 depositTransaction.setType("deposit");
                 depositTransaction.saveInBackground(new SaveCallback() {
                     @Override
@@ -308,13 +308,16 @@ public class DepositCreditActivity extends AppCompatActivity {
 
                 String cleanString = s.toString().replaceAll("[$,.]", "");
 
-                Float parsed = Float.parseFloat(cleanString);
+                Float parsed = 0F;
+                if (!cleanString.isEmpty()) {
+                    parsed = Float.parseFloat(cleanString);
+                }
                 if (parsed == 0F) {
                     tvNewBalanceCount.setText(formatter.format(round(currBalance)));
                     tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_black));
                 } else {
                     tvNewBalanceCount.setText(formatter.format(round(currBalance + (parsed / 100))));
-                    tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_green));
+                    tvNewBalanceCount.setTextColor(getResources().getColor(R.color.kat_orange_1));
                 }
                 String formatted = NumberFormat.getCurrencyInstance().format((parsed / 100));
 

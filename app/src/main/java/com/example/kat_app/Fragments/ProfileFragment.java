@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -34,6 +35,9 @@ import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.BounceTouchListener;
+
+import org.parceler.Parcels;
 
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -62,6 +66,7 @@ public class ProfileFragment extends Fragment {
     private List<Project> userProjects;
     private List<Equity> investedProjects;
     private RecyclerView rvProjects;
+    private ScrollView scrollView;
     private RecyclerView rvInvested;
 
     private static final String KEY_NAME = "name";
@@ -107,6 +112,19 @@ public class ProfileFragment extends Fragment {
         rvProjects = view.findViewById(R.id.rvProjects);
         rvInvested = view.findViewById(R.id.rvInvested);
         tabLayout = view.findViewById(R.id.portfolioTabLayout);
+        scrollView = view.findViewById(R.id.scrollView);
+
+        BounceTouchListener bounceTouchListener = BounceTouchListener.create(scrollView, R.id.profile,
+                new BounceTouchListener.OnTranslateListener() {
+                    @Override
+                    public void onTranslate(float translation) {
+                    }
+                }
+        );
+
+        scrollView.setOnTouchListener(bounceTouchListener);
+
+        tabLayout.getTabAt(0).getIcon().setTint(getResources().getColor(R.color.kat_orange_1));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -260,9 +278,9 @@ public class ProfileFragment extends Fragment {
                 // create the adapter
                 userProjectAdapter = new UserProjectAdapter(getActivity(), userProjects);
                 // set the adapter on the recycler view
-                rvProjects.setAdapter(userProjectAdapter);
                 // set the layout manager on the recycler view
                 rvProjects.setLayoutManager(new LinearLayoutManager(getContext()));
+                rvProjects.setAdapter(userProjectAdapter);
             }
         });
     }
@@ -305,12 +323,9 @@ public class ProfileFragment extends Fragment {
                 // create the adapter
                 investedProjectsAdapter = new InvestedProjectsAdapter(getActivity(), investedProjects);
                 // set the adapter on the recycler view
+                rvInvested.setLayoutManager(new LinearLayoutManager(getContext()));
                 rvInvested.setAdapter(investedProjectsAdapter);
                 // set the layout manager on the recycler view
-                // add line between items
-                rvInvested.addItemDecoration(new DividerItemDecoration(getContext(),
-                        DividerItemDecoration.VERTICAL));
-                rvInvested.setLayoutManager(new LinearLayoutManager(getContext()));
             }
         });
     }

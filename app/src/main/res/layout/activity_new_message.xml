@@ -34,10 +34,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/montserrat_regular"
+                    android:fontFamily="@font/proximanova_regular"
                     android:text="NEW MESSAGE"
                     android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <Button
                     android:id="@+id/bCancel"
@@ -46,7 +46,7 @@
                     android:layout_gravity="left"
                     android:background="@android:color/transparent"
                     android:contextClickable="false"
-                    android:fontFamily="@font/montserrat_semibold"
+                    android:fontFamily="@font/proximanova_semibold"
                     android:text="@android:string/cancel"
                     android:textAllCaps="false"
                     android:textColor="@color/kat_orange_1"
@@ -87,7 +87,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <android.support.v7.widget.RecyclerView
+    <com.chauthai.overscroll.RecyclerViewBouncy
         android:id="@+id/rvUsers"
         android:layout_width="0dp"
         android:layout_height="0dp"

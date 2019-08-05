@@ -125,12 +125,12 @@ public class MessageActivity extends AppCompatActivity {
 
         final String userId = ParseUser.getCurrentUser().getObjectId();
         mAdapter = new MessageAdapter(MessageActivity.this, mMessages, userId, otherUser);
-        rvMessage.setAdapter(mAdapter);
-
         // associate the LayoutManager with the RecylcerView
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MessageActivity.this);
         linearLayoutManager.setReverseLayout(true);
         rvMessage.setLayoutManager(linearLayoutManager);
+        rvMessage.setAdapter(mAdapter);
+
 
         // When send button is clicked, create message object on Parse
         btSend.setOnClickListener(new View.OnClickListener() {

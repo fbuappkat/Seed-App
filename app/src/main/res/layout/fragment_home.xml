@@ -9,51 +9,68 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
         android:layout_alignParentTop="true"
+        android:background="@color/kat_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <android.support.design.widget.AppBarLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="48dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/kat_white">
-
-
-                <SearchView
-                    android:id="@+id/search"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:iconifiedByDefault="false"/>
-
-
-            </android.support.v7.widget.Toolbar>
-
-        </android.support.design.widget.AppBarLayout>
-
         <ImageView
-            android:id="@+id/ivEarth"
-            android:layout_width="42dp"
-            android:layout_height="39dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-            android:tint="@color/kat_orange_1"
+            android:id="@+id/ivLogo"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/proximanova_regular"
+            android:paddingLeft="16dp"
+            android:paddingRight="24dp"
+            android:textSize="18sp"
+            android:tint="@color/kat_black"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_earth" />
+            app:srcCompat="@drawable/ic_seed_logo" />
+
+        <View
+            android:id="@+id/view26"
+            android:layout_width="0dp"
+            android:layout_height="3dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="23dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/gradient_1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/ivLogo"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
+
+    <SearchView
+        android:id="@+id/search"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:iconifiedByDefault="false"
+        app:layout_constraintEnd_toStartOf="@+id/ivEarth"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+    </SearchView>
+
+    <ImageButton
+        android:id="@+id/ivEarth"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right"
+        android:background="@android:color/transparent"
+        android:clickable="true"
+        android:cropToPadding="false"
+        android:scaleType="center"
+        android:src="@drawable/ic_planet_earth"
+        android:tint="@color/kat_black"
+        app:layout_constraintBottom_toTopOf="@+id/view11"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainer"
@@ -78,7 +95,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
             app:layout_constraintVertical_bias="0.0" />
-
 
 
     </android.support.v4.widget.SwipeRefreshLayout>
@@ -123,43 +139,48 @@
     <TextView
         android:id="@+id/tvFilter"
         android:layout_width="0dp"
-        android:layout_height="26dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Filter by: "
+        android:layout_height="0dp"
+        android:autoSizeTextType="uniform"
+        android:fontFamily="@font/proximanova_regular"
+        android:text="Filter By: "
+        android:textColor="@color/kat_black"
+        app:layout_constraintBottom_toBottomOf="@+id/spinnerFilter"
+        app:layout_constraintEnd_toStartOf="@+id/spinnerFilter"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/spinnerSearch"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+        app:layout_constraintTop_toTopOf="@+id/spinnerFilter" />
 
     <Spinner
         android:id="@+id/spinnerFilter"
         android:layout_width="208dp"
         android:layout_height="24dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.151"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tvFilter"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/view11" />
 
     <Spinner
         android:id="@+id/spinnerSearch"
         android:layout_width="115dp"
         android:layout_height="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
         android:paddingHorizontal="0dp"
+        app:layout_constraintEnd_toStartOf="@+id/tvFilter"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+        app:layout_constraintTop_toBottomOf="@id/view11" />
 
     <View
         android:id="@+id/view11"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="2dp"
         android:background="@color/kat_grey_3"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/search" />
 
     <View
         android:id="@+id/view12"

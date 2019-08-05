@@ -6,19 +6,27 @@
 
     <color name="kat_orange_3">#EA8965</color>
     <color name="kat_orange_1">#F98A61</color>
+    <color name="kat_orange_5">#FA9975</color>
     <color name="kat_orange_2">#FBA789</color>
+    <color name="kat_orange_4">#F7B7A0</color>
 
     <color name="kat_green">#61F98A</color>
 
     <color name="kat_ontouch">#1A000000</color>
     <color name="kat_grey_1">#404040</color>
     <color name="kat_grey_2">#808080</color>
-    <color name="kat_grey_3">#BFBFBF</color>
+    <color name="kat_grey_3">#DFDFDF</color>
     <color name="kat_grey_4">#1affffff</color>
     <color name="kat_grey_5">#66ffffff</color>
+    <color name="kat_grey_6">#EFEFEF</color>
+    <color name="kat_grey_7">#F3F3F3</color>
 
-    <color name="kat_black">#000000</color>
+    <color name="kat_black">#202020</color>
 
     <color name="kat_white">#FFFFFF</color>
     <color name="kat_off_white">#EFEFEF</color>
+
+    <color name="login_form_details">#CCFFFFFF</color>
+    <color name="login_form_details_light">#1affffff</color>
+    <color name="login_form_details_medium">#66ffffff</color>
 </resources>

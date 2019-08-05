@@ -35,19 +35,23 @@ android:background="@color/kat_white">
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/montserrat_regular"
+                android:fontFamily="@font/proximanova_regular"
                 android:text="FEED"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
-            <ImageView
+
+            <ImageButton
                 android:id="@+id/ivAddUpdate"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="right"
-                android:layout_marginRight="8dp"
-                android:tint="@color/kat_orange_1"
-                app:srcCompat="@drawable/ic_edit" />
+                android:layout_marginRight="16dp"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:paddingLeft="26dp"
+                android:src="@drawable/ic_edit"
+                android:tint="@color/kat_black" />
 
         </android.support.v7.widget.Toolbar>
 
@@ -55,10 +59,11 @@ android:background="@color/kat_white">
 
 </android.support.constraint.ConstraintLayout>
 
-    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.baoyz.widget.PullRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swipeContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@color/kat_grey_3"
         app:layout_constraintBottom_toBottomOf="@id/view8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,16 +73,13 @@ android:background="@color/kat_white">
             android:id="@+id/rvFeed"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:background="@color/kat_grey_7"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/swipeContainer" />
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.baoyz.widget.PullRefreshLayout>
 
     <ProgressBar
         android:id="@+id/pbLoad"

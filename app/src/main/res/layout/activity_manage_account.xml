@@ -7,6 +7,16 @@
     android:layout_height="match_parent"
     android:background="@color/kat_white">
 
+    <View
+        android:id="@+id/view17"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/kat_grey_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
@@ -35,10 +45,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/montserrat_regular"
+                    android:fontFamily="@font/proximanova_regular"
                     android:text="MANAGE ACCOUNT"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:textColor="@color/kat_black"
+                    android:textSize="18sp" />
 
                 <ImageButton
                     android:id="@+id/ivBack"
@@ -67,13 +77,62 @@
         android:layout_marginBottom="16dp"
         android:background="@android:color/transparent"
         android:contextClickable="false"
-        android:fontFamily="@font/montserrat_semibold"
+        android:fontFamily="@font/proximanova_semibold"
         android:text="Log Out"
         android:textAllCaps="false"
         android:textColor="@color/kat_orange_1"
-        android:textSize="14sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/accountHolder"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@drawable/menu_background"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view17">
+
+        <ImageView
+            android:id="@+id/ivNextAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:tint="@color/kat_black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_account" />
+
+        <TextView
+            android:id="@+id/tvAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/proximanova_regular"
+            android:text="Account"
+            android:textColor="@color/kat_black"
+            app:layout_constraintBottom_toBottomOf="@+id/ivNextAccount"
+            app:layout_constraintStart_toEndOf="@+id/ivNextAccount"
+            app:layout_constraintTop_toTopOf="@+id/ivNextAccount" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvAccount"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvAccount"
+            app:srcCompat="@drawable/ic_next" />
+
+    </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/creditHolder"
@@ -85,7 +144,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+        app:layout_constraintTop_toBottomOf="@+id/accountHolder">
 
         <ImageView
             android:id="@+id/ivNextCredit"
@@ -102,9 +161,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:fontFamily="@font/montserrat_regular"
+            android:fontFamily="@font/proximanova_regular"
             android:text="Manage Credit"
-            android:textColor="#000000"
+            android:textColor="@color/kat_black"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/ivNextCredit"
             app:layout_constraintStart_toEndOf="@+id/ivNextCredit"
             app:layout_constraintTop_toTopOf="@+id/ivNextCredit" />
@@ -119,6 +179,150 @@
             app:layout_constraintBottom_toBottomOf="@+id/tvCredit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvCredit"
+            app:srcCompat="@drawable/ic_next" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/securityHolder"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@drawable/menu_background"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/creditHolder">
+
+        <ImageView
+            android:id="@+id/ivNextSecurity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_lock" />
+
+        <TextView
+            android:id="@+id/tvSecurity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/proximanova_regular"
+            android:text="Security"
+            android:textColor="@color/kat_black"
+            app:layout_constraintBottom_toBottomOf="@+id/ivNextSecurity"
+            app:layout_constraintStart_toEndOf="@+id/ivNextSecurity"
+            app:layout_constraintTop_toTopOf="@+id/ivNextSecurity" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvSecurity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvSecurity"
+            app:srcCompat="@drawable/ic_next" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/helpHolder"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@drawable/menu_background"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/securityHolder">
+
+        <ImageView
+            android:id="@+id/ivNextHelp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:tint="@color/kat_black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_help" />
+
+        <TextView
+            android:id="@+id/tvHelp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/proximanova_regular"
+            android:text="Help"
+            android:textColor="@color/kat_black"
+            app:layout_constraintBottom_toBottomOf="@+id/ivNextHelp"
+            app:layout_constraintStart_toEndOf="@+id/ivNextHelp"
+            app:layout_constraintTop_toTopOf="@+id/ivNextHelp" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvHelp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvHelp"
+            app:srcCompat="@drawable/ic_next" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/aboutHolder"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@drawable/menu_background"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/helpHolder">
+
+        <ImageView
+            android:id="@+id/ivNextAbout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:tint="@color/kat_black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_information" />
+
+        <TextView
+            android:id="@+id/tvAbout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/proximanova_regular"
+            android:text="About"
+            android:textColor="@color/kat_black"
+            app:layout_constraintBottom_toBottomOf="@+id/ivNextAbout"
+            app:layout_constraintStart_toEndOf="@+id/ivNextAbout"
+            app:layout_constraintTop_toTopOf="@+id/ivNextAbout" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvAbout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvAbout"
             app:srcCompat="@drawable/ic_next" />
 
     </android.support.constraint.ConstraintLayout>
