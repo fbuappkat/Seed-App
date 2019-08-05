@@ -62,8 +62,9 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
 
-        generateKeyHash();
         StatusBarUtil.setTransparent(this);
         setupParseLogIn();
         setupFacebookLogIn();
@@ -75,8 +76,6 @@ public class LoginActivity extends AppCompatActivity {
             loginToHome();
         } else {
 
-            setContentView(R.layout.activity_login);
-            ButterKnife.bind(this);
             AnimationDrawable animationDrawable = (AnimationDrawable) loginBackground.getBackground();
             animationDrawable.setEnterFadeDuration(2000);
             animationDrawable.setExitFadeDuration(4000);
