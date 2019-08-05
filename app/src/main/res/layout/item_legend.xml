@@ -14,7 +14,7 @@
         android:layout_marginBottom="8dp"
         android:text="Item"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivColor"
+        app:layout_constraintStart_toEndOf="@+id/btn"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
@@ -31,14 +31,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <ImageView
-        android:id="@+id/ivColor"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="4dp"
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="28dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:color/holo_blue_bright" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
