@@ -77,4 +77,5 @@ dependencies {
     implementation "com.google.android.gms:play-services-location:$googlePlayVersion"
     implementation "com.github.hotchemi:permissionsdispatcher:$permissionDispatcherVersion"
     annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:$permissionDispatcherVersion"
+    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
 }

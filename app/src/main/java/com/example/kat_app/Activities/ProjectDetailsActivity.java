@@ -19,6 +19,9 @@ import com.example.kat_app.Adapters.LegendAdapter;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.Models.Request;
 import com.example.kat_app.R;
+import com.facebook.FacebookSdk;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
@@ -53,6 +56,8 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     TextView tvDescription;
     @BindView(R.id.tvNumInvestors)
     TextView tvInvestors;
+    @BindView(R.id.tvCollab)
+    TextView tvCollab;
     @BindView(R.id.tvNumFollowers)
     TextView tvFollowers;
     @BindView(R.id.btnMedia)
@@ -63,6 +68,8 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     Button btnFollow;
     @BindView(R.id.btnInvest)
     Button btnInvest;
+    @BindView(R.id.btnSocialMedia)
+    Button btnShare;
     @BindView(R.id.ivBack)
     ImageView ivBack;
     @BindView(R.id.tvHandleDetails)
@@ -102,6 +109,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         tvDescription.setText(proj.getDescription());
         tvInvestors.setText(Integer.toString(proj.getInvestors().length()));
         tvFollowers.setText(Integer.toString(proj.getFollowers().length()));
+        tvCollab.setText(Boolean.toString(proj.getCollabs()));
         totalFunds = -1;
         totalNeeded = -1;
         /*totalFunds = 0;
@@ -185,6 +193,23 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                     invest.putExtra("project", Parcels.wrap(proj));
                     startActivity(invest);
                 }
+            }
+        });
+
+        //invest button
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShareDialog shareDialog;
+                FacebookSdk.sdkInitialize(getApplicationContext());
+                shareDialog = new ShareDialog(ProjectDetailsActivity.this);
+
+                ShareLinkContent linkContent = new ShareLinkContent.Builder()
+                        .setContentTitle(project.getName())
+                        .setContentDescription(project.getDescription())
+                        .build();
+
+                shareDialog.show(linkContent);
             }
         });
 
