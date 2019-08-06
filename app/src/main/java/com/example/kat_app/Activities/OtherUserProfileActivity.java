@@ -223,6 +223,7 @@ public class OtherUserProfileActivity extends AppCompatActivity {
 
     protected void queryFollowers(ParseUser user) {
         ParseQuery<Followers> projectQuery = new ParseQuery<Followers>(Followers.class);
+        projectQuery.include("user");
         projectQuery.whereEqualTo("user", user);
 
         projectQuery.findInBackground(new FindCallback<Followers>() {

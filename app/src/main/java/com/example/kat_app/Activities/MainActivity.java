@@ -44,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
 
         activity = this;
 
+        if (savedInstanceState == null) {
+            bottomNav.setSelectedItemId(R.id.navHome); // change to whichever id should be default
+        }
+
         // Get the fragment manager
         fragmentManager = getSupportFragmentManager();
 
