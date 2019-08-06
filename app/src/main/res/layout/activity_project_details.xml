@@ -61,16 +61,20 @@
                     android:paddingRight="35dp"
                     android:src="@drawable/ic_facebook" />
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/ivBack"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="left"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/back" />
+                    android:layout_marginRight="8dp"
+                    android:background="@android:color/transparent"
+                    android:clickable="true"
+                    android:cropToPadding="false"
+                    android:paddingRight="35dp"
+                    app:srcCompat="@drawable/ic_back" />
 
             </android.support.v7.widget.Toolbar>
+
 
         </android.support.design.widget.AppBarLayout>
 

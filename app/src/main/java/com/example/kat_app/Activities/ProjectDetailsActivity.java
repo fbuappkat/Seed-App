@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -72,7 +73,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     @BindView(R.id.btnInvest)
     Button btnInvest;
     @BindView(R.id.ivBack)
-    ImageView ivBack;
+    ImageButton ivBack;
     @BindView(R.id.tvHandleDetails)
     TextView tvHandle;
     @BindView(R.id.tvPercentEquity)
@@ -414,5 +415,11 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         });
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

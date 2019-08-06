@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,7 +57,7 @@ public class UserOwnedProjectActivity extends AppCompatActivity {
     @BindView(R.id.tvNumFunds)
     TextView tvFunds;
     @BindView(R.id.ivBack)
-    ImageView ivBack;
+    ImageButton ivBack;
     @BindView(R.id.tvHandleDetails)
     TextView tvHandle;
     @BindView(R.id.tvPercentEquity)
