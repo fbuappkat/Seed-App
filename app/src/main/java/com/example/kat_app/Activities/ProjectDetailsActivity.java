@@ -12,9 +12,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.BounceTouchListener;
 import com.example.kat_app.Adapters.LegendAdapter;
 import com.example.kat_app.Adapters.UpdatesAdapter;
 import com.example.kat_app.Models.Project;
@@ -78,6 +80,8 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     protected LegendAdapter legendAdapter;
     @BindView(R.id.rvLegend)
     RecyclerView rvLegend;
+    @BindView(R.id.scrollView2)
+    ScrollView scrollView;
     private JSONArray media;
     private Project project;
 
@@ -246,6 +250,15 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                 startActivity(detailsToProfile);
             }
         });
+
+        BounceTouchListener bounceTouchListener = BounceTouchListener.create(scrollView, R.id.projectHolder,
+                new BounceTouchListener.OnTranslateListener() {
+                    @Override
+                    public void onTranslate(float translation) {
+                    }
+                }
+        );
+        scrollView.setOnTouchListener(bounceTouchListener);
     }
 
     public void makeLegend() {
