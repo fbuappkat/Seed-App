@@ -67,19 +67,23 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/default_profile_image" />
 
-    <ImageButton
+    <com.like.LikeButton
         android:id="@+id/btnLike"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="2dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="8dp"
-        android:background="@android:color/transparent"
-        android:padding="12dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_heart_stroke"
+        app:anim_scale_factor="2"
+        app:circle_end_color="@color/colorAccent"
+        app:circle_start_color="@color/colorPrimary"
+        app:dots_primary_color="@color/colorAccent"
+        app:dots_secondary_color="@color/colorPrimary"
+        app:icon_size="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/tvRelativeTime"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvUser" />
+        app:layout_constraintTop_toTopOf="@+id/tvUser"
+        app:like_drawable="@drawable/ic_heart_filled"
+        app:unlike_drawable="@drawable/ic_heart_stroke" />
 
 </android.support.constraint.ConstraintLayout>

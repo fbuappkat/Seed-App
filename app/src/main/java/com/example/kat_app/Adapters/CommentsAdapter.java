@@ -24,6 +24,8 @@ import com.example.kat_app.Fragments.ProfileFragment;
 import com.example.kat_app.Models.Comment;
 import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -81,7 +83,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
         private TextView tvComment;
         private TextView tvRelativeTime;
         private TextView tvNumLikes;
-        private ImageButton btnLike;
+        private LikeButton btnLike;
         private ImageView ivProfileImage;
 
         public ViewHolder(View itemView) {
@@ -129,66 +131,67 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
             }
 
             if (comment.isLiked()) {
-                btnLike.setImageResource(R.drawable.ic_heart_filled);
+                btnLike.setLiked(true);
             } else {
-                btnLike.setImageResource(R.drawable.ic_heart_stroke);
+                btnLike.setLiked(false);
             }
 
-            btnLike.setOnClickListener(new View.OnClickListener() {
+            btnLike.setOnLikeListener(new OnLikeListener() {
                 @Override
-                public void onClick(View view) {
-                    if (!comment.isLiked()) {
-                        btnLike.setImageResource(R.drawable.ic_heart_filled);
-                        int position = getAdapterPosition();
-                        Comment comment = comments.get(position);
-                        int curLikes = comment.getNumLikes();
-                        //add current user to list of users who liked this post
-                        comment.likePost(currUser);
+                public void liked(LikeButton likeButton) {
+                    btnLike.setLiked(true);
+                    int position = getAdapterPosition();
+                    Comment comment = comments.get(position);
+                    int curLikes = comment.getNumLikes();
+                    //add current user to list of users who liked this post
+                    comment.likePost(currUser);
 
-                        comment.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(com.parse.ParseException e) {
-                                if (e != null) {
-                                    e.printStackTrace();
-                                    return;
-                                }
+                    comment.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(com.parse.ParseException e) {
+                            if (e != null) {
+                                e.printStackTrace();
+                                return;
                             }
-                        });
-                        if (comment.getNumLikes() == 0) {
-                            tvNumLikes.setVisibility(View.GONE);
-                        } else if (comment.getNumLikes() == 1) {
-                            tvNumLikes.setVisibility(View.VISIBLE);
-                            tvNumLikes.setText(comment.getNumLikes() + " like");
-                        } else {
-                            tvNumLikes.setVisibility(View.VISIBLE);
-                            tvNumLikes.setText(comment.getNumLikes() + " likes");
                         }
+                    });
+                    if (comment.getNumLikes() == 0) {
+                        tvNumLikes.setVisibility(View.GONE);
+                    } else if (comment.getNumLikes() == 1) {
+                        tvNumLikes.setVisibility(View.VISIBLE);
+                        tvNumLikes.setText(comment.getNumLikes() + " like");
                     } else {
-                        btnLike.setImageResource(R.drawable.ic_heart_stroke);
-                        int position = getAdapterPosition();
-                        Comment comment = comments.get(position);
-                        int curLikes = comment.getNumLikes();
-                        //add current user to list of users who liked this post
-                        comment.unlikePost(currUser);
+                        tvNumLikes.setVisibility(View.VISIBLE);
+                        tvNumLikes.setText(comment.getNumLikes() + " likes");
+                    }
+                }
 
-                        comment.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(com.parse.ParseException e) {
-                                if (e != null) {
-                                    e.printStackTrace();
-                                    return;
-                                }
+                @Override
+                public void unLiked(LikeButton likeButton) {
+                    btnLike.setLiked(false);
+                    int position = getAdapterPosition();
+                    Comment comment = comments.get(position);
+                    int curLikes = comment.getNumLikes();
+                    //add current user to list of users who liked this post
+                    comment.unlikePost(currUser);
+
+                    comment.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(com.parse.ParseException e) {
+                            if (e != null) {
+                                e.printStackTrace();
+                                return;
                             }
-                        });
-                        if (comment.getNumLikes() == 0) {
-                            tvNumLikes.setVisibility(View.GONE);
-                        } else if (comment.getNumLikes() == 1) {
-                            tvNumLikes.setVisibility(View.VISIBLE);
-                            tvNumLikes.setText(comment.getNumLikes() + " like");
-                        } else {
-                            tvNumLikes.setVisibility(View.VISIBLE);
-                            tvNumLikes.setText(comment.getNumLikes() + " likes");
                         }
+                    });
+                    if (comment.getNumLikes() == 0) {
+                        tvNumLikes.setVisibility(View.GONE);
+                    } else if (comment.getNumLikes() == 1) {
+                        tvNumLikes.setVisibility(View.VISIBLE);
+                        tvNumLikes.setText(comment.getNumLikes() + " like");
+                    } else {
+                        tvNumLikes.setVisibility(View.VISIBLE);
+                        tvNumLikes.setText(comment.getNumLikes() + " likes");
                     }
                 }
             });
