@@ -16,7 +16,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.BounceTouchListener;
 import com.example.kat_app.Adapters.LegendAdapter;
 import com.example.kat_app.Adapters.UpdatesAdapter;
 import com.example.kat_app.Models.Project;
@@ -51,6 +50,8 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     PieChart pcBreakdown;
     @BindView(R.id.tvName)
     TextView tvName;
+    @BindView(R.id.tvDetailsName)
+    TextView tvDetails;
     @BindView(R.id.tvAuthor)
     TextView tvAuthor;
     @BindView(R.id.tvDescription)
@@ -80,8 +81,8 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     protected LegendAdapter legendAdapter;
     @BindView(R.id.rvLegend)
     RecyclerView rvLegend;
-    @BindView(R.id.scrollView2)
-    ScrollView scrollView;
+    @BindView(R.id.svScroll)
+    ScrollView svScroll;
     private JSONArray media;
     private Project project;
 
@@ -145,6 +146,17 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         queryUpdates();
 
         queryUser();
+
+        svScroll.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if(scrollY > 0){
+                    tvDetails.setVisibility(View.INVISIBLE);
+                } else {
+                    tvDetails.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         //rvMedia = findViewById(R.id.rvMedia);
 
@@ -250,15 +262,6 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                 startActivity(detailsToProfile);
             }
         });
-
-        BounceTouchListener bounceTouchListener = BounceTouchListener.create(scrollView, R.id.projectHolder,
-                new BounceTouchListener.OnTranslateListener() {
-                    @Override
-                    public void onTranslate(float translation) {
-                    }
-                }
-        );
-        scrollView.setOnTouchListener(bounceTouchListener);
     }
 
     public void makeLegend() {
