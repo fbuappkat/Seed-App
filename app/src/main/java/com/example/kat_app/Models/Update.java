@@ -124,7 +124,7 @@ public class Update extends ParseObject {
 
         // Get the first 20 posts
         public Query getTop() {
-            setLimit(10);
+            setLimit(20);
 
             // Chronological feed
             orderByDescending(KEY_CREATED_AT);

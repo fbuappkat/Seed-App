@@ -183,7 +183,12 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
 
             String username = update.getUser().getString("username");
             tvUser.setText(username);
-            tvCaption.setText(update.getCaption());
+            if (update.getCaption().equals("")) {
+                tvCaption.setVisibility(View.GONE);
+            } else {
+                tvCaption.setVisibility(View.VISIBLE);
+                tvCaption.setText(update.getCaption());
+            }
             tvRelativeTime.setText(getRelativeTimeAgo(String.valueOf(update.getCreatedAt())));
             tvNumLikes.setText(Integer.toString(update.getNumLikes()));
             tvNumComments.setText(Integer.toString(update.getNumComments()));

@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+
 /* FBU 2019
    TimelineFragment displays a recycler view with updates on a user's personal projects
    and the projects they've invested in. Users can scroll to refresh posts. Users can click to
@@ -74,7 +76,7 @@ public class FeedFragment extends Fragment {
         // create the adapter
         adapter = new UpdatesAdapter(getActivity(), updates);
         // set the adapter on the recycler view
-        rvFeed.setAdapter(adapter);
+        rvFeed.setAdapter(new ScaleInAnimationAdapter(adapter));
 
         setupSwipeRefreshing(view);
         enableEndlessScrolling(layoutManager);
