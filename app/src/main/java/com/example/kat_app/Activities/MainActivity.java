@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
 
        FragmentTransaction transaction = fragmentManager.beginTransaction();
-       transaction.add(R.id.centerView, new FeedFragment());
+       transaction.add(R.id.centerView, new HomeFragment());
        transaction.commit();
 
         // Set up the navigation bar to switch between fragments
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                                 fragment = new ChatFragment();
                                 break;
                             default:
-                                fragment = new FeedFragment();
+                                fragment = new HomeFragment();
                                 break;
                         }
                         fragmentManager.beginTransaction().replace(R.id.centerView, fragment).commit();
