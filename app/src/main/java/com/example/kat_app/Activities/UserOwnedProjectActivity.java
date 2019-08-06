@@ -10,8 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.BounceTouchListener;
 import com.example.kat_app.Adapters.LegendAdapter;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.Models.Request;
@@ -66,6 +68,8 @@ public class UserOwnedProjectActivity extends AppCompatActivity {
     Button btnPostFunds;
     @BindView(R.id.ivEdit)
     ImageView ivEdit;
+    @BindView(R.id.svScroll)
+    ScrollView svScroll;
     protected LegendAdapter legendAdapter;
     private RecyclerView rvLegend;
     private JSONArray media;
@@ -108,6 +112,16 @@ public class UserOwnedProjectActivity extends AppCompatActivity {
 
             setupAdapter();
         }*/
+
+        BounceTouchListener bounceTouchListener = BounceTouchListener.create(svScroll, R.id.projectHolder,
+                new BounceTouchListener.OnTranslateListener() {
+                    @Override
+                    public void onTranslate(float translation) {
+                    }
+                }
+        );
+
+        svScroll.setOnTouchListener(bounceTouchListener);
 
         //invest button
         btnMedia.setOnClickListener(new View.OnClickListener() {
