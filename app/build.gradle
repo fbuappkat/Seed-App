@@ -76,6 +76,7 @@ dependencies {
     implementation "com.android.support:support-v13:$supportLibVersion"
     // to remove lint error, found in .idea/libraries
     implementation 'jp.wasabeef:recyclerview-animators:2.3.0'
+    implementation 'com.github.jd-alexander:LikeButton:0.2.3'
     implementation 'com.jaeger.statusbarutil:library:1.4.0'
     implementation "com.google.android.gms:play-services-maps:$googlePlayVersion"
     implementation "com.google.android.gms:play-services-location:$googlePlayVersion"

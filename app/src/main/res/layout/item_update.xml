@@ -72,24 +72,11 @@
         app:layout_constraintTop_toTopOf="@+id/btnLike" />
 
     <ImageButton
-        android:id="@+id/btnLike"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/transparent"
-        android:padding="8dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_heart_stroke"
-        app:layout_constraintBottom_toBottomOf="@+id/tvRelativeTime"
-        app:layout_constraintEnd_toStartOf="@+id/tvNumLikes"
-        app:layout_constraintTop_toBottomOf="@+id/view13" />
-
-    <ImageButton
         android:id="@+id/btnGoToComments"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:background="@android:color/transparent"
-        android:padding="8dp"
+        android:padding="7dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="@+id/btnLike"
         app:layout_constraintEnd_toStartOf="@+id/tvNumComments"
@@ -142,19 +129,6 @@
         app:layout_constraintStart_toStartOf="@+id/tvEditAccount"
         app:layout_constraintTop_toBottomOf="@+id/tvEditAccount" />
 
-    <Button
-        android:id="@+id/btnPostComment"
-        android:layout_width="51dp"
-        android:layout_height="33dp"
-        android:layout_marginEnd="16dp"
-        android:background="@android:color/transparent"
-        android:fontFamily="@font/montserrat_semibold"
-        android:text="Post"
-        android:textColor="@color/kat_orange_1"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="393dp" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvPhotos"
         android:layout_width="0dp"
@@ -187,5 +161,22 @@
         app:layout_constraintStart_toEndOf="@+id/tvProject"
         app:layout_constraintTop_toTopOf="@+id/tvProject"
         app:srcCompat="@drawable/ic_triangle" />
+
+    <com.like.LikeButton
+        android:id="@+id/btnLike"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        app:anim_scale_factor="2"
+        app:circle_end_color="@color/colorAccent"
+        app:circle_start_color="@color/colorPrimary"
+        app:dots_primary_color="@color/colorAccent"
+        app:dots_secondary_color="@color/colorPrimary"
+        app:icon_size="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvRelativeTime"
+        app:layout_constraintEnd_toStartOf="@+id/tvNumLikes"
+        app:layout_constraintTop_toBottomOf="@+id/view13"
+        app:like_drawable="@drawable/ic_heart_filled"
+        app:unlike_drawable="@drawable/ic_heart_stroke" />
+
 
 </android.support.constraint.ConstraintLayout>

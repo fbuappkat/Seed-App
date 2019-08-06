@@ -29,6 +29,8 @@ import com.example.kat_app.Fragments.ProfileFragment;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 import com.parse.FindCallback;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
@@ -128,7 +130,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
         private TextView tvCaption;
         private TextView tvRelativeTime;
         private TextView tvNumLikes;
-        private ImageButton btnLike;
+        private LikeButton btnLike;
         private ImageView ivProfileImage;
         private TextView tvNumComments;
         private TextView tvProject;
@@ -148,7 +150,6 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
             btnLike = itemView.findViewById(R.id.btnLike);
             ivProfileImage = itemView.findViewById(R.id.ivProfileImageUpdate);
             tvProject = itemView.findViewById(R.id.tvProject);
-            btnAddComment = itemView.findViewById(R.id.btnPostComment);
             btnGoToComments = itemView.findViewById(R.id.btnGoToComments);
             rvPhotos = itemView.findViewById(R.id.rvPhotos);
             tvType = itemView.findViewById(R.id.tvType);
@@ -225,9 +226,9 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                 tvNumLikes.setText("0");
             }
             if (update.isLiked()) {
-                btnLike.setImageResource(R.drawable.ic_heart_filled);
+                btnLike.setLiked(true);
             } else {
-                btnLike.setImageResource(R.drawable.ic_heart_stroke);
+                btnLike.setLiked(false);
             }
 
             btnGoToComments.setOnClickListener(new View.OnClickListener() {
@@ -250,46 +251,47 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                 }
             });
 
-            btnLike.setOnClickListener(new View.OnClickListener() {
+            btnLike.setOnLikeListener(new OnLikeListener() {
                 @Override
-                public void onClick(View view) {
-                    if (!update.isLiked()) {
-                        btnLike.setImageResource(R.drawable.ic_heart_filled);
-                        int position = getAdapterPosition();
-                        Update update = updates.get(position);
-                        int curLikes = update.getNumLikes();
-                        //add current user to list of users who liked this post
-                        update.likePost(currUser);
+                public void liked(LikeButton likeButton) {
+                    btnLike.setLiked(true);
+                    int position = getAdapterPosition();
+                    Update update = updates.get(position);
+                    int curLikes = update.getNumLikes();
+                    //add current user to list of users who liked this post
+                    update.likePost(currUser);
 
-                        update.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(com.parse.ParseException e) {
-                                if (e != null) {
-                                    e.printStackTrace();
-                                    return;
-                                }
+                    update.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(com.parse.ParseException e) {
+                            if (e != null) {
+                                e.printStackTrace();
+                                return;
                             }
-                        });
-                        tvNumLikes.setText(Integer.toString(update.getNumLikes()));
-                    } else {
-                        btnLike.setImageResource(R.drawable.ic_heart_stroke);
-                        int position = getAdapterPosition();
-                        Update update = updates.get(position);
-                        int curLikes = update.getNumLikes();
-                        //add current user to list of users who liked this post
-                        update.unlikePost(currUser);
+                        }
+                    });
+                    tvNumLikes.setText(Integer.toString(update.getNumLikes()));
+                }
 
-                        update.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(com.parse.ParseException e) {
-                                if (e != null) {
-                                    e.printStackTrace();
-                                    return;
-                                }
+                @Override
+                public void unLiked(LikeButton likeButton) {
+                    btnLike.setLiked(false);
+                    int position = getAdapterPosition();
+                    Update update = updates.get(position);
+                    int curLikes = update.getNumLikes();
+                    //add current user to list of users who liked this post
+                    update.unlikePost(currUser);
+
+                    update.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(com.parse.ParseException e) {
+                            if (e != null) {
+                                e.printStackTrace();
+                                return;
                             }
-                        });
-                        tvNumLikes.setText(Integer.toString(update.getNumLikes()));
-                    }
+                        }
+                    });
+                    tvNumLikes.setText(Integer.toString(update.getNumLikes()));
                 }
             });
 
