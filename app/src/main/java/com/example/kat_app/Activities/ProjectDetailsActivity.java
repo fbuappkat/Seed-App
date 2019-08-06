@@ -16,12 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kat_app.Adapters.LegendAdapter;
+import com.example.kat_app.Adapters.UpdatesAdapter;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.Models.Request;
+import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
-import com.facebook.FacebookSdk;
-import com.facebook.share.model.ShareLinkContent;
-import com.facebook.share.widget.ShareDialog;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
@@ -68,14 +67,14 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     Button btnFollow;
     @BindView(R.id.btnInvest)
     Button btnInvest;
-    @BindView(R.id.btnSocialMedia)
-    Button btnShare;
     @BindView(R.id.ivBack)
     ImageView ivBack;
     @BindView(R.id.tvHandleDetails)
     TextView tvHandle;
     @BindView(R.id.tvPercentEquity)
     TextView tvPercentEquity;
+    @BindView(R.id.rvFeed)
+    RecyclerView rvFeed;
     protected LegendAdapter legendAdapter;
     @BindView(R.id.rvLegend)
     RecyclerView rvLegend;
@@ -88,6 +87,8 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     public static final String TAG = "ProjectDetailsActivity";
     private float totalFunds;
     private float totalNeeded;
+    protected UpdatesAdapter adapter;
+    protected List<Update> updates = new ArrayList<>();
     private List<PieEntry> values;
 
 
@@ -107,7 +108,11 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         tvDescription.setText(proj.getDescription());
         tvInvestors.setText(Integer.toString(proj.getInvestors().length()));
         tvFollowers.setText(Integer.toString(proj.getFollowers().length()));
-        tvCollab.setText(Boolean.toString(proj.getCollabs()));
+        if (proj.getCollabs()) {
+            tvCollab.setText("Yes");
+        } else {
+            tvCollab.setText("No");
+        }
         totalFunds = -1;
         totalNeeded = -1;
         /*totalFunds = 0;
@@ -122,6 +127,18 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         if (proj.getFollowers().toString().contains(ParseUser.getCurrentUser().getObjectId())) {
             btnFollow.setBackgroundColor(Color.GRAY);
         }
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(ProjectDetailsActivity.this);
+
+        // set the layout manager on the recycler view
+        rvFeed.setLayoutManager(layoutManager);
+        rvFeed.setHasFixedSize(true);
+        // create the adapter
+        adapter = new UpdatesAdapter(ProjectDetailsActivity.this, updates);
+        // set the adapter on the recycler view
+        rvFeed.setAdapter(adapter);
+
+        queryUpdates();
 
         queryUser();
 
@@ -194,22 +211,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
             }
         });
 
-        //invest button
-        btnShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ShareDialog shareDialog;
-                FacebookSdk.sdkInitialize(getApplicationContext());
-                shareDialog = new ShareDialog(ProjectDetailsActivity.this);
 
-                ShareLinkContent linkContent = new ShareLinkContent.Builder()
-                        .setContentTitle(project.getName())
-                        .setContentDescription(project.getDescription())
-                        .build();
-
-                shareDialog.show(linkContent);
-            }
-        });
 
         //invest button
         btnMedia.setOnClickListener(new View.OnClickListener() {
@@ -266,6 +268,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         pcBreakdown.setDescription(pcDesc);
         pcBreakdown.setHoleRadius(25);
         pcBreakdown.setTransparentCircleRadius(25);
+        pcBreakdown.getLegend().setEnabled(false);
         values = new ArrayList<>();
         for (int i = 0; i < requests.size(); i++) {
             values.add(new PieEntry(requests.get(i).getPrice(), requests.get(i).getRequest()));
@@ -372,5 +375,28 @@ public class ProjectDetailsActivity extends AppCompatActivity {
 
     private float round(float value) {
         return (float) Math.round(value * 100) / 100;
+    }
+
+    //get posts via network request
+    protected void queryUpdates() {
+        final Update.Query updateQuery = new Update.Query();
+        updateQuery.whereEqualTo("project", proj);
+        updateQuery.getTop().include("user");
+
+        // If app is just opened, get newest 20 posts
+        // Else query for older posts
+
+        updateQuery.findInBackground(new FindCallback<Update>() {
+            @Override
+            public void done(List<Update> posts, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG,"Error with string query");
+                    e.printStackTrace();
+                    return;
+                }
+                updates.addAll(posts);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 }

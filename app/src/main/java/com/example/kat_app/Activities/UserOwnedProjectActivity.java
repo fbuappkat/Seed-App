@@ -187,6 +187,7 @@ public class UserOwnedProjectActivity extends AppCompatActivity {
         PieData pieData = new PieData(pieDataSet);
         pieData.setValueTextSize(20);
         pcBreakdown.setData(pieData);
+        pcBreakdown.getLegend().setEnabled(false);
         pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
         pcBreakdown.animateXY(1400, 1400);
     }
