@@ -1,36 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_margin="8dp"
+android:background="@drawable/layout_bg"
+android:paddingBottom="10dp">
 
     <Button
         android:id="@+id/btnInvest"
-        android:layout_width="107dp"
+        android:layout_width="90dp"
         android:layout_height="46dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="4dp"
-        android:background="@color/kat_orange_1"
+        android:background="@drawable/button"
+        android:fontFamily="@font/proximanova_semibold"
         android:text="Invest"
         android:textColor="@color/kat_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvRequest"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
-        android:text="Request"
-        android:textAlignment="viewStart"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/etInvest"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<TextView
+    android:id="@+id/tvRequest"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginEnd="8dp"
+    android:text="Request"
+    android:textAlignment="viewStart"
+    android:textSize="24sp"
+    android:textStyle="bold"
+    app:layout_constraintEnd_toStartOf="@+id/etInvest"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvProgress"
@@ -38,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="progress"
+        android:text="Progress"
         android:textSize="18sp"
         android:textStyle="italic"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,25 +53,26 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="270dp"
         android:layout_height="11dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnInvest"
+        app:layout_constraintStart_toStartOf="@+id/tvProgress"
         app:layout_constraintTop_toBottomOf="@+id/tvProgress" />
 
-    <EditText
-        android:id="@+id/etInvest"
-        android:layout_width="107dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="8dp"
-        android:ems="10"
-        android:hint="0.00 USD"
-        android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/btnInvest"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<EditText
+    android:id="@+id/etInvest"
+    android:layout_width="107dp"
+    android:layout_height="42dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="4dp"
+    android:layout_marginBottom="8dp"
+    android:ems="10"
+    android:hint="0.00 USD"
+    android:inputType="number"
+    app:layout_constraintBottom_toTopOf="@+id/btnInvest"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
