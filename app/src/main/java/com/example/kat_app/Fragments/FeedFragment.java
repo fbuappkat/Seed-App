@@ -58,11 +58,15 @@ public class FeedFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         rvFeed = view.findViewById(R.id.rvFeed);
-        setAddButton(view);
 
         pbLoad = view.findViewById(R.id.pbLoad);
+        btnGoToAddUpdate = view.findViewById(R.id.ivAddUpdate);
+
+        // Make the update image clickable
+        btnGoToAddUpdate.setClickable(true);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        getProjects();
 
         // set the layout manager on the recycler view
         rvFeed.setLayoutManager(layoutManager);
@@ -144,23 +148,8 @@ public class FeedFragment extends Fragment {
 
     private void setAddButton(View view) {
         // Find reference for the view
-        btnGoToAddUpdate = view.findViewById(R.id.ivAddUpdate);
 
-        // Make the update image clickable
-        btnGoToAddUpdate.setClickable(true);
-        btnGoToAddUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ArrayList<Project> projects = getProjects();
-                if (projects.size() != 0) {
-                    Intent TimelineToUpdate = new Intent(getContext(), AddUpdateActivity.class);
-                    startActivity(TimelineToUpdate);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                } else {
-                    Toast.makeText(getContext(),"Sorry, but you can't add an update if you haven't created any projects yet!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+
     }
 
     // Get maximum Date to find next post to load.
@@ -180,13 +169,26 @@ public class FeedFragment extends Fragment {
         projectQuery.whereEqualTo("author", ParseUser.getCurrentUser());
         projectQuery.findInBackground(new FindCallback<Project>() {
             @Override
-            public void done(List<Project> projs, ParseException e) {
+            public void done(final List<Project> projs, ParseException e) {
                 if (e != null) {
                     Log.e(TAG, "Error with query");
                     e.printStackTrace();
                     return;
                 }
                 projects.addAll(projs);
+                btnGoToAddUpdate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ArrayList<Project> projects = (ArrayList)projs;
+                        if (projects.size() != 0) {
+                            Intent TimelineToUpdate = new Intent(getContext(), AddUpdateActivity.class);
+                            startActivity(TimelineToUpdate);
+                            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        } else {
+                            Toast.makeText(getContext(),"Sorry, but you can't add an update if you haven't created any projects yet!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         });
         return projects;
