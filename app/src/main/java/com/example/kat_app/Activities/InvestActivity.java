@@ -2,7 +2,6 @@ package com.example.kat_app.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,8 +10,8 @@ import android.widget.ImageView;
 
 import com.example.kat_app.Adapters.InvestAdapter;
 import com.example.kat_app.Models.Project;
-import com.example.kat_app.R;
 import com.example.kat_app.Models.Request;
+import com.example.kat_app.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -57,9 +56,6 @@ public class InvestActivity extends AppCompatActivity {
     public void setupAdapter() {
         // create the adapter
         investAdapter = new InvestAdapter(InvestActivity.this, requests, project);
-        // add line between items
-        rvRequests.addItemDecoration(new DividerItemDecoration(InvestActivity.this,
-                DividerItemDecoration.VERTICAL));
         // set the adapter on the recycler view
         rvRequests.setAdapter(investAdapter);
         // set the layout manager on the recycler view
