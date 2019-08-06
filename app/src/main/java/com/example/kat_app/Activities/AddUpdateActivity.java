@@ -109,6 +109,8 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
         rvImages.setLayoutManager(layoutManager);
         rvImages.setAdapter(mediaAdapter);
 
+        rvImages.setVisibility(View.GONE);
+
         rvImages.addOnScrollListener(new CenterScrollListener());
 
         setBackButton();
@@ -199,6 +201,7 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
             switch (requestCode) {
                 case 0:
                     if (resultCode == RESULT_OK && data != null) {
+                        rvImages.setVisibility(View.VISIBLE);
                         Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
                         ParseFile convertedImage = conversionBitmapParseFile(selectedImage);
                         images.add(convertedImage);
@@ -212,6 +215,7 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
                     break;
                 case 1:
                     if (resultCode == RESULT_OK && data != null) {
+                        rvImages.setVisibility(View.VISIBLE);
                         Uri selectedImage = data.getData();
                         Bitmap bitmap = null;
                         try {
@@ -363,5 +367,11 @@ public class AddUpdateActivity extends AppCompatActivity implements View.OnClick
         byte[] imageByte = byteArrayOutputStream.toByteArray();
         ParseFile parseFile = new ParseFile("image_file.png",imageByte);
         return parseFile;
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

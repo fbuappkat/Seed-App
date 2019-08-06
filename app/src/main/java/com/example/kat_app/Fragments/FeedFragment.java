@@ -156,6 +156,7 @@ public class FeedFragment extends Fragment {
             public void onClick(View v) {
                 Intent TimelineToUpdate = new Intent(getContext(), AddUpdateActivity.class);
                 startActivity(TimelineToUpdate);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
     }
