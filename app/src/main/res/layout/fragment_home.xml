@@ -46,18 +46,6 @@
                     app:srcCompat="@drawable/ic_seed_logo" />
 
 
-                <ImageButton
-                    android:id="@+id/ivAddUpdate"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="16dp"
-                    android:background="@android:color/transparent"
-                    android:clickable="true"
-                    android:paddingLeft="26dp"
-                    android:src="@drawable/ic_edit"
-                    android:tint="@color/kat_black" />
-
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.AppBarLayout>
