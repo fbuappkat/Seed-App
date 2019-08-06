@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,29 +12,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.baoyz.widget.PullRefreshLayout;
 import com.codepath.instagram.EndlessRecyclerViewScrollListener;
 import com.example.kat_app.Activities.AddUpdateActivity;
 import com.example.kat_app.Adapters.UpdatesAdapter;
+import com.example.kat_app.Models.Project;
 import com.example.kat_app.Models.Update;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /* FBU 2019
    TimelineFragment displays a recycler view with updates on a user's personal projects
-   and the projects they've invested in. Users can scroll to refresh posts.
- */
+   and the projects they've invested in. Users can scroll to refresh posts. Users can click to
+   add updates on projects. */
 public class FeedFragment extends Fragment {
 
     protected  RecyclerView rvFeed;
@@ -48,7 +46,6 @@ public class FeedFragment extends Fragment {
     private com.codepath.instagram.EndlessRecyclerViewScrollListener scrollListener;
     private ImageButton btnGoToAddUpdate;
     private ProgressBar pbLoad;
-
     private Bundle savedState = null;
 
     // onCreateView to inflate the view
@@ -154,9 +151,14 @@ public class FeedFragment extends Fragment {
         btnGoToAddUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent TimelineToUpdate = new Intent(getContext(), AddUpdateActivity.class);
-                startActivity(TimelineToUpdate);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                ArrayList<Project> projects = getProjects();
+                if (projects.size() != 0) {
+                    Intent TimelineToUpdate = new Intent(getContext(), AddUpdateActivity.class);
+                    startActivity(TimelineToUpdate);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                } else {
+                    Toast.makeText(getContext(),"Sorry, but you can't add an update if you haven't created any projects yet!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -170,5 +172,23 @@ public class FeedFragment extends Fragment {
             Update oldest = updates.get(updates.size() - 1);
             return oldest.getCreatedAt();
         }
+    }
+
+    private ArrayList<Project> getProjects() {
+        final ArrayList<Project> projects = new ArrayList<>();
+        ParseQuery<Project> projectQuery = new ParseQuery<Project>("Project");
+        projectQuery.whereEqualTo("author", ParseUser.getCurrentUser());
+        projectQuery.findInBackground(new FindCallback<Project>() {
+            @Override
+            public void done(List<Project> projs, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+                projects.addAll(projs);
+            }
+        });
+        return projects;
     }
 }
