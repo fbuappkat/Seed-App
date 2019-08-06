@@ -59,7 +59,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <ScrollView
-        android:id="@+id/scrollView2"
+        android:id="@+id/svScroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="0dp"
@@ -229,15 +229,17 @@
                 android:id="@+id/textView16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="8dp"
+                android:background="@color/kat_grey_7"
                 android:text="Updates"
                 android:textColor="@color/kat_orange_1"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/rvPhotos"
-                app:layout_constraintStart_toStartOf="@+id/rvPhotos"
-                app:layout_constraintTop_toBottomOf="@+id/rvPhotos" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvLegend" />
 
             <TextView
                 android:id="@+id/tvNumFollowers"
@@ -325,19 +327,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/pcBreakdown" />
 
             <TextView
-                android:id="@+id/textView13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Media"
-                android:textColor="@color/kat_orange_1"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/rvLegend"
-                app:layout_constraintStart_toStartOf="@+id/rvLegend"
-                app:layout_constraintTop_toBottomOf="@+id/rvLegend" />
-
-            <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -346,16 +335,6 @@
                 android:text="Looking for collaborators:"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvFunds" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvPhotos"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/gradient"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
             <TextView
                 android:id="@+id/tvCollab"
@@ -383,8 +362,11 @@
                 android:id="@+id/rvFeed"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
                 android:background="@color/kat_grey_7"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
