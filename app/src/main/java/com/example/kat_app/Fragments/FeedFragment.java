@@ -33,8 +33,8 @@ import java.util.List;
 
 /* FBU 2019
    TimelineFragment displays a recycler view with updates on a user's personal projects
-   and the projects they've invested in. Users can scroll to refresh posts.
- */
+   and the projects they've invested in. Users can scroll to refresh posts. Users can click to
+   add updates on projects. */
 public class FeedFragment extends Fragment {
 
     protected  RecyclerView rvFeed;
@@ -46,7 +46,6 @@ public class FeedFragment extends Fragment {
     private com.codepath.instagram.EndlessRecyclerViewScrollListener scrollListener;
     private ImageButton btnGoToAddUpdate;
     private ProgressBar pbLoad;
-
     private Bundle savedState = null;
 
     // onCreateView to inflate the view
