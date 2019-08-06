@@ -1,5 +1,6 @@
 package com.example.kat_app.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -171,6 +172,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                 intent.putExtra("comments", Parcels.wrap(update.getComments()));
                 // show the activity
                 context.startActivity(intent);
+                ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         }
 
@@ -309,6 +311,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                         feedToProfile.putExtra("User", Parcels.wrap(update.getUser()));
                         // show the activity
                         context.startActivity(feedToProfile);
+                        ((Activity) context).overridePendingTransition(R.anim.slide_up, R.anim.do_nothing);
                     }
                 });
             }

@@ -190,6 +190,7 @@ public class OtherUserProfileActivity extends AppCompatActivity {
                 Intent message = new Intent(OtherUserProfileActivity.this, MessageActivity.class);
                 message.putExtra(OtherUserProfileActivity.class.getSimpleName(), Parcels.wrap(user));
                 startActivity(message);
+                OtherUserProfileActivity.this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
     }

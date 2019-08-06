@@ -80,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-
     }
+
 
     public static void setStatusBar(Window window) {
         // Make sure that status bar text is still visible
