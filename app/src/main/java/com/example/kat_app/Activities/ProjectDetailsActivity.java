@@ -16,6 +16,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.BounceTouchListener;
 import com.example.kat_app.Adapters.LegendAdapter;
 import com.example.kat_app.Adapters.UpdatesAdapter;
 import com.example.kat_app.Models.Project;
@@ -147,16 +148,15 @@ public class ProjectDetailsActivity extends AppCompatActivity {
 
         queryUser();
 
-        svScroll.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if(scrollY > 0){
-                    tvDetails.setVisibility(View.INVISIBLE);
-                } else {
-                    tvDetails.setVisibility(View.VISIBLE);
+        BounceTouchListener bounceTouchListener = BounceTouchListener.create(svScroll, R.id.projectHolder,
+                new BounceTouchListener.OnTranslateListener() {
+                    @Override
+                    public void onTranslate(float translation) {
+                    }
                 }
-            }
-        });
+        );
+
+        svScroll.setOnTouchListener(bounceTouchListener);
 
         //rvMedia = findViewById(R.id.rvMedia);
 
