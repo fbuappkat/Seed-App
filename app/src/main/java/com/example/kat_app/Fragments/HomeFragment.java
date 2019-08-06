@@ -21,6 +21,7 @@ import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.baoyz.widget.PullRefreshLayout;
 import com.example.kat_app.Activities.CreateProjectActivity;
 import com.example.kat_app.Activities.MapActivity;
 import com.example.kat_app.Activities.ProjectDetailsActivity;
@@ -56,7 +57,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
     private boolean onProjects = true;
     RecyclerView rvUsers;
     SearchView editsearch;
-    protected SwipeRefreshLayout swipeContainer;
+    protected PullRefreshLayout swipeContainer;
 
 
     public static final String TAG = "HomeFragment";
@@ -205,13 +206,17 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         // set the layout manager on the recycler view
         rvUsers.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        setupSwipeRefreshing(view);
+
         queryProjects();
         queryUsers();
+    }
 
-        // Lookup the swipe container view
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+    protected void setupSwipeRefreshing(View view) {
+        swipeContainer = view.findViewById(R.id.swipeContainer);
+
         // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        swipeContainer.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 // Your code to refresh the list here.
@@ -228,10 +233,8 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
                 }
             }
         });
-        // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(android.R.color.holo_orange_dark,
-                android.R.color.holo_orange_light);
-
+        swipeContainer.setRefreshStyle(PullRefreshLayout.STYLE_SMARTISAN);
+        swipeContainer.setColor(getResources().getColor(R.color.kat_grey_7));
     }
 
     protected void queryProjects() {
