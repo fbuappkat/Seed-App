@@ -80,6 +80,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         tvFilter = view.findViewById(R.id.tvFilter);
         ivMap = view.findViewById(R.id.ivEarth);
 
+        pbLoad.setIndeterminate(true);
         ivMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
