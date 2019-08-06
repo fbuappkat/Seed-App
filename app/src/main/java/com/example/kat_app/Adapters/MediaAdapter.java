@@ -24,6 +24,8 @@ import java.util.ArrayList;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
+import static com.parse.Parse.getApplicationContext;
+
 public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> {
     private static Context context;
     private JSONArray media;
@@ -91,7 +93,7 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
         //add in data for specific user's post
         public void bind(final String url) {
            MultiTransformation<Bitmap> multiTransformation = new MultiTransformation<Bitmap>(new CenterCrop(), new RoundedCornersTransformation(20, 0));
-            Glide.with(context)
+            Glide.with(getApplicationContext())
                     .load(url)
                     .apply(RequestOptions.bitmapTransform(multiTransformation))
                     .into(ivMedia);
@@ -100,7 +102,7 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
         //add in data for specific user's post
         public void bind(final Bitmap image) {
             MultiTransformation<Bitmap> multiTransformation = new MultiTransformation<Bitmap>(new CenterCrop(), new RoundedCornersTransformation(20, 0));
-            Glide.with(context)
+            Glide.with(getApplicationContext())
                     .asBitmap()
                     .load(image)
                     .apply(RequestOptions.bitmapTransform(multiTransformation))
