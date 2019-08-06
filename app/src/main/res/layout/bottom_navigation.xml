@@ -14,6 +14,7 @@
             android:background="@color/kat_white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:itemIconTint="@color/bottom_nav_color"
+            app:itemTextColor="@color/bottom_nav_color"
             app:labelVisibilityMode="labeled"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
