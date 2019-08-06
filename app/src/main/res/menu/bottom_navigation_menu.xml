@@ -3,22 +3,22 @@
 
     <item android:id="@+id/navFeed"
         android:icon="@drawable/ic_notifications"
-        android:title="">
+        android:title="Feed">
     </item>
 
     <item android:id="@+id/navHome"
         android:icon="@drawable/ic_home"
-        android:title="">
+        android:title="Home">
     </item>
 
     <item android:id="@+id/navChat"
         android:icon="@drawable/ic_chat"
-        android:title="">
+        android:title="Chat">
     </item>
 
     <item android:id="@+id/navUser"
         android:icon="@drawable/ic_user"
-        android:title="">
+        android:title="Profile">
     </item>
 
 </menu>

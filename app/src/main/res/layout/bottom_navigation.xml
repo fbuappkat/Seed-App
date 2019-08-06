@@ -4,7 +4,8 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        >
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/bottomNav"
@@ -13,11 +14,12 @@
             android:background="@color/kat_white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:itemIconTint="@color/bottom_nav_color"
-            app:labelVisibilityMode="unlabeled"
+            app:labelVisibilityMode="labeled"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:itemIconSize="26dp"
+            app:itemIconSize="25dp"
+            android:theme="@style/Widget.BottomNavigationView"
             app:menu="@menu/bottom_navigation_menu">
 
 
