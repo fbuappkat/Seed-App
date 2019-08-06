@@ -3,6 +3,7 @@ package com.example.kat_app.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Path;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.example.kat_app.Activities.ProjectDetailsActivity;
 import com.example.kat_app.Activities.UserOwnedProjectActivity;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
@@ -94,14 +96,25 @@ public class UserProjectAdapter extends RecyclerView.Adapter<UserProjectAdapter.
                         .apply(bitmapTransform(multiTransformation))
                         .into(ivThumbnail);
             }
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent project2description = new Intent(context, UserOwnedProjectActivity.class);
-                    project2description.putExtra("project", Parcels.wrap(project));
-                    context.startActivity(project2description);
-                }
-            });
+            if (ParseUser.getCurrentUser() == project.getUser()) {
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent project2description = new Intent(context, UserOwnedProjectActivity.class);
+                        project2description.putExtra("project", Parcels.wrap(project));
+                        context.startActivity(project2description);
+                    }
+                });
+            } else {
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent project2description = new Intent(context, ProjectDetailsActivity.class);
+                        project2description.putExtra("project", Parcels.wrap(project));
+                        context.startActivity(project2description);
+                    }
+                });
+            }
         }
 
         @Override

@@ -44,11 +44,15 @@ public class MainActivity extends AppCompatActivity {
 
         activity = this;
 
+        if (savedInstanceState == null) {
+            bottomNav.setSelectedItemId(R.id.navHome); // change to whichever id should be default
+        }
+
         // Get the fragment manager
         fragmentManager = getSupportFragmentManager();
 
        FragmentTransaction transaction = fragmentManager.beginTransaction();
-       transaction.add(R.id.centerView, new FeedFragment());
+       transaction.add(R.id.centerView, new HomeFragment());
        transaction.commit();
 
         // Set up the navigation bar to switch between fragments
@@ -72,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                                 fragment = new ChatFragment();
                                 break;
                             default:
-                                fragment = new FeedFragment();
+                                fragment = new HomeFragment();
                                 break;
                         }
                         fragmentManager.beginTransaction().replace(R.id.centerView, fragment).commit();
@@ -80,8 +84,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-
     }
+
 
     public static void setStatusBar(Window window) {
         // Make sure that status bar text is still visible

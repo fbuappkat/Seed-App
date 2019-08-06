@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,7 +57,7 @@ public class UserOwnedProjectActivity extends AppCompatActivity {
     @BindView(R.id.tvNumFunds)
     TextView tvFunds;
     @BindView(R.id.ivBack)
-    ImageView ivBack;
+    ImageButton ivBack;
     @BindView(R.id.tvHandleDetails)
     TextView tvHandle;
     @BindView(R.id.tvPercentEquity)
@@ -187,6 +188,7 @@ public class UserOwnedProjectActivity extends AppCompatActivity {
         PieData pieData = new PieData(pieDataSet);
         pieData.setValueTextSize(20);
         pcBreakdown.setData(pieData);
+        pcBreakdown.getLegend().setEnabled(false);
         pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
         pcBreakdown.animateXY(1400, 1400);
     }
@@ -292,4 +294,9 @@ public class UserOwnedProjectActivity extends AppCompatActivity {
         rvLegend.setLayoutManager(new LinearLayoutManager(ProjectDetailsActivity.this));
     }*/
 
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 }

@@ -84,6 +84,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
             public void onClick(View v) {
                 Intent map = new Intent(getActivity(), MapActivity.class);
                 startActivity(map);
+                getActivity().overridePendingTransition(R.anim.slide_up, R.anim.do_nothing);
             }
         });
 
@@ -321,11 +322,13 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
             Intent project2description = new Intent(getActivity(), UserOwnedProjectActivity.class);
             project2description.putExtra("project", Parcels.wrap(projects.get(i)));
             startActivity(project2description);
+            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         } else {
             Log.d(TAG,"not user owned");
             Intent project2description = new Intent(getActivity(), ProjectDetailsActivity.class);
             project2description.putExtra("project", Parcels.wrap(projects.get(i)));
             startActivity(project2description);
+            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
     }
 

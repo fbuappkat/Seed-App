@@ -190,6 +190,7 @@ public class OtherUserProfileActivity extends AppCompatActivity {
                 Intent message = new Intent(OtherUserProfileActivity.this, MessageActivity.class);
                 message.putExtra(OtherUserProfileActivity.class.getSimpleName(), Parcels.wrap(user));
                 startActivity(message);
+                OtherUserProfileActivity.this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
     }
@@ -222,6 +223,7 @@ public class OtherUserProfileActivity extends AppCompatActivity {
 
     protected void queryFollowers(ParseUser user) {
         ParseQuery<Followers> projectQuery = new ParseQuery<Followers>(Followers.class);
+        projectQuery.include("user");
         projectQuery.whereEqualTo("user", user);
 
         projectQuery.findInBackground(new FindCallback<Followers>() {
@@ -333,5 +335,11 @@ public class OtherUserProfileActivity extends AppCompatActivity {
                 // set the layout manager on the recycler view
             }
         });
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

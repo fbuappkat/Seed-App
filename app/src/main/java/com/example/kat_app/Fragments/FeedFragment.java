@@ -155,6 +155,7 @@ public class FeedFragment extends Fragment {
                 if (projects.size() != 0) {
                     Intent TimelineToUpdate = new Intent(getContext(), AddUpdateActivity.class);
                     startActivity(TimelineToUpdate);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 } else {
                     Toast.makeText(getContext(),"Sorry, but you can't add an update if you haven't created any projects yet!", Toast.LENGTH_SHORT).show();
                 }
