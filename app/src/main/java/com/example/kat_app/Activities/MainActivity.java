@@ -1,9 +1,11 @@
 package com.example.kat_app.Activities;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.app.Fragment;
@@ -111,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
                 viewPager.setCurrentItem(position, true);
             }
         });
+
+        bottomNav.setTypeface(ResourcesCompat.getFont(this, R.font.proximanova_semibold));
     }
 
 
