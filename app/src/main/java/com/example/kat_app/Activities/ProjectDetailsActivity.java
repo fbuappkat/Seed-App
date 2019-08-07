@@ -64,6 +64,8 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     TextView tvFollowers;
     @BindView(R.id.tvNumFunds)
     TextView tvFunds;
+    @BindView(R.id.tvNumFunds2)
+    TextView tvFunds2;
     @BindView(R.id.btnFollow)
     Button btnFollow;
     @BindView(R.id.btnInvest)
@@ -324,7 +326,8 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                     if (totalFunds >= totalNeeded) {
                         btnInvest.setBackground(getDrawable(R.drawable.button_grey));
                     }
-                    tvFunds.setText(Float.toString(getTotalFunds(requests)) + "0/" + Float.toString(getTotal(requests)) + "0");
+                    tvFunds2.setText("$" + Float.toString(getTotalFunds(requests)) + "0/");
+                    tvFunds.setText("$" + Float.toString(getTotal(requests)) + "0");
                     String equity = "0.00%";
                     if (proj.getEquity() != null) {
                         float newEquity = proj.getEquity() - getTotalFunds(requests) / getTotal(requests) * proj.getEquity();
