@@ -54,9 +54,11 @@ public class CreditTransactionAdapter extends RecyclerView.Adapter<CreditTransac
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
         if (transaction.getType().equals("withdrawal")) {
+            holder.tvBalance.setText(transaction.getBalance().toString());
             holder.tvAmount.setText("-" + formatter.format(transaction.getAmount()));
             holder.tvDate.setText(transaction.getRelativeTimeAgo());
         } else if (transaction.getType().equals("deposit")) {
+            holder.tvBalance.setText(transaction.getBalance().toString());
             holder.tvAmount.setText("+" + formatter.format(transaction.getAmount()));
             holder.tvDate.setText(transaction.getRelativeTimeAgo());
         }
@@ -71,11 +73,13 @@ public class CreditTransactionAdapter extends RecyclerView.Adapter<CreditTransac
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView tvAmount;
+        public TextView tvBalance;
         public TextView tvDate;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvAmount = itemView.findViewById(R.id.tvAmount);
+            tvBalance = itemView.findViewById(R.id.tvBalance);
             tvDate = itemView.findViewById(R.id.tvDate);
         }
 
