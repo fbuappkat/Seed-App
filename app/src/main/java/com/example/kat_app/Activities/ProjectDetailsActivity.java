@@ -193,7 +193,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         btnInvest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (totalFunds != -1 && totalNeeded != -1 && totalFunds > totalNeeded) {
+                if (totalFunds >= totalNeeded) {
                     Toast.makeText(ProjectDetailsActivity.this, "Project is already fully funded!", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent invest = new Intent(ProjectDetailsActivity.this, InvestActivity.class);
