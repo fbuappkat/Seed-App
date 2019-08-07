@@ -199,6 +199,24 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                     Intent invest = new Intent(ProjectDetailsActivity.this, InvestActivity.class);
                     invest.putExtra("project", Parcels.wrap(proj));
                     startActivity(invest);
+                    ProjectDetailsActivity.this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+            }
+        });
+
+        //collab button
+        btnCollab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG,"collabs: "+ proj.getCollabs());
+                if (!proj.getCollabs()) {
+                    Toast.makeText(ProjectDetailsActivity.this, "The owner of this project isn't looking for collaborators right now.", Toast.LENGTH_SHORT).show();
+                //TODO fix this
+                } else {
+                    Intent message = new Intent(ProjectDetailsActivity.this, MessageActivity.class);
+                    message.putExtra(OtherUserProfileActivity.class.getSimpleName(), Parcels.wrap(proj.getUser()));
+                    startActivity(message);
+                    ProjectDetailsActivity.this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             }
         });

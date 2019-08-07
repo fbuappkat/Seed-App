@@ -1,6 +1,5 @@
 package com.example.kat_app.Activities;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +16,6 @@ import android.widget.Toast;
 import com.example.kat_app.Adapters.ChatAdapter;
 import com.example.kat_app.Adapters.MessageAdapter;
 import com.example.kat_app.Adapters.UserAdapter;
-import com.example.kat_app.Fragments.ChatFragment;
 import com.example.kat_app.Models.Chat;
 import com.example.kat_app.Models.Message;
 import com.example.kat_app.R;
@@ -83,7 +81,11 @@ public class MessageActivity extends AppCompatActivity {
             otherUser = Parcels.unwrap(getIntent().getParcelableExtra(UserAdapter.class.getSimpleName()));
         }
 
-        tvChat.setText(otherUser.getUsername());
+        try {
+            tvChat.setText(otherUser.fetchIfNeeded().getUsername());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         startWithCurrentUser();
         myHandler.postDelayed(mRefreshMessagesRunnable, POLL_INTERVAL);
     }
