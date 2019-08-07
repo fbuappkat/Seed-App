@@ -65,6 +65,8 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     Button btnFollow;
     @BindView(R.id.btnInvest)
     Button btnInvest;
+    @BindView(R.id.btnCollab)
+    Button btnCollab;
     @BindView(R.id.ivBack)
     ImageButton ivBack;
     @BindView(R.id.tvHandleDetails)
@@ -108,19 +110,13 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         tvDescription.setText(proj.getDescription());
         tvInvestors.setText(Integer.toString(proj.getInvestors().length()));
         tvFollowers.setText(Integer.toString(proj.getFollowers().length()));
-        totalFunds = -1;
-        totalNeeded = -1;
-        /*totalFunds = 0;
-        if (requests != null) {
-            totalFunds = getTotalFunds(requests);
-        }
-        totalNeeded = getTotal(requests);
-        if (totalFunds >= totalNeeded) {
-            btnInvest.setBackgroundColor(Color.GRAY);
-        }*/
 
         if (proj.getFollowers().toString().contains(ParseUser.getCurrentUser().getObjectId())) {
-            btnFollow.setBackgroundColor(Color.GRAY);
+            btnFollow.setBackground(getDrawable(R.drawable.button_grey));
+        }
+
+        if (!proj.getCollabs()) {
+            btnCollab.setBackground(getDrawable(R.drawable.button_grey));
         }
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(ProjectDetailsActivity.this);
@@ -147,16 +143,6 @@ public class ProjectDetailsActivity extends AppCompatActivity {
 
         svScroll.setOnTouchListener(bounceTouchListener);
 
-        //rvMedia = findViewById(R.id.rvMedia);
-
-        //Log.d(TAG,"project is:" + Boolean.toString(project.containsMedia()));
-
-        /*if (project.containsMedia()) {
-            media = project.getMedia();
-
-            setupAdapter();
-        }*/
-
         //Follow button
         if (!proj.getFollowers().toString().contains(ParseUser.getCurrentUser().getObjectId())) {
             btnFollow.setText("Follow");
@@ -181,9 +167,11 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                     });
                     Toast.makeText(ProjectDetailsActivity.this, "Project followed!", Toast.LENGTH_SHORT).show();
                     btnFollow.setText("Unfollow");
+                    btnFollow.setBackground(getDrawable(R.drawable.button_grey));
                 } else {
                     btnFollow.setBackgroundColor(Color.rgb(249, 138, 97));
                     btnFollow.setText("Follow");
+                    btnFollow.setBackground(getDrawable(R.drawable.button));
 
                     ArrayList<ParseUser> remove = new ArrayList<>();
                     remove.add(ParseUser.getCurrentUser());
@@ -296,7 +284,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                     totalFunds = getTotalFunds(requests);
                     totalNeeded = getTotal(requests);
                     if (totalFunds >= totalNeeded) {
-                        btnInvest.setBackgroundColor(Color.GRAY);
+                        btnInvest.setBackground(getDrawable(R.drawable.button_grey));
                     }
                     tvFunds.setText(Float.toString(getTotalFunds(requests)) + "0/" + Float.toString(getTotal(requests)) + "0");
                     String equity = "0.00%";
