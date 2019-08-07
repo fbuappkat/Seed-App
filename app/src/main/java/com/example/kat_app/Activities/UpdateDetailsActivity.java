@@ -167,10 +167,10 @@ public class UpdateDetailsActivity extends AppCompatActivity {
                 if (e == null) {
                     commentList.clear();
                     commentList.addAll(comments);
-                    adapter.notifyDataSetChanged(); // update adapter
+                    adapter.notifyDataSetChanged();
+                    rvComments.scrollToPosition(commentList.size() - 1);// update adapter
                     // Scroll to the bottom of the list on initial load
                     if (mFirstLoad) {
-                        rvComments.scrollToPosition(commentList.size() - 1);
                         mFirstLoad = false;
                     }
                 } else {
@@ -200,8 +200,8 @@ public class UpdateDetailsActivity extends AppCompatActivity {
                             return;
                         }
 
-                        adapter.notifyDataSetChanged();
                         update.addComment(newComment);
+                        adapter.notifyDataSetChanged();
                         etComment.setText("");
                         update.saveInBackground(new SaveCallback() {
                             @Override
@@ -212,6 +212,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
                                 }
                             }
                         });
+                        queryComments();
                     }
                 });
 

@@ -44,6 +44,8 @@ public class SignupActivity extends AppCompatActivity {
     EditText etPassword;
     @BindView(R.id.etConfirmPassword)
     EditText etConfirmpassword;
+    @BindView(R.id.btnSignIn)
+    TextView btnSignIn;
     @BindView(R.id.signinBackground)
     ConstraintLayout signinBackground;
 
@@ -70,6 +72,15 @@ public class SignupActivity extends AppCompatActivity {
         etPassword.addTextChangedListener(signupAvailable);
         etConfirmpassword.addTextChangedListener(signupAvailable);
 
+        // Set up listener for sign in button
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override

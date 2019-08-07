@@ -22,6 +22,7 @@ public class Transaction extends ParseObject implements Parcelable {
     private final static String KEY_REQUEST = "request";
     private final static String KEY_PROJECT = "project";
     private final static String KEY_TYPE = "type";
+    private final static String KEY_BALANCE = "current_balance";
     private final static String KEY_EQUITY = "equity";
     private static final String KEY_CREATED_AT = "createdAt";
     private static final String KEY_EARNING_TYPE = "earningType";
@@ -79,6 +80,10 @@ public class Transaction extends ParseObject implements Parcelable {
 
     public void setType(String type) {
         put(KEY_TYPE, type);
+    }
+
+    public Double getBalance() {
+        return getDouble(KEY_BALANCE);
     }
 
     public String getType() {

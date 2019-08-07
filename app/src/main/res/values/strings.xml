@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">KAT-app</string>
+    <string name="app_name">Seed</string>
 
     <string-array name="projects">
         <item>"Meet Zuck"</item>
@@ -12,6 +12,7 @@
         <item>Technology</item>
         <item>Social Good</item>
         <item>Food/Drink</item>
+        <item>Entertainment</item>
         <item>Finance</item>
         <item>Other</item>
     </string-array>
@@ -22,6 +23,7 @@
         <item>Technology</item>
         <item>Social Good</item>
         <item>Food/Drink</item>
+        <item>Entertainment</item>
         <item>Finance</item>
         <item>Other</item>
     </string-array>
