@@ -51,17 +51,6 @@
                     android:textSize="18sp" />
 
                 <ImageButton
-                    android:id="@+id/ivShare"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="right"
-                    android:background="@android:color/transparent"
-                    android:clickable="true"
-                    android:cropToPadding="false"
-                    android:paddingRight="35dp"
-                    android:src="@drawable/ic_facebook" />
-
-                <ImageButton
                     android:id="@+id/ivBack"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -72,6 +61,18 @@
                     android:cropToPadding="false"
                     android:paddingRight="35dp"
                     app:srcCompat="@drawable/ic_back" />
+
+                <ImageButton
+                    android:id="@+id/ivAdd"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="0dp"
+                    android:background="@android:color/transparent"
+                    android:clickable="true"
+                    android:cropToPadding="false"
+                    android:paddingRight="10dp"
+                    app:srcCompat="@drawable/ic_add" />
 
             </android.support.v7.widget.Toolbar>
 
@@ -138,6 +139,7 @@
                 android:layout_marginTop="8dp"
                 android:text="Author"
                 android:textAlignment="viewStart"
+                android:textColor="@color/kat_orange_1"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -228,32 +230,40 @@
 
             <TextView
                 android:id="@+id/tvNumInvestors"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
                 android:text="x"
+                android:textAlignment="center"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/tvInvestors"
+                app:layout_constraintEnd_toStartOf="@+id/line9"
                 app:layout_constraintStart_toStartOf="@+id/tvInvestors"
                 app:layout_constraintTop_toTopOf="@+id/line9" />
 
             <TextView
                 android:id="@+id/tvNumFollowers"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:text="x"
+                android:textAlignment="center"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/tvInvestments"
-                app:layout_constraintStart_toStartOf="@+id/tvInvestments"
+                app:layout_constraintEnd_toStartOf="@+id/line8"
+                app:layout_constraintStart_toEndOf="@+id/line9"
                 app:layout_constraintTop_toTopOf="@+id/line9" />
 
             <TextView
                 android:id="@+id/tvNumFunds"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:text="x"
+                android:textAlignment="center"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/tvFunds"
-                app:layout_constraintStart_toStartOf="@+id/tvFunds"
+                app:layout_constraintEnd_toStartOf="@+id/line4"
+                app:layout_constraintStart_toEndOf="@+id/line8"
                 app:layout_constraintTop_toTopOf="@+id/line8" />
 
             <TextView
@@ -277,12 +287,14 @@
 
             <TextView
                 android:id="@+id/tvPercentEquity"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:text="x"
+                android:textAlignment="center"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/textView5"
-                app:layout_constraintStart_toStartOf="@+id/textView5"
+                app:layout_constraintStart_toEndOf="@+id/line4"
                 app:layout_constraintTop_toTopOf="@+id/line4" />
 
             <android.support.v7.widget.RecyclerView
@@ -304,6 +316,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:text="Legend"
+                android:textColor="@color/kat_orange_1"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -326,13 +340,12 @@
                 android:id="@+id/rvFeed"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="8dp"
                 android:background="@color/kat_grey_7"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/greyView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/greyView" />
 
             <View
                 android:id="@+id/greyView"

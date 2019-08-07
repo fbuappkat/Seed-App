@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +56,8 @@ public class ProjectDetailsActivity extends AppCompatActivity {
     TextView tvAuthor;
     @BindView(R.id.tvDescription)
     TextView tvDescription;
+    @BindView(R.id.ivAdd)
+    ImageView btnPostFunds;
     @BindView(R.id.tvNumInvestors)
     TextView tvInvestors;
     @BindView(R.id.tvNumFollowers)
@@ -217,6 +220,23 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                     message.putExtra(OtherUserProfileActivity.class.getSimpleName(), Parcels.wrap(proj.getUser()));
                     startActivity(message);
                     ProjectDetailsActivity.this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+            }
+        });
+
+        btnPostFunds.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (proj.getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+                    // create intent for the new activity
+                    Intent detailsToFunds = new Intent(ProjectDetailsActivity.this, AddFundsActivity.class);
+                    //pass user as an object
+                    detailsToFunds.putExtra("User", Parcels.wrap(proj.getUser()));
+                    detailsToFunds.putExtra("project",Parcels.wrap(proj));
+                    // show the activity
+                    startActivity(detailsToFunds);
+                } else {
+                    Toast.makeText(ProjectDetailsActivity.this, "You can't post funds for a project you didn't create!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
