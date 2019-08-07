@@ -49,22 +49,16 @@ public class ProjectDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.pcBreakdown)
     PieChart pcBreakdown;
-    @BindView(R.id.tvName)
-    TextView tvName;
     @BindView(R.id.tvDetailsName)
-    TextView tvDetails;
+    TextView tvName;
     @BindView(R.id.tvAuthor)
     TextView tvAuthor;
     @BindView(R.id.tvDescription)
     TextView tvDescription;
     @BindView(R.id.tvNumInvestors)
     TextView tvInvestors;
-    @BindView(R.id.tvCollab)
-    TextView tvCollab;
     @BindView(R.id.tvNumFollowers)
     TextView tvFollowers;
-    @BindView(R.id.btnMedia)
-    Button btnMedia;
     @BindView(R.id.tvNumFunds)
     TextView tvFunds;
     @BindView(R.id.btnFollow)
@@ -114,11 +108,6 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         tvDescription.setText(proj.getDescription());
         tvInvestors.setText(Integer.toString(proj.getInvestors().length()));
         tvFollowers.setText(Integer.toString(proj.getFollowers().length()));
-        if (proj.getCollabs()) {
-            tvCollab.setText("Yes");
-        } else {
-            tvCollab.setText("No");
-        }
         totalFunds = -1;
         totalNeeded = -1;
         /*totalFunds = 0;
@@ -223,18 +212,6 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                     invest.putExtra("project", Parcels.wrap(proj));
                     startActivity(invest);
                 }
-            }
-        });
-
-
-
-        //invest button
-        btnMedia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent media = new Intent(ProjectDetailsActivity.this, ProjectMediaActivity.class);
-                media.putExtra("project", Parcels.wrap(proj));
-                startActivity(media);
             }
         });
 

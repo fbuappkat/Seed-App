@@ -85,33 +85,50 @@
         android:id="@+id/svScroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/kat_grey_4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view9"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0.0">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/projectHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/kat_white"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="Name"
-                android:textAlignment="center"
-                android:textColor="@color/kat_orange_3"
-                android:textSize="36sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <View
+                android:id="@+id/line4"
+                android:layout_width="1dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="90dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/kat_grey_3"
+                app:layout_constraintStart_toEndOf="@+id/line8"
+                app:layout_constraintTop_toBottomOf="@+id/tvHandleDetails" />
+
+            <View
+                android:id="@+id/line8"
+                android:layout_width="1dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="90dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/kat_grey_3"
+                app:layout_constraintStart_toEndOf="@+id/line9"
+                app:layout_constraintTop_toBottomOf="@+id/tvHandleDetails" />
+
+            <View
+                android:id="@+id/line9"
+                android:layout_width="1dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="90dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/kat_grey_3"
+                app:layout_constraintStart_toStartOf="@+id/tvAuthor"
+                app:layout_constraintTop_toBottomOf="@+id/tvHandleDetails" />
 
             <TextView
                 android:id="@+id/tvAuthor"
@@ -124,32 +141,15 @@
                 android:textSize="14sp"
                 android:textStyle="bold|italic"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view2" />
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <View
-                android:id="@+id/view"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="8dp"
-                android:background="#c0c0c0"
-                app:layout_constraintTop_toBottomOf="@+id/btnFollow"
-                tools:layout_editor_absoluteX="0dp" />
-
-
-            <View
-                android:id="@+id/view2"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="8dp"
-                android:background="#c0c0c0"
-                app:layout_constraintTop_toBottomOf="@id/tvName" />
 
             <TextView
                 android:id="@+id/tvDescription"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
                 android:text="Description"
                 android:textAlignment="center"
@@ -157,14 +157,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view" />
+                app:layout_constraintTop_toBottomOf="@+id/btnFollow" />
 
             <TextView
                 android:id="@+id/tvInvestors"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:text="Investors"
+                app:layout_constraintEnd_toStartOf="@+id/line9"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvNumInvestors" />
 
@@ -172,10 +174,12 @@
                 android:id="@+id/tvInvestments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="2dp"
+                android:layout_marginEnd="8dp"
                 android:text="Followers"
-                app:layout_constraintStart_toEndOf="@+id/tvInvestors"
+                app:layout_constraintEnd_toStartOf="@+id/line8"
+                app:layout_constraintStart_toEndOf="@+id/line9"
                 app:layout_constraintTop_toBottomOf="@+id/tvNumFollowers" />
 
             <com.github.mikephil.charting.charts.PieChart
@@ -193,61 +197,57 @@
                 android:id="@+id/tvFunds"
                 android:layout_width="wrap_content"
                 android:layout_height="19dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginEnd="8dp"
                 android:text="Funds"
                 android:textAlignment="center"
-                app:layout_constraintStart_toEndOf="@+id/tvInvestments"
+                app:layout_constraintEnd_toStartOf="@+id/line4"
+                app:layout_constraintStart_toEndOf="@+id/line8"
                 app:layout_constraintTop_toBottomOf="@+id/tvNumFunds" />
 
             <Button
                 android:id="@+id/btnFollow"
-                android:layout_width="0dp"
-                android:layout_height="23dp"
+                android:layout_width="110dp"
+                android:layout_height="30dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:background="@color/kat_orange_1"
+                android:background="@drawable/button"
+                android:fontFamily="@font/proximanova_semibold"
                 android:text="Follow"
                 android:textColor="@color/kat_white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnInvest" />
+                app:layout_constraintEnd_toStartOf="@+id/btnCollab"
+                app:layout_constraintStart_toEndOf="@+id/btnInvest"
+                app:layout_constraintTop_toTopOf="@+id/btnCollab" />
 
             <Button
                 android:id="@+id/btnInvest"
-                android:layout_width="0dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@color/kat_orange_1"
+                android:layout_width="110dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/button"
+                android:fontFamily="@font/proximanova_semibold"
                 android:text="Invest"
                 android:textColor="@color/kat_white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnCollab" />
+                app:layout_constraintTop_toTopOf="@+id/btnFollow" />
 
             <TextView
                 android:id="@+id/tvNumInvestors"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:text="TextView"
+                android:text="x"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvAuthor" />
+                app:layout_constraintEnd_toEndOf="@+id/tvInvestors"
+                app:layout_constraintStart_toStartOf="@+id/tvInvestors"
+                app:layout_constraintTop_toTopOf="@+id/line9" />
 
             <TextView
                 android:id="@+id/textView16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:background="@color/kat_grey_7"
+                android:background="@color/kat_white"
                 android:text="Updates"
                 android:textColor="@color/kat_orange_1"
                 android:textSize="24sp"
@@ -260,21 +260,21 @@
                 android:id="@+id/tvNumFollowers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="TextView"
+                android:text="x"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/tvInvestments"
                 app:layout_constraintStart_toStartOf="@+id/tvInvestments"
-                app:layout_constraintTop_toBottomOf="@+id/tvAuthor" />
+                app:layout_constraintTop_toTopOf="@+id/line9" />
 
             <TextView
                 android:id="@+id/tvNumFunds"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="TextView"
+                android:text="x"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/tvFunds"
                 app:layout_constraintStart_toStartOf="@+id/tvFunds"
-                app:layout_constraintTop_toBottomOf="@+id/tvAuthor" />
+                app:layout_constraintTop_toTopOf="@+id/line8" />
 
             <TextView
                 android:id="@+id/tvHandleDetails"
@@ -284,38 +284,26 @@
                 android:layout_marginTop="8dp"
                 android:text="Handle"
                 app:layout_constraintStart_toEndOf="@+id/tvAuthor"
-                app:layout_constraintTop_toBottomOf="@+id/view2" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginStart="8dp"
                 android:text="% Equity Left"
-                app:layout_constraintStart_toEndOf="@+id/tvNumFunds"
+                app:layout_constraintStart_toEndOf="@+id/line4"
                 app:layout_constraintTop_toBottomOf="@+id/tvPercentEquity" />
 
             <TextView
                 android:id="@+id/tvPercentEquity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="TextView"
+                android:text="x"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/tvNumFunds"
-                app:layout_constraintTop_toTopOf="@+id/tvNumFunds" />
-
-            <Button
-                android:id="@+id/btnMedia"
-                android:layout_width="89dp"
-                android:layout_height="34dp"
-                android:layout_marginStart="8dp"
-                android:background="@android:color/transparent"
-                android:text="Show Media"
-                android:textColor="@color/kat_orange_1"
-                app:layout_constraintStart_toEndOf="@+id/tvHandleDetails"
-                app:layout_constraintTop_toBottomOf="@+id/view2" />
+                app:layout_constraintEnd_toEndOf="@+id/textView5"
+                app:layout_constraintStart_toStartOf="@+id/textView5"
+                app:layout_constraintTop_toTopOf="@+id/line4" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvLegend"
@@ -341,42 +329,24 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/pcBreakdown" />
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
-                android:text="Looking for collaborators:"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvFunds" />
-
-            <TextView
-                android:id="@+id/tvCollab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="12dp"
-                android:text="TextView"
-                app:layout_constraintStart_toEndOf="@+id/textView3"
-                app:layout_constraintTop_toBottomOf="@+id/tvFunds" />
-
             <Button
                 android:id="@+id/btnCollab"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_width="110dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/button"
+                android:fontFamily="@font/proximanova_semibold"
                 android:text="Collab"
-                app:layout_constraintEnd_toEndOf="@+id/btnInvest"
-                app:layout_constraintStart_toEndOf="@+id/tvCollab"
+                android:textColor="@color/kat_white"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvFeed"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:background="@color/kat_grey_7"
                 app:layout_constraintBottom_toBottomOf="parent"
