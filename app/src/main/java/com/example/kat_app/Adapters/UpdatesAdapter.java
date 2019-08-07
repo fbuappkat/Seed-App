@@ -24,6 +24,7 @@ import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Activities.OtherUserProfileActivity;
+import com.example.kat_app.Activities.ProjectDetailsActivity;
 import com.example.kat_app.Activities.UpdateDetailsActivity;
 import com.example.kat_app.Fragments.ProfileFragment;
 import com.example.kat_app.Models.Project;
@@ -177,6 +178,32 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
             }
         }
 
+        public void queryProject(Update update){
+            ParseQuery<Project> projectQuery = new ParseQuery<Project>(Project.class);
+            //updateQuery.include(Update.KEY_USER);
+            projectQuery.whereEqualTo("objectId", update.getProject().getObjectId());
+
+            projectQuery.findInBackground(new FindCallback<Project>() {
+                @Override
+                public void done(final List<Project> posts, com.parse.ParseException e) {
+                    if (e != null) {
+                        Log.e(TAG, "Error with query");
+                        e.printStackTrace();
+                        return;
+                    }
+                    tvProject.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent update2details = new Intent(context, ProjectDetailsActivity.class);
+                            update2details.putExtra("project", Parcels.wrap(posts.get(0)));
+                            context.startActivity(update2details);
+                        }
+                    });
+
+                }
+            });
+        }
+
         //add in data for specific user's post
         public void bind(final Update update, String name) {
 
@@ -195,6 +222,9 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
             tvNumComments.setText(Integer.toString(update.getNumComments()));
             tvType.setText(update.getString("type"));
             tvProject.setText(name);
+
+            queryProject(update);
+
 
 
             if (update.getMedia() == null || update.getMedia().length() == 0) {
@@ -324,6 +354,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
             }
         }
     }
+
 
     // Clean all elements of the recycler
     public void clear() {
