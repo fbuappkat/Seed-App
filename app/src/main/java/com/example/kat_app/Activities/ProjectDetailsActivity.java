@@ -326,8 +326,8 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                     if (totalFunds >= totalNeeded) {
                         btnInvest.setBackground(getDrawable(R.drawable.button_grey));
                     }
-                    tvFunds2.setText("$" + Float.toString(getTotalFunds(requests)) + "0/");
-                    tvFunds.setText("$" + Float.toString(getTotal(requests)) + "0");
+                    tvFunds2.setText(Float.toString(getTotalFunds(requests)) + "0/");
+                    tvFunds.setText(Float.toString(getTotal(requests)) + "0");
                     String equity = "0.00%";
                     if (proj.getEquity() != null) {
                         float newEquity = proj.getEquity() - getTotalFunds(requests) / getTotal(requests) * proj.getEquity();

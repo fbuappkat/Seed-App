@@ -3,7 +3,6 @@ package com.example.kat_app.Adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -59,22 +58,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     @Override
     public UserAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
         View view;
-        if (request == 1) {
-            view = LayoutInflater.from(context).inflate(R.layout.item_user_message, parent, false);
-        } else {
-            view = LayoutInflater.from(context).inflate(R.layout.item_user, parent, false);
-        }
+        view = LayoutInflater.from(context).inflate(R.layout.item_user, parent, false);
         return new UserAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull UserAdapter.ViewHolder holder, int position) {
         ParseUser user = users.get(position);
-        if (position % 2 == 1) {
-            holder.view.setBackgroundColor(Color.parseColor("#FFFFFF"));
-        } else {
-            holder.view.setBackgroundColor(Color.parseColor("#EFEFEF"));
-        }
         holder.bind(user, users, position);
     }
 

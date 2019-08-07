@@ -201,9 +201,6 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         users = new ArrayList<>();
         // create the adapter
         userAdapter = new UserAdapter(getContext(), users, this);
-        // add line between items
-        rvUsers.addItemDecoration(new DividerItemDecoration(getContext(),
-                DividerItemDecoration.VERTICAL));
         // set the adapter on the recycler view
         rvUsers.setAdapter(userAdapter);
         // set the layout manager on the recycler view

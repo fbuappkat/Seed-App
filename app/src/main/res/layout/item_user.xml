@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/userHolder"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/menu_background">
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/project"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_marginLeft="8dp"
+android:layout_marginTop="8dp"
+android:layout_marginRight="8dp"
+android:layout_marginBottom="8dp"
+android:background="@drawable/layout_bg">
 
     <ImageView
         android:id="@+id/ivImage"
@@ -24,7 +28,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Name "
-        android:textColor="#111010"
+        android:textColor="@color/kat_orange_1"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/ivImage"
@@ -46,7 +50,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"
         android:text="Projects"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivImage"
         app:layout_constraintTop_toBottomOf="@+id/tvUsername" />
 
@@ -56,7 +62,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"
         android:text="Investments"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvProjects"
         app:layout_constraintTop_toBottomOf="@+id/tvUsername" />
 
@@ -69,4 +77,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_next" />
+
 </android.support.constraint.ConstraintLayout>
