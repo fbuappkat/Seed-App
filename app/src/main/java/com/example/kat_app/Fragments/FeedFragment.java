@@ -62,6 +62,7 @@ public class FeedFragment extends Fragment {
         rvFeed = view.findViewById(R.id.rvFeed);
 
         pbLoad = view.findViewById(R.id.pbLoad);
+        pbLoad.setIndeterminate(true);
         btnGoToAddUpdate = view.findViewById(R.id.ivAddUpdate);
 
         // Make the update image clickable

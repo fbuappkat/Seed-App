@@ -48,7 +48,7 @@
                     android:fontFamily="@font/proximanova_regular"
                     android:padding="10dp"
                     android:textSize="18sp"
-                    android:tint="@color/kat_black"
+                    android:tint="@color/kat_orange_1"
 
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

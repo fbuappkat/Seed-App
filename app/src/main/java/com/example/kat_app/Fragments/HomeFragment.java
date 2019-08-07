@@ -40,6 +40,8 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+
 public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickListener {
 
     RecyclerView rvProjects;
@@ -80,6 +82,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         tvFilter = view.findViewById(R.id.tvFilter);
         ivMap = view.findViewById(R.id.ivEarth);
 
+        pbLoad.setIndeterminate(true);
         ivMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,7 +193,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         adapter = new ProjectsAdapter(getContext(), projects, this);
         // add line between items
         // set the adapter on the recycler view
-        rvProjects.setAdapter(adapter);
+        rvProjects.setAdapter(new ScaleInAnimationAdapter(adapter));
         // set the layout manager on the recycler view
         rvProjects.setLayoutManager(new LinearLayoutManager(getContext()));
 
