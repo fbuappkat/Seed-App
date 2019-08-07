@@ -167,8 +167,10 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                     if (posts.get(i).getParseGeoPoint("location") != null){
                         //get location from parse and turn into LatLng type
                         ParseGeoPoint loc = posts.get(i).getParseGeoPoint("location");
-                        double lat = loc.getLatitude();
-                        double lng = loc.getLongitude();
+                        double displace1 = Math.random()*0.1;
+                        double displace2 = Math.random()*0.1;
+                        double lat = loc.getLatitude() + displace1;
+                        double lng = loc.getLongitude() + displace2;
                         LatLng projLoc = new LatLng(lat,lng);
 
 
