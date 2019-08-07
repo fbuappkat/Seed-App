@@ -389,7 +389,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                     },
                     Looper.myLooper());
         } catch (SecurityException e){
-            e.printStackTrace(); 
+            e.printStackTrace();
         }
     }
 
