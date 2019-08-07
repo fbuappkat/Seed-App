@@ -176,7 +176,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                         //create marker and set position to access specific project
                         Marker marker = map.addMarker(new MarkerOptions().position(projLoc)
                                 .snippet(posts.get(i).getDescription())
-                                .title(posts.get(i).getName()));
+                                .title(posts.get(i).getName())
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
 
 
                         marker.setTag(idx);
