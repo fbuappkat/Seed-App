@@ -137,6 +137,18 @@ public class CreateProjectActivity extends AppCompatActivity {
             }
         });
 
+        //publish post
+        tbCollabs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tbCollabs.getText().equals("YES")) {
+                    tbCollabs.setBackgroundDrawable(getDrawable(R.drawable.button));
+                } else if ((tbCollabs.getText().equals("NO"))) {
+                    tbCollabs.setBackgroundDrawable(getDrawable(R.drawable.button_grey));
+                }
+            }
+        });
+
         setBackButton();
     }
 
