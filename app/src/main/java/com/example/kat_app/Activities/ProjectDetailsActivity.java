@@ -117,11 +117,11 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         tvFollowers.setText(Integer.toString(proj.getFollowers().length()));
 
         if (proj.getFollowers().toString().contains(ParseUser.getCurrentUser().getObjectId())) {
-           // btnFollow.setBackground(getDrawable(R.drawable.button_grey));
+           btnFollow.setBackground(getDrawable(R.drawable.button_grey));
         }
 
         if (!proj.getCollabs()) {
-           // btnCollab.setBackground(getDrawable(R.drawable.button_grey));
+           btnCollab.setBackground(getDrawable(R.drawable.button_grey));
         }
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(ProjectDetailsActivity.this);
@@ -172,7 +172,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                     });
                     Toast.makeText(ProjectDetailsActivity.this, "Project followed!", Toast.LENGTH_SHORT).show();
                     btnFollow.setText("Unfollow");
-                    //btnFollow.setBackground(getDrawable(R.drawable.button_grey));
+                    btnFollow.setBackground(getDrawable(R.drawable.button_grey));
                 } else {
                     btnFollow.setBackgroundColor(Color.rgb(249, 138, 97));
                     btnFollow.setText("Follow");
@@ -324,7 +324,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                     totalFunds = getTotalFunds(requests);
                     totalNeeded = getTotal(requests);
                     if (totalFunds >= totalNeeded) {
-                        //btnInvest.setBackground(getDrawable(R.drawable.button_grey));
+                        btnInvest.setBackground(getDrawable(R.drawable.button_grey));
                     }
                     tvFunds2.setText(Float.toString(getTotalFunds(requests)) + "0/");
                     tvFunds.setText(Float.toString(getTotal(requests)) + "0");
