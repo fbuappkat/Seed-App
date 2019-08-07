@@ -322,20 +322,10 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
 
     @Override
     public void onClick(int i) {
-        //Toast.makeText(getContext(), "Clicked", Toast.LENGTH_SHORT).show();
-        if (projects.get(i).getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
-            Log.d(TAG,"user owned");
-            Intent project2description = new Intent(getActivity(), UserOwnedProjectActivity.class);
-            project2description.putExtra("project", Parcels.wrap(projects.get(i)));
-            startActivity(project2description);
-            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        } else {
-            Log.d(TAG,"not user owned");
-            Intent project2description = new Intent(getActivity(), ProjectDetailsActivity.class);
-            project2description.putExtra("project", Parcels.wrap(projects.get(i)));
-            startActivity(project2description);
-            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        }
+        Intent project2description = new Intent(getActivity(), ProjectDetailsActivity.class);
+        project2description.putExtra("project", Parcels.wrap(projects.get(i)));
+        startActivity(project2description);
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
 
