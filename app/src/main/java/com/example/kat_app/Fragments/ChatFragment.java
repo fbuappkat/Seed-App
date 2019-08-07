@@ -44,6 +44,15 @@ public class ChatFragment extends Fragment {
     private ArrayList<ParseUser> otherUsers;
     private ChatAdapter adapter;
 
+    public static ChatFragment newInstance(int page, String title) {
+        ChatFragment fragmentChat = new ChatFragment();
+        Bundle args = new Bundle();
+        args.putInt("someInt", page);
+        args.putString("someTitle", title);
+        fragmentChat.setArguments(args);
+        return fragmentChat;
+    }
+
     // onCreateView to inflate the view
     @Nullable
     @Override

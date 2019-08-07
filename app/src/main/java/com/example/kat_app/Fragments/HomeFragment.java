@@ -64,6 +64,15 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
 
     public static final String TAG = "HomeFragment";
 
+    public static HomeFragment newInstance(int page, String title) {
+        HomeFragment fragmentHome = new HomeFragment();
+        Bundle args = new Bundle();
+        args.putInt("someInt", page);
+        args.putString("someTitle", title);
+        fragmentHome.setArguments(args);
+        return fragmentHome;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);

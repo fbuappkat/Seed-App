@@ -1,25 +1,26 @@
 package com.example.kat_app.Activities;
 
 import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 
 import com.example.kat_app.Fragments.ChatFragment;
 import com.example.kat_app.Fragments.FeedFragment;
 import com.example.kat_app.Fragments.HomeFragment;
 import com.example.kat_app.Fragments.ProfileFragment;
+import com.example.kat_app.Models.Chat;
 import com.example.kat_app.R;
+import com.gauravk.bubblenavigation.BubbleNavigationLinearView;
+import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,12 +28,53 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static class MyPagerAdapter extends FragmentPagerAdapter {
+        private static int NUM_ITEMS = 4;
+
+        public MyPagerAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
+        }
+
+        // Returns total number of pages
+        @Override
+        public int getCount() {
+            return NUM_ITEMS;
+        }
+
+        // Returns the fragment to display for that page
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0: // Fragment # 0 - This will show FirstFragment
+                    return FeedFragment.newInstance(0, "Page # 1");
+                case 1: // Fragment # 0 - This will show FirstFragment different title
+                    return HomeFragment.newInstance(1, "Page # 2");
+                case 2: // Fragment # 1 - This will show SecondFragment
+                    return ChatFragment.newInstance(2, "Page # 3");
+                case 3: // Fragment # 1 - This will show SecondFragment
+                    return ProfileFragment.newInstance(3, "Page # 4");
+                default:
+                    return null;
+            }
+        }
+
+        // Returns the page title for the top indicator
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return "Page " + position;
+        }
+
+    }
+
     @BindView(R.id.bottomNav)
-    BottomNavigationView bottomNav;
+    BubbleNavigationLinearView bottomNav;
+    @BindView(R.id.centerView)
+    ViewPager viewPager;
+
+    private PagerAdapter pagerAdapter;
 
     public static Activity activity;
 
-    FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,46 +86,31 @@ public class MainActivity extends AppCompatActivity {
 
         activity = this;
 
-        if (savedInstanceState == null) {
-            bottomNav.setSelectedItemId(R.id.navHome); // change to whichever id should be default
-        }
+        pagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(pagerAdapter);
 
-        // Get the fragment manager
-        fragmentManager = getSupportFragmentManager();
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+            }
 
-       FragmentTransaction transaction = fragmentManager.beginTransaction();
-       transaction.add(R.id.centerView, new HomeFragment());
-       transaction.commit();
+            @Override
+            public void onPageSelected(int i) {
+                bottomNav.setCurrentActiveItem(i);
+            }
 
-        // Set up the navigation bar to switch between fragments
-        bottomNav.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                        Fragment fragment;
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        switch (menuItem.getItemId()) {
-                            case R.id.navFeed:
-                                fragment = new FeedFragment();
-                                break;
-                            case R.id.navHome:
-                                fragment = new HomeFragment();
-                                break;
-                            case R.id.navUser:
-                                fragment = new ProfileFragment();
-                                break;
-                            case R.id.navChat:
-                                fragment = new ChatFragment();
-                                break;
-                            default:
-                                fragment = new HomeFragment();
-                                break;
-                        }
-                        fragmentManager.beginTransaction().replace(R.id.centerView, fragment).commit();
-                        return true;
-                    }
-                });
+            @Override
+            public void onPageScrollStateChanged(int i) {
 
+            }
+        });
+
+        bottomNav.setNavigationChangeListener(new BubbleNavigationChangeListener() {
+            @Override
+            public void onNavigationChanged(View view, int position) {
+                viewPager.setCurrentItem(position, true);
+            }
+        });
     }
 
 

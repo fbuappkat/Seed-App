@@ -49,6 +49,15 @@ public class FeedFragment extends Fragment {
     private ImageButton btnGoToAddUpdate;
     private ProgressBar pbLoad;
 
+    public static FeedFragment newInstance(int page, String title) {
+        FeedFragment fragmentFeed = new FeedFragment();
+        Bundle args = new Bundle();
+        args.putInt("someInt", page);
+        args.putString("someTitle", title);
+        fragmentFeed.setArguments(args);
+        return fragmentFeed;
+    }
+
     // onCreateView to inflate the view
     @Nullable
     @Override

@@ -78,6 +78,15 @@ public class ProfileFragment extends Fragment {
     private static final int EDIT_PROFILE_CODE = 10001;
     private static final int MANAGE_ACCOUNT_CODE = 10002;
 
+    public static ProfileFragment newInstance(int page, String title) {
+        ProfileFragment fragmentProfile = new ProfileFragment();
+        Bundle args = new Bundle();
+        args.putInt("someInt", page);
+        args.putString("someTitle", title);
+        fragmentProfile.setArguments(args);
+        return fragmentProfile;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_profile, container, false);

@@ -1,0 +1,58 @@
+<com.gauravk.bubblenavigation.BubbleNavigationLinearView android:id="@+id/bottomNav"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/kat_white"
+    android:elevation="8dp"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.gauravk.bubblenavigation.BubbleToggleView
+        android:id="@+id/navFeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:bt_active="true"
+        app:bt_colorActive="@color/kat_orange_1"
+        app:bt_colorInactive="@color/kat_black"
+        app:bt_icon="@drawable/ic_notifications"
+        app:bt_shape="@drawable/transition_background_drawable_home"
+        app:bt_title="Feed" />
+
+    <com.gauravk.bubblenavigation.BubbleToggleView
+        android:id="@+id/navHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:bt_active="true"
+        app:bt_colorActive="@color/kat_orange_1"
+        app:bt_colorInactive="@color/kat_black"
+        app:bt_icon="@drawable/ic_home"
+        app:bt_shape="@drawable/transition_background_drawable_home"
+        app:bt_title="Home" />
+
+    <com.gauravk.bubblenavigation.BubbleToggleView
+        android:id="@+id/navChat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:bt_active="true"
+        app:bt_colorActive="@color/kat_orange_1"
+        app:bt_colorInactive="@color/kat_black"
+        app:bt_icon="@drawable/ic_chat"
+        app:bt_shape="@drawable/transition_background_drawable_home"
+        app:bt_title="Chat" />
+
+    <com.gauravk.bubblenavigation.BubbleToggleView
+        android:id="@+id/navUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:bt_active="true"
+        app:bt_colorActive="@color/kat_orange_1"
+        app:bt_colorInactive="@color/kat_black"
+        app:bt_icon="@drawable/ic_user"
+        app:bt_shape="@drawable/transition_background_drawable_home"
+        app:bt_title="Profile" />
+
+</com.gauravk.bubblenavigation.BubbleNavigationLinearView>
