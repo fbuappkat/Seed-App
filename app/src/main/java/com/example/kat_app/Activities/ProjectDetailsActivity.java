@@ -211,7 +211,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
                 Log.d(TAG,"collabs: "+ proj.getCollabs());
                 if (!proj.getCollabs()) {
                     Toast.makeText(ProjectDetailsActivity.this, "The owner of this project isn't looking for collaborators right now.", Toast.LENGTH_SHORT).show();
-                //TODO fix this
+                //TODO add message
                 } else {
                     Intent message = new Intent(ProjectDetailsActivity.this, MessageActivity.class);
                     message.putExtra(OtherUserProfileActivity.class.getSimpleName(), Parcels.wrap(proj.getUser()));
