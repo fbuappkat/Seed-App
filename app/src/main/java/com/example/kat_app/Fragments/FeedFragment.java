@@ -48,7 +48,6 @@ public class FeedFragment extends Fragment {
     private com.codepath.instagram.EndlessRecyclerViewScrollListener scrollListener;
     private ImageButton btnGoToAddUpdate;
     private ProgressBar pbLoad;
-    private Bundle savedState = null;
 
     // onCreateView to inflate the view
     @Nullable
