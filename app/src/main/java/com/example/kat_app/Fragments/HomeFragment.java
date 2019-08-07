@@ -264,6 +264,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
     protected void queryUsers() {
         ParseQuery<ParseUser> projectQuery = new ParseQuery<ParseUser>(ParseUser.class);
         projectQuery.addDescendingOrder("createdAt");
+        projectQuery.whereNotEqualTo("objectId", ParseUser.getCurrentUser().getObjectId());
 
         projectQuery.findInBackground(new FindCallback<ParseUser>() {
             @Override
