@@ -243,7 +243,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                         // create intent for the new activity
                         Intent feedToDetails = new Intent(context, UpdateDetailsActivity.class);
                         //serialize the update using parceler, use its short name as a key
-                        feedToDetails.putExtra(Update.class.getSimpleName(), Parcels.wrap(update));
+                        feedToDetails.putExtra("update", Parcels.wrap(update));
                         feedToDetails.putExtra("user", Parcels.wrap(updates.get(position).getUser()));
                         // show the activity
                         context.startActivity(feedToDetails);
