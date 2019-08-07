@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -170,7 +169,6 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         }*/
 
         //Follow button
-
         if (!proj.getFollowers().toString().contains(ParseUser.getCurrentUser().getObjectId())) {
             btnFollow.setText("Follow");
         } else {
