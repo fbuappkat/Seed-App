@@ -73,7 +73,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
         int width = (int) Math.round(dm.widthPixels * 0.9);
-        int height = (int) Math.round(dm.heightPixels * 0.6);
+        int height = (int) Math.round(dm.heightPixels * 0.7);
 
         getWindow().setLayout(width, height);
 
