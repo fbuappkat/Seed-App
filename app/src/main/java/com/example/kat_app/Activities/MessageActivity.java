@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.kat_app.Adapters.ChatAdapter;
 import com.example.kat_app.Adapters.MessageAdapter;
@@ -153,8 +152,6 @@ public class MessageActivity extends AppCompatActivity {
                 message.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        Toast.makeText(MessageActivity.this, "Successfully created message on Parse",
-                                Toast.LENGTH_SHORT).show();
                         refreshMessages();
                     }
                 });
@@ -174,8 +171,7 @@ public class MessageActivity extends AppCompatActivity {
                     newChat.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-                            Toast.makeText(MessageActivity.this, "Successfully created chat on Parse",
-                                    Toast.LENGTH_SHORT).show();
+                            refreshMessages();
                         }
                     });
 
@@ -266,8 +262,6 @@ public class MessageActivity extends AppCompatActivity {
                         newChat.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
-                                Toast.makeText(MessageActivity.this, "Successfully created chat on Parse",
-                                        Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
