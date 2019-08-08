@@ -177,11 +177,34 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
                 // Your code to refresh the list here.
                 // Make sure you call swipeContainer.setRefreshing(false)
                 // once the network request has completed successfully.
-                    projects.clear();
-                    adapter.clear();
-                    pbLoad.setVisibility(View.VISIBLE);
-                    rvProjects.setVisibility(View.INVISIBLE);
-                    queryProjects();
+                pbLoad.setVisibility(View.VISIBLE);
+                int position = topNav.getCurrentActiveItemPosition();
+                switch (position) {
+                    case 0:
+                        queryProjects();
+                        rvProjects.setVisibility(View.INVISIBLE);
+                        break;
+                    case 1:
+                        queryProjectsByCategory("Technology");
+                        rvProjects.setVisibility(View.INVISIBLE);
+                        break;
+                    case 2:
+                        queryProjectsByCategory("Health");
+                        rvProjects.setVisibility(View.INVISIBLE);
+                        break;
+                    case 3:
+                        queryProjectsByCategory("Education");
+                        rvProjects.setVisibility(View.INVISIBLE);
+                        break;
+                    case 4:
+                        queryProjectsByCategory("Food/Drink");
+                        rvProjects.setVisibility(View.INVISIBLE);
+                        break;
+                    case 5:
+                        queryProjectsByCategory("Arts");
+                        rvProjects.setVisibility(View.INVISIBLE);
+                        break;
+                }
             }
         });
         swipeContainer.setRefreshStyle(PullRefreshLayout.STYLE_SMARTISAN);
