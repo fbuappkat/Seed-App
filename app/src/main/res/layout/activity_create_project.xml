@@ -112,7 +112,7 @@
             android:ems="10"
             android:hint="Name"
             android:inputType="textPersonName"
-            android:maxLength="25"
+            android:maxLength="23"
             android:paddingLeft="20dp"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"

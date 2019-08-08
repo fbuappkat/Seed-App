@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.example.kat_app.Models.Project;
+import com.example.kat_app.Models.Request;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -23,6 +24,8 @@ import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -71,8 +74,9 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
         OnClickListener onClickListener;
         private TextView tvName;
         private TextView tvAuthor;
-        private TextView tvInvestors;
-        private TextView tvFollowers;
+        private TextView tvInvestorsCount;
+        private TextView tvFollowersCount;
+        private TextView tvPercentCount;
         private ImageView ivThumbnail;
         View view;
 
@@ -81,10 +85,10 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
             view = itemView;
             tvName = itemView.findViewById(R.id.tvName);
             tvAuthor = itemView.findViewById(R.id.tvAuthor);
-            tvFollowers = itemView.findViewById(R.id.tvInvestments);
-            tvInvestors = itemView.findViewById(R.id.tvInvestors);
+            tvFollowersCount = itemView.findViewById(R.id.tvFollowersCount);
+            tvInvestorsCount = itemView.findViewById(R.id.tvInvestorsCount);
             ivThumbnail = itemView.findViewById(R.id.ivThumbnail);
-
+            tvPercentCount = itemView.findViewById(R.id.tvPercentCount);
         }
 
         protected void queryUser(final Project project) {
@@ -108,13 +112,13 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
             });
         }
 
-
         //add in data for specific user's post
         public void bind(final Project project, OnClickListener onClickListener) {
             tvName.setText(project.getName());
-            tvInvestors.setText("Investors: " + project.getInvestors().length());
-            tvFollowers.setText("Followers: " + project.getFollowers().length());
+            tvInvestorsCount.setText(project.getInvestors().length() + "");
+            tvFollowersCount.setText(project.getFollowers().length() + "");
             queryUser(project);
+            queryRequests(project);
             ParseFile profileImage = project.getParseFile("thumbnail");
             MultiTransformation<Bitmap> multiTransformation = new MultiTransformation<Bitmap>(new CenterCrop(), new RoundedCornersTransformation(25, 0), new BlurTransformation(7));
             if (profileImage != null) {
@@ -131,6 +135,39 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
             this.onClickListener = onClickListener;
             itemView.setOnClickListener(this);
 
+        }
+
+        protected void queryRequests(final Project project) {
+            ParseQuery<Request> requestQuery = new ParseQuery<>(Request.class);
+            requestQuery.include("project");
+
+            requestQuery.whereEqualTo("project", project);
+            requestQuery.findInBackground(new FindCallback<Request>() {
+                @Override
+                public void done(List<Request> requests, ParseException e) {
+                    if (e != null) {
+                        Log.e("Query requests", "Error with query");
+                        e.printStackTrace();
+                        return;
+                    }
+
+                    NumberFormat percentageFormat = NumberFormat.getPercentInstance();
+                    percentageFormat.setMinimumFractionDigits(2);
+
+                    float requestedFunds = 0;
+                    float receievedFunds = 0;
+                    float percent = 0;
+
+                    for (Request projectRequest : requests) {
+                        receievedFunds += projectRequest.getPrice();
+                        requestedFunds += projectRequest.getReceived();
+                    }
+
+                    percent = (requestedFunds/receievedFunds);
+                    tvPercentCount.setText(percentageFormat.format(percent));
+                }
+
+            });
         }
 
 
@@ -207,6 +244,10 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
                 notifyDataSetChanged();
             }
         };
+    }
+
+    private static float round(float value) {
+        return (float) Math.round(value * 100) / 100;
     }
 
 }
