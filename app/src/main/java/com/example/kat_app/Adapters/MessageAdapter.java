@@ -15,6 +15,9 @@ import com.example.kat_app.R;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter {
@@ -77,6 +80,23 @@ public class MessageAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Message message =  mMessageList.get(position);
+
+        String currUser = ParseUser.getCurrentUser().getObjectId();
+
+        boolean foundUser = false;
+        JSONArray readBy = message.getReadBy();
+        for (int i = 0; i < readBy.length(); i++) {
+            try {
+                if (readBy.getString(i).equals(currUser))
+                    foundUser = true;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        if (!foundUser) {
+            message.setReadBy(currUser);
+            message.saveInBackground();
+        }
 
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_MESSAGE_SENT:

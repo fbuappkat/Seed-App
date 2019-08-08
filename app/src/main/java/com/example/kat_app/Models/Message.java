@@ -4,6 +4,8 @@ import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
+
 import java.text.SimpleDateFormat;
 
 @ParseClassName("Message")
@@ -14,6 +16,7 @@ public class Message extends ParseObject {
     public static final String MESSAGE_RECEIVER_KEY = "receiver";
     public static final String BODY_KEY = "body";
     private static final String KEY_CREATED_AT = "createdAt";
+    private static final String KEY_READ_BY = "readBy";
 
     public String getUserId() {
         return getString(USER_ID_KEY);
@@ -30,6 +33,10 @@ public class Message extends ParseObject {
     public void setUserId(String userId) {
         put(USER_ID_KEY, userId);
     }
+
+    public void setReadBy(String userId) { add(KEY_READ_BY, userId); }
+
+    public JSONArray getReadBy() { return getJSONArray(KEY_READ_BY); }
 
     public void setBody(String body) {
         put(BODY_KEY, body);
