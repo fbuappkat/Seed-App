@@ -90,61 +90,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             view = itemView;
             tvName = itemView.findViewById(R.id.tvName);
             tvUsername = itemView.findViewById(R.id.tvUsername);
-            tvInvestments = itemView.findViewById(R.id.tvInvestments);
-            tvProjects = itemView.findViewById(R.id.tvProjects);
             ivImage = itemView.findViewById(R.id.ivImage);
-            ivProfile = itemView.findViewById(R.id.ivProfile);
             userHolder = itemView.findViewById(R.id.userHolder);
         }
 
-
-        protected void queryProjects(ParseUser user) {
-            ParseQuery<Project> projectQuery = new ParseQuery<Project>(Project.class);
-            projectQuery.whereEqualTo("author", user);
-
-            projectQuery.findInBackground(new FindCallback<Project>() {
-                @Override
-                public void done(List<Project> posts, ParseException e) {
-                    if (e != null) {
-                        Log.e("users", "Error with query");
-                        e.printStackTrace();
-                        return;
-                    }
-                    tvProjects.setText("Projects: " + Integer.toString(posts.size()));
-                }
-            });
-        }
-
-        protected void queryInvested(final ParseUser user) {
-            ParseQuery<Project> projectQuery = new ParseQuery<Project>(Project.class);
-            projectQuery.findInBackground(new FindCallback<Project>() {
-                @Override
-                public void done(List<Project> posts, ParseException e) {
-                    if (e != null) {
-                        Log.e("users", "Error with query");
-                        e.printStackTrace();
-                        return;
-                    }
-                    int count = 0;
-                    for (Project project : posts) {
-                        if (project.getInvestors().toString().contains(user.getObjectId())) {
-                            count++;
-                        }
-                    }
-                    tvInvestments.setText("Investments: " + count);
-
-                }
-            });
-        }
 
         //add in data for specific user's post
         public void bind(final ParseUser user, final List<ParseUser> userList, final int position) {
             tvName.setText(user.get("name").toString());
             tvUsername.setText("@" + user.getUsername());
-            if (request != 1) {
-                queryInvested(user);
-                queryProjects(user);
-            }
             ParseFile profileImage = user.getParseFile("profile_image");
             if (profileImage != null) {
                 Glide.with(context)

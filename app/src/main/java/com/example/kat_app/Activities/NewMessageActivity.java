@@ -51,9 +51,6 @@ public class NewMessageActivity extends AppCompatActivity {
         users = new ArrayList<>();
         // create the adapter
         userAdapter = new UserAdapter(this, users, 1);
-        // add line between items
-        rvUsers.addItemDecoration(new DividerItemDecoration(this,
-                DividerItemDecoration.VERTICAL));
         // set the layout manager on the recycler view
         rvUsers.setLayoutManager(new LinearLayoutManager(this));
         // set the adapter on the recycler view
