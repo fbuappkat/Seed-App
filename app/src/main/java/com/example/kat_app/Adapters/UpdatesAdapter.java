@@ -54,7 +54,7 @@ import java.util.Locale;
 public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHolder> {
 
     private Context context;
-    private List<Update> updates;
+    private final List<Update> updates;
     private final String TAG = "UpdatesAdapter";
     private final ParseUser currUser = ParseUser.getCurrentUser();
     private static final String KEY_PROFILE_IMAGE = "profile_image";

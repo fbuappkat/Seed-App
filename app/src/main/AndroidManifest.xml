@@ -92,7 +92,8 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.ConfirmInvestActivity" />
+        <activity android:name=".Activities.ConfirmInvestActivity"
+                  android:theme="@style/AppTheme.moreDetials"/>
         <activity android:name=".Activities.InvestActivity" />
         <activity android:name=".Activities.MessageActivity" />
         <activity android:name=".Activities.OtherUserProfileActivity" />
