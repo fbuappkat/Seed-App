@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
     public static ImageButton ivNewMessage;
     public static ImageButton ivEdit;
     public static ImageButton ivSettings;
+    public static ImageButton ivSearchUsers;
     public static ProgressBar pbLoad;
 
     private PagerAdapter pagerAdapter;
@@ -117,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         ivNewMessage = findViewById(R.id.ivNewMessage);
         ivEdit = findViewById(R.id.ivEdit);
         ivSettings = findViewById(R.id.ivSettings);
+        ivSearchUsers = findViewById(R.id.ivSearchUsers);
 
         pagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
