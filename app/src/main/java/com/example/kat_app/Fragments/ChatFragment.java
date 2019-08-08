@@ -64,7 +64,6 @@ public class ChatFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
         startWithCurrentUser();
-        myHandler.postDelayed(mRefreshChatsRunnable, POLL_INTERVAL);
 
         ivNewMessage = MainActivity.ivNewMessage;
 
@@ -77,15 +76,6 @@ public class ChatFragment extends Fragment {
         });
     }
 
-    static final int POLL_INTERVAL = 1000; // milliseconds
-    Handler myHandler = new Handler();  // android.os.Handler
-    Runnable mRefreshChatsRunnable = new Runnable() {
-        @Override
-        public void run() {
-            queryChats();
-            myHandler.postDelayed(this, POLL_INTERVAL);
-        }
-    };
 
     // Get the userId from the cached currentUser object
     void startWithCurrentUser() {
