@@ -20,6 +20,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.BounceInterpolator;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.kat_app.Adapters.CustomWindowAdapter;
@@ -69,6 +70,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     private GoogleMap map;
     private LocationRequest mLocationRequest;
     Location mCurrentLocation;
+    ImageView ivBack;
     private long UPDATE_INTERVAL = 60000;  /* 60 secs */
     private long FASTEST_INTERVAL = 5000; /* 5 secs */
     private ArrayList<Project> projects = new ArrayList<>();
