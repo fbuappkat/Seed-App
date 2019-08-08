@@ -63,19 +63,28 @@ public class NewMessageActivity extends AppCompatActivity {
     }
 
     protected void queryUsers() {
-        ParseQuery<ParseUser> userQuery = new ParseQuery<ParseUser>(ParseUser.class);
-        userQuery.addDescendingOrder("createdAt");
+        ParseQuery<ParseUser> projectQuery = new ParseQuery<ParseUser>(ParseUser.class);
+        projectQuery.addDescendingOrder("createdAt");
+        projectQuery.whereNotEqualTo("objectId", ParseUser.getCurrentUser().getObjectId());
 
-        userQuery.whereNotEqualTo("name", currUser.getString("name"));
-
-        userQuery.findInBackground(new FindCallback<ParseUser>() {
+        projectQuery.findInBackground(new FindCallback<ParseUser>() {
             @Override
             public void done(List<ParseUser> user, ParseException e) {
                 if (e != null) {
-                    Log.e(TAG,"Error with query");
+                    Log.e(TAG, "Error with query");
                     e.printStackTrace();
                     return;
                 }
+//                for (int  i = 0; i < user.size(); i++) {
+//                    if (user.get(i).getParseObject("follower") == null) {
+//                        final Followers follows = new Followers();
+//                        JSONArray empty = new JSONArray();
+//                        follows.setFollowers(empty);
+//                        follows.setUser(user.get(i));
+//                        follows.saveInBackground();
+//                    }
+//                }
+
                 users.clear();
                 userAdapter.clear();
                 users.addAll(user);
