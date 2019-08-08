@@ -2,6 +2,8 @@ package com.example.kat_app.Adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,9 +23,11 @@ import com.example.kat_app.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -41,6 +45,8 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
     private static List<Project> matchingProjects;
     private final String TAG = "UpdatesAdapter";
     private OnClickListener monClickListener;
+
+    private static final String KEY_LOCATION = "location";
 
 
     public ProjectsAdapter(Context context, List<Project> projects, OnClickListener onClickListener) {
@@ -77,6 +83,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
         private TextView tvInvestorsCount;
         private TextView tvFollowersCount;
         private TextView tvPercentCount;
+        private TextView tvLocation;
         private ImageView ivThumbnail;
         View view;
 
@@ -89,6 +96,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
             tvInvestorsCount = itemView.findViewById(R.id.tvInvestorsCount);
             ivThumbnail = itemView.findViewById(R.id.ivThumbnail);
             tvPercentCount = itemView.findViewById(R.id.tvPercentCount);
+            tvLocation = itemView.findViewById(R.id.tvLocation);
         }
 
         protected void queryUser(final Project project) {
@@ -106,6 +114,11 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
                     if (posts.size() != 0) {
                         ParseUser user = posts.get(0);
                         tvAuthor.setText("@" + user.getUsername());
+                        try {
+                            tvLocation.setText(setLocation(user.getParseGeoPoint(KEY_LOCATION)));
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
                     }
                 }
 
@@ -250,4 +263,19 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
         return (float) Math.round(value * 100) / 100;
     }
 
+    private static String setLocation(ParseGeoPoint pickedLocation) throws IOException {
+        if (pickedLocation == null) {
+            return "No Location";
+        }
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(context, Locale.getDefault());
+
+        addresses = geocoder.getFromLocation(pickedLocation.getLatitude(), pickedLocation.getLongitude(), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+
+        String state = addresses.get(0).getAdminArea();
+        String country = addresses.get(0).getCountryName();
+
+        return state + ", " + country;
+    }
 }
