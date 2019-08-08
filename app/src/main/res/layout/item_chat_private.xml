@@ -78,4 +78,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_next" />
 
+    <ImageView
+        android:id="@+id/ivDot"
+        android:layout_width="14dp"
+        android:layout_height="17dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/orange_dot" />
+
 </android.support.constraint.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.example.kat_app.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,14 +16,16 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Activities.MessageActivity;
 import com.example.kat_app.Models.Chat;
-import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.parceler.Parcels;
 
 import java.util.List;
@@ -34,6 +37,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     private List<Chat> chats;
     private ParseUser currUser;
     private ParseUser otherUser;
+    private static final String KEY_READ_BY = "readBy";
 
     private static final String KEY_PROFILE_IMAGE = "profile_image";
 
@@ -53,10 +57,31 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ChatAdapter.ViewHolder viewHolder, int position) {
         Chat chat =  chats.get(position);
+        //TODO get message object not parse object
+        ParseObject message = chat.getLastMessagePointer();
+        JSONArray readByUser = null;
+        try {
+            if (message != null) {
+                readByUser = message.fetchIfNeeded().getJSONArray(KEY_READ_BY);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        boolean foundUser = false;
+        if (readByUser != null) {
+            for (int i = 0; i < readByUser.length(); i++) {
+                try {
+                    if (readByUser.getString(i).equals(ParseUser.getCurrentUser().getObjectId()))
+                        foundUser = true;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
         String body = chat.getLastMessageBody();
         String time = chat.getLastMessageTime();
-        queryUsers(chat.getOtherUsers(currUser).get(0), body, time, viewHolder);
+        queryUsers(chat.getOtherUsers(currUser).get(0), body, time, viewHolder, foundUser);
     }
 
     public  class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -66,6 +91,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         private TextView tvTime;
         private ImageView ivProfileImage;
         View view;
+        private ImageView ivDot;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -74,14 +100,20 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             tvBody = itemView.findViewById(R.id.tvBody);
             tvTime = itemView.findViewById(R.id.tvTime);
             ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
+            ivDot = itemView.findViewById(R.id.ivDot);
         }
 
 
         //add in data for specific user's post
-        public void bind(String name, String body, String time, final ParseUser otherUser) {
+        public void bind(String name, String body, String time, final ParseUser otherUser, final Boolean foundUser) {
             tvName.setText(name);
             tvBody.setText(body);
             tvTime.setText(time);
+            if (foundUser) {
+                ivDot.setVisibility(View.GONE);
+            } else {
+                tvBody.setTypeface(null, Typeface.BOLD);
+            }
 
             ParseFile profileImage = otherUser.getParseFile("profile_image");
             if (profileImage != null) {
@@ -131,7 +163,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    protected void queryUsers(String userId, final String body, final String time, final ViewHolder viewHolder) {
+    protected void queryUsers(String userId, final String body, final String time, final ViewHolder viewHolder, final Boolean foundUser) {
         ParseQuery<ParseUser> userQuery = new ParseQuery<ParseUser>(ParseUser.class);
 
         userQuery.whereEqualTo("objectId", userId);
@@ -147,7 +179,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                 if (user.size() != 0) {
                     otherUser = user.get(0);
                     String name = otherUser.getString("name");
-                    viewHolder.bind(name, body, time, otherUser);
+                    viewHolder.bind(name, body, time, otherUser, foundUser);
                 }
             }
         });
