@@ -168,7 +168,7 @@ public class MessageActivity extends AppCompatActivity {
                     users.add(ParseUser.getCurrentUser().getObjectId());
                     newChat.setUsers(users);
                     newChat.setFirstMessageCount();
-                    newChat.setLastMessageBody(etMessage.getText().toString());
+                    newChat.setLastMessageBody(message.getBody());
                     newChat.setLastMessagePointer(message);
 
                     newChat.saveInBackground(new SaveCallback() {
