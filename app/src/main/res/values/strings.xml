@@ -10,10 +10,10 @@
     <string-array name="categories">
         <item>Select a Category</item>
         <item>Technology</item>
-        <item>Social Good</item>
+        <item>Health</item>
+        <item>Education</item>
         <item>Food/Drink</item>
-        <item>Entertainment</item>
-        <item>Finance</item>
+        <item>Arts</item>
         <item>Other</item>
     </string-array>
 
