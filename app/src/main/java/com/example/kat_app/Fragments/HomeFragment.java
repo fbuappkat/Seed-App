@@ -233,9 +233,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
 
     protected void queryProjects() {
         ParseQuery<Project> projectQuery = new ParseQuery<Project>(Project.class);
-        //updateQuery.include(Update.KEY_USER);
         projectQuery.addDescendingOrder("createdAt");
-
         projectQuery.findInBackground(new FindCallback<Project>() {
             @Override
             public void done(List<Project> posts, ParseException e) {

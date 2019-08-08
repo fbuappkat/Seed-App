@@ -106,6 +106,8 @@ public class ConfirmInvestActivity extends AppCompatActivity {
                 invest();
             }
         });
+        //brother doctor samuel brown wylie mitchell, brother andrew adams ripka, brother duane williams, brother james bayard hodge, brother john thorne storn, brother victor alfred
+        //dupont, brother charles hare hitchinson
     }
 
     //invest funds
