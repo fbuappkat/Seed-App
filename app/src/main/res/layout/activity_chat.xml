@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/feed"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
@@ -43,9 +43,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/montserrat_semibold"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:fontFamily="@font/proximanova_semibold"
+                    android:textColor="@color/kat_black"
+                    android:textSize="18sp" />
 
                 <ImageButton
                     android:id="@+id/ivBack"
@@ -74,7 +74,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/feed" />
 
     <View
         android:layout_width="0dp"

@@ -7,84 +7,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/constraintLayout"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_alignParentTop="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <android.support.design.widget.AppBarLayout
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/tabs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/kat_white">
-
-
-                    <ImageButton
-                        android:id="@+id/ivEdit"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="left"
-                        android:background="@android:color/transparent"
-                        android:clickable="true"
-                        android:paddingRight="26dp"
-                        android:src="@drawable/ic_edit_profile"
-                        android:tint="@color/kat_black" />
-
-                    <ImageView
-                        android:id="@+id/ivLogo"
-                        android:layout_width="130dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/proximanova_regular"
-                        android:padding="10dp"
-                        android:textSize="18sp"
-                        android:tint="@color/kat_orange_1"
-
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_seed_logo" />
-
-
-                    <ImageButton
-                        android:id="@+id/ivSettings"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="right"
-                        android:layout_marginRight="16dp"
-                        android:background="@android:color/transparent"
-                        android:paddingLeft="26dp"
-                        android:src="@drawable/ic_settings"
-                        android:tint="@color/kat_black" />
-
-                </android.support.v7.widget.Toolbar>
-
-            </android.support.design.widget.AppBarLayout>
-
-        </android.support.constraint.ConstraintLayout>
-
-    <ScrollView
+        <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scrollbars="none"
+            android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/view3">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/profile"
@@ -195,7 +126,6 @@
                 android:id="@+id/tvProjects"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
                 android:fontFamily="@font/proximanova_light"
                 android:text="Projects"
                 android:textColor="@color/kat_grey_1"
@@ -209,7 +139,6 @@
                 android:id="@+id/tvProjectsCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
                 android:fontFamily="@font/proximanova_semibold"
                 android:text="X"
                 android:textColor="@color/kat_black"
@@ -395,16 +324,6 @@
         </android.support.constraint.ConstraintLayout>
 
     </ScrollView>
-
-    <View
-        android:id="@+id/view3"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/kat_grey_3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <View
         android:id="@+id/view4"

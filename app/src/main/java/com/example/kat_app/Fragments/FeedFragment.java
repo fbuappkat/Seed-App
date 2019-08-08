@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.baoyz.widget.PullRefreshLayout;
 import com.codepath.instagram.EndlessRecyclerViewScrollListener;
 import com.example.kat_app.Activities.AddUpdateActivity;
+import com.example.kat_app.Activities.MainActivity;
 import com.example.kat_app.Adapters.UpdatesAdapter;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.Models.Update;
@@ -44,9 +45,9 @@ public class FeedFragment extends Fragment {
     protected UpdatesAdapter adapter;
     protected List<Update> updates = new ArrayList<>();
     protected PullRefreshLayout swipeContainer;
-    // Store a member variable for the listener
-    private com.codepath.instagram.EndlessRecyclerViewScrollListener scrollListener;
     private ImageButton btnGoToAddUpdate;
+    // Store a member variable for the listener
+    private EndlessRecyclerViewScrollListener scrollListener;
     private ProgressBar pbLoad;
 
     public static FeedFragment newInstance(int page, String title) {
@@ -69,15 +70,12 @@ public class FeedFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         rvFeed = view.findViewById(R.id.rvFeed);
 
-        pbLoad = view.findViewById(R.id.pbLoad);
-        pbLoad.setIndeterminate(true);
-        btnGoToAddUpdate = view.findViewById(R.id.ivAddUpdate);
-
-        // Make the update image clickable
-        btnGoToAddUpdate.setClickable(true);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         getProjects();
+
+        pbLoad = MainActivity.pbLoad;
+        pbLoad.setIndeterminate(true);
+        btnGoToAddUpdate = MainActivity.btnAddUpdate;
 
         // set the layout manager on the recycler view
         rvFeed.setLayoutManager(layoutManager);
@@ -114,6 +112,7 @@ public class FeedFragment extends Fragment {
                 // Your code to refresh the list here.
                 // Make sure you call swipeContainer.setRefreshing(false)
                 // once the network request has completed successfully.
+                pbLoad.setVisibility(View.VISIBLE);
                 fetchHomeAsync(0);
             }
         });

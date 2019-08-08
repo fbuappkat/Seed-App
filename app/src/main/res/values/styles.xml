@@ -31,7 +31,6 @@
     <style name="Widget.BottomNavigationView"
         parent="Widget.Design.BottomNavigationView">
         <item name="fontFamily">@font/proximanova_light</item>
-        <item name="android:textColor">@color/kat_black</item>
     </style>
 
 </resources>

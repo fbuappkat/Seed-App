@@ -3,6 +3,7 @@ package com.example.kat_app.Activities;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.res.ResourcesCompat;
@@ -12,8 +13,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Layout;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
 import com.example.kat_app.Fragments.ChatFragment;
 import com.example.kat_app.Fragments.FeedFragment;
@@ -47,13 +51,13 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             switch (position) {
-                case 0: // Fragment # 0 - This will show FirstFragment
-                    return FeedFragment.newInstance(0, "Page # 1");
-                case 1: // Fragment # 0 - This will show FirstFragment different title
-                    return HomeFragment.newInstance(1, "Page # 2");
-                case 2: // Fragment # 1 - This will show SecondFragment
+                case 0:
+                    return HomeFragment.newInstance(0, "Page # 1");
+                case 1:
+                    return FeedFragment.newInstance(1, "Page # 2");
+                case 2:
                     return ChatFragment.newInstance(2, "Page # 3");
-                case 3: // Fragment # 1 - This will show SecondFragment
+                case 3:
                     return ProfileFragment.newInstance(3, "Page # 4");
                 default:
                     return null;
@@ -72,6 +76,21 @@ public class MainActivity extends AppCompatActivity {
     BubbleNavigationLinearView bottomNav;
     @BindView(R.id.centerView)
     ViewPager viewPager;
+    @BindView(R.id.feed)
+    ConstraintLayout feed;
+    @BindView(R.id.home)
+    ConstraintLayout home;
+    @BindView(R.id.chat)
+    ConstraintLayout chat;
+    @BindView(R.id.profile)
+    ConstraintLayout profile;
+    public static ImageButton btnAddUpdate;
+    public static ImageButton ivMap;
+    public static ImageButton ivNewMessage;
+    public static ImageButton ivEdit;
+    public static ImageButton ivSettings;
+    public static ImageButton ivSearchUsers;
+    public static ProgressBar pbLoad;
 
     private PagerAdapter pagerAdapter;
 
@@ -86,7 +105,20 @@ public class MainActivity extends AppCompatActivity {
         setStatusBar(getWindow());
         ButterKnife.bind(this);
 
+        feed.setVisibility(View.GONE);
+        home.setVisibility(View.VISIBLE);
+        chat.setVisibility(View.GONE);
+        profile.setVisibility(View.GONE);
+
         activity = this;
+
+        btnAddUpdate = findViewById(R.id.ivAddUpdate);
+        pbLoad = findViewById(R.id.pbLoad);
+        ivMap = findViewById(R.id.ivEarth);
+        ivNewMessage = findViewById(R.id.ivNewMessage);
+        ivEdit = findViewById(R.id.ivEdit);
+        ivSettings = findViewById(R.id.ivSettings);
+        ivSearchUsers = findViewById(R.id.ivSearchUsers);
 
         pagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
@@ -99,6 +131,35 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int i) {
                 bottomNav.setCurrentActiveItem(i);
+
+                if (viewPager.getCurrentItem() == 0) {
+                    feed.setVisibility(View.GONE);
+                    home.setVisibility(View.VISIBLE);
+                    chat.setVisibility(View.GONE);
+                    profile.setVisibility(View.GONE);
+                }
+
+                if (viewPager.getCurrentItem() == 1) {
+                    feed.setVisibility(View.VISIBLE);
+                    home.setVisibility(View.GONE);
+                    chat.setVisibility(View.GONE);
+                    profile.setVisibility(View.GONE);
+                }
+
+                if (viewPager.getCurrentItem() == 2) {
+                    feed.setVisibility(View.GONE);
+                    home.setVisibility(View.GONE);
+                    chat.setVisibility(View.VISIBLE);
+                    profile.setVisibility(View.GONE);
+                }
+
+                if (viewPager.getCurrentItem() == 3) {
+                    feed.setVisibility(View.GONE);
+                    home.setVisibility(View.GONE);
+                    chat.setVisibility(View.GONE);
+                    profile.setVisibility(View.VISIBLE);
+                }
+
             }
 
             @Override
@@ -115,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         bottomNav.setTypeface(ResourcesCompat.getFont(this, R.font.proximanova_semibold));
+        viewPager.setCurrentItem(0);
     }
 
 

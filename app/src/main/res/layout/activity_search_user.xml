@@ -35,34 +35,21 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/proximanova_regular"
-                    android:text="NEW MESSAGE"
+                    android:text="USER SEARCH"
                     android:textColor="@color/kat_black"
                     android:textSize="18sp" />
 
-                <Button
-                    android:id="@+id/bCancel"
+                <ImageButton
+                    android:id="@+id/ivBack"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="left"
                     android:background="@android:color/transparent"
-                    android:contextClickable="false"
-                    android:fontFamily="@font/proximanova_semibold"
-                    android:text="@android:string/cancel"
-                    android:textAllCaps="false"
-                    android:textColor="@color/kat_orange_1"
-                    android:textSize="14sp" />
+                    android:clickable="true"
+                    android:paddingRight="35dp"
+                    android:src="@drawable/ic_back" />
 
             </android.support.v7.widget.Toolbar>
-
-            <ImageButton
-                android:id="@+id/ivSettings2"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="right"
-                android:layout_marginRight="16dp"
-                android:background="@android:color/transparent"
-                android:paddingLeft="26dp"
-                android:src="@drawable/ic_settings" />
 
         </android.support.design.widget.AppBarLayout>
 
@@ -94,6 +81,14 @@
         app:layout_constraintBottom_toBottomOf="@id/view6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view5" />
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view5" />
 
 </android.support.constraint.ConstraintLayout>

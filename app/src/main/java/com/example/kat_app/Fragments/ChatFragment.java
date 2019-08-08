@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.example.kat_app.Activities.MainActivity;
 import com.example.kat_app.Activities.NewMessageActivity;
 import com.example.kat_app.Adapters.ChatAdapter;
 import com.example.kat_app.Models.Chat;
@@ -37,8 +38,7 @@ public class ChatFragment extends Fragment {
 
     @BindView(R.id.rvMessage)
     RecyclerView rvMessage;
-    @BindView(R.id.ivNewMessage)
-    ImageButton ivNewMessage;
+    private ImageButton ivNewMessage;
 
     private ArrayList<Chat> chats;
     private ArrayList<ParseUser> otherUsers;
@@ -64,7 +64,8 @@ public class ChatFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
         startWithCurrentUser();
-        myHandler.postDelayed(mRefreshChatsRunnable, POLL_INTERVAL);
+
+        ivNewMessage = MainActivity.ivNewMessage;
 
         ivNewMessage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,15 +76,6 @@ public class ChatFragment extends Fragment {
         });
     }
 
-    static final int POLL_INTERVAL = 1000; // milliseconds
-    Handler myHandler = new Handler();  // android.os.Handler
-    Runnable mRefreshChatsRunnable = new Runnable() {
-        @Override
-        public void run() {
-            queryChats();
-            myHandler.postDelayed(this, POLL_INTERVAL);
-        }
-    };
 
     // Get the userId from the cached currentUser object
     void startWithCurrentUser() {

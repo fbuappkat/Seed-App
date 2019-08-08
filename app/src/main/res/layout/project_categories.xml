@@ -1,0 +1,94 @@
+<com.gauravk.bubblenavigation.BubbleNavigationConstraintView android:id="@+id/floating_top_bar_navigation"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="18dp"
+    android:layout_marginLeft="18dp"
+    android:layout_marginTop="18dp"
+    android:layout_marginEnd="18dp"
+    android:layout_marginRight="18dp"
+    android:background="@drawable/transition_background_drawable"
+    android:elevation="8dp"
+    android:padding="16dp"
+    app:bnc_mode="packed"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.gauravk.bubblenavigation.BubbleToggleView
+        android:id="@+id/category_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:bt_active="true"
+        app:bt_colorActive="@color/kat_orange_1"
+        app:bt_colorInactive="@color/kat_black"
+        app:bt_shape="@drawable/rounded_rect"
+        app:bt_icon="@drawable/ic_all_projects"
+        app:bt_shapeColor="@color/orange_light"
+        app:bt_title="All"/>
+
+    <com.gauravk.bubblenavigation.BubbleToggleView
+        android:id="@+id/category_tech"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:bt_active="true"
+        app:bt_colorActive="@color/kat_orange_1"
+        app:bt_colorInactive="@color/kat_black"
+        app:bt_icon="@drawable/ic_tech"
+        app:bt_shape="@drawable/rounded_rect"
+        app:bt_shapeColor="@color/orange_light"
+        app:bt_title="Technology" />
+
+    <com.gauravk.bubblenavigation.BubbleToggleView
+        android:id="@+id/category_health"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:bt_active="true"
+        app:bt_colorActive="@color/kat_orange_1"
+        app:bt_colorInactive="@color/kat_black"
+        app:bt_icon="@drawable/ic_health"
+        app:bt_shape="@drawable/rounded_rect"
+        app:bt_shapeColor="@color/orange_light"
+        app:bt_title="Health" />
+
+
+    <com.gauravk.bubblenavigation.BubbleToggleView
+        android:id="@+id/category_education"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:bt_active="true"
+        app:bt_colorActive="@color/kat_orange_1"
+        app:bt_colorInactive="@color/kat_black"
+        app:bt_icon="@drawable/ic_edu"
+        app:bt_shape="@drawable/rounded_rect"
+        app:bt_shapeColor="@color/orange_light"
+        app:bt_title="Education" />
+
+    <com.gauravk.bubblenavigation.BubbleToggleView
+        android:id="@+id/category_food_drink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:bt_active="true"
+        app:bt_colorActive="@color/kat_orange_1"
+        app:bt_colorInactive="@color/kat_black"
+        app:bt_icon="@drawable/ic_food_drink"
+        app:bt_shape="@drawable/rounded_rect"
+        app:bt_shapeColor="@color/orange_light"
+        app:bt_title="Food" />
+
+    <com.gauravk.bubblenavigation.BubbleToggleView
+        android:id="@+id/category_arts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:bt_active="true"
+        app:bt_colorActive="@color/kat_orange_1"
+        app:bt_colorInactive="@color/kat_black"
+        app:bt_icon="@drawable/ic_arts"
+        app:bt_shape="@drawable/rounded_rect"
+        app:bt_shapeColor="@color/orange_light"
+        app:bt_title="Arts" />
+
+
+</com.gauravk.bubblenavigation.BubbleNavigationConstraintView>
+

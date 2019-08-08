@@ -12,17 +12,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.gauravk.bubblenavigation.BubbleToggleView
-        android:id="@+id/navFeed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:bt_active="true"
-        app:bt_colorActive="@color/kat_orange_1"
-        app:bt_colorInactive="@color/kat_black"
-        app:bt_icon="@drawable/ic_notifications"
-        app:bt_shape="@drawable/transition_background_drawable_home"
-        app:bt_title="Feed" />
-
-    <com.gauravk.bubblenavigation.BubbleToggleView
         android:id="@+id/navHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,6 +21,17 @@
         app:bt_icon="@drawable/ic_home"
         app:bt_shape="@drawable/transition_background_drawable_home"
         app:bt_title="Home" />
+
+    <com.gauravk.bubblenavigation.BubbleToggleView
+        android:id="@+id/navFeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:bt_active="true"
+        app:bt_colorActive="@color/kat_orange_1"
+        app:bt_colorInactive="@color/kat_black"
+        app:bt_icon="@drawable/ic_notifications"
+        app:bt_shape="@drawable/transition_background_drawable_home"
+        app:bt_title="Feed" />
 
     <com.gauravk.bubblenavigation.BubbleToggleView
         android:id="@+id/navChat"
@@ -48,6 +48,7 @@
         android:id="@+id/navUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:theme="@style/Widget.BottomNavigationView"
         app:bt_active="true"
         app:bt_colorActive="@color/kat_orange_1"
         app:bt_colorInactive="@color/kat_black"
