@@ -19,7 +19,7 @@ android:background="@color/kat_white">
         app:layout_constraintTop_toBottomOf="@+id/tvRelativeTime" />
 
     <android.support.constraint.ConstraintLayout
-    android:id="@+id/constraintLayout"
+    android:id="@+id/feed"
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:layout_alignParentTop="true"
@@ -110,7 +110,7 @@ android:background="@color/kat_white">
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/feed" />
 
     <ImageView
         android:id="@+id/ivProfileImage"

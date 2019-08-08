@@ -2,6 +2,7 @@ package com.example.kat_app.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 
 import com.baoyz.widget.PullRefreshLayout;
 import com.example.kat_app.Activities.CreateProjectActivity;
+import com.example.kat_app.Activities.MainActivity;
 import com.example.kat_app.Activities.MapActivity;
 import com.example.kat_app.Activities.ProjectDetailsActivity;
 import com.example.kat_app.Activities.UserOwnedProjectActivity;
@@ -83,15 +85,15 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         super.onViewCreated(view, savedInstanceState);
 
 
-        pbLoad = view.findViewById(R.id.pbLoad);
+        pbLoad = MainActivity.pbLoad;
+        pbLoad.setIndeterminate(true);
         fabCreate = view.findViewById(R.id.fabCreate);
         spinnerFilter = view.findViewById(R.id.spinnerFilter);
         spinnerSearch = view.findViewById(R.id.spinnerSearch);
         rvUsers = view.findViewById(R.id.rvUsers);
         tvFilter = view.findViewById(R.id.tvFilter);
-        ivMap = view.findViewById(R.id.ivEarth);
+        ivMap = MainActivity.ivMap;
 
-        pbLoad.setIndeterminate(true);
         ivMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

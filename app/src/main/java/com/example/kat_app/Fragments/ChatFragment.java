@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.example.kat_app.Activities.MainActivity;
 import com.example.kat_app.Activities.NewMessageActivity;
 import com.example.kat_app.Adapters.ChatAdapter;
 import com.example.kat_app.Models.Chat;
@@ -37,8 +38,7 @@ public class ChatFragment extends Fragment {
 
     @BindView(R.id.rvMessage)
     RecyclerView rvMessage;
-    @BindView(R.id.ivNewMessage)
-    ImageButton ivNewMessage;
+    private ImageButton ivNewMessage;
 
     private ArrayList<Chat> chats;
     private ArrayList<ParseUser> otherUsers;
@@ -65,6 +65,8 @@ public class ChatFragment extends Fragment {
         ButterKnife.bind(this, view);
         startWithCurrentUser();
         myHandler.postDelayed(mRefreshChatsRunnable, POLL_INTERVAL);
+
+        ivNewMessage = MainActivity.ivNewMessage;
 
         ivNewMessage.setOnClickListener(new View.OnClickListener() {
             @Override

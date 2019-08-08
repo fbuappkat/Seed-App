@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.kat_app.Activities.EditProfileActivity;
+import com.example.kat_app.Activities.MainActivity;
 import com.example.kat_app.Activities.ManageAccountActivity;
 import com.example.kat_app.Adapters.InvestedProjectsAdapter;
 import com.example.kat_app.Adapters.UserProjectAdapter;
@@ -216,7 +217,7 @@ public class ProfileFragment extends Fragment {
 
     private void setEditAccountButton(View view) {
         // Find reference for the view
-        ivEdit = view.findViewById(R.id.ivEdit);
+        ivEdit = MainActivity.ivEdit;
 
         // Set on-click listener for for image view to launch edit account activity
         ivEdit.setOnClickListener(new View.OnClickListener() {
@@ -231,7 +232,7 @@ public class ProfileFragment extends Fragment {
 
     private void setSettingsButton(View view) {
         // Find reference for the view
-        ivSettings = view.findViewById(R.id.ivSettings);
+        ivSettings = MainActivity.ivSettings;
 
         // Set up the settings button to open manage account fragment
         ivSettings.setOnClickListener(new View.OnClickListener() {

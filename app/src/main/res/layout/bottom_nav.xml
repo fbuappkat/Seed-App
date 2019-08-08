@@ -48,6 +48,7 @@
         android:id="@+id/navUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:theme="@style/Widget.BottomNavigationView"
         app:bt_active="true"
         app:bt_colorActive="@color/kat_orange_1"
         app:bt_colorInactive="@color/kat_black"
