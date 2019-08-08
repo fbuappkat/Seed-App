@@ -35,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/proximanova_regular"
-                    android:text="USER SEARCH"
+                    android:text="USERS"
                     android:textColor="@color/kat_black"
                     android:textSize="18sp" />
 
@@ -61,6 +61,7 @@
         android:layout_height="1dp"
         android:background="@color/kat_grey_3"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/feed" />
 
@@ -80,15 +81,6 @@
         android:layout_height="0dp"
         android:paddingTop="8dp"
         app:layout_constraintBottom_toBottomOf="@id/view6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" />
-
-    <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:background="@color/kat_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view5" />

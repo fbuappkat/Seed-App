@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
+    <View
+        android:id="@+id/view11"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/kat_grey_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topNav" />
+
     <include
         android:id="@+id/topNav"
         layout="@layout/project_categories"
@@ -24,7 +34,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topNav">
+        app:layout_constraintTop_toBottomOf="@+id/view11">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvProjects"
