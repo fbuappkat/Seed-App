@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.baoyz.widget.PullRefreshLayout;
 import com.example.kat_app.Activities.MainActivity;
 import com.example.kat_app.Activities.NewMessageActivity;
 import com.example.kat_app.Adapters.ChatAdapter;
@@ -37,7 +38,7 @@ public class ChatFragment extends Fragment {
     @BindView(R.id.rvMessage)
     RecyclerView rvMessage;
     private ImageButton ivNewMessage;
-
+    protected PullRefreshLayout swipeContainer;
     private ArrayList<Chat> chats;
     private ArrayList<ParseUser> otherUsers;
     private ChatAdapter adapter;
@@ -72,6 +73,8 @@ public class ChatFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        setupSwipeRefreshing(view);
     }
 
 
@@ -119,6 +122,32 @@ public class ChatFragment extends Fragment {
             }
 
         });
+    }
+
+
+    protected void setupSwipeRefreshing(View view) {
+        swipeContainer = view.findViewById(R.id.swipeContainer);
+
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                //pbLoad.setVisibility(View.VISIBLE);
+                fetchHomeAsync(0);
+            }
+        });
+        swipeContainer.setRefreshStyle(PullRefreshLayout.STYLE_SMARTISAN);
+        swipeContainer.setColor(getResources().getColor(R.color.kat_grey_7));
+    }
+
+    protected void fetchHomeAsync(int page) {
+        chats.clear();
+        adapter.clear();
+        queryChats();
+        swipeContainer.setRefreshing(false);
     }
 }
 

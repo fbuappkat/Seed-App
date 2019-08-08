@@ -95,21 +95,6 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.ViewHold
                     }
                     if (projs.size() != 0) {
                         Project project = projs.get(0);
-                        /*try {
-                            JSONArray followers = project.getFollowers();
-                            for (int i = 0; i < followers.length(); i++) {
-                                JSONObject jsonobject = followers.getJSONObject(i);
-                                String userID = jsonobject.getString("objectId");
-                                String currUserID = currUser.getObjectId();
-                                if (Boolean.toString(userID.equals(currUserID)).equals("true")) {
-                                    userInFollowList = true;
-                                    break;
-                                }
-                            }
-                        } catch (JSONException e1) {
-                            e1.printStackTrace();
-                        }*/
-
                         hold.bind(update, project.getName());
                     }
                 }
