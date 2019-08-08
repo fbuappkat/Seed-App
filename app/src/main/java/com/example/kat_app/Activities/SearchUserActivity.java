@@ -46,6 +46,7 @@ public class SearchUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_user);
         ButterKnife.bind(this);
 
+        MainActivity.setStatusBar(getWindow());
         setBackButton();
 
         // create the data source
