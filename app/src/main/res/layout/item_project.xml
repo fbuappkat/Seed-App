@@ -25,7 +25,7 @@
 
     <TextView
         android:id="@+id/tvName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="10dp"
@@ -33,6 +33,7 @@
         android:autoSizeTextType="uniform"
         android:fontFamily="@font/proximanova_bold"
         android:text="Title"
+        android:textAlignment="center"
         android:textColor="@color/kat_white"
         android:textSize="18sp"
         android:textStyle="bold"
