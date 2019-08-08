@@ -6,18 +6,14 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <SearchView
-        android:id="@+id/search"
+    <include
+        android:id="@+id/topNav"
+        layout="@layout/project_categories"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:iconifiedByDefault="false"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </SearchView>
+        app:layout_constraintTop_toBottomOf="@+id/tvFilter" />
 
     <com.baoyz.widget.PullRefreshLayout
         android:id="@+id/swipeContainer"
@@ -28,7 +24,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/rvUsers">
+        app:layout_constraintTop_toBottomOf="@+id/topNav">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvProjects"
@@ -59,58 +55,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvUsers"
-        android:layout_width="405dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/kat_grey_7"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvFilter" />
-
-    <TextView
-        android:id="@+id/tvFilter"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="6dp"
-        android:autoSizeTextType="uniform"
-        android:fontFamily="@font/proximanova_regular"
-        android:text="Filter By: "
-        android:textColor="@color/kat_black"
-        app:layout_constraintBottom_toBottomOf="@+id/spinnerFilter"
-        app:layout_constraintEnd_toStartOf="@+id/spinnerFilter"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/spinnerSearch"
-        app:layout_constraintTop_toTopOf="@+id/spinnerFilter" />
-
-    <Spinner
-        android:id="@+id/spinnerFilter"
-        android:layout_width="208dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tvFilter"
-        app:layout_constraintTop_toBottomOf="@+id/search" />
-
-    <Spinner
-        android:id="@+id/spinnerSearch"
-        android:layout_width="115dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:paddingHorizontal="0dp"
-        app:layout_constraintEnd_toStartOf="@+id/tvFilter"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search" />
-
     <View
         android:id="@+id/view12"
         android:layout_width="0dp"
@@ -119,6 +63,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/proximanova_light"
+        android:text="Project Categories"
+        android:textColor="@color/kat_grey_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -27,11 +27,15 @@ import com.example.kat_app.Activities.CreateProjectActivity;
 import com.example.kat_app.Activities.MainActivity;
 import com.example.kat_app.Activities.MapActivity;
 import com.example.kat_app.Activities.ProjectDetailsActivity;
+import com.example.kat_app.Activities.SearchUserActivity;
 import com.example.kat_app.Activities.UserOwnedProjectActivity;
 import com.example.kat_app.Adapters.ProjectsAdapter;
 import com.example.kat_app.Adapters.UserAdapter;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
+import com.gauravk.bubblenavigation.BubbleNavigationConstraintView;
+import com.gauravk.bubblenavigation.BubbleNavigationLinearView;
+import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -42,26 +46,23 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickListener {
 
     RecyclerView rvProjects;
-    private ImageView ivAdd;
     protected List<Project> projects;
     protected ProjectsAdapter adapter;
     protected List<ParseUser> users;
-    protected UserAdapter userAdapter;
     private ProgressBar pbLoad;
     private FloatingActionButton fabCreate;
-    private Spinner spinnerFilter;
-    private Spinner spinnerSearch;
     private TextView tvFilter;
     private ImageButton ivMap;
-    private boolean onProjects = true;
+    private ImageButton ivSearchUsers;
     RecyclerView rvUsers;
-    SearchView editsearch;
     protected PullRefreshLayout swipeContainer;
+    private BubbleNavigationConstraintView topNav;
 
 
     public static final String TAG = "HomeFragment";
@@ -85,11 +86,21 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         super.onViewCreated(view, savedInstanceState);
 
 
+        ivSearchUsers = MainActivity.ivSearchUsers;
+        ivSearchUsers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent project2usersearch = new Intent(getActivity(), SearchUserActivity.class);
+                startActivity(project2usersearch);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+        topNav = view.findViewById(R.id.topNav);
         pbLoad = MainActivity.pbLoad;
         pbLoad.setIndeterminate(true);
         fabCreate = view.findViewById(R.id.fabCreate);
-        spinnerFilter = view.findViewById(R.id.spinnerFilter);
-        spinnerSearch = view.findViewById(R.id.spinnerSearch);
+        /*spinnerFilter = view.findViewById(R.id.spinnerFilter);
+        spinnerSearch = view.findViewById(R.id.spinnerSearch);*/
         rvUsers = view.findViewById(R.id.rvUsers);
         tvFilter = view.findViewById(R.id.tvFilter);
         ivMap = MainActivity.ivMap;
@@ -103,71 +114,32 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
             }
         });
 
-
-        //setup spinners
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.filter));
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        spinnerFilter.setAdapter(spinnerAdapter);
-
-        ArrayAdapter<String> spinnerAdapter2 = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.search));
-        spinnerAdapter2.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        spinnerSearch.setAdapter(spinnerAdapter2);
-
-        spinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        topNav.setNavigationChangeListener(new BubbleNavigationChangeListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String[] strArr = getResources().getStringArray(R.array.filter);
+            public void onNavigationChanged(View view, int position) {
                 switch (position) {
                     case 0:
                         queryProjects();
                         break;
                     case 1:
-                        queryProjects();
-                    default:
-                        queryProjectsByCategory(strArr[position]);
+                        queryProjectsByCategory("Technology");
+                        break;
+                    case 2:
+                        queryProjectsByCategory("Health");
+                        break;
+                    case 3:
+                        queryProjectsByCategory("Education");
+                        break;
+                    case 4:
+                        queryProjectsByCategory("Food/Drink");
+                        break;
+                    case 5:
+                        queryProjectsByCategory("Arts");
+                        break;
                 }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
 
-        spinnerSearch.setSelection(0, false);
-        spinnerSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        spinnerFilter.setVisibility(View.VISIBLE);
-                        tvFilter.setVisibility(View.VISIBLE);
-                        rvProjects.setVisibility(View.VISIBLE);
-                        rvUsers.setVisibility(View.INVISIBLE);
-                        fabCreate.setVisibility(View.VISIBLE);
-                        onProjects = true;
-                        break;
-                    case 1:
-                        spinnerFilter.setVisibility(View.INVISIBLE);
-                        tvFilter.setVisibility(View.INVISIBLE);
-                        rvProjects.setVisibility(View.INVISIBLE);
-                        rvUsers.setVisibility(View.VISIBLE);
-                        fabCreate.setVisibility(View.INVISIBLE);
-                        onProjects = false;
-                        break;
-
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                spinnerFilter.setVisibility(View.VISIBLE);
-                tvFilter.setVisibility(View.VISIBLE);
-                onProjects = true;
-            }
-        });
 
         fabCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,27 +148,9 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
                 startActivity(intent);
             }
         });
-        // Locate the EditText in listview_main.xml
-        editsearch = (SearchView) view.findViewById(R.id.search);
-        editsearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                String text = s;
-                adapter.getFilter(text);
-                return false;
-            }
-        });
-
 
         rvProjects = view.findViewById(R.id.rvProjects);
         rvProjects.setVisibility(View.INVISIBLE);
-        rvUsers.setVisibility(View.INVISIBLE);
-
 
         // create the data source
         projects = new ArrayList<>();
@@ -208,19 +162,9 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         // set the layout manager on the recycler view
         rvProjects.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // create the data source
-        users = new ArrayList<>();
-        // create the adapter
-        userAdapter = new UserAdapter(getContext(), users, this);
-        // set the adapter on the recycler view
-        rvUsers.setAdapter(userAdapter);
-        // set the layout manager on the recycler view
-        rvUsers.setLayoutManager(new LinearLayoutManager(getContext()));
-
         setupSwipeRefreshing(view);
 
         queryProjects();
-        queryUsers();
     }
 
     protected void setupSwipeRefreshing(View view) {
@@ -233,14 +177,33 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
                 // Your code to refresh the list here.
                 // Make sure you call swipeContainer.setRefreshing(false)
                 // once the network request has completed successfully.
-                if (onProjects) {
-                    projects.clear();
-                    adapter.clear();
-                    pbLoad.setVisibility(View.VISIBLE);
-                    rvProjects.setVisibility(View.INVISIBLE);
-                    queryProjects();
-                } else {
-                    queryUsers();
+                pbLoad.setVisibility(View.VISIBLE);
+                int position = topNav.getCurrentActiveItemPosition();
+                switch (position) {
+                    case 0:
+                        queryProjects();
+                        rvProjects.setVisibility(View.INVISIBLE);
+                        break;
+                    case 1:
+                        queryProjectsByCategory("Technology");
+                        rvProjects.setVisibility(View.INVISIBLE);
+                        break;
+                    case 2:
+                        queryProjectsByCategory("Health");
+                        rvProjects.setVisibility(View.INVISIBLE);
+                        break;
+                    case 3:
+                        queryProjectsByCategory("Education");
+                        rvProjects.setVisibility(View.INVISIBLE);
+                        break;
+                    case 4:
+                        queryProjectsByCategory("Food/Drink");
+                        rvProjects.setVisibility(View.INVISIBLE);
+                        break;
+                    case 5:
+                        queryProjectsByCategory("Arts");
+                        rvProjects.setVisibility(View.INVISIBLE);
+                        break;
                 }
             }
         });
@@ -268,38 +231,6 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
                 swipeContainer.setRefreshing(false);
                 pbLoad.setVisibility(View.INVISIBLE);
                 rvProjects.setVisibility(View.VISIBLE);
-            }
-        });
-    }
-
-    protected void queryUsers() {
-        ParseQuery<ParseUser> projectQuery = new ParseQuery<ParseUser>(ParseUser.class);
-        projectQuery.addDescendingOrder("createdAt");
-        projectQuery.whereNotEqualTo("objectId", ParseUser.getCurrentUser().getObjectId());
-
-        projectQuery.findInBackground(new FindCallback<ParseUser>() {
-            @Override
-            public void done(List<ParseUser> user, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error with query");
-                    e.printStackTrace();
-                    return;
-                }
-//                for (int  i = 0; i < user.size(); i++) {
-//                    if (user.get(i).getParseObject("follower") == null) {
-//                        final Followers follows = new Followers();
-//                        JSONArray empty = new JSONArray();
-//                        follows.setFollowers(empty);
-//                        follows.setUser(user.get(i));
-//                        follows.saveInBackground();
-//                    }
-//                }
-
-                users.clear();
-                userAdapter.clear();
-                users.addAll(user);
-                userAdapter.notifyDataSetChanged();
-                swipeContainer.setRefreshing(false);
             }
         });
     }

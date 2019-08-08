@@ -169,7 +169,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                     }
                 });
             } else {
-                ivProfile.setOnClickListener(new View.OnClickListener() {
+                userHolder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent otherProfile = new Intent(context, OtherUserProfileActivity.class);

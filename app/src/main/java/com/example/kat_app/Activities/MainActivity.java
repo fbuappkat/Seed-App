@@ -52,9 +52,9 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return FeedFragment.newInstance(0, "Page # 1");
+                    return HomeFragment.newInstance(0, "Page # 1");
                 case 1:
-                    return HomeFragment.newInstance(1, "Page # 2");
+                    return FeedFragment.newInstance(1, "Page # 2");
                 case 2:
                     return ChatFragment.newInstance(2, "Page # 3");
                 case 3:
@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
     public static ImageButton ivNewMessage;
     public static ImageButton ivEdit;
     public static ImageButton ivSettings;
+    public static ImageButton ivSearchUsers;
     public static ProgressBar pbLoad;
 
     private PagerAdapter pagerAdapter;
@@ -104,6 +105,11 @@ public class MainActivity extends AppCompatActivity {
         setStatusBar(getWindow());
         ButterKnife.bind(this);
 
+        feed.setVisibility(View.GONE);
+        home.setVisibility(View.VISIBLE);
+        chat.setVisibility(View.GONE);
+        profile.setVisibility(View.GONE);
+
         activity = this;
 
         btnAddUpdate = findViewById(R.id.ivAddUpdate);
@@ -112,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         ivNewMessage = findViewById(R.id.ivNewMessage);
         ivEdit = findViewById(R.id.ivEdit);
         ivSettings = findViewById(R.id.ivSettings);
+        ivSearchUsers = findViewById(R.id.ivSearchUsers);
 
         pagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
@@ -125,28 +132,28 @@ public class MainActivity extends AppCompatActivity {
             public void onPageSelected(int i) {
                 bottomNav.setCurrentActiveItem(i);
 
-                if (i == 0) {
-                    feed.setVisibility(View.VISIBLE);
-                    home.setVisibility(View.GONE);
-                    chat.setVisibility(View.GONE);
-                    profile.setVisibility(View.GONE);
-                }
-
-                if (i == 1) {
+                if (viewPager.getCurrentItem() == 0) {
                     feed.setVisibility(View.GONE);
                     home.setVisibility(View.VISIBLE);
                     chat.setVisibility(View.GONE);
                     profile.setVisibility(View.GONE);
                 }
 
-                if (i == 2) {
+                if (viewPager.getCurrentItem() == 1) {
+                    feed.setVisibility(View.VISIBLE);
+                    home.setVisibility(View.GONE);
+                    chat.setVisibility(View.GONE);
+                    profile.setVisibility(View.GONE);
+                }
+
+                if (viewPager.getCurrentItem() == 2) {
                     feed.setVisibility(View.GONE);
                     home.setVisibility(View.GONE);
                     chat.setVisibility(View.VISIBLE);
                     profile.setVisibility(View.GONE);
                 }
 
-                if (i == 3) {
+                if (viewPager.getCurrentItem() == 3) {
                     feed.setVisibility(View.GONE);
                     home.setVisibility(View.GONE);
                     chat.setVisibility(View.GONE);
@@ -169,9 +176,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         bottomNav.setTypeface(ResourcesCompat.getFont(this, R.font.proximanova_semibold));
-
-        bottomNav.setCurrentActiveItem(1);
-        viewPager.setCurrentItem(1);
+        viewPager.setCurrentItem(0);
     }
 
 
