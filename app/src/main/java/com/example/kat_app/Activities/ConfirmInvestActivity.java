@@ -88,7 +88,7 @@ public class ConfirmInvestActivity extends AppCompatActivity {
         totalProjectFunds = getIntent().getFloatExtra("total", 0);
 
         //setValues
-        tvPrice.setText(request.getReceived() + "/" + request.getPrice());
+        tvPrice.setText(request.getReceived() + "0/" + request.getPrice() + "0");
         tvRequest.setText(request.getRequest());
         equity = project.getEquity() / totalProjectFunds * toInvest;
         equity = round(equity);
