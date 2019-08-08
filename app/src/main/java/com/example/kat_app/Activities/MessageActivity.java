@@ -145,9 +145,11 @@ public class MessageActivity extends AppCompatActivity {
                 // Using new `Message` Parse-backed model now
                 Message message = new Message();
                 message.setBody(data);
-                message.setUserId(ParseUser.getCurrentUser().getObjectId());
+                String userId = ParseUser.getCurrentUser().getObjectId();
+                message.setUserId(userId);
                 message.setMessageSender(ParseUser.getCurrentUser());
                 message.setMessageReceiver(otherUser);
+                message.setReadBy(userId);
                 message.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -156,6 +158,7 @@ public class MessageActivity extends AppCompatActivity {
                         refreshMessages();
                     }
                 });
+
                 etMessage.setText(null);
 
                 if (mMessages.size() == 0) {
@@ -164,8 +167,18 @@ public class MessageActivity extends AppCompatActivity {
                     users.add(otherUser.getObjectId());
                     users.add(ParseUser.getCurrentUser().getObjectId());
                     newChat.setUsers(users);
+                    newChat.setFirstMessageCount();
+                    newChat.setLastMessageBody(etMessage.getText().toString());
+                    newChat.setLastMessagePointer(message);
 
-                    newChat.saveInBackground();
+                    newChat.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            Toast.makeText(MessageActivity.this, "Successfully created chat on Parse",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
 
                     queryChats(message);
                 } else {
@@ -234,10 +247,30 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void done(List<Chat> userChats, ParseException e) {
                 if (e == null) {
-                    Chat chat = userChats.get(0);
-                    chat.setLastMessageBody(message.getBody());
-                    chat.setLastMessageTime(message.getTime());
-                    chat.saveInBackground();
+                    if (userChats.size() != 0) {
+                        Chat chat = userChats.get(0);
+                        chat.setLastMessageBody(message.getBody());
+                        chat.setLastMessageTime(message.getTime());
+                        chat.saveInBackground();
+                    } else {
+                        Chat newChat = new Chat();
+                        ArrayList<String> users = new ArrayList<>();
+                        users.add(otherUser.getObjectId());
+                        users.add(ParseUser.getCurrentUser().getObjectId());
+                        newChat.setUsers(users);
+                        newChat.setFirstMessageCount();
+                        newChat.setLastMessageTime(message.getTime());
+                        newChat.setLastMessageBody(message.getBody());
+                        newChat.setLastMessagePointer(message);
+
+                        newChat.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                Toast.makeText(MessageActivity.this, "Successfully created chat on Parse",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 } else {
                     e.printStackTrace();
                 }

@@ -3,13 +3,17 @@ package com.example.kat_app.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +44,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.tuann.floatingactionbuttonexpandable.FloatingActionButtonExpandable;
 
 import org.parceler.Parcels;
 
@@ -56,7 +61,7 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
     protected ProjectsAdapter adapter;
     protected List<ParseUser> users;
     private ProgressBar pbLoad;
-    private FloatingActionButton fabCreate;
+    private FloatingActionButtonExpandable fabCreate;
     private TextView tvFilter;
     private ImageButton ivMap;
     private ImageButton ivSearchUsers;
@@ -99,9 +104,12 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         pbLoad = MainActivity.pbLoad;
         pbLoad.setIndeterminate(true);
         fabCreate = view.findViewById(R.id.fabCreate);
-        /*spinnerFilter = view.findViewById(R.id.spinnerFilter);
-        spinnerSearch = view.findViewById(R.id.spinnerSearch);*/
-        rvUsers = view.findViewById(R.id.rvUsers);
+        fabCreate.setIconActionButton(R.drawable.ic_add_project);
+        fabCreate.setTextColor(ContextCompat.getColor(getContext(), R.color.kat_white));
+        fabCreate.setBackgroundButtonColor(ContextCompat.getColor(getContext(), R.color.kat_orange_1));
+        fabCreate.setContent("Add A New Project");
+        fabCreate.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f);
+        fabCreate.setTypeface(ResourcesCompat.getFont(getContext(), R.font.proximanova_regular));
         tvFilter = view.findViewById(R.id.tvFilter);
         ivMap = MainActivity.ivMap;
 
@@ -151,6 +159,18 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
 
         rvProjects = view.findViewById(R.id.rvProjects);
         rvProjects.setVisibility(View.INVISIBLE);
+
+        rvProjects.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0) {
+                    fabCreate.collapse(true);
+                } else {
+                    fabCreate.expand(true);
+                }
+            }
+        });
 
         // create the data source
         projects = new ArrayList<>();
