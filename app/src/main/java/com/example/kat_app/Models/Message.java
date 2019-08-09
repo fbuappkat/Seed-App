@@ -7,6 +7,7 @@ import com.parse.ParseUser;
 import org.json.JSONArray;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @ParseClassName("Message")
 public class Message extends ParseObject {
@@ -49,6 +50,13 @@ public class Message extends ParseObject {
     public String getTime() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("h:mm aa");
         String formattedDate = dateFormat.format(this.getCreatedAt());
+
+        return formattedDate.toUpperCase();
+    }
+
+    public static String getTime(Date date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("h:mm aa");
+        String formattedDate = dateFormat.format(date);
 
         return formattedDate.toUpperCase();
     }

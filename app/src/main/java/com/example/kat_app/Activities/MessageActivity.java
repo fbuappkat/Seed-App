@@ -32,6 +32,7 @@ import com.parse.SaveCallback;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -155,7 +156,9 @@ public class MessageActivity extends AppCompatActivity {
                         refreshMessages();
                     }
                 });
+
                 etMessage.setText(null);
+                checkforNewChat(message);
 
                 if (mMessages.size() == 0) {
                     Chat newChat = new Chat();
@@ -166,14 +169,17 @@ public class MessageActivity extends AppCompatActivity {
 
                     newChat.saveInBackground();
 
-                    queryChats(message);
+                    queryChats(data, Message.getTime(Calendar.getInstance().getTime()));
                 } else {
-                    queryChats(message);
+                    queryChats(data, Message.getTime(Calendar.getInstance().getTime()));
                 }
             }
         });
     }
 
+    void checkforNewChat(Message message) {
+
+    }
 
     void refreshMessages() {
         // build first AND condition
@@ -220,7 +226,7 @@ public class MessageActivity extends AppCompatActivity {
 
 
     //get chats via network request
-    protected void queryChats(final Message message) {
+    protected void queryChats(final String body, final String time) {
         ParseQuery<Chat> chatQuery = new ParseQuery<>(Chat.class);
 
         ArrayList<String> users = new ArrayList<>();
@@ -235,8 +241,8 @@ public class MessageActivity extends AppCompatActivity {
                 if (e == null) {
                     if (userChats.size() > 0) {
                         Chat chat = userChats.get(0);
-                        chat.setLastMessageBody(message.getBody());
-                        chat.setLastMessageTime(message.getTime());
+                        chat.setLastMessageBody(body);
+                        chat.setLastMessageTime(time);
                         chat.saveInBackground();
                     }
                 } else {

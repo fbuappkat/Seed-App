@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/kat_white"
+    tools:context=".Activities.ProjectDetailsActivity">
+
+
+    <ImageView
+        android:id="@+id/ivThumbnail2"
+        android:layout_width="215dp"
+        android:layout_height="150dp"
+        android:alpha="1"
+        android:foreground="@color/kat_white"
+        android:foregroundTint="#80000000"
+        android:foregroundTintMode="src_in"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_invest" />
+</android.support.constraint.ConstraintLayout>
