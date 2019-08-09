@@ -297,8 +297,10 @@ public class ProjectDetailsActivity extends AppCompatActivity {
         PieDataSet pieDataSet = new PieDataSet(values, "<- Requests");
         pieDataSet.setSliceSpace(0f);
         PieData pieData = new PieData(pieDataSet);
-        pieData.setValueTextSize(20);
+        pieData.setValueTextSize(15f);
+        pieData.setValueTextColor(Color.parseColor("#333333"));
         pcBreakdown.setData(pieData);
+        pcBreakdown.setDrawEntryLabels(false);
         pcBreakdown.getLegend().setEnabled(false);
         pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
         pcBreakdown.animateXY(1400, 1400);
