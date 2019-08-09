@@ -100,7 +100,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             tvBody = itemView.findViewById(R.id.tvBody);
             tvTime = itemView.findViewById(R.id.tvTime);
             ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
-            ivDot = itemView.findViewById(R.id.ivDot);
         }
 
 
@@ -109,11 +108,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             tvName.setText(name);
             tvBody.setText(body);
             tvTime.setText(time);
-            if (foundUser) {
-                ivDot.setVisibility(View.GONE);
-            } else {
-                tvBody.setTypeface(null, Typeface.BOLD);
-            }
 
             ParseFile profileImage = otherUser.getParseFile("profile_image");
             if (profileImage != null) {

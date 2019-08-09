@@ -2,9 +2,11 @@ package com.example.kat_app.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.baoyz.widget.PullRefreshLayout;
 import com.example.kat_app.Activities.MainActivity;
 import com.example.kat_app.Activities.NewMessageActivity;
 import com.example.kat_app.Adapters.ChatAdapter;
@@ -38,7 +39,7 @@ public class ChatFragment extends Fragment {
     @BindView(R.id.rvMessage)
     RecyclerView rvMessage;
     private ImageButton ivNewMessage;
-    protected PullRefreshLayout swipeContainer;
+
     private ArrayList<Chat> chats;
     private ArrayList<ParseUser> otherUsers;
     private ChatAdapter adapter;
@@ -63,6 +64,7 @@ public class ChatFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
         startWithCurrentUser();
+        myHandler.postDelayed(mRefreshChatsRunnable, POLL_INTERVAL);
 
         ivNewMessage = MainActivity.ivNewMessage;
 
@@ -73,10 +75,17 @@ public class ChatFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
-        setupSwipeRefreshing(view);
     }
 
+    static final int POLL_INTERVAL = 1000; // milliseconds
+    Handler myHandler = new Handler();  // android.os.Handler
+    Runnable mRefreshChatsRunnable = new Runnable() {
+        @Override
+        public void run() {
+            queryChats();
+            myHandler.postDelayed(this, POLL_INTERVAL);
+        }
+    };
 
     // Get the userId from the cached currentUser object
     void startWithCurrentUser() {
@@ -123,31 +132,6 @@ public class ChatFragment extends Fragment {
 
         });
     }
-
-
-    protected void setupSwipeRefreshing(View view) {
-        swipeContainer = view.findViewById(R.id.swipeContainer);
-
-        // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
-                //pbLoad.setVisibility(View.VISIBLE);
-                fetchHomeAsync(0);
-            }
-        });
-        swipeContainer.setRefreshStyle(PullRefreshLayout.STYLE_SMARTISAN);
-        swipeContainer.setColor(getResources().getColor(R.color.kat_grey_7));
-    }
-
-    protected void fetchHomeAsync(int page) {
-        chats.clear();
-        adapter.clear();
-        queryChats();
-        swipeContainer.setRefreshing(false);
-    }
 }
+
 

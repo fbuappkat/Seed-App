@@ -29,6 +29,8 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
+import static com.parse.Parse.getApplicationContext;
+
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     private static Context context;
     private List<ParseUser> users;
@@ -101,12 +103,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             tvUsername.setText("@" + user.getUsername());
             ParseFile profileImage = user.getParseFile("profile_image");
             if (profileImage != null) {
-                Glide.with(context)
+                Glide.with(getApplicationContext())
                         .load(profileImage.getUrl())
                         .apply(RequestOptions.circleCropTransform())
                         .into(ivImage);
             } else {
-                Glide.with(context)
+                Glide.with(getApplicationContext())
                         .load(R.drawable.default_profile_image)
                         .apply(RequestOptions.circleCropTransform())
                         .into(ivImage);

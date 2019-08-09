@@ -16,25 +16,14 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.baoyz.widget.PullRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/swipeContainer"
+    <com.chauthai.overscroll.RecyclerViewBouncy
+        android:id="@+id/rvMessage"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/kat_white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/view6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.chauthai.overscroll.RecyclerViewBouncy
-            android:id="@+id/rvMessage"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="@id/swipeContainer"
-            app:layout_constraintEnd_toEndOf="@id/swipeContainer"
-            app:layout_constraintStart_toStartOf="@id/swipeContainer"
-            app:layout_constraintTop_toTopOf="@id/swipeContainer" />
-
-    </com.baoyz.widget.PullRefreshLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

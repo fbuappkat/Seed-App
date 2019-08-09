@@ -1,5 +1,6 @@
 package com.example.kat_app.Activities;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -11,10 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kat_app.Adapters.ChatAdapter;
 import com.example.kat_app.Adapters.MessageAdapter;
 import com.example.kat_app.Adapters.UserAdapter;
+import com.example.kat_app.Fragments.ChatFragment;
 import com.example.kat_app.Models.Chat;
 import com.example.kat_app.Models.Message;
 import com.example.kat_app.R;
@@ -55,6 +58,7 @@ public class MessageActivity extends AppCompatActivity {
     private MessageAdapter mAdapter;
     private ChatAdapter chatAdapter;
     private ParseUser otherUser;
+    private String name;
     // Keep track of initial load to scroll to the bottom of the ListView
     boolean mFirstLoad;
 
@@ -80,11 +84,9 @@ public class MessageActivity extends AppCompatActivity {
             otherUser = Parcels.unwrap(getIntent().getParcelableExtra(UserAdapter.class.getSimpleName()));
         }
 
-        try {
-            tvChat.setText(otherUser.fetchIfNeeded().getUsername());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        name = otherUser.getUsername();
+
+        tvChat.setText(otherUser.getUsername());
         startWithCurrentUser();
         myHandler.postDelayed(mRefreshMessagesRunnable, POLL_INTERVAL);
     }
@@ -126,12 +128,12 @@ public class MessageActivity extends AppCompatActivity {
 
         final String userId = ParseUser.getCurrentUser().getObjectId();
         mAdapter = new MessageAdapter(MessageActivity.this, mMessages, userId, otherUser);
+
         // associate the LayoutManager with the RecylcerView
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MessageActivity.this);
         linearLayoutManager.setReverseLayout(true);
         rvMessage.setLayoutManager(linearLayoutManager);
         rvMessage.setAdapter(mAdapter);
-
 
         // When send button is clicked, create message object on Parse
         btSend.setOnClickListener(new View.OnClickListener() {
@@ -144,18 +146,15 @@ public class MessageActivity extends AppCompatActivity {
                 // Using new `Message` Parse-backed model now
                 Message message = new Message();
                 message.setBody(data);
-                String userId = ParseUser.getCurrentUser().getObjectId();
-                message.setUserId(userId);
+                message.setUserId(ParseUser.getCurrentUser().getObjectId());
                 message.setMessageSender(ParseUser.getCurrentUser());
                 message.setMessageReceiver(otherUser);
-                message.setReadBy(userId);
                 message.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
                         refreshMessages();
                     }
                 });
-
                 etMessage.setText(null);
 
                 if (mMessages.size() == 0) {
@@ -164,17 +163,8 @@ public class MessageActivity extends AppCompatActivity {
                     users.add(otherUser.getObjectId());
                     users.add(ParseUser.getCurrentUser().getObjectId());
                     newChat.setUsers(users);
-                    newChat.setFirstMessageCount();
-                    newChat.setLastMessageBody(message.getBody());
-                    newChat.setLastMessagePointer(message);
 
-                    newChat.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            refreshMessages();
-                        }
-                    });
-
+                    newChat.saveInBackground();
 
                     queryChats(message);
                 } else {
@@ -243,27 +233,11 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void done(List<Chat> userChats, ParseException e) {
                 if (e == null) {
-                    if (userChats.size() != 0) {
+                    if (userChats.size() > 0) {
                         Chat chat = userChats.get(0);
                         chat.setLastMessageBody(message.getBody());
                         chat.setLastMessageTime(message.getTime());
                         chat.saveInBackground();
-                    } else {
-                        Chat newChat = new Chat();
-                        ArrayList<String> users = new ArrayList<>();
-                        users.add(otherUser.getObjectId());
-                        users.add(ParseUser.getCurrentUser().getObjectId());
-                        newChat.setUsers(users);
-                        newChat.setFirstMessageCount();
-                        newChat.setLastMessageTime(message.getTime());
-                        newChat.setLastMessageBody(message.getBody());
-                        newChat.setLastMessagePointer(message);
-
-                        newChat.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                            }
-                        });
                     }
                 } else {
                     e.printStackTrace();
@@ -290,4 +264,5 @@ public class MessageActivity extends AppCompatActivity {
     }
 
 }
+
 
