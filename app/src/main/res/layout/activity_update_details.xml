@@ -52,15 +52,21 @@ android:background="@color/kat_white">
                 android:paddingRight="35dp"
                 android:src="@drawable/ic_back" />
 
-            <TextView
-                android:id="@+id/tvDetailsName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="130dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:fontFamily="@font/proximanova_regular"
-                android:text="COMMENTS"
-                android:textColor="@color/kat_black"
-                android:textSize="18sp" />
+                android:padding="10dp"
+                android:textSize="18sp"
+                android:tint="@color/kat_orange_1"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_seed_logo" />
 
         </android.support.v7.widget.Toolbar>
 
