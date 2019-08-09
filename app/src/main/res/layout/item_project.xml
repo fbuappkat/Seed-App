@@ -43,12 +43,13 @@
 
     <TextView
         android:id="@+id/tvAuthor"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/proximanova_semibold"
         android:text="Author"
+        android:textAlignment="center"
         android:textColor="@color/kat_white"
         android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/view7"
@@ -57,11 +58,12 @@
 
     <TextView
         android:id="@+id/tvInvestments"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/proximanova_light"
         android:text="Followers"
+        android:textAlignment="center"
         android:textColor="@color/kat_black"
         app:layout_constraintEnd_toStartOf="@+id/tvInvestors"
         app:layout_constraintHorizontal_bias="0.5"
@@ -70,11 +72,12 @@
 
     <TextView
         android:id="@+id/tvInvestors"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/proximanova_light"
         android:text="Investors"
+        android:textAlignment="center"
         android:textColor="@color/kat_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -83,13 +86,14 @@
 
     <TextView
         android:id="@+id/tvLocation"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="10dp"
         android:fontFamily="@font/proximanova_regular"
         android:text="California, United States"
+        android:textAlignment="center"
         android:textColor="@color/kat_white"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/ivThumbnail"
@@ -98,13 +102,14 @@
 
     <TextView
         android:id="@+id/tvInfo"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/proximanova_light"
         android:text="Project Info"
+        android:textAlignment="center"
         android:textColor="@color/kat_grey_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivThumbnail"
@@ -112,13 +117,14 @@
 
     <TextView
         android:id="@+id/textView13"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/proximanova_light"
         android:text="Percent Funded"
+        android:textAlignment="center"
         android:textColor="@color/kat_black"
         app:layout_constraintEnd_toEndOf="@+id/tvInvestors"
         app:layout_constraintStart_toStartOf="@+id/tvInvestments"
@@ -126,11 +132,12 @@
 
     <TextView
         android:id="@+id/tvFollowersCount"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/proximanova_semibold"
         android:text="34"
+        android:textAlignment="center"
         android:textColor="@color/kat_black"
         app:layout_constraintEnd_toEndOf="@+id/tvInvestments"
         app:layout_constraintStart_toStartOf="@+id/tvInvestments"
@@ -138,11 +145,12 @@
 
     <TextView
         android:id="@+id/tvInvestorsCount"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/proximanova_semibold"
         android:text="5"
+        android:textAlignment="center"
         android:textColor="@color/kat_black"
         app:layout_constraintEnd_toEndOf="@+id/tvInvestors"
         app:layout_constraintStart_toStartOf="@+id/tvInvestors"
@@ -150,11 +158,12 @@
 
     <TextView
         android:id="@+id/tvPercentCount"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/proximanova_semibold"
         android:text="67%"
+        android:textAlignment="center"
         android:textColor="@color/kat_orange_1"
         app:layout_constraintEnd_toEndOf="@+id/textView13"
         app:layout_constraintStart_toStartOf="@+id/textView13"
