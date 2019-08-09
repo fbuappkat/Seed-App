@@ -54,10 +54,10 @@ public class UserOwnedProjectActivity extends AppCompatActivity {
     TextView tvInvestors;
     @BindView(R.id.tvNumFollowers)
     TextView tvFollowers;
-    @BindView(R.id.btnMedia)
-    Button btnMedia;
     @BindView(R.id.tvNumFunds)
     TextView tvFunds;
+    @BindView(R.id.tvNumFunds2)
+    TextView tvFunds2;
     @BindView(R.id.ivBack)
     ImageButton ivBack;
     @BindView(R.id.tvHandleDetails)
@@ -122,16 +122,6 @@ public class UserOwnedProjectActivity extends AppCompatActivity {
         );
 
         svScroll.setOnTouchListener(bounceTouchListener);
-
-        //invest button
-        btnMedia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent media = new Intent(UserOwnedProjectActivity.this, ProjectMediaActivity.class);
-                media.putExtra("project", Parcels.wrap(proj));
-                startActivity(media);
-            }
-        });
 
         tvHandle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -226,7 +216,8 @@ public class UserOwnedProjectActivity extends AppCompatActivity {
                 if (requests != null) {
                     totalFunds = getTotalFunds(requests);
                     totalNeeded = getTotal(requests);
-                    tvFunds.setText(Float.toString(getTotalFunds(requests)) + "0/" + Float.toString(getTotal(requests)) + "0");
+                    tvFunds2.setText(Float.toString(getTotalFunds(requests)) + "0/");
+                    tvFunds.setText(Float.toString(getTotal(requests)) + "0");
                     String equity = "0.00%";
                     if (proj.getEquity() != null) {
                         float newEquity = proj.getEquity() - getTotalFunds(requests) / getTotal(requests) * proj.getEquity();

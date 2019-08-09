@@ -95,6 +95,38 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <View
+                android:id="@+id/line5"
+                android:layout_width="1dp"
+                android:layout_height="65dp"
+                android:layout_marginStart="8dp"
+                android:background="@color/kat_grey_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/line7"
+                app:layout_constraintTop_toTopOf="@+id/line7" />
+
+            <View
+                android:id="@+id/line6"
+                android:layout_width="1dp"
+                android:layout_height="65dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/kat_grey_3"
+                app:layout_constraintEnd_toStartOf="@+id/line7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvHandleDetails" />
+
+            <View
+                android:id="@+id/line7"
+                android:layout_width="1dp"
+                android:layout_height="65dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/kat_grey_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/line6" />
+
             <TextView
                 android:id="@+id/tvName"
                 android:layout_width="0dp"
@@ -161,19 +193,20 @@
                 android:id="@+id/tvInvestors"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:text="Investors"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="@+id/tvNumInvestors"
+                app:layout_constraintStart_toStartOf="@+id/tvNumInvestors"
                 app:layout_constraintTop_toBottomOf="@+id/tvNumInvestors" />
 
             <TextView
                 android:id="@+id/tvInvestments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="2dp"
                 android:text="Followers"
-                app:layout_constraintStart_toEndOf="@+id/tvInvestors"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="@+id/tvNumFollowers"
+                app:layout_constraintStart_toStartOf="@+id/tvNumFollowers"
                 app:layout_constraintTop_toBottomOf="@+id/tvNumFollowers" />
 
             <com.github.mikephil.charting.charts.PieChart
@@ -191,43 +224,52 @@
                 android:id="@+id/tvFunds"
                 android:layout_width="wrap_content"
                 android:layout_height="19dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="2dp"
                 android:text="Funds"
                 android:textAlignment="center"
-                app:layout_constraintStart_toEndOf="@+id/tvInvestments"
+                app:layout_constraintEnd_toEndOf="@+id/tvNumFunds"
+                app:layout_constraintStart_toStartOf="@+id/tvNumFunds"
                 app:layout_constraintTop_toBottomOf="@+id/tvNumFunds" />
 
             <TextView
                 android:id="@+id/tvNumInvestors"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:text="TextView"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="8dp"
+                android:text="x"
+                android:textAlignment="center"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/line6"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvAuthor" />
+                app:layout_constraintTop_toTopOf="@+id/line6" />
 
             <TextView
                 android:id="@+id/tvNumFollowers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="TextView"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="8dp"
+                android:text="x"
+                android:textAlignment="center"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/tvInvestments"
-                app:layout_constraintTop_toBottomOf="@+id/tvAuthor" />
+                app:layout_constraintEnd_toStartOf="@+id/line7"
+                app:layout_constraintStart_toEndOf="@+id/line6"
+                app:layout_constraintTop_toTopOf="@+id/line6" />
 
             <TextView
                 android:id="@+id/tvNumFunds"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="TextView"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="x"
+                android:textAlignment="center"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/tvFunds"
-                app:layout_constraintTop_toBottomOf="@+id/tvAuthor" />
+                app:layout_constraintEnd_toStartOf="@+id/line5"
+                app:layout_constraintStart_toEndOf="@+id/line7"
+                app:layout_constraintTop_toBottomOf="@+id/tvNumFunds2" />
 
             <TextView
                 android:id="@+id/tvHandleDetails"
@@ -243,32 +285,25 @@
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="2dp"
                 android:text="% Equity Left"
-                app:layout_constraintStart_toEndOf="@+id/tvNumFunds"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="@+id/tvPercentEquity"
+                app:layout_constraintStart_toStartOf="@+id/tvPercentEquity"
                 app:layout_constraintTop_toBottomOf="@+id/tvPercentEquity" />
 
             <TextView
                 android:id="@+id/tvPercentEquity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="TextView"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/tvNumFunds"
-                app:layout_constraintTop_toTopOf="@+id/tvNumFunds" />
-
-            <Button
-                android:id="@+id/btnMedia"
-                android:layout_width="89dp"
-                android:layout_height="34dp"
                 android:layout_marginStart="8dp"
-                android:background="@android:color/transparent"
-                android:text="Show Media"
-                android:textColor="@color/kat_orange_1"
-                app:layout_constraintStart_toEndOf="@+id/tvHandleDetails"
-                app:layout_constraintTop_toBottomOf="@+id/view2" />
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="8dp"
+                android:text="x"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/line5"
+                app:layout_constraintTop_toTopOf="@+id/line5" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvLegend"
@@ -279,7 +314,7 @@
                 android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pcBreakdown" />
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
             <Button
                 android:id="@+id/btnPostFunds"
@@ -288,12 +323,52 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:background="@color/kat_orange_1"
+                android:background="@drawable/button"
+                android:fontFamily="@font/montserrat_semibold"
                 android:text="Add Money Made"
                 android:textColor="@color/kat_white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvInvestments" />
+                app:layout_constraintTop_toBottomOf="@+id/line7" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Legend"
+                android:textColor="@color/kat_orange_1"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pcBreakdown" />
+
+            <Button
+                android:id="@+id/btnUpdate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="169dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="323dp"
+                android:background="@drawable/button_white"
+                android:fontFamily="@font/proximanova_semibold"
+                android:text="Updates"
+                android:textColor="@color/kat_orange_1"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/svScroll"
+                app:layout_constraintStart_toStartOf="@+id/svScroll"
+                app:layout_constraintTop_toBottomOf="@+id/rvLegend" />
+
+            <TextView
+                android:id="@+id/tvNumFunds2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="x/"
+                app:layout_constraintEnd_toEndOf="@+id/tvNumFunds"
+                app:layout_constraintStart_toStartOf="@+id/tvNumFunds"
+                app:layout_constraintTop_toTopOf="@+id/line7" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
