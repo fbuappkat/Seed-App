@@ -124,9 +124,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
     @Override
     public void onMapLongClick(LatLng point) {
-        Toast.makeText(getApplicationContext(), "Long Press", Toast.LENGTH_LONG).show();
         // Display the alert dialog
-        showAlertDialogForPoint(point);
+        ;
     }
 
     protected void loadMap(GoogleMap googleMap) {
