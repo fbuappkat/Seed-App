@@ -94,7 +94,9 @@ public class UserProjectAdapter extends RecyclerView.Adapter<UserProjectAdapter.
                         .apply(bitmapTransform(multiTransformation))
                         .into(ivThumbnail);
             }
-            if (ParseUser.getCurrentUser() == project.getUser()) {
+            String user = ParseUser.getCurrentUser().getObjectId();
+            String proj = project.getUser().getObjectId();
+            if (user.equals(proj)) {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
