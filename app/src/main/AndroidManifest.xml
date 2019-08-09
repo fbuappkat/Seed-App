@@ -46,7 +46,6 @@
         <activity android:name=".Activities.RegisterNewUserActivity" />
         <activity android:name=".Activities.EditProjectActivity" />
         <activity android:name=".Activities.AddFundsActivity" />
-        <activity android:name=".Activities.UserOwnedProjectActivity" />
 
         <uses-library
             android:name="org.apache.http.legacy"
