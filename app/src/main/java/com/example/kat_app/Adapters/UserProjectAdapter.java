@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.example.kat_app.Activities.ProjectDetailsActivity;
 import com.example.kat_app.Activities.UserOwnedProjectActivity;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
@@ -94,7 +95,9 @@ public class UserProjectAdapter extends RecyclerView.Adapter<UserProjectAdapter.
                         .apply(bitmapTransform(multiTransformation))
                         .into(ivThumbnail);
             }
-            if (ParseUser.getCurrentUser() == project.getUser()) {
+            String user = ParseUser.getCurrentUser().getObjectId();
+            String proj = project.getUser().getObjectId();
+            if (user.equals(proj)) {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -107,7 +110,7 @@ public class UserProjectAdapter extends RecyclerView.Adapter<UserProjectAdapter.
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent project2description = new Intent(context, UserOwnedProjectActivity.class);
+                        Intent project2description = new Intent(context, ProjectDetailsActivity.class);
                         project2description.putExtra("project", Parcels.wrap(project));
                         context.startActivity(project2description);
                     }
