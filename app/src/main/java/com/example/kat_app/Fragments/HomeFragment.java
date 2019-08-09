@@ -2,14 +2,10 @@ package com.example.kat_app.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,14 +13,8 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.baoyz.widget.PullRefreshLayout;
 import com.example.kat_app.Activities.CreateProjectActivity;
@@ -32,13 +22,10 @@ import com.example.kat_app.Activities.MainActivity;
 import com.example.kat_app.Activities.MapActivity;
 import com.example.kat_app.Activities.ProjectDetailsActivity;
 import com.example.kat_app.Activities.SearchUserActivity;
-import com.example.kat_app.Activities.UserOwnedProjectActivity;
 import com.example.kat_app.Adapters.ProjectsAdapter;
-import com.example.kat_app.Adapters.UserAdapter;
 import com.example.kat_app.Models.Project;
 import com.example.kat_app.R;
 import com.gauravk.bubblenavigation.BubbleNavigationConstraintView;
-import com.gauravk.bubblenavigation.BubbleNavigationLinearView;
 import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -51,7 +38,6 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickListener {
