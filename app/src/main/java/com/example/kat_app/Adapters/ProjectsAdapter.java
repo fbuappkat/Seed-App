@@ -28,7 +28,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -176,7 +175,11 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ViewHo
                         requestedFunds += projectRequest.getReceived();
                     }
 
-                    percent = (requestedFunds/receievedFunds);
+                    if (receievedFunds != 0) {
+                        percent = (requestedFunds / receievedFunds);
+                    } else {
+                        percent = 0;
+                    }
                     tvPercentCount.setText(percentageFormat.format(percent));
                 }
 
