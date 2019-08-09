@@ -112,7 +112,9 @@ public class ChatFragment extends Fragment {
         ParseQuery<Chat> chatQuery = new ParseQuery<>(Chat.class);
 
         ArrayList<String> currUser = new ArrayList<>();
-        currUser.add(ParseUser.getCurrentUser().getObjectId());
+        if (ParseUser.getCurrentUser() != null) {
+            currUser.add(ParseUser.getCurrentUser().getObjectId());
+        }
 
         chatQuery.whereContainedIn("users", currUser);
 
