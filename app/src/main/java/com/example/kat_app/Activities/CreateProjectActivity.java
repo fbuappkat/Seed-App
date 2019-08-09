@@ -256,7 +256,6 @@ public class CreateProjectActivity extends AppCompatActivity {
         requestsAdapter.add(request + " - $" + price);
         etRequest.setText("");
         etPrice.setText("");
-        Toast.makeText(getApplicationContext(), "Request added to list!", Toast.LENGTH_SHORT).show();
     }
 
     //create project and upload to Parse, return project to be used in createRequest
@@ -288,7 +287,6 @@ public class CreateProjectActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     Log.d("ProjectCreate", "create Project Success!");
-                    Toast.makeText(CreateProjectActivity.this, "Project created!", Toast.LENGTH_LONG).show();
                 } else {
                     e.printStackTrace();
                     Log.e("ProjectCreate", "Failed creating project");
