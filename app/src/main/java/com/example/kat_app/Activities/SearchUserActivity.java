@@ -5,7 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -13,6 +16,7 @@ import android.widget.ProgressBar;
 import com.example.kat_app.Adapters.ProjectsAdapter;
 import com.example.kat_app.Adapters.UserAdapter;
 import com.example.kat_app.R;
+import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -32,7 +36,6 @@ public class SearchUserActivity extends AppCompatActivity {
     ImageButton ivBack;
     @BindView(R.id.rvUsers)
     RecyclerView rvUsers;
-
 
     protected UserAdapter userAdapter;
     protected List<ParseUser> users;
@@ -64,7 +67,6 @@ public class SearchUserActivity extends AppCompatActivity {
         rvUsers.setAdapter(userAdapter);
         queryUsers();
     }
-
 
     protected void queryUsers() {
         ParseQuery<ParseUser> projectQuery = new ParseQuery<ParseUser>(ParseUser.class);

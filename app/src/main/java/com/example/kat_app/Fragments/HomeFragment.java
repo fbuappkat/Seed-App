@@ -62,10 +62,8 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
     protected List<ParseUser> users;
     private ProgressBar pbLoad;
     private FloatingActionButtonExpandable fabCreate;
-    private TextView tvFilter;
     private ImageButton ivMap;
     private ImageButton ivSearchUsers;
-    RecyclerView rvUsers;
     protected PullRefreshLayout swipeContainer;
     private BubbleNavigationConstraintView topNav;
 
@@ -90,7 +88,6 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         ivSearchUsers = MainActivity.ivSearchUsers;
         ivSearchUsers.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +107,6 @@ public class HomeFragment extends Fragment implements ProjectsAdapter.OnClickLis
         fabCreate.setContent("Add A New Project");
         fabCreate.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f);
         fabCreate.setTypeface(ResourcesCompat.getFont(getContext(), R.font.proximanova_regular));
-        tvFilter = view.findViewById(R.id.tvFilter);
         ivMap = MainActivity.ivMap;
 
         ivMap.setOnClickListener(new View.OnClickListener() {

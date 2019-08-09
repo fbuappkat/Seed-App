@@ -1,7 +1,7 @@
 Group Project 
 ===
 
-# KAT
+# Seed
 
 ## Table of Contents 
 1. [Overview](#Overview)
